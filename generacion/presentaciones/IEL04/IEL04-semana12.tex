@@ -1,0 +1,753 @@
+% =====================================================================
+%  IEL04 - Circuitos Eléctricos I
+%  Semana 12: El circuito RLC en paralelo: susceptancias opuestas, ley de corrientes de Kirchhoff, circuito tanque y corrección del factor de potencia
+%  Institución Universitaria de Barranquilla (IUB)
+%  Generada por src/presentaciones.py (diseño IUB 5). Compilador: pdfLaTeX (dos pasadas)
+% =====================================================================
+\documentclass[aspectratio=169,11pt,xcolor={table}]{beamer}
+
+% ---------------------------------------------------------------------
+%  Codificación, idioma y tipografía
+% ---------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot,es-noshorthands]{babel}
+\usepackage{avant}                       % Sans geométrica (emula Avenir Next)
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\ttdefault}{pcr}           % Monoespaciada para código
+\usepackage{textcomp}
+
+% ---------------------------------------------------------------------
+%  Paquetes
+% ---------------------------------------------------------------------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={.}, per-mode=symbol}
+\usepackage{booktabs,tabularx,multirow,array}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,shapes.misc,
+  decorations.pathreplacing,fit,backgrounds,babel}
+\usepackage[siunitx,RPvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+% ---------------------------------------------------------------------
+%  Paleta institucional IUB (Manual de Identidad Visual 2025)
+% ---------------------------------------------------------------------
+\definecolor{iubwhite}{HTML}{FFFFFF}
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+
+% ---------------------------------------------------------------------
+%  Configuración de Beamer
+% ---------------------------------------------------------------------
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=0.6cm, text margin right=0.6cm}
+\setbeamercolor{normal text}{fg=iubnavy, bg=iubwhite}
+\setbeamercolor{background canvas}{bg=iubwhite}
+\setbeamercolor{structure}{fg=iubnavy}
+\setbeamercolor{alerted text}{fg=iuborange}
+\setbeamertemplate{itemize item}{\textcolor{iubblue}{\small$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\textcolor{iuborange}{\scriptsize$\bullet$}}
+\setbeamertemplate{enumerate item}{\textcolor{iubblue}{\bfseries\insertenumlabel.}}
+\setbeamertemplate{frametitle}{}         % el título vive en el headline
+
+% Parches: el headline se pre-mide antes del primer frame
+\makeatletter
+\providecommand{\insertframetitle}{}
+\providecommand{\insertframesubtitle}{}
+\makeatother
+
+% ---------- Encabezado ----------
+\setbeamertemplate{headline}{%
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,1.05cm);
+    \fill[iubnavy] (0,0) rectangle (\paperwidth,1.05cm);
+    \fill[iubyellow] (0,0) rectangle (\paperwidth,0.05cm);
+    \node[anchor=west, text=iubyellow, font=\large\bfseries]
+      at (0.6cm,0.55cm) {\strut\insertframetitle};
+    \node[anchor=east, text=iubyellow, font=\footnotesize\bfseries]
+      at ([xshift=-0.6cm]\paperwidth,0.55cm) {IUB};
+  \end{tikzpicture}}
+
+% ---------- Pie de página ----------
+\setbeamertemplate{footline}{%
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,0.55cm);
+    \fill[iubnavy] (0,0) rectangle (\paperwidth,0.55cm);
+    \node[anchor=west, text=iubyellow, font=\tiny]
+      at (0.6cm,0.275cm) {IEL04 \textperiodcentered{} Circuitos Eléctricos I};
+    \node[anchor=center, text=iubyellow, font=\tiny]
+      at (0.66\paperwidth,0.275cm) {Ing. Sergio Martinez Castilla};
+    \node[anchor=east, text=iubyellow, font=\tiny\bfseries]
+      at ([xshift=-0.6cm]\paperwidth,0.275cm)
+      {Semana 12 \quad \insertframenumber\,/\,\inserttotalframenumber};
+  \end{tikzpicture}}
+
+% ---------------------------------------------------------------------
+%  Cajas tcolorbox (texto blanco sobre la paleta complementaria)
+%  \begin{caja}[opciones]{color}{título} ... \end{caja}
+%  \begin{cajaplana}[opciones]{color} ... \end{cajaplana}
+%  \begin{cardB|cardO|cardG|cardN}[opciones]{título} ... \end{cardX}
+% ---------------------------------------------------------------------
+\tcbset{
+  iubbase/.style={enhanced, arc=1.5mm, boxrule=0pt, coltext=white, coltitle=white,
+    fonttitle=\bfseries\footnotesize, fontupper=\footnotesize,
+    left=1.8mm, right=1.8mm, top=1mm, bottom=1.2mm,
+    toptitle=0.6mm, bottomtitle=0.6mm, halign=left,
+    before upper={\hyphenpenalty=5000\setbeamercolor{itemize item}{fg=white}%
+                  \setbeamercolor{itemize/enumerate body}{fg=white}%
+                  \setbeamercolor{itemize/enumerate subbody}{fg=white}%
+                  \setbeamercolor{itemize subitem}{fg=white}%
+                  \setbeamercolor{enumerate item}{fg=white}%
+                  \setbeamertemplate{itemize item}{\textcolor{white}{\small$\blacktriangleright$}}}}
+}
+\newtcolorbox{caja}[3][]{iubbase, colback=#2, colframe=#2,
+  colbacktitle=#2!78!iubnavy, title={#3}, #1}
+\newtcolorbox{cajaplana}[2][]{iubbase, colback=#2, colframe=#2, #1}
+\newtcolorbox{cardB}[2][]{iubbase, colback=iubblue,   colframe=iubblue,
+  colbacktitle=iubblue!78!iubnavy,   title={#2}, #1}
+\newtcolorbox{cardO}[2][]{iubbase, colback=iuborange, colframe=iuborange,
+  colbacktitle=iuborange!78!iubnavy, title={#2}, #1}
+\newtcolorbox{cardG}[2][]{iubbase, colback=iubgreen,  colframe=iubgreen,
+  colbacktitle=iubgreen!78!iubnavy,  title={#2}, #1}
+\newtcolorbox{cardN}[2][]{iubbase, colback=iubnavy,   colframe=iubnavy,
+  colbacktitle=iubnavy, coltitle=iubyellow, title={#2}, #1}
+
+% Celda de encabezado de tabla (texto amarillo sobre \rowcolor{iubnavy}) y código en línea
+\newcommand{\hd}[1]{\textcolor{iubyellow}{\bfseries #1}}
+\newcommand{\thc}[1]{\textcolor{iubyellow}{\textbf{#1}}}
+\newcommand{\cod}[1]{\texttt{\textbf{#1}}}
+
+% ---------------------------------------------------------------------
+%  Código sobre fondo oscuro:
+%  \begin{codebox}[listing options app={language=Python,firstnumber=1}]{título}
+% ---------------------------------------------------------------------
+\lstdefinestyle{iubcode}{
+  basicstyle=\ttfamily\fontsize{7}{8.4}\selectfont\color{white},
+  keywordstyle=\color{iubblue}\bfseries,
+  commentstyle=\color{iubgreen!55!white}\itshape,
+  stringstyle=\color{iuborange!80!white},
+  numbers=left, numberstyle=\tiny\color{iubyellow}, numbersep=6pt,
+  showstringspaces=false, breaklines=true, tabsize=4,
+  columns=fullflexible, keepspaces=true, upquote=true}
+\newtcblisting{codebox}[2][]{enhanced, listing only, colback=iubnavy,
+  colframe=iubnavy, colbacktitle=iubnavy!85!white, coltitle=iubyellow,
+  fonttitle=\bfseries\scriptsize, title={#2}, arc=1.5mm, boxrule=0pt,
+  left=6mm, right=1mm, top=0.5mm, bottom=0.5mm, toptitle=0.5mm, bottomtitle=0.5mm,
+  listing options={style=iubcode}, #1}
+
+% ---------------------------------------------------------------------
+%  Estilos TikZ
+% ---------------------------------------------------------------------
+\tikzset{
+  bloque/.style={rectangle, rounded corners=2mm, fill=#1, text=white,
+    font=\scriptsize\bfseries, align=center, minimum height=1.1cm,
+    text width=1.8cm, inner sep=1.2mm},
+  flecha/.style={-{Stealth[length=2.2mm]}, line width=1pt, draw=iubnavy},
+  arr/.style={flecha},
+  term/.style={rectangle, draw=#1, line width=1.2pt, fill=white,
+    text=iubnavy, font=\tiny\bfseries, minimum width=1.05cm,
+    minimum height=0.5cm, inner sep=1pt},
+  nodo/.style={rectangle, rounded corners=1mm, fill=#1, text=white,
+    font=\scriptsize\bfseries, minimum size=0.75cm, align=center},
+  cable/.style={line width=1.4pt, draw=#1},
+  box/.style={rectangle, rounded corners=1.5mm, draw=none, text=white,
+    font=\scriptsize\bfseries, align=center, minimum height=0.8cm, inner sep=3pt},
+  bB/.style={box, fill=iubblue}, bO/.style={box, fill=iuborange},
+  bG/.style={box, fill=iubgreen}, bN/.style={box, fill=iubnavy},
+  dec/.style={diamond, aspect=1.9, fill=iuborange, text=white,
+    font=\scriptsize\bfseries, align=center, inner sep=1pt},
+  tag/.style={fill=#1, text=white, font=\scriptsize\bfseries, rounded corners=1mm,
+    minimum width=0.7cm, anchor=north west},
+}
+
+% ---------------------------------------------------------------------
+%  Diapositiva separadora de bloque
+%  #1 número  #2 título  #3 duración  #4 color
+% ---------------------------------------------------------------------
+\newcommand{\bloque}[4]{%
+\section{#2}
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[#4] (current page.north west) rectangle
+        ([xshift=5.2cm]current page.south west);
+  \node[anchor=north west, text=white, font=\bfseries\large]
+    at ([xshift=0.8cm,yshift=-2.2cm]current page.north west) {BLOQUE};
+  \node[anchor=north west, text=white, font=\bfseries\fontsize{72}{72}\selectfont]
+    at ([xshift=0.65cm,yshift=-2.9cm]current page.north west) {#1};
+  \node[anchor=north west, text=iubnavy, font=\bfseries\LARGE,
+        text width=9.4cm, align=left]
+    at ([xshift=6.2cm,yshift=-2.8cm]current page.north west)
+    {\hyphenpenalty=10000\exhyphenpenalty=10000 #2};
+  \node[anchor=north west, fill=iubnavy, text=iubyellow, rounded corners=1.5mm,
+        font=\small\bfseries, inner sep=2mm]
+    at ([xshift=6.2cm,yshift=-6.0cm]current page.north west) {Duración: #3};
+  \fill[iubnavy] ([xshift=5.2cm]current page.south west) rectangle
+        ([yshift=0.35cm]current page.south east);
+  \fill[iubyellow] ([xshift=5.2cm,yshift=0.35cm]current page.south west)
+        rectangle ([yshift=0.42cm]current page.south east);
+  \node[anchor=north east, text=iubnavy, font=\small\bfseries]
+    at ([xshift=-0.6cm,yshift=-0.5cm]current page.north east) {IUB · IEL04};
+\end{tikzpicture}
+\end{frame}}
+
+% =====================================================================
+\begin{document}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+%  PORTADA
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  % Panel institucional
+  \fill[iubnavy] (current page.north west) rectangle
+        ([xshift=5.6cm]current page.south west);
+  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{54}{54}\selectfont]
+    at ([xshift=0.7cm,yshift=-1.0cm]current page.north west) {IUB};
+  \node[anchor=north west, text=white, font=\footnotesize, text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=-3.0cm]current page.north west)
+    {Institución Universitaria de Barranquilla};
+  \draw[iubyellow, line width=1.2pt]
+    ([xshift=0.75cm,yshift=-4.25cm]current page.north west) --
+    ([xshift=2.6cm,yshift=-4.25cm]current page.north west);
+  \node[anchor=north west, text=iubyellow, font=\scriptsize\bfseries,
+        text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=-4.5cm]current page.north west)
+    {Tecnología en Gestión de Sistemas Eléctricos};
+  \node[anchor=south west, text=white, font=\scriptsize, text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=0.9cm]current page.south west)
+    {Ing. Sergio Martinez Castilla\\[1pt]\textcolor{iubyellow}{\tiny smartinezc@unibarranquilla.edu.co}};
+  % Bloque de título
+  \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
+        font=\scriptsize\bfseries, inner sep=2mm]
+    at ([xshift=6.4cm,yshift=-1.0cm]current page.north west)
+    {IEL04 \textperiodcentered{} Semana 12 de 14 \textperiodcentered{} Corte evaluativo 3};
+  \node[anchor=north west, text=iubnavy, font=\small, text width=9.0cm, align=left] (a)
+    at ([xshift=6.4cm,yshift=-1.9cm]current page.north west)
+    {Circuitos Eléctricos I};
+  \node[anchor=north west, text=iubnavy, font=\bfseries\fontsize{13}{16}\selectfont,
+        text width=9.0cm, align=left] (t)
+    at ([yshift=-0.35cm]a.south west)
+    {\hyphenpenalty=10000 El circuito RLC en paralelo: susceptancias opuestas, ley de corrientes de Kirchhoff, circuito tanque y corrección del factor de potencia};
+  % Franjas de la paleta complementaria
+  \fill[iubblue]   ([xshift=6.4cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \fill[iuborange] ([xshift=8.1cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \fill[iubgreen]  ([xshift=9.8cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \node[anchor=north west, text=iubnavy, font=\scriptsize]
+    at ([xshift=6.4cm,yshift=0.95cm]current page.south west)
+    {Sesión teórico-práctica \textperiodcentered{} 240 min};
+\end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Punto de partida de la sesión}
+\begin{columns}[T,onlytextwidth]
+  \column{0.34\textwidth}
+\begin{caja}[height=5.9cm]{iubblue}{Continuidad}
+\scriptsize \begin{itemize}\setlength{\itemsep}{2pt}
+  \item Semana 11: Circuito RLC en serie
+  \item \textbf{Semana 12: Circuito RLC en paralelo: análisis y Ley de Corrientes de Kirchhoff}
+  \item Semana 13: Cálculo y medición de parámetros en circuitos RLC serie
+\end{itemize}
+\end{caja}
+  \column{0.34\textwidth}
+\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}
+\scriptsize \begin{itemize}\setlength{\itemsep}{2pt}
+  \item Calcular admitancias y aplicar la ley de corrientes de Kirchhoff
+  \item Analizar un circuito RLC en serie y su resonancia (semana 11)
+  \item Convertir una bobina real a su modelo en paralelo con R\_p
+  \item Calcular potencia activa, reactiva y aparente y factor de potencia
+\end{itemize}
+\end{caja}
+  \column{0.29\textwidth}
+\begin{caja}[height=5.9cm]{iubgreen}{Competencia}
+\scriptsize \textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Resultados de aprendizaje}
+\begin{columns}[c,onlytextwidth]
+  \column{0.45\textwidth}
+\begin{caja}{iubnavy}{IEL04-RA4}
+\footnotesize Calcular un circuito resistivo, inductivo, capacitivo y RLC, sea en serie o paralelo.
+\end{caja}
+\vspace{1mm}
+\begin{cajaplana}{iubblue}
+\scriptsize \textbf{CE1.} Identificar los tipos de resistores, inductores y capacitores.\\[2pt]
+\textbf{CE2.} Realizar mediciones en un circuito resistivo, inductivo y capacitivo.\\[2pt]
+\textbf{CE3.} Realizar mediciones en un circuito RLC.
+\end{cajaplana}
+  \column{0.52\textwidth}
+\centering
+\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
+\begin{tikzpicture}
+  \node[box, fill=iubblue, text width=4.9cm, align=left, font=\tiny, anchor=west] (r0) at (1.25,0.00) {Identificar y verificar el resistor, la bobina y el condensador de un circuito RLC en paralelo antes del montaje.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Aplicar};
+  \node[box, fill=iuborange, text width=4.9cm, align=left, font=\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular la admitancia, la impedancia y el carácter de un circuito RLC en paralelo a una frecuencia dada.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Aplicar};
+  \node[box, fill=iubgreen, text width=4.9cm, align=left, font=\tiny, anchor=west] (r2) at (1.25,-2.90) {Analizar las corrientes de un circuito RLC en paralelo con la ley de corrientes de Kirchhoff y explicar la resonancia en paralelo y el circuito tanque real.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Analizar};
+  \node[box, fill=iubblue, text width=4.9cm, align=left, font=\tiny, anchor=west] (r3) at (1.25,-4.35) {Medir las corrientes de rama y la corriente total de un RLC en paralelo a varias frecuencias y verificar la resonancia.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};
+  \draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);
+  \draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);
+  \draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);
+\end{tikzpicture}
+\end{adjustbox}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ruta de la sesión \textperiodcentered{} 240 minutos}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,0.00) {1};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,0.00) {Del RLC en serie al RLC en paralelo: tensión común y corrientes reactivas opuestas};
+  \fill[iubblue] (8.3,-0.20) rectangle ++(2.04,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (10.44,0.00) {20 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-0.76) {2};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-0.76) {Y = G + j(BC \ensuremath{-} BL), carácter inductivo o capacitivo según la frecuencia};
+  \fill[iuborange] (8.3,-0.96) rectangle ++(3.07,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.47,-0.76) {30 min};
+  \node[circle, fill=iubgreen, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-1.51) {3};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-1.51) {IT = IR + j(IC \ensuremath{-} IL): corrientes reactivas en oposición y mayores que la total};
+  \fill[iubgreen] (8.3,-1.71) rectangle ++(3.58,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.98,-1.51) {35 min};
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-2.27) {4};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-2.27) {fr, Z = R, Q = R/XL, ancho de banda y curva de impedancia};
+  \fill[iubblue] (8.3,-2.47) rectangle ++(3.58,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.98,-2.27) {35 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-3.03) {5};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-3.03) {Equivalente RLC en paralelo, Rp(eq) = RW(Q\texttwosuperior{} + 1) y desplazamiento de la resonancia};
+  \fill[iuborange] (8.3,-3.23) rectangle ++(3.07,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.47,-3.03) {30 min};
+  \node[circle, fill=iubgreen, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-3.79) {6};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-3.79) {Compensar la corriente reactiva de una carga inductiva y dimensionar el condensador};
+  \fill[iubgreen] (8.3,-3.99) rectangle ++(3.07,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.47,-3.79) {30 min};
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-4.54) {7};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-4.54) {Con el kit: 4.7 k\ensuremath{\Omega}, bobina de 10.4 mH y condensador de 97.8 nF a 3 kHz, fr y 8 kHz};
+  \fill[iubblue] (8.3,-4.74) rectangle ++(4.60,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (13.00,-4.54) {45 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-5.30) {8};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-5.30) {Síntesis, cierre actitudinal y bibliografía};
+  \fill[iuborange] (8.3,-5.50) rectangle ++(1.53,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (9.93,-5.30) {15 min};
+  \draw[iubnavy, line width=0.6pt] (8.3,0.45) -- (8.3,-5.70);
+\end{tikzpicture}
+\end{frame}
+
+% =====================================================================
+\bloque{01}{Del RLC en serie al RLC en paralelo: tensión común y corrientes reactivas opuestas}{20 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Tres elementos en paralelo: cuando las corrientes se oponen}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item En la semana 11, el resistor, la bobina y el condensador compartían la corriente, y sus tensiones reactivas, opuestas, se restaban.
+  \item El circuito RLC en paralelo aparece en tres contextos que el técnico en sistemas eléctricos encuentra a menudo.
+  \item Cuando son iguales, en la resonancia, se cancelan y la fuente solo entrega la corriente del resistor: la corriente total es mínima y la impedancia máxima.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{cardO}{Nota pedagógica}
+\footnotesize Conviene tener a la vista la tabla de la semana 11 al estudiar esta sesión: casi cada resultado del RLC en paralelo es el del RLC en serie con tensión y corriente, impedancia y admitancia, y mínimo y máximo intercambiados.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Relaciones de fase en el circuito RLC en paralelo}
+\centering
+\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
+\begin{tikzpicture}
+  \node[bG, align=center, font=\scriptsize, text width=2.10cm] (n0) at (1.17,2.80) {Tensión común VS};
+  \node[bB, align=center, font=\scriptsize, text width=2.07cm] (n1) at (4.65,2.80) {IR en fase con VS};
+  \node[bB, align=center, font=\scriptsize, text width=1.90cm] (n2) at (4.65,0.81) {IL retrasada 90°};
+  \node[bB, align=center, font=\scriptsize, text width=2.07cm] (n3) at (4.65,4.79) {IC adelantada 90°};
+  \node[bO, align=center, font=\scriptsize, text width=2.24cm] (n4) at (8.19,2.80) {LCK: IT = IR + j(IC \ensuremath{-} IL)};
+  \node[bG, align=center, font=\scriptsize, text width=2.44cm] (n5) at (11.92,2.80) {IT mínima en resonancia};
+  \draw[flecha] (n0) -- (n1);
+  \draw[flecha] (n0) -- (n2);
+  \draw[flecha] (n0) -- (n3);
+  \draw[flecha] (n1) -- (n4);
+  \draw[flecha] (n2) -- (n4);
+  \draw[flecha] (n3) -- (n4);
+  \draw[flecha] (n4) -- (n5);
+\end{tikzpicture}
+\end{adjustbox}
+
+\vspace{1mm}{\scriptsize Relaciones de fase en el circuito RLC en paralelo: de la tensión común a la corriente total\par}
+\end{frame}
+
+% =====================================================================
+\bloque{02}{Y = G + j(BC \ensuremath{-} BL), carácter inductivo o capacitivo según la frecuencia}{30 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Admitancia e impedancia del circuito RLC en paralelo}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item En paralelo, como se vio en las semanas 6 y 8, conviene trabajar con admitancias: se suman directamente, igual que las impedancias en serie.
+  \item Lejos de la resonancia, una de las dos ramas reactivas deriva casi toda la corriente y la impedancia cae a unos cientos de ohmios.
+  \item Si el circuito lleva una bobina real, su resistencia de devanado no está en paralelo sino en serie con la inductancia, dentro de la misma rama.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}\mathbf{Y}= G + j(B_C - B_L) \\ = \sqrt{G^{2} + (B_C - B_L)^{2}}\ \angle \tan^{-1}\!\left(\frac{B_C - B_L}{G}\right) \\ \mathbf{Z} = \frac{1}{\mathbf{Y}}\end{gathered}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Admitancia e impedancia de un RLC en paralelo ideal}}
+\centering\tiny
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{f (Hz)} & \hd{G (mS)} & \hd{BC (mS)} & \hd{BL (mS)} & \hd{Y (mS)} & \hd{Z (\ensuremath{\Omega})} & \hd{Ángulo de Z (°)} & \hd{Carácter}\\
+  2000 & 1.00 & 1.26 & 7.96 & 6.78 & 147.6 & +81.5 & inductivo\\
+  4000 & 1.00 & 2.51 & 3.98 & 1.78 & 563.5 & +55.7 & inductivo\\
+  5033 (fr) & 1.00 & 3.16 & 3.16 & 1.00 & 1000 & 0.0 & resistivo\\
+  6000 & 1.00 & 3.77 & 2.65 & 1.50 & 666.9 & \ensuremath{-}48.2 & capacitivo\\
+  10 000 & 1.00 & 6.28 & 1.59 & 4.80 & 208.5 & \ensuremath{-}78.0 & capacitivo\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Admitancia e impedancia de un RLC en paralelo ideal (R = 1 k\ensuremath{\Omega}, L = 10 mH, C = 0.1 µF) a varias frecuencias\par}
+\end{frame}
+
+% =====================================================================
+\bloque{03}{IT = IR + j(IC \ensuremath{-} IL): corrientes reactivas en oposición y mayores que la total}{35 min}{iubgreen}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ley de corrientes de Kirchhoff en el circuito RLC}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item La ley de corrientes de Kirchhoff se aplica en el nodo donde la corriente de la fuente se divide entre las tres ramas.
+  \item Con $R = 1\ \text{k}\Omega$, $L = 10\ \text{mH}$, $C = 0.1\ \mu\text{F}$ y 2 V eficaces, a 4 kHz: $I_R = 2.00\ \text{mA}$, $I_C = 2 \times 2.513 = 5.03\ \text{mA}$ e $I_L = 2 \times 3.979 = 7.96\ \text{mA}$.
+  \item Las columnas de la tabla también muestran por qué el carácter del circuito cambia con la frecuencia.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}\mathbf{I}_T = I_R + j(I_C - I_L) \\ I_T = \sqrt{I_R^{2} + (I_C - I_L)^{2}} \\ \theta = \tan^{-1}\!\left(\frac{I_C - I_L}{I_R}\right)\end{gathered}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Corrientes de un RLC en paralelo ideal}
+\centering\tiny
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{f (Hz)} & \hd{IR (mA)} & \hd{IL (mA)} & \hd{IC (mA)} & \hd{IT (mA)} & \hd{\ensuremath{\theta} (°)} & \hd{Carácter}\\
+  2000 & 2.00 & 15.92 & 2.51 & 13.56 & \ensuremath{-}81.5 & inductivo\\
+  4000 & 2.00 & 7.96 & 5.03 & 3.55 & \ensuremath{-}55.7 & inductivo\\
+  5033 (fr) & 2.00 & 6.32 & 6.32 & 2.00 & 0.0 & resistivo\\
+  10 000 & 2.00 & 3.18 & 12.57 & 9.59 & +78.0 & capacitivo\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Corrientes de un RLC en paralelo ideal (R = 1 k\ensuremath{\Omega}, L = 10 mH, C = 0.1 µF, VS = 2 V eficaces)\par}
+\end{frame}
+
+% =====================================================================
+\bloque{04}{fr, Z = R, Q = R/XL, ancho de banda y curva de impedancia}{35 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Resonancia en paralelo: impedancia máxima y corriente mínima}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item La resonancia en paralelo ocurre cuando las susceptancias capacitiva e inductiva son iguales, $B_C = B_L$, lo que equivale a $X_L = X_C$.
+  \item Con $L = 10\ \text{mH}$ y $C = 0.1\ \mu\text{F}$, $f_r = 5.03\ \text{kHz}$ y $X_L = 316\ \Omega$.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}f_r = \frac{1}{2\pi\sqrt{LC}} \\ Z_r = R \\ I_{T,min} = \frac{V_S}{R} \\ Q = \frac{R}{X_L} \\ AB = \frac{f_r}{Q}\end{gathered}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Impedancia de un RLC en paralelo (L = 10 mH, C = 0.1 µF)}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.62\textwidth}
+\centering
+\begin{tikzpicture}
+  \begin{semilogxaxis}[width=8.4cm, height=5.7cm, xmin=1000, xmax=25000, ymin=0, ymax=2962.6,
+      xlabel={Frecuencia f (Hz)}, ylabel={Impedancia Z (\ensuremath{\Omega})},
+      label style={font=\scriptsize, text=iubnavy}, tick label style={font=\tiny, text=iubnavy},
+      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},
+      legend style={font=\tiny, fill=white}, legend pos=north east]
+    \addplot[line width=1.4pt, iubblue] coordinates {(1000,65.275) (1044,68.386) (1089.9,71.668) (1137.9,75.135) (1188,78.801) (1240.2,82.681) (1294.8,86.794) (1351.8,91.158) (1411.3,95.798) (1473.4,100.74) (1538.2,106.01) (1605.9,111.64) (1676.6,117.67) (1750.3,124.14) (1827.3,131.11) (1907.8,138.63) (1991.7,146.77) (2079.3,155.62) (2170.8,165.27) (2266.4,175.84) (2366.1,187.46) (2470.2,200.32) (2578.9,214.61) (2692.4,230.6) (2810.8,248.61) (2934.5,269.05) (3063.7,292.44) (3198.5,319.45) (3339.2,350.95) (3486.1,388.06) (3639.5,432.26) (3799.7,485.39) (3966.9,549.71) (4141.4,627.49) (4323.7,719.81) (4513.9,823.2) (4712.5,923.2) (4919.9,989.84) (5136.4,991.82) (5362.4,928.05) (5598.4,828.97) (5844.7,725.26) (6101.9,632.18) (6370.4,553.61) (6650.7,488.6) (6943.4,434.92) (7248.9,390.29) (7567.8,352.83) (7900.9,321.05) (8248.5,293.82) (8611.5,270.25) (8990.4,249.66) (9386,231.53) (9799,215.44) (10230,201.06) (10680,188.13) (11150,176.44) (11641,165.82) (12153,156.13) (12688,147.24) (13246,139.06) (13829,131.51) (14438,124.51) (15073,118.01) (15736,111.96) (16429,106.3) (17151,101.02) (17906,96.061) (18694,91.405) (19517,87.026) (20375,82.9) (21272,79.008) (22208,75.331) (23185,71.853) (24205,68.561) (25000,66.206)};
+    \addlegendentry{R = 1 k\ensuremath{\Omega} (Q = 3.16)}
+    \addplot[line width=1.4pt, iuborange] coordinates {(1000,65.399) (1044,68.528) (1089.9,71.832) (1137.9,75.324) (1188,79.019) (1240.2,82.933) (1294.8,87.086) (1351.8,91.497) (1411.3,96.191) (1473.4,101.19) (1538.2,106.54) (1605.9,112.26) (1676.6,118.4) (1750.3,125) (1827.3,132.12) (1907.8,139.83) (1991.7,148.2) (2079.3,157.32) (2170.8,167.31) (2266.4,178.3) (2366.1,190.46) (2470.2,203.99) (2578.9,219.14) (2692.4,236.25) (2810.8,255.73) (2934.5,278.15) (3063.7,304.24) (3198.5,335.01) (3339.2,371.9) (3486.1,416.97) (3639.5,473.35) (3799.7,545.91) (3966.9,642.77) (4141.4,778.31) (4323.7,980.05) (4513.9,1305.5) (4712.5,1875.1) (4919.9,2755.1) (5136.4,2798.6) (5362.4,1916.8) (5598.4,1328.8) (5844.7,993.93) (6101.9,787.3) (6370.4,649.03) (6650.7,550.49) (6943.4,476.85) (7248.9,419.73) (7567.8,374.13) (7900.9,336.86) (8248.5,305.79) (8611.5,279.48) (8990.4,256.88) (9386,237.25) (9799,220.03) (10230,204.77) (10680,191.16) (11150,178.94) (11641,167.89) (12153,157.85) (12688,148.68) (13246,140.27) (13829,132.53) (14438,125.38) (15073,118.75) (15736,112.59) (16429,106.84) (17151,101.48) (17906,96.457) (18694,91.747) (19517,87.32) (20375,83.155) (21272,79.228) (22208,75.521) (23185,72.019) (24205,68.705) (25000,66.335)};
+    \addlegendentry{R = 3 k\ensuremath{\Omega} (Q = 9.49)}
+    \addplot[line width=1pt, dashed, iubnavy!70] coordinates {(5033,0) (5033,2962.6)};
+    \addlegendentry{fr = 5.03 kHz}
+    \addplot[line width=1pt, dashed, iubnavy!70] coordinates {(1000,707) (25000,707)};
+    \addlegendentry{0.707 · Zmax (R = 1 k\ensuremath{\Omega})}
+  \end{semilogxaxis}
+\end{tikzpicture}
+  \column{0.35\textwidth}
+\begin{caja}{iubblue}{Lectura de la gráfica}
+\footnotesize Y, a la inversa, un tanque en serie con una línea bloquea precisamente su frecuencia de resonancia, que es el principio de los filtros de rechazo de banda.
+\end{caja}
+\end{columns}
+\end{frame}
+
+% =====================================================================
+\bloque{05}{Equivalente RLC en paralelo, Rp(eq) = RW(Q\texttwosuperior{} + 1) y desplazamiento de la resonancia}{30 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{El circuito tanque con bobina real}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item El circuito tanque ideal supone una bobina sin resistencia.
+  \item La resistencia de devanado tiene además un efecto sobre la propia frecuencia de resonancia.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}Q = \frac{X_L}{R_W} \\ L_{eq} = L\left(\frac{Q^{2} + 1}{Q^{2}}\right) \\ R_{p(eq)} = R_W\,(Q^{2} + 1)\end{gathered}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Efecto de la resistencia de devanado en un tanque con L}}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{RW (\ensuremath{\Omega})} & \hd{Q = XL/RW} & \hd{Rp(eq) = RW(Q² + 1) (\ensuremath{\Omega})} & \hd{fr con corriente en fase (Hz)} & \hd{Desplazamiento}\\
+  24.6 (L3 del kit) & 13.3 & 4349 & 4976 & \ensuremath{-}0.3 \%\\
+  50 & 6.52 & 2176 & 4931 & \ensuremath{-}1.2 \%\\
+  100 & 3.26 & 1163 & 4750 & \ensuremath{-}4.8 \%\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Efecto de la resistencia de devanado en un tanque con L = 10.4 mH y C = 97.8 nF (resonancia ideal: 4990 Hz, XL = 326.1 \ensuremath{\Omega})\par}
+\end{frame}
+
+% =====================================================================
+\bloque{06}{Compensar la corriente reactiva de una carga inductiva y dimensionar el condensador}{30 min}{iubgreen}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Corrección del factor de potencia con un condensador}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item La aplicación más importante del RLC en paralelo en los sistemas eléctricos es la \textbf{corrección del factor de potencia}.
+  \item El condensador no cambia la potencia real de la carga, porque no disipa energía; solo reduce la potencia reactiva que la red debe suministrar.
+  \item El ángulo inicial es $\cos^{-1}0.70 = 45.6^\circ$, con $\tan\theta_1 = 1.020$; el final, $\cos^{-1}0.95 = 18.2^\circ$, con $\tan\theta_2 = 0.329$.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}Q_C = P\,(\tan\theta_1 - \tan\theta_2) \\ C = \frac{Q_C}{2\pi f V^{2}}\end{gathered}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Corrección del factor de potencia de una carga de 1.2 kW}}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Magnitud} & \hd{Sin condensador} & \hd{Con 153 µF en paralelo} & \hd{Cambio}\\
+  Potencia real P & 1200 W & 1200 W & sin cambio\\
+  Potencia reactiva Q & 1224 VAR & 394 VAR & \ensuremath{-}68 \%\\
+  Potencia aparente S & 1714 VA & 1263 VA & \ensuremath{-}26 \%\\
+  Factor de potencia & 0.70 en atraso & 0.95 en atraso & mejora\\
+  Corriente de línea & 14.3 A & 10.5 A & \ensuremath{-}26 \%\\
+  Corriente del condensador & — & 6.9 A & —\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Corrección del factor de potencia de una carga de 1.2 kW a 120 V y 60 Hz\par}
+\end{frame}
+
+% =====================================================================
+\bloque{07}{Con el kit: 4.7 k\ensuremath{\Omega}, bobina de 10.4 mH y condensador de 97.8 nF a 3 kHz, fr y 8 kHz}{45 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Medición de un circuito RLC en paralelo antes, en y después}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Los tres se verifican antes del montaje con el ohmímetro y el medidor LCR, lo que cubre el criterio CE1.
+  \item Con la bobina real, la corriente total se calcula sumando las admitancias de las tres ramas en forma rectangular.
+  \item La comparación con el modelo ideal es instructiva.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle I_T = V_S\sqrt{\left(\frac{1}{R} + \frac{R_W}{R_W^{2} + X_L^{2}}\right)^{2} + \left(2\pi f C - \frac{X_L}{R_W^{2} + X_L^{2}}\right)^{2}}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Corriente total prevista del RLC en paralelo con la bobina}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.62\textwidth}
+\centering
+\begin{tikzpicture}
+  \begin{semilogxaxis}[width=8.4cm, height=5.7cm, xmin=2000, xmax=15000, ymin=0, ymax=17.334,
+      xlabel={Frecuencia f (Hz)}, ylabel={Corriente total IT (mA)},
+      label style={font=\scriptsize, text=iubnavy}, tick label style={font=\tiny, text=iubnavy},
+      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},
+      legend style={font=\tiny, fill=white}, legend pos=north east]
+    \addplot[line width=1.4pt, iubblue] coordinates {(2000,12.732) (2054.6,12.276) (2110.8,11.828) (2168.5,11.387) (2227.7,10.954) (2288.6,10.527) (2351.1,10.107) (2415.3,9.6931) (2481.3,9.2857) (2549.1,8.8845) (2618.8,8.4891) (2690.3,8.0993) (2763.8,7.715) (2839.3,7.3358) (2916.9,6.9617) (2996.6,6.5923) (3078.5,6.2276) (3162.6,5.8674) (3249,5.5114) (3337.7,5.1596) (3428.9,4.8118) (3522.6,4.468) (3618.9,4.1281) (3717.7,3.7922) (3819.3,3.4603) (3923.7,3.1328) (4030.9,2.8101) (4141,2.4931) (4254.1,2.1834) (4370.4,1.8834) (4489.8,1.5977) (4612.4,1.3344) (4738.5,1.1088) (4867.9,0.9474) (5000.9,0.88572) (5137.6,0.94341) (5277.9,1.1021) (5422.1,1.3264) (5570.3,1.5894) (5722.5,1.8754) (5878.8,2.1761) (6039.4,2.4869) (6204.4,2.8053) (6374,3.1296) (6548.1,3.4591) (6727,3.7932) (6910.8,4.1317) (7099.6,4.4744) (7293.6,4.8214) (7492.9,5.1727) (7697.6,5.5285) (7907.9,5.8887) (8124,6.2537) (8345.9,6.6236) (8574,6.9987) (8808.2,7.3791) (9048.9,7.7651) (9296.1,8.1569) (9550.1,8.5549) (9811,8.9592) (10079,9.3702) (10354,9.788) (10637,10.213) (10928,10.646) (11227,11.086) (11533,11.535) (11848,11.992) (12172,12.457) (12505,12.932) (12846,13.417) (13197,13.911) (13558,14.415) (13928,14.93) (14309,15.455) (14700,15.992) (15000,16.403)};
+    \addlegendentry{IT prevista}
+    \addplot[line width=1pt, dashed, iubnavy!70] coordinates {(4976,0) (4976,17.334)};
+    \addlegendentry{fr \ensuremath{\approx} 4.98 kHz}
+  \end{semilogxaxis}
+\end{tikzpicture}
+  \column{0.35\textwidth}
+\begin{caja}{iubblue}{Lectura de la gráfica}
+\footnotesize Es la corriente de circulación del tanque, que no pasa por la fuente.
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{RLC en paralelo del kit con VS = 2.00 V eficaces}
+\centering\tiny
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Magnitud} & \hd{3 kHz calc.} & \hd{3 kHz med.} & \hd{fr calc. (4.98 kHz)} & \hd{fr med. (4.96 kHz)} & \hd{8 kHz calc.} & \hd{8 kHz med.}\\
+  IR (mA) & 0.43 & 0.43 & 0.43 & 0.43 & 0.43 & 0.43\\
+  Ibob (mA) & 10.12 & 10.1 & 6.13 & 6.10 & 3.82 & 3.81\\
+  IC (mA) & 3.69 & 3.70 & 6.12 & 6.08 & 9.83 & 9.82\\
+  IT (mA) & 6.58 & 6.57 & 0.885 & 0.89 & 6.05 & 6.04\\
+  Ángulo de IT (°) & \ensuremath{-}75.2 & — & \ensuremath{\approx} 0 & — & +84.3 & —\\
+  Carácter & inductivo & — & resistivo & — & capacitivo & —\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize RLC en paralelo del kit con VS = 2.00 V eficaces: cálculo con la bobina real y medición (lecturas de ejemplo)\par}
+\end{frame}
+
+% =====================================================================
+\bloque{08}{Síntesis, cierre actitudinal y bibliografía}{15 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Síntesis de la sesión}
+\begin{columns}[T,onlytextwidth]
+  \column{0.32\textwidth}
+\begin{cardB}{Admitancia e impedancia del circuito RLC}
+\scriptsize Y = G + j(BC \ensuremath{-} BL), carácter inductivo o capacitivo según la frecuencia
+\end{cardB}
+  \column{0.32\textwidth}
+\begin{cardO}{Ley de corrientes de Kirchhoff}
+\scriptsize IT = IR + j(IC \ensuremath{-} IL): corrientes reactivas en oposición y mayores que la total
+\end{cardO}
+  \column{0.32\textwidth}
+\begin{cardG}{Resonancia en paralelo}
+\scriptsize fr, Z = R, Q = R/XL, ancho de banda y curva de impedancia
+\end{cardG}
+\end{columns}
+\vspace{2mm}
+\begin{columns}[T,onlytextwidth]
+  \column{0.32\textwidth}
+\begin{cardB}{El circuito tanque con bobina real}
+\scriptsize Equivalente RLC en paralelo, Rp(eq) = RW(Q² + 1) y desplazamiento de la resonancia
+\end{cardB}
+  \column{0.32\textwidth}
+\begin{cardO}{Corrección del factor de potencia}
+\scriptsize Compensar la corriente reactiva de una carga inductiva y dimensionar el condensador
+\end{cardO}
+  \column{0.32\textwidth}
+\begin{cardG}{Medición de un circuito RLC en paralelo}
+\scriptsize Con el kit: 4.7 k\ensuremath{\Omega}, bobina de 10.4 mH y condensador de 97.8 nF a 3 kHz, fr y 8 kHz
+\end{cardG}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Reflexión para llevar}
+\centering
+\begin{tikzpicture}
+  \node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\normalsize] (c) at (0,0) {\itshape «Instalar un banco de condensadores sin calcular antes la corriente que circulará por él, o sin sus resistencias de descarga, pone en riesgo a quien lo intervenga después: el trabajo técnico responsable piensa también en el compañero del siguiente turno.»};
+  \node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\scriptsize\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};
+\end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Referencias bibliográficas}
+\small
+\begin{itemize}\setlength{\itemsep}{8pt}
+  \item[{$[1]$}] T. L. Floyd, Principios de circuitos eléctricos, 8.\textordfeminine{} ed. México: Pearson Educación, 2007.
+  \item[{$[2]$}] R. L. Boylestad, Introducción al análisis de circuitos, 10.\textordfeminine{} ed. México: Pearson Educación, 2004.
+  \item[{$[3]$}] M. F. P. Deorsola y P. Morcelle del Valle, Circuitos eléctricos. Parte 1, 1.\textordfeminine{} ed. La Plata: Editorial de la Universidad de La Plata, 2017.
+\end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+%  CIERRE
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[iubnavy] (current page.north west) rectangle (current page.south east);
+  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{40}{44}\selectfont]
+    at ([xshift=1.2cm,yshift=-1.6cm]current page.north west) {\textexclamdown{}Gracias!};
+  \node[anchor=north west, text=white, font=\normalsize, text width=14cm, align=left]
+    at ([xshift=1.2cm,yshift=-3.4cm]current page.north west)
+    {IEL04 \textperiodcentered{} Circuitos Eléctricos I};
+  \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
+        font=\small\bfseries, inner sep=2.2mm, text width=11.5cm]
+    at ([xshift=1.2cm,yshift=-4.4cm]current page.north west)
+    {Próxima sesión \textperiodcentered{} Semana 13: Cálculo y medición de parámetros en circuitos RLC serie y paralelo: unidades, simbología y nomenclatura};
+  \node[anchor=south west, text=iubyellow, font=\small, align=left]
+    at ([xshift=1.2cm,yshift=0.9cm]current page.south west)
+    {Ing. Sergio Martinez Castilla \quad · \quad smartinezc@unibarranquilla.edu.co};
+  \fill[iubblue]   ([xshift=1.2cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+  \fill[iuborange] ([xshift=2.9cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+  \fill[iubgreen]  ([xshift=4.6cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+\end{tikzpicture}
+\end{frame}
+
+\end{document}

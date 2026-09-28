@@ -1,0 +1,813 @@
+% =====================================================================
+%  IEL04 - Circuitos Eléctricos I
+%  Semana 1: El condensador: estructura, capacitancia, tipos e identificación de componentes comerciales
+%  Institución Universitaria de Barranquilla (IUB)
+%  Generada por src/presentaciones.py (diseño IUB 5). Compilador: pdfLaTeX (dos pasadas)
+% =====================================================================
+\documentclass[aspectratio=169,11pt,xcolor={table}]{beamer}
+
+% ---------------------------------------------------------------------
+%  Codificación, idioma y tipografía
+% ---------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot,es-noshorthands]{babel}
+\usepackage{avant}                       % Sans geométrica (emula Avenir Next)
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\ttdefault}{pcr}           % Monoespaciada para código
+\usepackage{textcomp}
+
+% ---------------------------------------------------------------------
+%  Paquetes
+% ---------------------------------------------------------------------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={.}, per-mode=symbol}
+\usepackage{booktabs,tabularx,multirow,array}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,shapes.misc,
+  decorations.pathreplacing,fit,backgrounds,babel}
+\usepackage[siunitx,RPvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+% ---------------------------------------------------------------------
+%  Paleta institucional IUB (Manual de Identidad Visual 2025)
+% ---------------------------------------------------------------------
+\definecolor{iubwhite}{HTML}{FFFFFF}
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+
+% ---------------------------------------------------------------------
+%  Configuración de Beamer
+% ---------------------------------------------------------------------
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=0.6cm, text margin right=0.6cm}
+\setbeamercolor{normal text}{fg=iubnavy, bg=iubwhite}
+\setbeamercolor{background canvas}{bg=iubwhite}
+\setbeamercolor{structure}{fg=iubnavy}
+\setbeamercolor{alerted text}{fg=iuborange}
+\setbeamertemplate{itemize item}{\textcolor{iubblue}{\small$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\textcolor{iuborange}{\scriptsize$\bullet$}}
+\setbeamertemplate{enumerate item}{\textcolor{iubblue}{\bfseries\insertenumlabel.}}
+\setbeamertemplate{frametitle}{}         % el título vive en el headline
+
+% Parches: el headline se pre-mide antes del primer frame
+\makeatletter
+\providecommand{\insertframetitle}{}
+\providecommand{\insertframesubtitle}{}
+\makeatother
+
+% ---------- Encabezado ----------
+\setbeamertemplate{headline}{%
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,1.05cm);
+    \fill[iubnavy] (0,0) rectangle (\paperwidth,1.05cm);
+    \fill[iubyellow] (0,0) rectangle (\paperwidth,0.05cm);
+    \node[anchor=west, text=iubyellow, font=\large\bfseries]
+      at (0.6cm,0.55cm) {\strut\insertframetitle};
+    \node[anchor=east, text=iubyellow, font=\footnotesize\bfseries]
+      at ([xshift=-0.6cm]\paperwidth,0.55cm) {IUB};
+  \end{tikzpicture}}
+
+% ---------- Pie de página ----------
+\setbeamertemplate{footline}{%
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,0.55cm);
+    \fill[iubnavy] (0,0) rectangle (\paperwidth,0.55cm);
+    \node[anchor=west, text=iubyellow, font=\tiny]
+      at (0.6cm,0.275cm) {IEL04 \textperiodcentered{} Circuitos Eléctricos I};
+    \node[anchor=center, text=iubyellow, font=\tiny]
+      at (0.66\paperwidth,0.275cm) {Ing. Sergio Martinez Castilla};
+    \node[anchor=east, text=iubyellow, font=\tiny\bfseries]
+      at ([xshift=-0.6cm]\paperwidth,0.275cm)
+      {Semana 1 \quad \insertframenumber\,/\,\inserttotalframenumber};
+  \end{tikzpicture}}
+
+% ---------------------------------------------------------------------
+%  Cajas tcolorbox (texto blanco sobre la paleta complementaria)
+%  \begin{caja}[opciones]{color}{título} ... \end{caja}
+%  \begin{cajaplana}[opciones]{color} ... \end{cajaplana}
+%  \begin{cardB|cardO|cardG|cardN}[opciones]{título} ... \end{cardX}
+% ---------------------------------------------------------------------
+\tcbset{
+  iubbase/.style={enhanced, arc=1.5mm, boxrule=0pt, coltext=white, coltitle=white,
+    fonttitle=\bfseries\footnotesize, fontupper=\footnotesize,
+    left=1.8mm, right=1.8mm, top=1mm, bottom=1.2mm,
+    toptitle=0.6mm, bottomtitle=0.6mm, halign=left,
+    before upper={\hyphenpenalty=5000\setbeamercolor{itemize item}{fg=white}%
+                  \setbeamercolor{itemize/enumerate body}{fg=white}%
+                  \setbeamercolor{itemize/enumerate subbody}{fg=white}%
+                  \setbeamercolor{itemize subitem}{fg=white}%
+                  \setbeamercolor{enumerate item}{fg=white}%
+                  \setbeamertemplate{itemize item}{\textcolor{white}{\small$\blacktriangleright$}}}}
+}
+\newtcolorbox{caja}[3][]{iubbase, colback=#2, colframe=#2,
+  colbacktitle=#2!78!iubnavy, title={#3}, #1}
+\newtcolorbox{cajaplana}[2][]{iubbase, colback=#2, colframe=#2, #1}
+\newtcolorbox{cardB}[2][]{iubbase, colback=iubblue,   colframe=iubblue,
+  colbacktitle=iubblue!78!iubnavy,   title={#2}, #1}
+\newtcolorbox{cardO}[2][]{iubbase, colback=iuborange, colframe=iuborange,
+  colbacktitle=iuborange!78!iubnavy, title={#2}, #1}
+\newtcolorbox{cardG}[2][]{iubbase, colback=iubgreen,  colframe=iubgreen,
+  colbacktitle=iubgreen!78!iubnavy,  title={#2}, #1}
+\newtcolorbox{cardN}[2][]{iubbase, colback=iubnavy,   colframe=iubnavy,
+  colbacktitle=iubnavy, coltitle=iubyellow, title={#2}, #1}
+
+% Celda de encabezado de tabla (texto amarillo sobre \rowcolor{iubnavy}) y código en línea
+\newcommand{\hd}[1]{\textcolor{iubyellow}{\bfseries #1}}
+\newcommand{\thc}[1]{\textcolor{iubyellow}{\textbf{#1}}}
+\newcommand{\cod}[1]{\texttt{\textbf{#1}}}
+
+% ---------------------------------------------------------------------
+%  Código sobre fondo oscuro:
+%  \begin{codebox}[listing options app={language=Python,firstnumber=1}]{título}
+% ---------------------------------------------------------------------
+\lstdefinestyle{iubcode}{
+  basicstyle=\ttfamily\fontsize{7}{8.4}\selectfont\color{white},
+  keywordstyle=\color{iubblue}\bfseries,
+  commentstyle=\color{iubgreen!55!white}\itshape,
+  stringstyle=\color{iuborange!80!white},
+  numbers=left, numberstyle=\tiny\color{iubyellow}, numbersep=6pt,
+  showstringspaces=false, breaklines=true, tabsize=4,
+  columns=fullflexible, keepspaces=true, upquote=true}
+\newtcblisting{codebox}[2][]{enhanced, listing only, colback=iubnavy,
+  colframe=iubnavy, colbacktitle=iubnavy!85!white, coltitle=iubyellow,
+  fonttitle=\bfseries\scriptsize, title={#2}, arc=1.5mm, boxrule=0pt,
+  left=6mm, right=1mm, top=0.5mm, bottom=0.5mm, toptitle=0.5mm, bottomtitle=0.5mm,
+  listing options={style=iubcode}, #1}
+
+% ---------------------------------------------------------------------
+%  Estilos TikZ
+% ---------------------------------------------------------------------
+\tikzset{
+  bloque/.style={rectangle, rounded corners=2mm, fill=#1, text=white,
+    font=\scriptsize\bfseries, align=center, minimum height=1.1cm,
+    text width=1.8cm, inner sep=1.2mm},
+  flecha/.style={-{Stealth[length=2.2mm]}, line width=1pt, draw=iubnavy},
+  arr/.style={flecha},
+  term/.style={rectangle, draw=#1, line width=1.2pt, fill=white,
+    text=iubnavy, font=\tiny\bfseries, minimum width=1.05cm,
+    minimum height=0.5cm, inner sep=1pt},
+  nodo/.style={rectangle, rounded corners=1mm, fill=#1, text=white,
+    font=\scriptsize\bfseries, minimum size=0.75cm, align=center},
+  cable/.style={line width=1.4pt, draw=#1},
+  box/.style={rectangle, rounded corners=1.5mm, draw=none, text=white,
+    font=\scriptsize\bfseries, align=center, minimum height=0.8cm, inner sep=3pt},
+  bB/.style={box, fill=iubblue}, bO/.style={box, fill=iuborange},
+  bG/.style={box, fill=iubgreen}, bN/.style={box, fill=iubnavy},
+  dec/.style={diamond, aspect=1.9, fill=iuborange, text=white,
+    font=\scriptsize\bfseries, align=center, inner sep=1pt},
+  tag/.style={fill=#1, text=white, font=\scriptsize\bfseries, rounded corners=1mm,
+    minimum width=0.7cm, anchor=north west},
+}
+
+% ---------------------------------------------------------------------
+%  Diapositiva separadora de bloque
+%  #1 número  #2 título  #3 duración  #4 color
+% ---------------------------------------------------------------------
+\newcommand{\bloque}[4]{%
+\section{#2}
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[#4] (current page.north west) rectangle
+        ([xshift=5.2cm]current page.south west);
+  \node[anchor=north west, text=white, font=\bfseries\large]
+    at ([xshift=0.8cm,yshift=-2.2cm]current page.north west) {BLOQUE};
+  \node[anchor=north west, text=white, font=\bfseries\fontsize{72}{72}\selectfont]
+    at ([xshift=0.65cm,yshift=-2.9cm]current page.north west) {#1};
+  \node[anchor=north west, text=iubnavy, font=\bfseries\LARGE,
+        text width=9.4cm, align=left]
+    at ([xshift=6.2cm,yshift=-2.8cm]current page.north west)
+    {\hyphenpenalty=10000\exhyphenpenalty=10000 #2};
+  \node[anchor=north west, fill=iubnavy, text=iubyellow, rounded corners=1.5mm,
+        font=\small\bfseries, inner sep=2mm]
+    at ([xshift=6.2cm,yshift=-6.0cm]current page.north west) {Duración: #3};
+  \fill[iubnavy] ([xshift=5.2cm]current page.south west) rectangle
+        ([yshift=0.35cm]current page.south east);
+  \fill[iubyellow] ([xshift=5.2cm,yshift=0.35cm]current page.south west)
+        rectangle ([yshift=0.42cm]current page.south east);
+  \node[anchor=north east, text=iubnavy, font=\small\bfseries]
+    at ([xshift=-0.6cm,yshift=-0.5cm]current page.north east) {IUB · IEL04};
+\end{tikzpicture}
+\end{frame}}
+
+% =====================================================================
+\begin{document}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+%  PORTADA
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  % Panel institucional
+  \fill[iubnavy] (current page.north west) rectangle
+        ([xshift=5.6cm]current page.south west);
+  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{54}{54}\selectfont]
+    at ([xshift=0.7cm,yshift=-1.0cm]current page.north west) {IUB};
+  \node[anchor=north west, text=white, font=\footnotesize, text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=-3.0cm]current page.north west)
+    {Institución Universitaria de Barranquilla};
+  \draw[iubyellow, line width=1.2pt]
+    ([xshift=0.75cm,yshift=-4.25cm]current page.north west) --
+    ([xshift=2.6cm,yshift=-4.25cm]current page.north west);
+  \node[anchor=north west, text=iubyellow, font=\scriptsize\bfseries,
+        text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=-4.5cm]current page.north west)
+    {Tecnología en Gestión de Sistemas Eléctricos};
+  \node[anchor=south west, text=white, font=\scriptsize, text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=0.9cm]current page.south west)
+    {Ing. Sergio Martinez Castilla\\[1pt]\textcolor{iubyellow}{\tiny smartinezc@unibarranquilla.edu.co}};
+  % Bloque de título
+  \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
+        font=\scriptsize\bfseries, inner sep=2mm]
+    at ([xshift=6.4cm,yshift=-1.0cm]current page.north west)
+    {IEL04 \textperiodcentered{} Semana 1 de 14 \textperiodcentered{} Corte evaluativo 1};
+  \node[anchor=north west, text=iubnavy, font=\small, text width=9.0cm, align=left] (a)
+    at ([xshift=6.4cm,yshift=-1.9cm]current page.north west)
+    {Circuitos Eléctricos I};
+  \node[anchor=north west, text=iubnavy, font=\bfseries\fontsize{15}{18}\selectfont,
+        text width=9.0cm, align=left] (t)
+    at ([yshift=-0.35cm]a.south west)
+    {\hyphenpenalty=10000 El condensador: estructura, capacitancia, tipos e identificación de componentes comerciales};
+  % Franjas de la paleta complementaria
+  \fill[iubblue]   ([xshift=6.4cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \fill[iuborange] ([xshift=8.1cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \fill[iubgreen]  ([xshift=9.8cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \node[anchor=north west, text=iubnavy, font=\scriptsize]
+    at ([xshift=6.4cm,yshift=0.95cm]current page.south west)
+    {Sesión teórico-práctica \textperiodcentered{} 240 min};
+\end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Punto de partida de la sesión}
+\begin{columns}[T,onlytextwidth]
+  \column{0.34\textwidth}
+\begin{caja}[height=5.9cm]{iubblue}{Continuidad}
+\scriptsize \begin{itemize}\setlength{\itemsep}{2pt}
+  \item \textbf{Semana 1: Condensadores: estructura, comportamiento interno, identificación y tipos}
+  \item Semana 2: Bobinas o inductores
+\end{itemize}
+\end{caja}
+  \column{0.34\textwidth}
+\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}
+\scriptsize \begin{itemize}\setlength{\itemsep}{2pt}
+  \item Definir carga eléctrica, diferencia de potencial
+  \item Aplicar la ley de Ohm a un resistor y calcular potencia en cd
+  \item Usar notación científica y de ingeniería con prefijos métricos
+  \item Leer el código de colores y la tolerancia de un resistor
+\end{itemize}
+\end{caja}
+  \column{0.29\textwidth}
+\begin{caja}[height=5.9cm]{iubgreen}{Competencia}
+\scriptsize \textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Resultados de aprendizaje}
+\begin{columns}[c,onlytextwidth]
+  \column{0.45\textwidth}
+\begin{caja}{iubnavy}{IEL04-RA1}
+\footnotesize Calcular un circuito capacitivo, inductivo y LC, sea en serie o paralelo.
+\end{caja}
+\vspace{1mm}
+\begin{cajaplana}{iubblue}
+\scriptsize \textbf{CE1.} Identificar los tipos de capacitores e inductores.\\[2pt]
+\textbf{CE2.} Realizar mediciones en un circuito capacitivo e inductivo.\\[2pt]
+\textbf{CE3.} Realizar mediciones en un circuito LC.
+\end{cajaplana}
+  \column{0.52\textwidth}
+\centering
+\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
+\begin{tikzpicture}
+  \node[box, fill=iubblue, text width=4.9cm, align=left, font=\tiny, anchor=west] (r0) at (1.25,0.00) {Explicar la estructura interna de un condensador y el papel del dieléctrico en su capacitancia.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Comprender};
+  \node[box, fill=iuborange, text width=4.9cm, align=left, font=\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular la capacitancia, la carga y la energía almacenada de un condensador a partir de su geometría o de su tensión de trabajo.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Aplicar};
+  \node[box, fill=iubgreen, text width=4.9cm, align=left, font=\tiny, anchor=west] (r2) at (1.25,-2.90) {Identificar el tipo, el valor nominal, la tolerancia y la tensión de trabajo de condensadores comerciales a partir de su marcado.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Aplicar};
+  \node[box, fill=iubblue, text width=4.9cm, align=left, font=\tiny, anchor=west] (r3) at (1.25,-4.35) {Medir la capacitancia de condensadores con un capacímetro y contrastarla con su intervalo de tolerancia, como base de las mediciones en circuitos capacitivos y LC.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};
+  \draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);
+  \draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);
+  \draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);
+\end{tikzpicture}
+\end{adjustbox}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ruta de la sesión \textperiodcentered{} 240 minutos}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,0.00) {1};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,0.00) {El condensador como elemento que almacena energía en el campo eléctrico y su lugar en los circuitos};
+  \fill[iubblue] (8.3,-0.20) rectangle ++(2.04,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (10.44,0.00) {20 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-0.76) {2};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-0.76) {Placas, dieléctrico, C = Q/V y capacitancia de placas paralelas};
+  \fill[iuborange] (8.3,-0.96) rectangle ++(3.58,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.98,-0.76) {35 min};
+  \node[circle, fill=iubgreen, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-1.51) {3};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-1.51) {Separación de cargas, rigidez dieléctrica, tensión nominal y energía W = CV\texttwosuperior{}/2};
+  \fill[iubgreen] (8.3,-1.71) rectangle ++(3.58,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.98,-1.51) {35 min};
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-2.27) {4};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-2.27) {Cerámicos, de película, de mica, electrolíticos de aluminio y tantalio, variables};
+  \fill[iubblue] (8.3,-2.47) rectangle ++(3.58,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.98,-2.27) {35 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-3.03) {5};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-3.03) {Lectura del valor, la tolerancia y la tensión en el cuerpo del condensador};
+  \fill[iuborange] (8.3,-3.23) rectangle ++(3.07,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.47,-3.03) {30 min};
+  \node[circle, fill=iubgreen, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-3.79) {6};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-3.79) {Faradio y sus submúltiplos, conversiones y símbolos normalizados};
+  \fill[iubgreen] (8.3,-3.99) rectangle ++(2.56,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (10.96,-3.79) {25 min};
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-4.54) {7};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-4.54) {Decodificar el marcado, calcular el intervalo de tolerancia y contrastarlo con la medición};
+  \fill[iubblue] (8.3,-4.74) rectangle ++(4.60,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (13.00,-4.54) {45 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-5.30) {8};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-5.30) {Síntesis, cierre actitudinal y bibliografía};
+  \fill[iuborange] (8.3,-5.50) rectangle ++(1.53,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (9.93,-5.30) {15 min};
+  \draw[iubnavy, line width=0.6pt] (8.3,0.45) -- (8.3,-5.70);
+\end{tikzpicture}
+\end{frame}
+
+% =====================================================================
+\bloque{01}{El condensador como elemento que almacena energía en el campo eléctrico y su lugar en los circuitos}{20 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Por qué estudiar el condensador}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Un capacitor, también llamado condensador, es un dispositivo que guarda carga eléctrica y, con ella, crea un campo eléctrico que a su vez almacena energía $[1]$.
+  \item En todos los casos el principio físico es el mismo: dos superficies conductoras separadas por un material aislante, el \textbf{dieléctrico} $[1]$, $[2]$.
+  \item Si el circuito externo permanece abierto, el condensador conserva la carga; si se cierra un camino, la energía vuelve al circuito.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{cardO}{Advertencia de seguridad}
+\footnotesize Los capacitores pueden guardar carga durante mucho tiempo después de cortar la alimentación de un circuito $[1]$.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Cadena de funcionamiento del condensador}
+\centering
+\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
+\begin{tikzpicture}
+  \node[bG, align=center, font=\scriptsize, text width=1.86cm] (n0) at (1.38,4.63) {Fuente aplica tensión};
+  \node[bB, align=center, font=\scriptsize, text width=1.67cm] (n1) at (6.72,4.63) {Placas acumulan carga ±Q};
+  \node[bB, align=center, font=\scriptsize, text width=2.16cm] (n2) at (11.88,4.63) {Campo eléctrico en dieléctrico};
+  \node[bO, align=center, font=\scriptsize, text width=2.00cm] (n3) at (11.88,1.34) {Energía almacenada};
+  \node[dec, align=center, font=\tiny, text width=1.78cm, inner sep=1pt] (n4) at (6.72,1.34) {¿Circuito externo cerrado?};
+  \node[bG, align=center, font=\scriptsize, text width=2.52cm] (n5) at (1.38,1.34) {Energía devuelta al circuito};
+  \draw[flecha] (n0) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {V} (n1);
+  \draw[flecha] (n1) -- (n2);
+  \draw[flecha] (n2) -- (n3);
+  \draw[flecha] (n3) -- (n4);
+  \draw[flecha] (n4) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {sí} (n5);
+  \draw[flecha] (n4) to[bend left=30] node[midway, above, fill=white, font=\tiny, inner sep=1pt] {no: conserva carga} (n3);
+\end{tikzpicture}
+\end{adjustbox}
+
+\vspace{1mm}{\scriptsize Cadena de funcionamiento del condensador: de la fuente al almacenamiento y la devolución de energía\par}
+\end{frame}
+
+% =====================================================================
+\bloque{02}{Placas, dieléctrico, C = Q/V y capacitancia de placas paralelas}{35 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Estructura del condensador y definición de capacitancia}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Un faradio es la capacitancia de un condensador que guarda un culombio de carga cuando entre sus placas hay un voltio $[1]$.
+  \item Con placas de 0.01 m² separadas 1 mil (2.54 × 10\ensuremath{^{-}}\ensuremath{^{5}} m) y mica ($\varepsilon_r = 5$), la capacitancia es $C = (5)(8.85 \times 10^{-12})(0.01) / (2.54 \times 10^{-5}) \approx 0.017\ \mu\text{F}$ $[1]$.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle C = \frac{Q}{V}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Ecuaciones: Estructura del condensador y definición}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.55\textwidth}
+\begin{cajaplana}{iubblue}
+\centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}C = \frac{\varepsilon_r \, \varepsilon_0 \, A}{d} \\ \varepsilon_0 = 8.85 \times 10^{-12}\ \text{F/m}\end{gathered}$\end{adjustbox}
+\end{cajaplana}
+  \column{0.42\textwidth}
+\begin{cardO}{Error frecuente}
+\footnotesize Confundir la carga $Q$ (culombios) con la capacitancia $C$ (faradios).
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Constantes dieléctricas típicas de materiales usados}}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Material} & \hd{Constante dieléctrica \ensuremath{\epsilon}r típica}\\
+  Aire (vacío) & 1.0\\
+  Teflón & 2.0\\
+  Papel parafinado & 2.5\\
+  Aceite & 4.0\\
+  Mica & 5.0\\
+  Vidrio & 7.5\\
+  Cerámica & 1200\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Constantes dieléctricas típicas de materiales usados en condensadores $[1]$\par}
+\end{frame}
+
+% =====================================================================
+\bloque{03}{Separación de cargas, rigidez dieléctrica, tensión nominal y energía W = CV\texttwosuperior{}/2}{35 min}{iubgreen}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Comportamiento interno}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Lo que ocupa el espacio entre ambas es un \textbf{campo eléctrico}, y en él reside la energía almacenada $[1]$.
+  \item Tras la ruptura, el condensador se comporta prácticamente como un conductor.
+  \item El dieléctrico real tampoco es un aislante perfecto.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \mathcal{E} = \frac{V}{d}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ecuaciones: Comportamiento interno}
+\begin{columns}[c,onlytextwidth]
+  \column{0.55\textwidth}
+\begin{cajaplana}{iubblue}
+\centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle W = \frac{1}{2} C V^{2}$\end{adjustbox}
+\end{cajaplana}
+  \column{0.42\textwidth}
+\begin{cardO}{Nota pedagógica}
+\footnotesize Las 0.147 J del ejemplo parecen poca energía, pero liberadas en microsegundos a través de un destornillador o de los dedos producen chispa y quemaduras.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Energía almacenada en función de la tensión}
+\begin{columns}[c,onlytextwidth]
+  \column{0.62\textwidth}
+\centering
+\begin{tikzpicture}
+  \begin{axis}[width=8.4cm, height=5.7cm, xmin=0, xmax=30, ymin=0, ymax=0.22419,
+      xlabel={Tensión entre terminales V (V)}, ylabel={Energía W (J)},
+      label style={font=\scriptsize, text=iubnavy}, tick label style={font=\tiny, text=iubnavy},
+      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},
+      legend style={font=\tiny, fill=white}, legend pos=north east]
+    \addplot[line width=1.4pt, iubblue] coordinates {(0,0) (0.40134,8.0536e-06) (0.80268,3.2214e-05) (1.204,7.2482e-05) (1.6054,0.00012886) (2.0067,0.00020134) (2.408,0.00028993) (2.8094,0.00039463) (3.2107,0.00051543) (3.612,0.00065234) (4.0134,0.00080536) (4.4147,0.00097449) (4.8161,0.0011597) (5.2174,0.0013611) (5.6187,0.0015785) (6.0201,0.0018121) (6.4214,0.0020617) (6.8227,0.0023275) (7.2241,0.0026094) (7.6254,0.0029074) (8.0268,0.0032214) (8.4281,0.0035516) (8.8294,0.0038979) (9.2308,0.0042604) (9.6321,0.0046389) (10.033,0.0050335) (10.435,0.0054442) (10.836,0.0058711) (11.237,0.006314) (11.639,0.0067731) (12.04,0.0072482) (12.441,0.0077395) (12.843,0.0082469) (13.244,0.0087704) (13.645,0.00931) (14.047,0.0098657) (14.448,0.010437) (14.849,0.011025) (15.251,0.011629) (15.652,0.01225) (16.054,0.012886) (16.455,0.013538) (16.856,0.014207) (17.258,0.014891) (17.659,0.015592) (18.06,0.016309) (18.462,0.017041) (18.863,0.01779) (19.264,0.018555) (19.666,0.019337) (20.067,0.020134) (20.468,0.020947) (20.87,0.021777) (21.271,0.022623) (21.672,0.023484) (22.074,0.024362) (22.475,0.025256) (22.876,0.026166) (23.278,0.027092) (23.679,0.028035) (24.08,0.028993) (24.482,0.029967) (24.883,0.030958) (25.284,0.031965) (25.686,0.032988) (26.087,0.034026) (26.488,0.035081) (26.89,0.036153) (27.291,0.03724) (27.692,0.038343) (28.094,0.039463) (28.495,0.040598) (28.896,0.04175) (29.298,0.042918) (29.699,0.044102) (30,0.045)};
+    \addlegendentry{C = 100 µF}
+    \addplot[line width=1.4pt, iuborange] coordinates {(0,0) (0.40134,3.7852e-05) (0.80268,0.00015141) (1.204,0.00034067) (1.6054,0.00060563) (2.0067,0.0009463) (2.408,0.0013627) (2.8094,0.0018547) (3.2107,0.0024225) (3.612,0.003066) (4.0134,0.0037852) (4.4147,0.0045801) (4.8161,0.0054507) (5.2174,0.006397) (5.6187,0.007419) (6.0201,0.0085167) (6.4214,0.0096901) (6.8227,0.010939) (7.2241,0.012264) (7.6254,0.013665) (8.0268,0.015141) (8.4281,0.016693) (8.8294,0.01832) (9.2308,0.020024) (9.6321,0.021803) (10.033,0.023657) (10.435,0.025588) (10.836,0.027594) (11.237,0.029676) (11.639,0.031833) (12.04,0.034067) (12.441,0.036376) (12.843,0.03876) (13.244,0.041221) (13.645,0.043757) (14.047,0.046369) (14.448,0.049056) (14.849,0.051819) (15.251,0.054658) (15.652,0.057573) (16.054,0.060563) (16.455,0.063629) (16.856,0.066771) (17.258,0.069988) (17.659,0.073281) (18.06,0.07665) (18.462,0.080095) (18.863,0.083615) (19.264,0.087211) (19.666,0.090882) (20.067,0.09463) (20.468,0.098453) (20.87,0.10235) (21.271,0.10633) (21.672,0.11038) (22.074,0.1145) (22.475,0.1187) (22.876,0.12298) (23.278,0.12733) (23.679,0.13176) (24.08,0.13627) (24.482,0.14085) (24.883,0.1455) (25.284,0.15023) (25.686,0.15504) (26.087,0.15992) (26.488,0.16488) (26.89,0.16992) (27.291,0.17503) (27.692,0.18021) (28.094,0.18547) (28.495,0.19081) (28.896,0.19622) (29.298,0.20171) (29.699,0.20728) (30,0.2115)};
+    \addlegendentry{C = 470 µF}
+    \addplot[line width=1pt, dashed, iubnavy!70] coordinates {(25,0) (25,0.22419)};
+    \addlegendentry{Tensión nominal 25 V}
+  \end{axis}
+\end{tikzpicture}
+  \column{0.35\textwidth}
+\begin{caja}{iubblue}{Lectura de la gráfica}
+\footnotesize La gráfica muestra las dos parábolas: a igual tensión, el condensador de mayor capacitancia almacena proporcionalmente más energía, y en ambos la energía crece con rapidez al acercarse a la tensión nominal.
+\end{caja}
+\end{columns}
+\end{frame}
+
+% =====================================================================
+\bloque{04}{Cerámicos, de película, de mica, electrolíticos de aluminio y tantalio, variables}{35 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Tipos de condensadores según su dieléctrico y construcción}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Igual que los resistores, los condensadores se agrupan en dos grandes categorías: \textbf{fijos} y \textbf{variables} $[2]$.
+  \item Los \textbf{condensadores cerámicos} aprovechan la constante dieléctrica muy alta de la cerámica (1200 es un valor típico) para lograr valores comparativamente altos en tamaños pequeños $[1]$.
+  \item La mayoría tienen menos de 1 µF, aunque algunos llegan a 100 µF $[1]$.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{cardO}{Advertencia de seguridad}
+\footnotesize Un condensador electrolítico conectado con la polaridad invertida puede explotar y provocar lesiones $[1]$.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Clasificación de los condensadores según su construcción}}
+\centering
+\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
+\begin{tikzpicture}
+  \node[bG, align=center, font=\scriptsize, text width=3.09cm] (n0) at (5.01,5.15) {Condensadores};
+  \node[bB, align=center, font=\scriptsize, text width=2.36cm] (n1) at (4.48,3.00) {Fijos no polarizados};
+  \node[bB, align=center, font=\scriptsize, text width=3.42cm] (n2) at (8.19,3.00) {Fijos polarizados (electrolíticos)};
+  \node[bB, align=center, font=\scriptsize, text width=2.36cm] (n3) at (1.30,3.00) {Variables y trimmers};
+  \node[bO, align=center, font=\scriptsize, text width=3.07cm] (n4) at (3.51,0.65) {Mica, cerámica, película};
+  \node[bO, align=center, font=\scriptsize, text width=2.18cm] (n5) at (6.96,0.65) {Aluminio y tantalio};
+  \draw[flecha] (n0) -- (n1);
+  \draw[flecha] (n0) -- (n2);
+  \draw[flecha] (n0) -- (n3);
+  \draw[flecha] (n1) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {según dieléctrico} (n4);
+  \draw[flecha] (n2) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {según óxido} (n5);
+\end{tikzpicture}
+\end{adjustbox}
+
+\vspace{1mm}{\scriptsize Clasificación de los condensadores según su construcción y su dieléctrico\par}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Comparación de los tipos de condensadores fijos}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Tipo} & \hd{Dieléctrico} & \hd{Intervalo típico} & \hd{Tensión} & \hd{Polarizado}\\
+  Mica & Mica (\ensuremath{\epsilon}r \ensuremath{\approx} 5) & 1 pF a 0.1 µF & 100 V a 2500 V & No\\
+  Cerámico & Cerámica (\ensuremath{\epsilon}r \ensuremath{\approx} 1200) & 1 pF a 2.2 µF & hasta 6 kV & No\\
+  Película plástica & Poliéster, polipropileno, policarbonato & mayoría < 1 µF & según serie & No\\
+  Electrolítico de aluminio & Óxido de aluminio & 1 µF a > 200 000 µF & \ensuremath{\leq} 350 V típico & Sí\\
+  Electrolítico de tantalio & Pentóxido de tantalio & valores medios en poco volumen & bajas & Sí\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Comparación de los tipos de condensadores fijos $[1]$\par}
+\end{frame}
+
+% =====================================================================
+\bloque{05}{Lectura del valor, la tolerancia y la tensión en el cuerpo del condensador}{30 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Identificación: marcado, código numérico y tolerancia}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Identificar un condensador es leer en su cuerpo tres datos: la capacitancia nominal, la tolerancia y la tensión de trabajo.
+  \item En los condensadores grandes, como los electrolíticos, el valor se imprime completo: «470 µF 25 V», con el signo menos sobre la franja del terminal negativo.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle C_{n} = (10\,a + b) \times 10^{\,m}\ \text{pF}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ecuaciones: Identificación}
+\begin{columns}[c,onlytextwidth]
+  \column{0.55\textwidth}
+\begin{cajaplana}{iubblue}
+\centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}C_{\min} = C_{n}\,(1 - t) \\ C_{\max} = C_{n}\,(1 + t)\end{gathered}$\end{adjustbox}
+\end{cajaplana}
+  \column{0.42\textwidth}
+\begin{cardO}{Error frecuente}
+\footnotesize Leer «104» como 104 pF.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Lectura de marcados frecuentes de condensadores}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Marcado} & \hd{Valor nominal} & \hd{Tolerancia} & \hd{Otros datos}\\
+  103 & 10 000 pF = 10 nF & no indicada & cerámico o película\\
+  104K 100V & 100 000 pF = 0.1 µF & ±10 \% & 100 V de trabajo\\
+  472J & 4700 pF = 4.7 nF & ±5 \% & —\\
+  .01 & 0.01 µF = 10 nF & no indicada & unidad implícita µF\\
+  330 (cerámico) & 330 pF & no indicada & unidad implícita pF\\
+  NP0 & — & — & coeficiente de temperatura nulo\\
+  470 µF 25 WVDC & 470 µF & según fabricante & electrolítico, 25 V cd\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Lectura de marcados frecuentes de condensadores\par}
+\end{frame}
+
+% =====================================================================
+\bloque{06}{Faradio y sus submúltiplos, conversiones y símbolos normalizados}{25 min}{iubgreen}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Unidades, múltiplos, submúltiplos, simbología y nomenclatura}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Es una unidad enorme para la electrónica y para la mayoría de las aplicaciones de potencia: los valores reales se expresan casi siempre con submúltiplos.
+  \item Con el nanofaradio como paso intermedio, cada salto entre unidades consecutivas es un factor 1000.
+  \item La \textbf{simbología} del condensador reproduce su estructura: dos trazos paralelos que representan las placas, con un terminal a cada lado $[1]$.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{cardO}{Error frecuente}
+\footnotesize Confundir la «m» minúscula (mili, $10^{-3}$) con la «µ» (micro, $10^{-6}$) o con la «M» mayúscula (mega, $10^{6}$).
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Submúltiplos del faradio y reglas de conversión}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Unidad} & \hd{Símbolo} & \hd{Valor en F} & \hd{Para pasar a la unidad inmediatamente menor}\\
+  milifaradio & mF & 10\ensuremath{^{-}}³ & × 1000 (a µF)\\
+  microfaradio & µF & 10\ensuremath{^{-}}\ensuremath{^{6}} & × 1000 (a nF)\\
+  nanofaradio & nF & 10\ensuremath{^{-}}\ensuremath{^{9}} & × 1000 (a pF)\\
+  picofaradio & pF & 10\ensuremath{^{-}}¹² & —\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Submúltiplos del faradio y reglas de conversión $[1]$\par}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Símbolos y nomenclatura usados en planos y en el cuerpo}}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Elemento} & \hd{Representación o marca} & \hd{Significado}\\
+  Condensador fijo & dos trazos paralelos & no polarizado\\
+  Condensador polarizado & trazo recto y trazo curvo, o signo + & placa recta positiva\\
+  Condensador variable & símbolo con flecha diagonal & capacitancia ajustable\\
+  Designador & C1, C2, C3… & referencia del componente en el plano\\
+  MF, MFD, uF & µF & microfaradio en rotulación abreviada\\
+  WV, WVDC & tensión de trabajo & tensión continua admisible\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Símbolos y nomenclatura usados en planos y en el cuerpo de los condensadores\par}
+\end{frame}
+
+% =====================================================================
+\bloque{07}{Decodificar el marcado, calcular el intervalo de tolerancia y contrastarlo con la medición}{45 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Identificación y verificación de los condensadores de un kit}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Antes de la primera práctica de circuitos capacitivos, el técnico de laboratorio debe dejar listo un kit de cinco condensadores para cada grupo de trabajo.
+  \item Para C1, el código 223 da $C_n = 22 \times 10^3\ \text{pF} = 22\ \text{nF}$ y la letra J indica ±5 \%, así que el intervalo es de $22 \times 0.95 = 20.9\ \text{nF}$ a $22 \times 1.05 = 23.1\ \text{nF}$.
+  \item Cuatro componentes están dentro de su tolerancia.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle e_{\%} = \frac{C_{m} - C_{n}}{C_{n}} \times 100$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Identificación y verificación de los condensadores del kit}}
+\centering\tiny
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Ref.} & \hd{Marcado} & \hd{Tipo} & \hd{Cn} & \hd{Tolerancia} & \hd{Intervalo admisible} & \hd{Cm} & \hd{e (\%)} & \hd{Decisión}\\
+  C1 & 223J & Cerámico multicapa & 22 nF & ±5 \% & 20.9 a 23.1 nF & 22.4 nF & +1.8 & Acepta\\
+  C2 & 104K 100V & Película & 100 nF & ±10 \% & 90 a 110 nF & 97.8 nF & \ensuremath{-}2.2 & Acepta\\
+  C3 & 472K & Cerámico de disco & 4.7 nF & ±10 \% & 4.23 a 5.17 nF & 4.52 nF & \ensuremath{-}3.8 & Acepta\\
+  C4 & 470 µF 25 V & Electrolítico & 470 µF & ±20 \% & 376 a 564 µF & 512 µF & +8.9 & Acepta\\
+  C5 & 100 µF 16 V & Electrolítico reutilizado & 100 µF & ±20 \% & 80 a 120 µF & 71.3 µF & \ensuremath{-}28.7 & Rechaza\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Identificación y verificación de los condensadores del kit (lecturas de ejemplo)\par}
+\end{frame}
+
+% =====================================================================
+\bloque{08}{Síntesis, cierre actitudinal y bibliografía}{15 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Síntesis de la sesión}
+\begin{columns}[T,onlytextwidth]
+  \column{0.32\textwidth}
+\begin{cardB}{Estructura del condensador y definición}
+\scriptsize Placas, dieléctrico, C = Q/V y capacitancia de placas paralelas
+\end{cardB}
+  \column{0.32\textwidth}
+\begin{cardO}{Comportamiento interno}
+\scriptsize Separación de cargas, rigidez dieléctrica, tensión nominal y energía W = CV²/2
+\end{cardO}
+  \column{0.32\textwidth}
+\begin{cardG}{Tipos de condensadores según}
+\scriptsize Cerámicos, de película, de mica, electrolíticos de aluminio y tantalio, variables
+\end{cardG}
+\end{columns}
+\vspace{2mm}
+\begin{columns}[T,onlytextwidth]
+  \column{0.32\textwidth}
+\begin{cardB}{Identificación}
+\scriptsize Lectura del valor, la tolerancia y la tensión en el cuerpo del condensador
+\end{cardB}
+  \column{0.32\textwidth}
+\begin{cardO}{Unidades, múltiplos, submúltiplos}
+\scriptsize Faradio y sus submúltiplos, conversiones y símbolos normalizados
+\end{cardO}
+  \column{0.32\textwidth}
+\begin{cardG}{Identificación y verificación}
+\scriptsize Decodificar el marcado, calcular el intervalo de tolerancia y contrastarlo con la medición
+\end{cardG}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Reflexión para llevar}
+\centering
+\begin{tikzpicture}
+  \node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\normalsize] (c) at (0,0) {\itshape «Verificar y descargar cada condensador antes de entregarlo al grupo es un acto de responsabilidad con los compañeros: un electrolítico cargado o mal identificado puede lastimar a alguien o arruinar las mediciones de todo el equipo en la práctica siguiente.»};
+  \node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\scriptsize\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};
+\end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Referencias bibliográficas}
+\small
+\begin{itemize}\setlength{\itemsep}{8pt}
+  \item[{$[1]$}] T. L. Floyd, Principios de circuitos eléctricos, 8.\textordfeminine{} ed. México: Pearson Educación, 2007.
+  \item[{$[2]$}] R. L. Boylestad, Introducción al análisis de circuitos, 10.\textordfeminine{} ed. México: Pearson Educación, 2004.
+\end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+%  CIERRE
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[iubnavy] (current page.north west) rectangle (current page.south east);
+  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{40}{44}\selectfont]
+    at ([xshift=1.2cm,yshift=-1.6cm]current page.north west) {\textexclamdown{}Gracias!};
+  \node[anchor=north west, text=white, font=\normalsize, text width=14cm, align=left]
+    at ([xshift=1.2cm,yshift=-3.4cm]current page.north west)
+    {IEL04 \textperiodcentered{} Circuitos Eléctricos I};
+  \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
+        font=\small\bfseries, inner sep=2.2mm, text width=11.5cm]
+    at ([xshift=1.2cm,yshift=-4.4cm]current page.north west)
+    {Próxima sesión \textperiodcentered{} Semana 2: Bobinas o inductores: estructura, comportamiento interno, identificación y tipos};
+  \node[anchor=south west, text=iubyellow, font=\small, align=left]
+    at ([xshift=1.2cm,yshift=0.9cm]current page.south west)
+    {Ing. Sergio Martinez Castilla \quad · \quad smartinezc@unibarranquilla.edu.co};
+  \fill[iubblue]   ([xshift=1.2cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+  \fill[iuborange] ([xshift=2.9cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+  \fill[iubgreen]  ([xshift=4.6cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+\end{tikzpicture}
+\end{frame}
+
+\end{document}

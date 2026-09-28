@@ -1,0 +1,770 @@
+% =====================================================================
+%  IEL04 - Circuitos Eléctricos I
+%  Semana 7: Cálculo y medición de parámetros en circuitos RC en serie, en paralelo y mixtos: método, filtros, instrumentos y nomenclatura
+%  Institución Universitaria de Barranquilla (IUB)
+%  Generada por src/presentaciones.py (diseño IUB 5). Compilador: pdfLaTeX (dos pasadas)
+% =====================================================================
+\documentclass[aspectratio=169,11pt,xcolor={table}]{beamer}
+
+% ---------------------------------------------------------------------
+%  Codificación, idioma y tipografía
+% ---------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot,es-noshorthands]{babel}
+\usepackage{avant}                       % Sans geométrica (emula Avenir Next)
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\ttdefault}{pcr}           % Monoespaciada para código
+\usepackage{textcomp}
+
+% ---------------------------------------------------------------------
+%  Paquetes
+% ---------------------------------------------------------------------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={.}, per-mode=symbol}
+\usepackage{booktabs,tabularx,multirow,array}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,shapes.misc,
+  decorations.pathreplacing,fit,backgrounds,babel}
+\usepackage[siunitx,RPvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+% ---------------------------------------------------------------------
+%  Paleta institucional IUB (Manual de Identidad Visual 2025)
+% ---------------------------------------------------------------------
+\definecolor{iubwhite}{HTML}{FFFFFF}
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+
+% ---------------------------------------------------------------------
+%  Configuración de Beamer
+% ---------------------------------------------------------------------
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=0.6cm, text margin right=0.6cm}
+\setbeamercolor{normal text}{fg=iubnavy, bg=iubwhite}
+\setbeamercolor{background canvas}{bg=iubwhite}
+\setbeamercolor{structure}{fg=iubnavy}
+\setbeamercolor{alerted text}{fg=iuborange}
+\setbeamertemplate{itemize item}{\textcolor{iubblue}{\small$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\textcolor{iuborange}{\scriptsize$\bullet$}}
+\setbeamertemplate{enumerate item}{\textcolor{iubblue}{\bfseries\insertenumlabel.}}
+\setbeamertemplate{frametitle}{}         % el título vive en el headline
+
+% Parches: el headline se pre-mide antes del primer frame
+\makeatletter
+\providecommand{\insertframetitle}{}
+\providecommand{\insertframesubtitle}{}
+\makeatother
+
+% ---------- Encabezado ----------
+\setbeamertemplate{headline}{%
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,1.05cm);
+    \fill[iubnavy] (0,0) rectangle (\paperwidth,1.05cm);
+    \fill[iubyellow] (0,0) rectangle (\paperwidth,0.05cm);
+    \node[anchor=west, text=iubyellow, font=\large\bfseries]
+      at (0.6cm,0.55cm) {\strut\insertframetitle};
+    \node[anchor=east, text=iubyellow, font=\footnotesize\bfseries]
+      at ([xshift=-0.6cm]\paperwidth,0.55cm) {IUB};
+  \end{tikzpicture}}
+
+% ---------- Pie de página ----------
+\setbeamertemplate{footline}{%
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,0.55cm);
+    \fill[iubnavy] (0,0) rectangle (\paperwidth,0.55cm);
+    \node[anchor=west, text=iubyellow, font=\tiny]
+      at (0.6cm,0.275cm) {IEL04 \textperiodcentered{} Circuitos Eléctricos I};
+    \node[anchor=center, text=iubyellow, font=\tiny]
+      at (0.66\paperwidth,0.275cm) {Ing. Sergio Martinez Castilla};
+    \node[anchor=east, text=iubyellow, font=\tiny\bfseries]
+      at ([xshift=-0.6cm]\paperwidth,0.275cm)
+      {Semana 7 \quad \insertframenumber\,/\,\inserttotalframenumber};
+  \end{tikzpicture}}
+
+% ---------------------------------------------------------------------
+%  Cajas tcolorbox (texto blanco sobre la paleta complementaria)
+%  \begin{caja}[opciones]{color}{título} ... \end{caja}
+%  \begin{cajaplana}[opciones]{color} ... \end{cajaplana}
+%  \begin{cardB|cardO|cardG|cardN}[opciones]{título} ... \end{cardX}
+% ---------------------------------------------------------------------
+\tcbset{
+  iubbase/.style={enhanced, arc=1.5mm, boxrule=0pt, coltext=white, coltitle=white,
+    fonttitle=\bfseries\footnotesize, fontupper=\footnotesize,
+    left=1.8mm, right=1.8mm, top=1mm, bottom=1.2mm,
+    toptitle=0.6mm, bottomtitle=0.6mm, halign=left,
+    before upper={\hyphenpenalty=5000\setbeamercolor{itemize item}{fg=white}%
+                  \setbeamercolor{itemize/enumerate body}{fg=white}%
+                  \setbeamercolor{itemize/enumerate subbody}{fg=white}%
+                  \setbeamercolor{itemize subitem}{fg=white}%
+                  \setbeamercolor{enumerate item}{fg=white}%
+                  \setbeamertemplate{itemize item}{\textcolor{white}{\small$\blacktriangleright$}}}}
+}
+\newtcolorbox{caja}[3][]{iubbase, colback=#2, colframe=#2,
+  colbacktitle=#2!78!iubnavy, title={#3}, #1}
+\newtcolorbox{cajaplana}[2][]{iubbase, colback=#2, colframe=#2, #1}
+\newtcolorbox{cardB}[2][]{iubbase, colback=iubblue,   colframe=iubblue,
+  colbacktitle=iubblue!78!iubnavy,   title={#2}, #1}
+\newtcolorbox{cardO}[2][]{iubbase, colback=iuborange, colframe=iuborange,
+  colbacktitle=iuborange!78!iubnavy, title={#2}, #1}
+\newtcolorbox{cardG}[2][]{iubbase, colback=iubgreen,  colframe=iubgreen,
+  colbacktitle=iubgreen!78!iubnavy,  title={#2}, #1}
+\newtcolorbox{cardN}[2][]{iubbase, colback=iubnavy,   colframe=iubnavy,
+  colbacktitle=iubnavy, coltitle=iubyellow, title={#2}, #1}
+
+% Celda de encabezado de tabla (texto amarillo sobre \rowcolor{iubnavy}) y código en línea
+\newcommand{\hd}[1]{\textcolor{iubyellow}{\bfseries #1}}
+\newcommand{\thc}[1]{\textcolor{iubyellow}{\textbf{#1}}}
+\newcommand{\cod}[1]{\texttt{\textbf{#1}}}
+
+% ---------------------------------------------------------------------
+%  Código sobre fondo oscuro:
+%  \begin{codebox}[listing options app={language=Python,firstnumber=1}]{título}
+% ---------------------------------------------------------------------
+\lstdefinestyle{iubcode}{
+  basicstyle=\ttfamily\fontsize{7}{8.4}\selectfont\color{white},
+  keywordstyle=\color{iubblue}\bfseries,
+  commentstyle=\color{iubgreen!55!white}\itshape,
+  stringstyle=\color{iuborange!80!white},
+  numbers=left, numberstyle=\tiny\color{iubyellow}, numbersep=6pt,
+  showstringspaces=false, breaklines=true, tabsize=4,
+  columns=fullflexible, keepspaces=true, upquote=true}
+\newtcblisting{codebox}[2][]{enhanced, listing only, colback=iubnavy,
+  colframe=iubnavy, colbacktitle=iubnavy!85!white, coltitle=iubyellow,
+  fonttitle=\bfseries\scriptsize, title={#2}, arc=1.5mm, boxrule=0pt,
+  left=6mm, right=1mm, top=0.5mm, bottom=0.5mm, toptitle=0.5mm, bottomtitle=0.5mm,
+  listing options={style=iubcode}, #1}
+
+% ---------------------------------------------------------------------
+%  Estilos TikZ
+% ---------------------------------------------------------------------
+\tikzset{
+  bloque/.style={rectangle, rounded corners=2mm, fill=#1, text=white,
+    font=\scriptsize\bfseries, align=center, minimum height=1.1cm,
+    text width=1.8cm, inner sep=1.2mm},
+  flecha/.style={-{Stealth[length=2.2mm]}, line width=1pt, draw=iubnavy},
+  arr/.style={flecha},
+  term/.style={rectangle, draw=#1, line width=1.2pt, fill=white,
+    text=iubnavy, font=\tiny\bfseries, minimum width=1.05cm,
+    minimum height=0.5cm, inner sep=1pt},
+  nodo/.style={rectangle, rounded corners=1mm, fill=#1, text=white,
+    font=\scriptsize\bfseries, minimum size=0.75cm, align=center},
+  cable/.style={line width=1.4pt, draw=#1},
+  box/.style={rectangle, rounded corners=1.5mm, draw=none, text=white,
+    font=\scriptsize\bfseries, align=center, minimum height=0.8cm, inner sep=3pt},
+  bB/.style={box, fill=iubblue}, bO/.style={box, fill=iuborange},
+  bG/.style={box, fill=iubgreen}, bN/.style={box, fill=iubnavy},
+  dec/.style={diamond, aspect=1.9, fill=iuborange, text=white,
+    font=\scriptsize\bfseries, align=center, inner sep=1pt},
+  tag/.style={fill=#1, text=white, font=\scriptsize\bfseries, rounded corners=1mm,
+    minimum width=0.7cm, anchor=north west},
+}
+
+% ---------------------------------------------------------------------
+%  Diapositiva separadora de bloque
+%  #1 número  #2 título  #3 duración  #4 color
+% ---------------------------------------------------------------------
+\newcommand{\bloque}[4]{%
+\section{#2}
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[#4] (current page.north west) rectangle
+        ([xshift=5.2cm]current page.south west);
+  \node[anchor=north west, text=white, font=\bfseries\large]
+    at ([xshift=0.8cm,yshift=-2.2cm]current page.north west) {BLOQUE};
+  \node[anchor=north west, text=white, font=\bfseries\fontsize{72}{72}\selectfont]
+    at ([xshift=0.65cm,yshift=-2.9cm]current page.north west) {#1};
+  \node[anchor=north west, text=iubnavy, font=\bfseries\LARGE,
+        text width=9.4cm, align=left]
+    at ([xshift=6.2cm,yshift=-2.8cm]current page.north west)
+    {\hyphenpenalty=10000\exhyphenpenalty=10000 #2};
+  \node[anchor=north west, fill=iubnavy, text=iubyellow, rounded corners=1.5mm,
+        font=\small\bfseries, inner sep=2mm]
+    at ([xshift=6.2cm,yshift=-6.0cm]current page.north west) {Duración: #3};
+  \fill[iubnavy] ([xshift=5.2cm]current page.south west) rectangle
+        ([yshift=0.35cm]current page.south east);
+  \fill[iubyellow] ([xshift=5.2cm,yshift=0.35cm]current page.south west)
+        rectangle ([yshift=0.42cm]current page.south east);
+  \node[anchor=north east, text=iubnavy, font=\small\bfseries]
+    at ([xshift=-0.6cm,yshift=-0.5cm]current page.north east) {IUB · IEL04};
+\end{tikzpicture}
+\end{frame}}
+
+% =====================================================================
+\begin{document}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+%  PORTADA
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  % Panel institucional
+  \fill[iubnavy] (current page.north west) rectangle
+        ([xshift=5.6cm]current page.south west);
+  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{54}{54}\selectfont]
+    at ([xshift=0.7cm,yshift=-1.0cm]current page.north west) {IUB};
+  \node[anchor=north west, text=white, font=\footnotesize, text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=-3.0cm]current page.north west)
+    {Institución Universitaria de Barranquilla};
+  \draw[iubyellow, line width=1.2pt]
+    ([xshift=0.75cm,yshift=-4.25cm]current page.north west) --
+    ([xshift=2.6cm,yshift=-4.25cm]current page.north west);
+  \node[anchor=north west, text=iubyellow, font=\scriptsize\bfseries,
+        text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=-4.5cm]current page.north west)
+    {Tecnología en Gestión de Sistemas Eléctricos};
+  \node[anchor=south west, text=white, font=\scriptsize, text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=0.9cm]current page.south west)
+    {Ing. Sergio Martinez Castilla\\[1pt]\textcolor{iubyellow}{\tiny smartinezc@unibarranquilla.edu.co}};
+  % Bloque de título
+  \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
+        font=\scriptsize\bfseries, inner sep=2mm]
+    at ([xshift=6.4cm,yshift=-1.0cm]current page.north west)
+    {IEL04 \textperiodcentered{} Semana 7 de 14 \textperiodcentered{} Corte evaluativo 2};
+  \node[anchor=north west, text=iubnavy, font=\small, text width=9.0cm, align=left] (a)
+    at ([xshift=6.4cm,yshift=-1.9cm]current page.north west)
+    {Circuitos Eléctricos I};
+  \node[anchor=north west, text=iubnavy, font=\bfseries\fontsize{13}{16}\selectfont,
+        text width=9.0cm, align=left] (t)
+    at ([yshift=-0.35cm]a.south west)
+    {\hyphenpenalty=10000 Cálculo y medición de parámetros en circuitos RC en serie, en paralelo y mixtos: método, filtros, instrumentos y nomenclatura};
+  % Franjas de la paleta complementaria
+  \fill[iubblue]   ([xshift=6.4cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \fill[iuborange] ([xshift=8.1cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \fill[iubgreen]  ([xshift=9.8cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \node[anchor=north west, text=iubnavy, font=\scriptsize]
+    at ([xshift=6.4cm,yshift=0.95cm]current page.south west)
+    {Sesión teórico-práctica \textperiodcentered{} 240 min};
+\end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Punto de partida de la sesión}
+\begin{columns}[T,onlytextwidth]
+  \column{0.34\textwidth}
+\begin{caja}[height=5.9cm]{iubblue}{Continuidad}
+\scriptsize \begin{itemize}\setlength{\itemsep}{2pt}
+  \item Semana 6: Circuito RC en paralelo
+  \item \textbf{Semana 7: Cálculo y medición de parámetros en circuitos RC serie y paralelo: unidades, simbología y nomenclatura}
+  \item Semana 8: Circuitos RL en serie y en paralelo
+\end{itemize}
+\end{caja}
+  \column{0.34\textwidth}
+\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}
+\scriptsize \begin{itemize}\setlength{\itemsep}{2pt}
+  \item Calcular impedancia, ángulo de fase y tensiones de un RC en serie
+  \item Calcular admitancia y corrientes de un RC en paralelo aplicando la LCK
+  \item Convertir fasores entre forma rectangular y polar, y operar con ellos
+  \item Identificar y verificar resistores y condensadores con ohmímetro
+\end{itemize}
+\end{caja}
+  \column{0.29\textwidth}
+\begin{caja}[height=5.9cm]{iubgreen}{Competencia}
+\scriptsize \textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Resultados de aprendizaje}
+\begin{columns}[c,onlytextwidth]
+  \column{0.45\textwidth}
+\begin{caja}{iubnavy}{IEL04-RA2}
+\footnotesize Calcular un circuito resistivo, capacitivo y RC, sea en serie o paralelo.
+\end{caja}
+\vspace{1mm}
+\begin{cajaplana}{iubblue}
+\scriptsize \textbf{CE1.} Identificar los tipos de resistores y capacitores.\\[2pt]
+\textbf{CE2.} Realizar mediciones en un circuito resistivo y capacitivo.\\[2pt]
+\textbf{CE3.} Realizar mediciones en un circuito RC.
+\end{cajaplana}
+  \column{0.52\textwidth}
+\centering
+\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
+\begin{tikzpicture}
+  \node[box, fill=iubblue, text width=4.9cm, align=left, font=\tiny, anchor=west] (r0) at (1.25,0.00) {Identificar los componentes y la topología de un circuito RC y elegir el método de cálculo adecuado para cada parte.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Analizar};
+  \node[box, fill=iuborange, text width=4.9cm, align=left, font=\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular impedancias, corrientes y tensiones de circuitos RC en serie, en paralelo y mixtos con fasores.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Aplicar};
+  \node[box, fill=iubgreen, text width=4.9cm, align=left, font=\tiny, anchor=west] (r2) at (1.25,-2.90) {Calcular la frecuencia de corte de un filtro RC y predecir la tensión de salida a una frecuencia dada.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Aplicar};
+  \node[box, fill=iubblue, text width=4.9cm, align=left, font=\tiny, anchor=west] (r3) at (1.25,-4.35) {Medir tensiones y corrientes en un circuito RC mixto, evaluar el efecto de los instrumentos y justificar las diferencias con el cálculo.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};
+  \draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);
+  \draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);
+  \draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);
+\end{tikzpicture}
+\end{adjustbox}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ruta de la sesión \textperiodcentered{} 240 minutos}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,0.00) {1};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,0.00) {Integrar lo visto en serie y en paralelo en un procedimiento de cálculo y medición};
+  \fill[iubblue] (8.3,-0.20) rectangle ++(1.84,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (10.24,0.00) {20 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-0.76) {2};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-0.76) {Pasos del análisis fasorial: reactancias, reducción, ley de Ohm y verificación con Kirchhoff};
+  \fill[iuborange] (8.3,-0.96) rectangle ++(2.76,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.16,-0.76) {30 min};
+  \node[circle, fill=iubgreen, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-1.51) {3};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-1.51) {Reducción de un resistor en serie con un paralelo RC y reparto de tensiones y corrientes};
+  \fill[iubgreen] (8.3,-1.71) rectangle ++(3.22,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.62,-1.51) {35 min};
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-2.27) {4};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-2.27) {Filtros pasabajas y pasaaltas, fc = 1/(2\ensuremath{\pi}RC) y el 70.7 \%};
+  \fill[iubblue] (8.3,-2.47) rectangle ++(3.22,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.62,-2.27) {35 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-3.03) {5};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-3.03) {Resistencia interna del generador, carga de la punta del osciloscopio, ancho de banda del multímetro};
+  \fill[iuborange] (8.3,-3.23) rectangle ++(2.76,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.16,-3.03) {30 min};
+  \node[circle, fill=iubgreen, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-3.79) {6};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-3.79) {Cuadro de magnitudes, unidades, prefijos, símbolos y notación fasorial};
+  \fill[iubgreen] (8.3,-3.99) rectangle ++(2.30,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (10.70,-3.79) {25 min};
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-4.54) {7};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-4.54) {Resistor en serie con un paralelo RC a 1 kHz: predecir, medir y justificar las diferencias};
+  \fill[iubblue] (8.3,-4.74) rectangle ++(4.60,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (13.00,-4.54) {50 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-5.30) {8};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-5.30) {Síntesis, cierre actitudinal y bibliografía};
+  \fill[iuborange] (8.3,-5.50) rectangle ++(1.38,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (9.78,-5.30) {15 min};
+  \draw[iubnavy, line width=0.6pt] (8.3,0.45) -- (8.3,-5.70);
+\end{tikzpicture}
+\end{frame}
+
+% =====================================================================
+\bloque{01}{Integrar lo visto en serie y en paralelo en un procedimiento de cálculo y medición}{20 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Un solo método para todos los circuitos RC}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Pero los circuitos reales rara vez son puramente de un tipo.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{cardO}{Nota pedagógica}
+\footnotesize Esta sesión es también una preparación para el RA3: en la semana 8, el mismo diagrama sirve para los circuitos RL, cambiando solo el cálculo de la reactancia y el signo del ángulo.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Procedimiento general de cálculo y medición de un circuito}}
+\centering
+\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
+\begin{tikzpicture}
+  \node[bG, align=center, font=\scriptsize, text width=3.51cm] (n0) at (1.88,4.53) {Identificar y verificar componentes};
+  \node[bB, align=center, font=\scriptsize, text width=2.80cm] (n1) at (6.77,4.53) {XC a la frecuencia de trabajo};
+  \node[bB, align=center, font=\scriptsize, text width=3.03cm] (n2) at (11.43,4.53) {Reducir: Z en serie, Y en paralelo};
+  \node[bB, align=center, font=\scriptsize, text width=3.03cm] (n3) at (11.43,1.07) {Ley de Ohm fasorial: I y V};
+  \node[bO, align=center, font=\scriptsize, text width=2.58cm] (n4) at (6.77,1.07) {Verificar LVK y LCK};
+  \node[bG, align=center, font=\scriptsize, text width=2.84cm] (n5) at (1.88,1.07) {Medir y comparar};
+  \draw[flecha] (n0) -- (n1);
+  \draw[flecha] (n1) -- (n2);
+  \draw[flecha] (n2) -- (n3);
+  \draw[flecha] (n3) -- (n4);
+  \draw[flecha] (n4) -- (n5);
+\end{tikzpicture}
+\end{adjustbox}
+
+\vspace{1mm}{\scriptsize Procedimiento general de cálculo y medición de un circuito RC\par}
+\end{frame}
+
+% =====================================================================
+\bloque{02}{Pasos del análisis fasorial: reactancias, reducción, ley de Ohm y verificación con Kirchhoff}{30 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Método general de cálculo con impedancias y admitancias}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Con estas herramientas, el método general tiene seis pasos.
+  \item Cambiar la referencia gira todo el diagrama fasorial, pero no altera ni las magnitudes ni las diferencias de fase entre las magnitudes.
+  \item En los circuitos mixtos se combinan ambos, como muestra la siguiente unidad.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}\mathbf{Z} = R + jX = Z\angle\theta \\ Z = \sqrt{R^{2} + X^{2}},\ \ \theta = \tan^{-1}\!\left(\frac{X}{R}\right) \\ R = Z\cos\theta,\ \ X = Z\sin\theta\end{gathered}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Método general aplicado al RC en serie de la semana 4}}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Paso} & \hd{Operación} & \hd{Forma} & \hd{Resultado}\\
+  1 & Identificar y medir componentes & — & R = 1.5 k\ensuremath{\Omega}, C = 0.1 µF\\
+  2 & XC = 1/(2\ensuremath{\pi}fC) & magnitud & 1592 \ensuremath{\Omega}\\
+  3 & Z = R \ensuremath{-} jXC & rectangular \ensuremath{\rightarrow} polar & 2187 \ensuremath{\angle} \ensuremath{-}46.7° \ensuremath{\Omega}\\
+  4 & I = V/Z & polar & 2.29 \ensuremath{\angle} 46.7° mA\\
+  5 & VR = IR, VC = IXC & polar & 3.43 \ensuremath{\angle} 46.7° V; 3.64 \ensuremath{\angle} \ensuremath{-}43.3° V\\
+  6 & VR + VC = VS & rectangular & 5.00 \ensuremath{\angle} 0° V\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Método general aplicado al RC en serie de la semana 4 (1.5 k\ensuremath{\Omega}, 0.1 µF, 5 V eficaces a 1 kHz)\par}
+\end{frame}
+
+% =====================================================================
+\bloque{03}{Reducción de un resistor en serie con un paralelo RC y reparto de tensiones y corrientes}{35 min}{iubgreen}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Circuitos RC mixtos (serie-paralelo)}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Un circuito RC mixto combina grupos en serie y grupos en paralelo.
+  \item Su admitancia es $\mathbf{Y}_p = G_2 + jB_C$, y su impedancia, $\mathbf{Z}_p = 1/\mathbf{Y}_p$, se pasa a forma rectangular para poder sumarla con $R_1$.
+  \item Con 5 V eficaces a 0°, la corriente total es $\mathbf{I} = \mathbf{V}_S/\mathbf{Z}_T = 2.57 \angle 22.6^\circ\ \text{mA}$.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \mathbf{Z}_T = R_1 + \mathbf{Z}_p = R_1 + \frac{1}{G_2 + jB_C}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Resultados del circuito mixto R1 + (R2 \ensuremath{\parallel} C) (1/2)}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Magnitud} & \hd{Valor} & \hd{Ángulo (ref. VS)} & \hd{Comprobación}\\
+  ZT & 1945 \ensuremath{\Omega} & \ensuremath{-}22.6° & 1795 \ensuremath{-} j749 \ensuremath{\Omega}\\
+  I & 2.57 mA & +22.6° & VS/ZT\\
+  VR1 & 2.57 V & +22.6° & en fase con I\\
+  Vp & 2.81 V & \ensuremath{-}20.7° & común a R2 y C\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Resultados del circuito mixto R1 + (R2 \ensuremath{\parallel} C) con valores nominales (5 V eficaces a 1 kHz)\par}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Resultados del circuito mixto R1 + (R2 \ensuremath{\parallel} C) (2/2)}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Magnitud} & \hd{Valor} & \hd{Ángulo (ref. VS)} & \hd{Comprobación}\\
+  IR2 & 1.87 mA & \ensuremath{-}20.7° & en fase con Vp\\
+  IC & 1.76 mA & +69.3° & 90° delante de Vp\\
+  \ensuremath{\surd}(IR2² + IC²) & 2.57 mA & — & LCK: igual a I\\
+  VR1 + Vp (fasorial) & 5.00 V & 0° & LVK: igual a VS\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Resultados del circuito mixto R1 + (R2 \ensuremath{\parallel} C) con valores nominales (5 V eficaces a 1 kHz)\par}
+\end{frame}
+
+% =====================================================================
+\bloque{04}{Filtros pasabajas y pasaaltas, fc = 1/(2\ensuremath{\pi}RC) y el 70.7 \%}{35 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{El circuito RC como filtro}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item La aplicación más extendida del circuito RC en serie es el \textbf{filtro}: un circuito que deja pasar unas frecuencias y atenúa otras.
+  \item La frontera entre las frecuencias que pasan y las que se atenúan se define por convención.
+  \item En el laboratorio, $f_c$ se mide barriendo la frecuencia del generador hasta que la salida cae al 70.7 \% de su valor en baja frecuencia.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}f_c = \frac{1}{2\pi R C} \\ \frac{V_{sal}}{V_{ent}}\bigg|_{pasabajas} = \frac{1}{\sqrt{1 + (f/f_c)^{2}}} \\ \frac{V_{sal}}{V_{ent}}\bigg|_{pasaaltas} = \frac{f/f_c}{\sqrt{1 + (f/f_c)^{2}}}\end{gathered}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Respuesta en frecuencia de un filtro RC pasabajas}
+\begin{columns}[c,onlytextwidth]
+  \column{0.62\textwidth}
+\centering
+\begin{tikzpicture}
+  \begin{semilogxaxis}[width=8.4cm, height=5.7cm, xmin=10, xmax=1e+05, ymin=0, ymax=1.0594,
+      xlabel={Frecuencia f (Hz)}, ylabel={Vsal / Vent},
+      label style={font=\scriptsize, text=iubnavy}, tick label style={font=\tiny, text=iubnavy},
+      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},
+      legend style={font=\tiny, fill=white}, legend pos=north east]
+    \addplot[line width=1.4pt, iubblue] coordinates {(10,0.99996) (11.311,0.99994) (12.795,0.99993) (14.472,0.99991) (16.37,0.99988) (18.516,0.99985) (20.945,0.99981) (23.691,0.99975) (26.797,0.99968) (30.311,0.99959) (34.286,0.99948) (38.782,0.99933) (43.867,0.99915) (49.619,0.99891) (56.126,0.9986) (63.486,0.99821) (71.81,0.99772) (81.227,0.99708) (91.878,0.99627) (103.93,0.99524) (117.55,0.99392) (132.97,0.99224) (150.4,0.9901) (170.13,0.98739) (192.43,0.98395) (217.67,0.9796) (246.21,0.97412) (278.49,0.96724) (315.01,0.95864) (356.32,0.94797) (403.04,0.93482) (455.89,0.91878) (515.67,0.8994) (583.29,0.87631) (659.78,0.8492) (746.29,0.81793) (844.15,0.78254) (954.85,0.74331) (1080.1,0.70079) (1221.7,0.65571) (1381.9,0.609) (1563.1,0.56163) (1768,0.51456) (1999.9,0.46866) (2262.1,0.42464) (2558.7,0.38303) (2894.3,0.34419) (3273.8,0.3083) (3703.1,0.27544) (4188.6,0.24555) (4737.9,0.21853) (5359.2,0.19421) (6061.9,0.17241) (6856.8,0.15292) (7755.9,0.13554) (8772.9,0.12007) (9923.3,0.10631) (11225,0.094106) (12696,0.083277) (14361,0.073679) (16244,0.065176) (18374,0.057647) (20784,0.050983) (23509,0.045085) (26592,0.039868) (30079,0.035252) (34023,0.03117) (38484,0.027559) (43531,0.024366) (49239,0.021543) (55695,0.019047) (62999,0.016839) (71260,0.014888) (80604,0.013162) (91173,0.011636) (1e+05,0.010609)};
+    \addlegendentry{Pasabajas (salida en C)}
+    \addplot[line width=1.4pt, iuborange] coordinates {(10,0.0094247) (11.311,0.01066) (12.795,0.012058) (14.472,0.013639) (16.37,0.015427) (18.516,0.017449) (20.945,0.019737) (23.691,0.022323) (26.797,0.025249) (30.311,0.028557) (34.286,0.032298) (38.782,0.036528) (43.867,0.04131) (49.619,0.046716) (56.126,0.052825) (63.486,0.059729) (71.81,0.067527) (81.227,0.076333) (91.878,0.086273) (103.93,0.097484) (117.55,0.11012) (132.97,0.12435) (150.4,0.14035) (170.13,0.15832) (192.43,0.17846) (217.67,0.20097) (246.21,0.22605) (278.49,0.25388) (315.01,0.28462) (356.32,0.31836) (403.04,0.35511) (455.89,0.39478) (515.67,0.43713) (583.29,0.48176) (659.78,0.52807) (746.29,0.57532) (844.15,0.6226) (954.85,0.66894) (1080.1,0.71337) (1221.7,0.75501) (1381.9,0.79317) (1563.1,0.82739) (1768,0.85746) (1999.9,0.88338) (2262.1,0.90536) (2558.7,0.92373) (2894.3,0.9389) (3273.8,0.95129) (3703.1,0.96132) (4188.6,0.96938) (4737.9,0.97583) (5359.2,0.98096) (6061.9,0.98503) (6856.8,0.98824) (7755.9,0.99077) (8772.9,0.99277) (9923.3,0.99433) (11225,0.99556) (12696,0.99653) (14361,0.99728) (16244,0.99787) (18374,0.99834) (20784,0.9987) (23509,0.99898) (26592,0.9992) (30079,0.99938) (34023,0.99951) (38484,0.99962) (43531,0.9997) (49239,0.99977) (55695,0.99982) (62999,0.99986) (71260,0.99989) (80604,0.99991) (91173,0.99993) (1e+05,0.99994)};
+    \addlegendentry{Pasaaltas (salida en R)}
+    \addplot[line width=1pt, dashed, iubnavy!70] coordinates {(1061,0) (1061,1.0594)};
+    \addlegendentry{fc = 1061 Hz}
+    \addplot[line width=1pt, dashed, iubnavy!70] coordinates {(10,0.707) (1e+05,0.707)};
+    \addlegendentry{70.7 \%}
+  \end{semilogxaxis}
+\end{tikzpicture}
+  \column{0.35\textwidth}
+\begin{caja}{iubblue}{Lectura de la gráfica}
+\footnotesize La gráfica muestra que las dos curvas se cruzan en la frecuencia de corte, a 0.707, y son simétricas respecto a ella en escala logarítmica.
+\end{caja}
+\end{columns}
+\end{frame}
+
+% =====================================================================
+\bloque{05}{Resistencia interna del generador, carga de la punta del osciloscopio, ancho de banda del multímetro}{30 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Instrumentos de medición y sus efectos en circuitos RC}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Todo instrumento que se conecta a un circuito se convierte, durante la medición, en parte del circuito.
+  \item La \textbf{punta de osciloscopio} es el caso típico.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle X_{Cp} = \frac{1}{2\pi f C_p}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Efectos de los instrumentos en las mediciones de circuitos}}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Instrumento} & \hd{Parámetro interno} & \hd{Efecto sobre la medición} & \hd{Cómo reducirlo}\\
+  Generador de funciones & resistencia de salida (\ensuremath{\approx}50 \ensuremath{\Omega}) & la tensión aplicada baja al conectar la carga & medir VS en los bornes del circuito\\
+  Osciloscopio con punta ×1 & \ensuremath{\approx}1 M\ensuremath{\Omega} \ensuremath{\parallel} capacitancia alta & carga capacitiva a frecuencias altas & usar punta ×10 compensada\\
+  Osciloscopio con punta ×10 & \ensuremath{\approx}10 M\ensuremath{\Omega} \ensuremath{\parallel} pocos pF & efecto mínimo & compensarla con la onda cuadrada de referencia\\
+  Multímetro como voltímetro ca & ancho de banda limitado & lectura baja a frecuencias altas & verificar la especificación; usar el osciloscopio\\
+  Multímetro como amperímetro & resistencia en serie & reduce ligeramente la corriente de la rama & preferir un resistor sensor pequeño\\
+  Puntas con tierra común & tierras unidas al chasis & cortocircuita elementos flotantes & medir con resta de canales\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Efectos de los instrumentos en las mediciones de circuitos RC (puntas ×1 y ×10: $[1]$; generador, multímetro y tierras: [fuente no cargada])\par}
+\end{frame}
+
+% =====================================================================
+\bloque{06}{Cuadro de magnitudes, unidades, prefijos, símbolos y notación fasorial}{25 min}{iubgreen}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Parámetros, unidades, simbología y nomenclatura}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item El contenido procedimental del RA2 pide diferenciar los parámetros del circuito RC identificando unidades de medida, múltiplos y submúltiplos, simbología y nomenclatura.
+  \item Tres observaciones evitan los errores más comunes al leer la tabla.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{cardO}{Error frecuente}
+\footnotesize Mezclar valores eficaces con valores pico a pico en un mismo cálculo.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Parámetros de los circuitos RC (1/2)}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Parámetro} & \hd{Símbolo} & \hd{Unidad} & \hd{Submúltiplos habituales} & \hd{Fórmula o definición}\\
+  Resistencia & R & ohmio (\ensuremath{\Omega}) & k\ensuremath{\Omega}, M\ensuremath{\Omega} & V/I en el resistor\\
+  Capacitancia & C & faradio (F) & pF, nF, µF & Q/V\\
+  Reactancia capacitiva & XC & ohmio (\ensuremath{\Omega}) & k\ensuremath{\Omega} & 1/(2\ensuremath{\pi}fC)\\
+  Impedancia & Z, Z\ensuremath{\angle}\ensuremath{\theta} & ohmio (\ensuremath{\Omega}) & k\ensuremath{\Omega} & R \ensuremath{-} jXC (serie)\\
+  Conductancia & G & siemens (S) & mS, µS & 1/R\\
+  Susceptancia capacitiva & BC & siemens (S) & mS, µS & 2\ensuremath{\pi}fC\\
+  Admitancia & Y, Y\ensuremath{\angle}\ensuremath{\theta} & siemens (S) & mS, µS & G + jBC (paralelo)\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Parámetros de los circuitos RC: símbolo, unidad, submúltiplos habituales y fórmula\par}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Parámetros de los circuitos RC (2/2)}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Parámetro} & \hd{Símbolo} & \hd{Unidad} & \hd{Submúltiplos habituales} & \hd{Fórmula o definición}\\
+  Constante de tiempo & \ensuremath{\tau} & segundo (s) & ms, µs & RC\\
+  Frecuencia de corte & fc & hercio (Hz) & kHz & 1/(2\ensuremath{\pi}RC)\\
+  Ángulo de fase & \ensuremath{\theta} & grado (°) & — & tan\ensuremath{^{-}}¹ de la relación reactiva/resistiva\\
+  Tensión y corriente eficaces & V, I & voltio (V), amperio (A) & mV, mA & magnitud del fasor\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Parámetros de los circuitos RC: símbolo, unidad, submúltiplos habituales y fórmula\par}
+\end{frame}
+
+% =====================================================================
+\bloque{07}{Resistor en serie con un paralelo RC a 1 kHz: predecir, medir y justificar las diferencias}{50 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Cálculo y medición de un circuito RC mixto en el laboratorio}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item La identificación y la verificación de los tres componentes cubren el criterio CE1.
+  \item Siguiendo el método general: $G_2 = 1/1492 = 0.670\ \text{mS}$ y $B_C = 2\pi(1000)(97.8 \times 10^{-9}) = 0.615\ \text{mS}$, de modo que $\mathbf{Y}_p = 0.909 \angle 42.5^\circ\ \text{mS}$ y $\mathbf{Z}_p = 1100 \angle -42.5^\circ\ \Omega = 811 - j743\ \Omega$.
+  \item Ambas leyes de Kirchhoff se cumplen solo en forma fasorial.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}\mathbf{Z}_T= 996 + (811 - j743) \\ = 1807 - j743\ \Omega \\ = 1954 \angle -22.4^\circ\ \Omega\end{gathered}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Circuito RC mixto R1 + (R2 \ensuremath{\parallel} C) a 1 kHz}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Magnitud} & \hd{Predicción} & \hd{Medido} & \hd{Diferencia} & \hd{Causa probable de la diferencia}\\
+  I & 2.56 mA & 2.55 mA & \ensuremath{-}0.4 \% & resistencia del amperímetro\\
+  VR1 & 2.55 V & 2.54 V & \ensuremath{-}0.4 \% & resolución del multímetro\\
+  Vp & 2.81 V & 2.82 V & +0.4 \% & tolerancia de lectura en ca\\
+  IR2 & 1.89 mA & 1.88 mA & \ensuremath{-}0.5 \% & resistencia del amperímetro\\
+  IC & 1.73 mA & 1.73 mA & 0.0 \% & —\\
+  \ensuremath{\Delta}t (I respecto a VS) & 62 µs & 61 µs & \ensuremath{-}1.6 \% & resolución de los cursores\\
+  \ensuremath{\theta} & 22.4° & 22.0° & 0.4° & resolución de los cursores\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Circuito RC mixto R1 + (R2 \ensuremath{\parallel} C) a 1 kHz: predicción con valores medidos y mediciones (lecturas de ejemplo)\par}
+\end{frame}
+
+% =====================================================================
+\bloque{08}{Síntesis, cierre actitudinal y bibliografía}{15 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Síntesis de la sesión}
+\begin{columns}[T,onlytextwidth]
+  \column{0.32\textwidth}
+\begin{cardB}{Método general de cálculo con impedancias}
+\scriptsize Pasos del análisis fasorial: reactancias, reducción, ley de Ohm y verificación con Kirchhoff
+\end{cardB}
+  \column{0.32\textwidth}
+\begin{cardO}{Circuitos RC mixtos (serie-paralelo)}
+\scriptsize Reducción de un resistor en serie con un paralelo RC y reparto de tensiones y corrientes
+\end{cardO}
+  \column{0.32\textwidth}
+\begin{cardG}{El circuito RC como filtro}
+\scriptsize Filtros pasabajas y pasaaltas, fc = 1/(2\ensuremath{\pi}RC) y el 70.7 \%
+\end{cardG}
+\end{columns}
+\vspace{2mm}
+\begin{columns}[T,onlytextwidth]
+  \column{0.32\textwidth}
+\begin{cardB}{Instrumentos de medición y sus efectos}
+\scriptsize Resistencia interna del generador, carga de la punta del osciloscopio, ancho de banda del multímetro
+\end{cardB}
+  \column{0.32\textwidth}
+\begin{cardO}{Parámetros, unidades, simbología}
+\scriptsize Cuadro de magnitudes, unidades, prefijos, símbolos y notación fasorial
+\end{cardO}
+  \column{0.32\textwidth}
+\begin{cardG}{Cálculo y medición de un circuito RC mixto}
+\scriptsize Resistor en serie con un paralelo RC a 1 kHz: predecir, medir y justificar las diferencias
+\end{cardG}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Reflexión para llevar}
+\centering
+\begin{tikzpicture}
+  \node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\normalsize] (c) at (0,0) {\itshape «Un informe que justifica cada diferencia con una causa medible es un acto de honestidad profesional: quien lo lea, en el laboratorio o en una empresa, puede confiar en los datos sin tener que repetir las mediciones del equipo.»};
+  \node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\scriptsize\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};
+\end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Referencias bibliográficas}
+\small
+\begin{itemize}\setlength{\itemsep}{8pt}
+  \item[{$[1]$}] T. L. Floyd, Principios de circuitos eléctricos, 8.\textordfeminine{} ed. México: Pearson Educación, 2007.
+  \item[{$[2]$}] R. L. Boylestad, Introducción al análisis de circuitos, 10.\textordfeminine{} ed. México: Pearson Educación, 2004.
+  \item[{$[3]$}] M. F. P. Deorsola y P. Morcelle del Valle, Circuitos eléctricos. Parte 1, 1.\textordfeminine{} ed. La Plata: Editorial de la Universidad de La Plata, 2017.
+  \item[{$[4]$}] Manuales del generador de funciones, del multímetro digital y del osciloscopio del laboratorio (resistencia de salida, ancho de banda y referencia de tierra); no están cargados en el wiki. (no cargada en el wiki)
+\end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+%  CIERRE
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[iubnavy] (current page.north west) rectangle (current page.south east);
+  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{40}{44}\selectfont]
+    at ([xshift=1.2cm,yshift=-1.6cm]current page.north west) {\textexclamdown{}Gracias!};
+  \node[anchor=north west, text=white, font=\normalsize, text width=14cm, align=left]
+    at ([xshift=1.2cm,yshift=-3.4cm]current page.north west)
+    {IEL04 \textperiodcentered{} Circuitos Eléctricos I};
+  \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
+        font=\small\bfseries, inner sep=2.2mm, text width=11.5cm]
+    at ([xshift=1.2cm,yshift=-4.4cm]current page.north west)
+    {Próxima sesión \textperiodcentered{} Semana 8: Circuitos RL en serie y en paralelo: tipos e identificación de resistores e inductores, análisis con las leyes de voltajes y corrientes de Kirchhoff};
+  \node[anchor=south west, text=iubyellow, font=\small, align=left]
+    at ([xshift=1.2cm,yshift=0.9cm]current page.south west)
+    {Ing. Sergio Martinez Castilla \quad · \quad smartinezc@unibarranquilla.edu.co};
+  \fill[iubblue]   ([xshift=1.2cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+  \fill[iuborange] ([xshift=2.9cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+  \fill[iubgreen]  ([xshift=4.6cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+\end{tikzpicture}
+\end{frame}
+
+\end{document}

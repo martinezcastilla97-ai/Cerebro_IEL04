@@ -1,0 +1,58 @@
+{
+ "archivos": {
+  "raw/bibliografia/boylestad-introduccion-al-analisis-de-circuitos-10ed.md": {
+   "bytes": 4843024,
+   "secciones": {
+    "(inicio)": "37e2d6bcd32c8bdc"
+   },
+   "sha": "37e2d6bcd32c8bdc"
+  },
+  "raw/bibliografia/deorsola-morcelle-circuitos-electricos-parte-1.md": {
+   "bytes": 374406,
+   "secciones": {
+    "(inicio)": "4d1f77b8335bbcec"
+   },
+   "sha": "4d1f77b8335bbcec"
+  },
+  "raw/bibliografia/floyd-principios-de-circuitos-electricos-8ed.md": {
+   "bytes": 3039945,
+   "secciones": {
+    "(inicio)": "081f65782caa8394"
+   },
+   "sha": "081f65782caa8394"
+  },
+  "raw/curriculos/Tecnología en Gestión de Sistemas Eléctricos/IEL04 - Circuitos Eléctricos I.md": {
+   "bytes": 31632,
+   "secciones": {
+    "(inicio)": "34b2bc83d015cc9c",
+    "ANEXO": "b1c7a602576cfd30",
+    "APRENDIZAJES PREVIOS": "255b159927944d61",
+    "Actitudinal": "427e3a8405ef3310",
+    "Actitudinal (2)": "d2d962938a1db327",
+    "Actitudinal (3)": "bce87b4ac9b85aba",
+    "Actitudinal (4)": "4bff05fd79ecdd1b",
+    "BIBLIOGRAFÍA": "56be00741c0b7cf7",
+    "BIBLIOGRAFÍA (2)": "e9240b6d4c778c68",
+    "Conceptual  medios": "43b11c787188b2b4",
+    "DIDÁCTICAS PARA EL APRENDIZAJE SUGERIDAS": "f2263c03c6926b92",
+    "ESTRATEGIAS DE ENSEÑANZA SUGERIDAS": "4a6b969b6558fc0b",
+    "ESTRATEGIAS PEDAGÓGICAS Y DIDÁCTICAS": "6ea5c457357d7606",
+    "Equipo de laboratorio  X  Wiki    Aula  X  Espacio abierto": "fbb38903f81392d1",
+    "Información de Créditos": "4cfe079de94859e2",
+    "PROCESO DE APROBACIÓN": "3e791af4904c2240",
+    "Procedimental": "5798051d3e43e47f",
+    "Procedimental (2)": "5992d4cdd562be13",
+    "Procedimental (3)": "a93b362a4d13a28c",
+    "Práctica de laboratorio  X  Relatoría    Informe escrito  X": "6f3f7fd77eda184f",
+    "Práctica de laboratorio  X  Resumen analítico    Tutoría    Registro documental": "ca6dd6d42dfa96fb",
+    "RECURSOS DIDÁCTICOS": "935952c457fe981d",
+    "RESULTADOS DE APRENDIZAJE DEL PROGRAMA": "a02f158e277320e3",
+    "UNIDADES Y ELEMENTOS DECOMPETENCIA ASOCIADA": "02341abbe0fe3335",
+    "WEBGRAFÍA Y BASES DE DATOS": "75f8f09a6ab4986d"
+   },
+   "sha": "452e8961f3a68e2c"
+  }
+ },
+ "fecha": "2026-09-28",
+ "version": 1
+}

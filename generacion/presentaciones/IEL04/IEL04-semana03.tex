@@ -1,0 +1,789 @@
+% =====================================================================
+%  IEL04 - Circuitos Eléctricos I
+%  Semana 3: Asociaciones de condensadores y bobinas en serie, en paralelo y mixtas: cálculo y medición en circuitos L, C y LC
+%  Institución Universitaria de Barranquilla (IUB)
+%  Generada por src/presentaciones.py (diseño IUB 5). Compilador: pdfLaTeX (dos pasadas)
+% =====================================================================
+\documentclass[aspectratio=169,11pt,xcolor={table}]{beamer}
+
+% ---------------------------------------------------------------------
+%  Codificación, idioma y tipografía
+% ---------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot,es-noshorthands]{babel}
+\usepackage{avant}                       % Sans geométrica (emula Avenir Next)
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\ttdefault}{pcr}           % Monoespaciada para código
+\usepackage{textcomp}
+
+% ---------------------------------------------------------------------
+%  Paquetes
+% ---------------------------------------------------------------------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={.}, per-mode=symbol}
+\usepackage{booktabs,tabularx,multirow,array}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,shapes.misc,
+  decorations.pathreplacing,fit,backgrounds,babel}
+\usepackage[siunitx,RPvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+% ---------------------------------------------------------------------
+%  Paleta institucional IUB (Manual de Identidad Visual 2025)
+% ---------------------------------------------------------------------
+\definecolor{iubwhite}{HTML}{FFFFFF}
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+
+% ---------------------------------------------------------------------
+%  Configuración de Beamer
+% ---------------------------------------------------------------------
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=0.6cm, text margin right=0.6cm}
+\setbeamercolor{normal text}{fg=iubnavy, bg=iubwhite}
+\setbeamercolor{background canvas}{bg=iubwhite}
+\setbeamercolor{structure}{fg=iubnavy}
+\setbeamercolor{alerted text}{fg=iuborange}
+\setbeamertemplate{itemize item}{\textcolor{iubblue}{\small$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\textcolor{iuborange}{\scriptsize$\bullet$}}
+\setbeamertemplate{enumerate item}{\textcolor{iubblue}{\bfseries\insertenumlabel.}}
+\setbeamertemplate{frametitle}{}         % el título vive en el headline
+
+% Parches: el headline se pre-mide antes del primer frame
+\makeatletter
+\providecommand{\insertframetitle}{}
+\providecommand{\insertframesubtitle}{}
+\makeatother
+
+% ---------- Encabezado ----------
+\setbeamertemplate{headline}{%
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,1.05cm);
+    \fill[iubnavy] (0,0) rectangle (\paperwidth,1.05cm);
+    \fill[iubyellow] (0,0) rectangle (\paperwidth,0.05cm);
+    \node[anchor=west, text=iubyellow, font=\large\bfseries]
+      at (0.6cm,0.55cm) {\strut\insertframetitle};
+    \node[anchor=east, text=iubyellow, font=\footnotesize\bfseries]
+      at ([xshift=-0.6cm]\paperwidth,0.55cm) {IUB};
+  \end{tikzpicture}}
+
+% ---------- Pie de página ----------
+\setbeamertemplate{footline}{%
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,0.55cm);
+    \fill[iubnavy] (0,0) rectangle (\paperwidth,0.55cm);
+    \node[anchor=west, text=iubyellow, font=\tiny]
+      at (0.6cm,0.275cm) {IEL04 \textperiodcentered{} Circuitos Eléctricos I};
+    \node[anchor=center, text=iubyellow, font=\tiny]
+      at (0.66\paperwidth,0.275cm) {Ing. Sergio Martinez Castilla};
+    \node[anchor=east, text=iubyellow, font=\tiny\bfseries]
+      at ([xshift=-0.6cm]\paperwidth,0.275cm)
+      {Semana 3 \quad \insertframenumber\,/\,\inserttotalframenumber};
+  \end{tikzpicture}}
+
+% ---------------------------------------------------------------------
+%  Cajas tcolorbox (texto blanco sobre la paleta complementaria)
+%  \begin{caja}[opciones]{color}{título} ... \end{caja}
+%  \begin{cajaplana}[opciones]{color} ... \end{cajaplana}
+%  \begin{cardB|cardO|cardG|cardN}[opciones]{título} ... \end{cardX}
+% ---------------------------------------------------------------------
+\tcbset{
+  iubbase/.style={enhanced, arc=1.5mm, boxrule=0pt, coltext=white, coltitle=white,
+    fonttitle=\bfseries\footnotesize, fontupper=\footnotesize,
+    left=1.8mm, right=1.8mm, top=1mm, bottom=1.2mm,
+    toptitle=0.6mm, bottomtitle=0.6mm, halign=left,
+    before upper={\hyphenpenalty=5000\setbeamercolor{itemize item}{fg=white}%
+                  \setbeamercolor{itemize/enumerate body}{fg=white}%
+                  \setbeamercolor{itemize/enumerate subbody}{fg=white}%
+                  \setbeamercolor{itemize subitem}{fg=white}%
+                  \setbeamercolor{enumerate item}{fg=white}%
+                  \setbeamertemplate{itemize item}{\textcolor{white}{\small$\blacktriangleright$}}}}
+}
+\newtcolorbox{caja}[3][]{iubbase, colback=#2, colframe=#2,
+  colbacktitle=#2!78!iubnavy, title={#3}, #1}
+\newtcolorbox{cajaplana}[2][]{iubbase, colback=#2, colframe=#2, #1}
+\newtcolorbox{cardB}[2][]{iubbase, colback=iubblue,   colframe=iubblue,
+  colbacktitle=iubblue!78!iubnavy,   title={#2}, #1}
+\newtcolorbox{cardO}[2][]{iubbase, colback=iuborange, colframe=iuborange,
+  colbacktitle=iuborange!78!iubnavy, title={#2}, #1}
+\newtcolorbox{cardG}[2][]{iubbase, colback=iubgreen,  colframe=iubgreen,
+  colbacktitle=iubgreen!78!iubnavy,  title={#2}, #1}
+\newtcolorbox{cardN}[2][]{iubbase, colback=iubnavy,   colframe=iubnavy,
+  colbacktitle=iubnavy, coltitle=iubyellow, title={#2}, #1}
+
+% Celda de encabezado de tabla (texto amarillo sobre \rowcolor{iubnavy}) y código en línea
+\newcommand{\hd}[1]{\textcolor{iubyellow}{\bfseries #1}}
+\newcommand{\thc}[1]{\textcolor{iubyellow}{\textbf{#1}}}
+\newcommand{\cod}[1]{\texttt{\textbf{#1}}}
+
+% ---------------------------------------------------------------------
+%  Código sobre fondo oscuro:
+%  \begin{codebox}[listing options app={language=Python,firstnumber=1}]{título}
+% ---------------------------------------------------------------------
+\lstdefinestyle{iubcode}{
+  basicstyle=\ttfamily\fontsize{7}{8.4}\selectfont\color{white},
+  keywordstyle=\color{iubblue}\bfseries,
+  commentstyle=\color{iubgreen!55!white}\itshape,
+  stringstyle=\color{iuborange!80!white},
+  numbers=left, numberstyle=\tiny\color{iubyellow}, numbersep=6pt,
+  showstringspaces=false, breaklines=true, tabsize=4,
+  columns=fullflexible, keepspaces=true, upquote=true}
+\newtcblisting{codebox}[2][]{enhanced, listing only, colback=iubnavy,
+  colframe=iubnavy, colbacktitle=iubnavy!85!white, coltitle=iubyellow,
+  fonttitle=\bfseries\scriptsize, title={#2}, arc=1.5mm, boxrule=0pt,
+  left=6mm, right=1mm, top=0.5mm, bottom=0.5mm, toptitle=0.5mm, bottomtitle=0.5mm,
+  listing options={style=iubcode}, #1}
+
+% ---------------------------------------------------------------------
+%  Estilos TikZ
+% ---------------------------------------------------------------------
+\tikzset{
+  bloque/.style={rectangle, rounded corners=2mm, fill=#1, text=white,
+    font=\scriptsize\bfseries, align=center, minimum height=1.1cm,
+    text width=1.8cm, inner sep=1.2mm},
+  flecha/.style={-{Stealth[length=2.2mm]}, line width=1pt, draw=iubnavy},
+  arr/.style={flecha},
+  term/.style={rectangle, draw=#1, line width=1.2pt, fill=white,
+    text=iubnavy, font=\tiny\bfseries, minimum width=1.05cm,
+    minimum height=0.5cm, inner sep=1pt},
+  nodo/.style={rectangle, rounded corners=1mm, fill=#1, text=white,
+    font=\scriptsize\bfseries, minimum size=0.75cm, align=center},
+  cable/.style={line width=1.4pt, draw=#1},
+  box/.style={rectangle, rounded corners=1.5mm, draw=none, text=white,
+    font=\scriptsize\bfseries, align=center, minimum height=0.8cm, inner sep=3pt},
+  bB/.style={box, fill=iubblue}, bO/.style={box, fill=iuborange},
+  bG/.style={box, fill=iubgreen}, bN/.style={box, fill=iubnavy},
+  dec/.style={diamond, aspect=1.9, fill=iuborange, text=white,
+    font=\scriptsize\bfseries, align=center, inner sep=1pt},
+  tag/.style={fill=#1, text=white, font=\scriptsize\bfseries, rounded corners=1mm,
+    minimum width=0.7cm, anchor=north west},
+}
+
+% ---------------------------------------------------------------------
+%  Diapositiva separadora de bloque
+%  #1 número  #2 título  #3 duración  #4 color
+% ---------------------------------------------------------------------
+\newcommand{\bloque}[4]{%
+\section{#2}
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[#4] (current page.north west) rectangle
+        ([xshift=5.2cm]current page.south west);
+  \node[anchor=north west, text=white, font=\bfseries\large]
+    at ([xshift=0.8cm,yshift=-2.2cm]current page.north west) {BLOQUE};
+  \node[anchor=north west, text=white, font=\bfseries\fontsize{72}{72}\selectfont]
+    at ([xshift=0.65cm,yshift=-2.9cm]current page.north west) {#1};
+  \node[anchor=north west, text=iubnavy, font=\bfseries\LARGE,
+        text width=9.4cm, align=left]
+    at ([xshift=6.2cm,yshift=-2.8cm]current page.north west)
+    {\hyphenpenalty=10000\exhyphenpenalty=10000 #2};
+  \node[anchor=north west, fill=iubnavy, text=iubyellow, rounded corners=1.5mm,
+        font=\small\bfseries, inner sep=2mm]
+    at ([xshift=6.2cm,yshift=-6.0cm]current page.north west) {Duración: #3};
+  \fill[iubnavy] ([xshift=5.2cm]current page.south west) rectangle
+        ([yshift=0.35cm]current page.south east);
+  \fill[iubyellow] ([xshift=5.2cm,yshift=0.35cm]current page.south west)
+        rectangle ([yshift=0.42cm]current page.south east);
+  \node[anchor=north east, text=iubnavy, font=\small\bfseries]
+    at ([xshift=-0.6cm,yshift=-0.5cm]current page.north east) {IUB · IEL04};
+\end{tikzpicture}
+\end{frame}}
+
+% =====================================================================
+\begin{document}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+%  PORTADA
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  % Panel institucional
+  \fill[iubnavy] (current page.north west) rectangle
+        ([xshift=5.6cm]current page.south west);
+  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{54}{54}\selectfont]
+    at ([xshift=0.7cm,yshift=-1.0cm]current page.north west) {IUB};
+  \node[anchor=north west, text=white, font=\footnotesize, text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=-3.0cm]current page.north west)
+    {Institución Universitaria de Barranquilla};
+  \draw[iubyellow, line width=1.2pt]
+    ([xshift=0.75cm,yshift=-4.25cm]current page.north west) --
+    ([xshift=2.6cm,yshift=-4.25cm]current page.north west);
+  \node[anchor=north west, text=iubyellow, font=\scriptsize\bfseries,
+        text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=-4.5cm]current page.north west)
+    {Tecnología en Gestión de Sistemas Eléctricos};
+  \node[anchor=south west, text=white, font=\scriptsize, text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=0.9cm]current page.south west)
+    {Ing. Sergio Martinez Castilla\\[1pt]\textcolor{iubyellow}{\tiny smartinezc@unibarranquilla.edu.co}};
+  % Bloque de título
+  \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
+        font=\scriptsize\bfseries, inner sep=2mm]
+    at ([xshift=6.4cm,yshift=-1.0cm]current page.north west)
+    {IEL04 \textperiodcentered{} Semana 3 de 14 \textperiodcentered{} Corte evaluativo 1};
+  \node[anchor=north west, text=iubnavy, font=\small, text width=9.0cm, align=left] (a)
+    at ([xshift=6.4cm,yshift=-1.9cm]current page.north west)
+    {Circuitos Eléctricos I};
+  \node[anchor=north west, text=iubnavy, font=\bfseries\fontsize{13}{16}\selectfont,
+        text width=9.0cm, align=left] (t)
+    at ([yshift=-0.35cm]a.south west)
+    {\hyphenpenalty=10000 Asociaciones de condensadores y bobinas en serie, en paralelo y mixtas: cálculo y medición en circuitos L, C y LC};
+  % Franjas de la paleta complementaria
+  \fill[iubblue]   ([xshift=6.4cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \fill[iuborange] ([xshift=8.1cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \fill[iubgreen]  ([xshift=9.8cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \node[anchor=north west, text=iubnavy, font=\scriptsize]
+    at ([xshift=6.4cm,yshift=0.95cm]current page.south west)
+    {Sesión teórico-práctica \textperiodcentered{} 240 min};
+\end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Punto de partida de la sesión}
+\begin{columns}[T,onlytextwidth]
+  \column{0.34\textwidth}
+\begin{caja}[height=5.9cm]{iubblue}{Continuidad}
+\scriptsize \begin{itemize}\setlength{\itemsep}{2pt}
+  \item Semana 2: Bobinas o inductores
+  \item \textbf{Semana 3: Condensadores y bobinas en serie, en paralelo y mixto: cálculo y medición en circuitos L, C y LC}
+  \item Semana 4: Circuito RC en serie
+\end{itemize}
+\end{caja}
+  \column{0.34\textwidth}
+\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}
+\scriptsize \begin{itemize}\setlength{\itemsep}{2pt}
+  \item Calcular resistencias equivalentes en serie, en paralelo y mixtas
+  \item Identificar el valor nominal y la tolerancia de condensadores
+  \item Aplicar Q = CV y la relación v = L di/dt (semanas 1 y 2)
+  \item Convertir entre pF, nF, µF y entre µH, mH y H
+\end{itemize}
+\end{caja}
+  \column{0.29\textwidth}
+\begin{caja}[height=5.9cm]{iubgreen}{Competencia}
+\scriptsize \textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Resultados de aprendizaje}
+\begin{columns}[c,onlytextwidth]
+  \column{0.45\textwidth}
+\begin{caja}{iubnavy}{IEL04-RA1}
+\footnotesize Calcular un circuito capacitivo, inductivo y LC, sea en serie o paralelo.
+\end{caja}
+\vspace{1mm}
+\begin{cajaplana}{iubblue}
+\scriptsize \textbf{CE1.} Identificar los tipos de capacitores e inductores.\\[2pt]
+\textbf{CE2.} Realizar mediciones en un circuito capacitivo e inductivo.\\[2pt]
+\textbf{CE3.} Realizar mediciones en un circuito LC.
+\end{cajaplana}
+  \column{0.52\textwidth}
+\centering
+\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
+\begin{tikzpicture}
+  \node[box, fill=iubblue, text width=4.9cm, align=left, font=\tiny, anchor=west] (r0) at (1.25,0.00) {Calcular la capacitancia equivalente y la tensión de cada condensador en asociaciones en serie, en paralelo y mixtas.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Aplicar};
+  \node[box, fill=iuborange, text width=4.9cm, align=left, font=\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular la inductancia equivalente de bobinas en serie, en paralelo y mixtas, y comparar sus reglas con las de condensadores y resistores.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Analizar};
+  \node[box, fill=iubgreen, text width=4.9cm, align=left, font=\tiny, anchor=west] (r2) at (1.25,-2.90) {Medir la capacitancia y la inductancia equivalentes de asociaciones montadas en el protoboard y contrastarlas con el cálculo.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Evaluar};
+  \node[box, fill=iubblue, text width=4.9cm, align=left, font=\tiny, anchor=west] (r3) at (1.25,-4.35) {Calcular y medir la frecuencia de resonancia de un circuito LC a partir de los valores de sus componentes.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};
+  \draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);
+  \draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);
+  \draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);
+\end{tikzpicture}
+\end{adjustbox}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ruta de la sesión \textperiodcentered{} 240 minutos}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,0.00) {1};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,0.00) {Obtener valores no estándar, repartir tensiones y formar circuitos LC};
+  \fill[iubblue] (8.3,-0.20) rectangle ++(1.38,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (9.78,0.00) {15 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-0.76) {2};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-0.76) {1/CT = \ensuremath{\Sigma} 1/Ci, casos de dos y de n iguales, reparto de tensión Vx = (CT/Cx)VT};
+  \fill[iuborange] (8.3,-0.96) rectangle ++(3.22,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.62,-0.76) {35 min};
+  \node[circle, fill=iubgreen, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-1.51) {3};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-1.51) {CT = \ensuremath{\Sigma} Ci, tensión común y reducción paso a paso de redes mixtas};
+  \fill[iubgreen] (8.3,-1.71) rectangle ++(2.76,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.16,-1.51) {30 min};
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-2.27) {4};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-2.27) {LT = \ensuremath{\Sigma} Li, 1/LT = \ensuremath{\Sigma} 1/Li, analogía con resistores y condición de no acoplamiento};
+  \fill[iubblue] (8.3,-2.47) rectangle ++(3.22,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.62,-2.27) {35 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-3.03) {5};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-3.03) {Intercambio de energía entre L y C y fr = 1/(2\ensuremath{\pi}\ensuremath{\surd}LC)};
+  \fill[iuborange] (8.3,-3.23) rectangle ++(3.22,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.62,-3.03) {35 min};
+  \node[circle, fill=iubgreen, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-3.79) {6};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-3.79) {Tabla comparativa de reglas, magnitudes, unidades y símbolos de L, C y R};
+  \fill[iubgreen] (8.3,-3.99) rectangle ++(2.30,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (10.70,-3.79) {25 min};
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-4.54) {7};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-4.54) {Calcular con valores nominales y medidos, medir con LCR y osciloscopio, comparar};
+  \fill[iubblue] (8.3,-4.74) rectangle ++(4.60,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (13.00,-4.54) {50 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-5.30) {8};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-5.30) {Síntesis, cierre actitudinal y bibliografía};
+  \fill[iuborange] (8.3,-5.50) rectangle ++(1.38,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (9.78,-5.30) {15 min};
+  \draw[iubnavy, line width=0.6pt] (8.3,0.45) -- (8.3,-5.70);
+\end{tikzpicture}
+\end{frame}
+
+% =====================================================================
+\bloque{01}{Obtener valores no estándar, repartir tensiones y formar circuitos LC}{15 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Por qué asociar condensadores y bobinas}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Rara vez un circuito real usa un solo condensador o una sola bobina con exactamente el valor que el cálculo pide.
+  \item Las reglas de asociación no son arbitrarias: salen de la física de cada elemento.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{cardO}{Nota pedagógica}
+\footnotesize Esta sesión completa el RA1 antes del examen de la semana 5.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ruta de la sesión}
+\centering
+\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
+\begin{tikzpicture}
+  \node[bG, align=center, font=\scriptsize, text width=2.41cm] (n0) at (1.33,3.91) {Kit verificado (semanas 1 y 2)};
+  \node[bB, align=center, font=\scriptsize, text width=2.55cm] (n1) at (6.51,4.80) {Asociaciones de condensadores};
+  \node[bB, align=center, font=\scriptsize, text width=2.38cm] (n2) at (6.51,2.84) {Asociaciones de bobinas};
+  \node[bO, align=center, font=\scriptsize, text width=2.38cm] (n3) at (11.67,3.91) {Valores equivalentes CT y LT};
+  \node[bB, align=center, font=\scriptsize, text width=1.71cm] (n4) at (11.67,0.61) {Circuito LC: fr};
+  \node[bG, align=center, font=\scriptsize, text width=2.57cm] (n5) at (6.51,0.61) {Medición y comparación};
+  \draw[flecha] (n0) -- (n1);
+  \draw[flecha] (n0) -- (n2);
+  \draw[flecha] (n1) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {serie, paralelo, mixto} (n3);
+  \draw[flecha] (n2) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {serie, paralelo, mixto} (n3);
+  \draw[flecha] (n3) -- (n4);
+  \draw[flecha] (n4) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {LCR y osciloscopio} (n5);
+\end{tikzpicture}
+\end{adjustbox}
+
+\vspace{1mm}{\scriptsize Ruta de la sesión: de los componentes verificados al circuito LC medido\par}
+\end{frame}
+
+% =====================================================================
+\bloque{02}{1/CT = \ensuremath{\Sigma} 1/Ci, casos de dos y de n iguales, reparto de tensión Vx = (CT/Cx)VT}{35 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Condensadores en serie y divisor capacitivo de tensión}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item En consecuencia, todos los condensadores acumulan \textbf{la misma carga} $Q$, igual a la carga total del conjunto $[1]$.
+  \item Para \textbf{dos condensadores} en serie, la capacitancia total es el producto dividido entre la suma, $C_T = C_1 C_2 / (C_1 + C_2)$ $[1]$; con 100 pF y 330 pF resulta $C_T = (100)(330)/430 \approx 76.7\ \text{pF}$.
+  \item La asociación en serie actúa además como un \textbf{divisor de tensión}.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \frac{1}{C_T} = \frac{1}{C_1} + \frac{1}{C_2} + \dots + \frac{1}{C_n}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Ecuaciones: Condensadores en serie y divisor capacitivo}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.55\textwidth}
+\begin{cajaplana}{iubblue}
+\centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle V_x = \left( \frac{C_T}{C_x} \right) V_T$\end{adjustbox}
+\end{cajaplana}
+  \column{0.42\textwidth}
+\begin{cardO}{Error frecuente}
+\footnotesize Sumar directamente las capacitancias en serie, como si fueran resistencias.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Divisor capacitivo de tres condensadores en serie con 25 V}}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Condensador} & \hd{C (µF)} & \hd{CT/Cx} & \hd{Vx (V)}\\
+  C1 & 0.10 & 0.600 & 15.0\\
+  C2 & 0.47 & 0.128 & 3.19\\
+  C3 & 0.22 & 0.273 & 6.82\\
+  Total & CT = 0.06 & — & 25.0\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Divisor capacitivo de tres condensadores en serie con 25 V aplicados (ejemplo de $[1]$)\par}
+\end{frame}
+
+% =====================================================================
+\bloque{03}{CT = \ensuremath{\Sigma} Ci, tensión común y reducción paso a paso de redes mixtas}{30 min}{iubgreen}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Condensadores en paralelo y asociaciones mixtas}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item En una conexión en \textbf{paralelo}, todos los condensadores quedan entre los mismos dos nodos y, por tanto, tienen la misma tensión.
+  \item La conexión en paralelo tiene dos ventajas prácticas.
+  \item Una \textbf{asociación mixta} combina grupos en serie y grupos en paralelo.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle C_T = C_1 + C_2 + C_3 + \dots + C_n$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Procedimiento de reducción de una asociación mixta}
+\centering
+\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
+\begin{tikzpicture}
+  \node[bG, align=center, font=\scriptsize, text width=2.96cm] (n0) at (1.60,4.13) {Red mixta de condensadores};
+  \node[bB, align=center, font=\scriptsize, text width=1.91cm] (n1) at (6.78,4.13) {Reducir grupos en paralelo: \ensuremath{\Sigma}Ci};
+  \node[bB, align=center, font=\scriptsize, text width=2.25cm] (n2) at (11.98,4.13) {Reducir grupos en serie: 1/CT = \ensuremath{\Sigma}1/Ci};
+  \node[dec, align=center, font=\tiny, text width=1.85cm, inner sep=1pt] (n3) at (11.98,1.06) {¿Queda un solo C?};
+  \node[bG, align=center, font=\scriptsize, text width=2.79cm] (n4) at (6.78,1.06) {Capacitancia equivalente};
+  \draw[flecha] (n0) -- (n1);
+  \draw[flecha] (n1) -- (n2);
+  \draw[flecha] (n2) -- (n3);
+  \draw[flecha] (n3) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {sí} (n4);
+  \draw[flecha] (n3) to[bend left=30] node[midway, above, fill=white, font=\tiny, inner sep=1pt] {no: repetir} (n1);
+\end{tikzpicture}
+\end{adjustbox}
+
+\vspace{1mm}{\scriptsize Procedimiento de reducción de una asociación mixta de condensadores\par}
+\end{frame}
+
+% =====================================================================
+\bloque{04}{LT = \ensuremath{\Sigma} Li, 1/LT = \ensuremath{\Sigma} 1/Li, analogía con resistores y condición de no acoplamiento}{35 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Bobinas en serie, en paralelo y mixtas}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item A diferencia de los condensadores, sus reglas son las mismas que las de los resistores.
+  \item En el protoboard, las bobinas se montan separadas y con sus ejes perpendiculares; las toroidales, que confinan su campo, son las menos sensibles a este efecto.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle L_T = L_1 + L_2 + L_3 + \dots + L_n$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ecuaciones: Bobinas en serie, en paralelo y mixtas}
+\begin{columns}[c,onlytextwidth]
+  \column{0.55\textwidth}
+\begin{cajaplana}{iubblue}
+\centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}\frac{1}{L_T} = \frac{1}{L_1} + \frac{1}{L_2} + \dots + \frac{1}{L_n} \\ L_T = \frac{L_1 L_2}{L_1 + L_2}\ \text{(dos bobinas)}\end{gathered}$\end{adjustbox}
+\end{cajaplana}
+  \column{0.42\textwidth}
+\begin{cardO}{Error frecuente}
+\footnotesize Olvidar las resistencias de devanado al asociar bobinas.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Reglas de asociación de bobinas con ejemplos numéricos}}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Conexión} & \hd{Regla} & \hd{Ejemplo} & \hd{LT}\\
+  Serie & LT = L1 + L2 + … & 1 mH + 4.7 mH + 10 mH & 15.7 mH\\
+  Paralelo (dos) & LT = L1·L2/(L1 + L2) & 4.7 mH \ensuremath{\parallel} 10 mH & 3.20 mH\\
+  Paralelo (n) & 1/LT = \ensuremath{\Sigma} 1/Li & 10 mH \ensuremath{\parallel} 5 mH \ensuremath{\parallel} 2 mH & 1.25 mH\\
+  n iguales en serie & LT = n·L & 3 × 10 mH & 30 mH\\
+  n iguales en paralelo & LT = L/n & 2 × 10 mH & 5 mH\\
+  Mixta & reducir por grupos & (1 mH + 4.7 mH) \ensuremath{\parallel} 10 mH & 3.63 mH\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Reglas de asociación de bobinas con ejemplos numéricos\par}
+\end{frame}
+
+% =====================================================================
+\bloque{05}{Intercambio de energía entre L y C y fr = 1/(2\ensuremath{\pi}\ensuremath{\surd}LC)}{35 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{El circuito LC y su frecuencia de resonancia}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Cuando un condensador y una bobina se conectan entre sí, aparece un comportamiento que ninguno de los dos tiene por separado.
+  \item Con un condensador de 100 nF cargado a 10 V y una bobina de 10 mH, $I_{max} = 10\sqrt{10^{-7}/10^{-2}} \approx 31.6\ \text{mA}$.
+  \item Con $L = 10\ \text{mH}$ y $C = 100\ \text{nF}$, $\sqrt{LC} = \sqrt{10^{-2} \times 10^{-7}} = 3.162 \times 10^{-5}\ \text{s}$ y $f_r = 1/(2\pi \times 3.162 \times 10^{-5}) \approx 5.03\ \text{kHz}$.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle f_r = \frac{1}{2\pi\sqrt{L\,C}}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Frecuencia de resonancia de un circuito LC en función}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.62\textwidth}
+\centering
+\begin{tikzpicture}
+  \begin{semilogxaxis}[width=8.4cm, height=5.7cm, xmin=10, xmax=1000, ymin=294.13, ymax=24513,
+      xlabel={Capacitancia C (nF)}, ylabel={Frecuencia de resonancia fr (Hz)},
+      label style={font=\scriptsize, text=iubnavy}, tick label style={font=\tiny, text=iubnavy},
+      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},
+      legend style={font=\tiny, fill=white}, legend pos=north east]
+    \addplot[line width=1.4pt, iubblue] coordinates {(10,23215) (10.635,22511) (11.311,21828) (12.03,21166) (12.795,20524) (13.608,19901) (14.472,19298) (15.392,18712) (16.37,18145) (17.41,17594) (18.516,17061) (19.693,16543) (20.945,16041) (22.275,15555) (23.691,15083) (25.196,14625) (26.797,14182) (28.5,13751) (30.311,13334) (32.237,12930) (34.286,12538) (36.465,12157) (38.782,11788) (41.246,11431) (43.867,11084) (46.655,10748) (49.619,10422) (52.773,10106) (56.126,9799.2) (59.692,9501.9) (63.486,9213.7) (67.52,8934.2) (71.81,8663.2) (76.374,8400.4) (81.227,8145.6) (86.388,7898.5) (91.878,7658.9) (97.716,7426.6) (103.93,7201.3) (110.53,6982.8) (117.55,6771) (125.02,6565.6) (132.97,6366.5) (141.42,6173.3) (150.4,5986.1) (159.96,5804.5) (170.13,5628.4) (180.94,5457.7) (192.43,5292.1) (204.66,5131.6) (217.67,4975.9) (231.5,4825) (246.21,4678.6) (261.85,4536.7) (278.49,4399.1) (296.19,4265.7) (315.01,4136.3) (335.03,4010.8) (356.32,3889.1) (378.96,3771.1) (403.04,3656.8) (428.65,3545.8) (455.89,3438.3) (484.86,3334) (515.67,3232.8) (548.44,3134.8) (583.29,3039.7) (620.36,2947.5) (659.78,2858.1) (701.7,2771.4) (746.29,2687.3) (793.72,2605.8) (844.15,2526.7) (897.8,2450.1) (954.85,2375.8) (1000,2321.5)};
+    \addlegendentry{L = 4.7 mH}
+    \addplot[line width=1.4pt, iuborange] coordinates {(10,15915) (10.635,15433) (11.311,14965) (12.03,14511) (12.795,14070) (13.608,13644) (14.472,13230) (15.392,12828) (16.37,12439) (17.41,12062) (18.516,11696) (19.693,11341) (20.945,10997) (22.275,10664) (23.691,10340) (25.196,10027) (26.797,9722.4) (28.5,9427.5) (30.311,9141.5) (32.237,8864.2) (34.286,8595.3) (36.465,8334.6) (38.782,8081.8) (41.246,7836.6) (43.867,7598.9) (46.655,7368.4) (49.619,7144.9) (52.773,6928.1) (56.126,6718) (59.692,6514.2) (63.486,6316.6) (67.52,6125) (71.81,5939.2) (76.374,5759) (81.227,5584.3) (86.388,5414.9) (91.878,5250.7) (97.716,5091.4) (103.93,4937) (110.53,4787.2) (117.55,4642) (125.02,4501.2) (132.97,4364.6) (141.42,4232.2) (150.4,4103.8) (159.96,3979.4) (170.13,3858.7) (180.94,3741.6) (192.43,3628.1) (204.66,3518) (217.67,3411.3) (231.5,3307.9) (246.21,3207.5) (261.85,3110.2) (278.49,3015.9) (296.19,2924.4) (315.01,2835.7) (335.03,2749.7) (356.32,2666.2) (378.96,2585.4) (403.04,2506.9) (428.65,2430.9) (455.89,2357.2) (484.86,2285.7) (515.67,2216.3) (548.44,2149.1) (583.29,2083.9) (620.36,2020.7) (659.78,1959.4) (701.7,1900) (746.29,1842.3) (793.72,1786.4) (844.15,1732.2) (897.8,1679.7) (954.85,1628.7) (1000,1591.5)};
+    \addlegendentry{L = 10 mH}
+    \addplot[line width=1pt, dashed, iubnavy!70] coordinates {(100,294.13) (100,24513)};
+    \addlegendentry{C = 100 nF}
+  \end{semilogxaxis}
+\end{tikzpicture}
+  \column{0.35\textwidth}
+\begin{caja}{iubblue}{Lectura de la gráfica}
+\footnotesize Con el eje de capacitancia en escala logarítmica, las curvas muestran que la frecuencia cae rápido al principio y cada vez más despacio: cada década de capacitancia divide la frecuencia entre $\sqrt{10} \approx 3.16$.
+\end{caja}
+\end{columns}
+\end{frame}
+
+% =====================================================================
+\bloque{06}{Tabla comparativa de reglas, magnitudes, unidades y símbolos de L, C y R}{25 min}{iubgreen}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Parámetros, unidades y dualidad de los circuitos L y C}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Las reglas de asociación de las tres magnitudes pasivas se recuerdan mejor como un sistema que como fórmulas sueltas.
+  \item Si se asocian condensadores en serie, el resultado debe ser menor que el menor; si se asocian bobinas en serie, mayor que la mayor.
+  \item En los planos del laboratorio conviene anotar junto a cada designador el valor medido, no solo el nominal, para poder comparar después cálculo y medición.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{cardO}{Nota pedagógica}
+\footnotesize Una regla mnemotécnica útil: «la bobina se porta como el resistor; el condensador, al revés».
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Parámetros, unidades y reglas de asociación (1/2)}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Característica} & \hd{Resistor (R)} & \hd{Condensador (C)} & \hd{Bobina (L)}\\
+  Unidad & ohmio (\ensuremath{\Omega}) & faradio (F) & henrio (H)\\
+  Submúltiplos habituales & k\ensuremath{\Omega}, M\ensuremath{\Omega} & pF, nF, µF & µH, mH\\
+  Relación tensión-corriente & V = IR & i = C dv/dt & v = L di/dt\\
+  Energía & se disipa: P = I²R & se almacena: W = CV²/2 & se almacena: W = LI²/2\\
+  En serie & RT = \ensuremath{\Sigma}Ri & 1/CT = \ensuremath{\Sigma}1/Ci & LT = \ensuremath{\Sigma}Li\\
+  En paralelo & 1/RT = \ensuremath{\Sigma}1/Ri & CT = \ensuremath{\Sigma}Ci & 1/LT = \ensuremath{\Sigma}1/Li\\
+  En serie, el total es & mayor que el mayor & menor que el menor & mayor que el mayor\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Parámetros, unidades y reglas de asociación de resistores, condensadores y bobinas\par}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Parámetros, unidades y reglas de asociación (2/2)}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Característica} & \hd{Resistor (R)} & \hd{Condensador (C)} & \hd{Bobina (L)}\\
+  Comportamiento en cd estable & resistencia & circuito abierto & cortocircuito (más RW)\\
+  Designador en planos & R1, R2… & C1, C2… & L1, L2…\\
+  Límite de trabajo & potencia (W) & tensión (V) & corriente (A)\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Parámetros, unidades y reglas de asociación de resistores, condensadores y bobinas\par}
+\end{frame}
+
+% =====================================================================
+\bloque{07}{Calcular con valores nominales y medidos, medir con LCR y osciloscopio, comparar}{50 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Montaje y medición de asociaciones L, C y de un circuito LC}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Las lecturas del LCR y del osciloscopio que se usan más abajo son valores de ejemplo para ilustrar el procedimiento.
+  \item Para el montaje A, con valores nominales, $C_T = (22)(4.7)/(22 + 4.7) \approx 3.87\ \text{nF}$; con los medidos, $C_T = (22.4)(4.52)/(26.92) \approx 3.76\ \text{nF}$.
+  \item Deja dos criterios de trabajo para el resto del curso.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle e_{\%} = \frac{X_{med} - X_{calc}}{X_{calc}} \times 100$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Ecuaciones: Montaje y medición de asociaciones L, C}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.55\textwidth}
+\begin{cajaplana}{iubblue}
+\centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}f_r= \frac{1}{2\pi\sqrt{(10.4 \times 10^{-3})(97.8 \times 10^{-9})}} \\ \approx 4.99\ \text{kHz}\end{gathered}$\end{adjustbox}
+\end{cajaplana}
+  \column{0.42\textwidth}
+\begin{caja}{iubnavy}{Recuerde}
+\footnotesize donde $f_r$ es la frecuencia de resonancia en hercios (Hz), calculada con la inductancia medida de L3 en henrios (10.4 mH) y la capacitancia medida de C2 en faradios (97.8 nF).
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Valores equivalentes calculados y medidos}
+\centering\tiny
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Montaje} & \hd{Asociación} & \hd{Calc. nominal} & \hd{Calc. con medidos} & \hd{Medido (LCR)} & \hd{e (\%)}\\
+  A & C1 serie C3 & 3.87 nF & 3.76 nF & 3.78 nF & +0.5\\
+  B & C1 \ensuremath{\parallel} C2 & 122 nF & 120.2 nF & 120.6 nF & +0.3\\
+  C & L1 serie L2 & 5.70 mH & 5.65 mH & 5.68 mH & +0.5\\
+  D & L2 \ensuremath{\parallel} L3 & 3.20 mH & 3.20 mH & 3.21 mH & +0.3\\
+  E & (L1 + L2) \ensuremath{\parallel} L3 & 3.63 mH & 3.66 mH & 3.67 mH & +0.3\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Valores equivalentes calculados y medidos de las asociaciones (lecturas de ejemplo)\par}
+\end{frame}
+
+% =====================================================================
+\bloque{08}{Síntesis, cierre actitudinal y bibliografía}{15 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Síntesis de la sesión}
+\begin{columns}[T,onlytextwidth]
+  \column{0.32\textwidth}
+\begin{cardB}{Condensadores en serie y divisor}
+\scriptsize 1/CT = \ensuremath{\Sigma} 1/Ci, casos de dos y de n iguales, reparto de tensión Vx = (CT/Cx)VT
+\end{cardB}
+  \column{0.32\textwidth}
+\begin{cardO}{Condensadores en paralelo y asociaciones}
+\scriptsize CT = \ensuremath{\Sigma} Ci, tensión común y reducción paso a paso de redes mixtas
+\end{cardO}
+  \column{0.32\textwidth}
+\begin{cardG}{Bobinas en serie, en paralelo y mixtas}
+\scriptsize LT = \ensuremath{\Sigma} Li, 1/LT = \ensuremath{\Sigma} 1/Li, analogía con resistores y condición de no acoplamiento
+\end{cardG}
+\end{columns}
+\vspace{2mm}
+\begin{columns}[T,onlytextwidth]
+  \column{0.32\textwidth}
+\begin{cardB}{El circuito LC y su frecuencia}
+\scriptsize Intercambio de energía entre L y C y fr = 1/(2\ensuremath{\pi}\ensuremath{\surd}LC)
+\end{cardB}
+  \column{0.32\textwidth}
+\begin{cardO}{Parámetros, unidades y dualidad}
+\scriptsize Tabla comparativa de reglas, magnitudes, unidades y símbolos de L, C y R
+\end{cardO}
+  \column{0.32\textwidth}
+\begin{cardG}{Montaje y medición de asociaciones L, C}
+\scriptsize Calcular con valores nominales y medidos, medir con LCR y osciloscopio, comparar
+\end{cardG}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Reflexión para llevar}
+\centering
+\begin{tikzpicture}
+  \node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\normalsize] (c) at (0,0) {\itshape «En un montaje compartido, anotar los valores medidos de cada componente y montar las bobinas separadas es trabajo que ahorra horas al equipo: una diferencia que nadie sabe explicar suele venir de un dato que alguien no registró.»};
+  \node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\scriptsize\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};
+\end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Referencias bibliográficas}
+\small
+\begin{itemize}\setlength{\itemsep}{8pt}
+  \item[{$[1]$}] T. L. Floyd, Principios de circuitos eléctricos, 8.\textordfeminine{} ed. México: Pearson Educación, 2007.
+  \item[{$[2]$}] R. L. Boylestad, Introducción al análisis de circuitos, 10.\textordfeminine{} ed. México: Pearson Educación, 2004.
+\end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+%  CIERRE
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[iubnavy] (current page.north west) rectangle (current page.south east);
+  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{40}{44}\selectfont]
+    at ([xshift=1.2cm,yshift=-1.6cm]current page.north west) {\textexclamdown{}Gracias!};
+  \node[anchor=north west, text=white, font=\normalsize, text width=14cm, align=left]
+    at ([xshift=1.2cm,yshift=-3.4cm]current page.north west)
+    {IEL04 \textperiodcentered{} Circuitos Eléctricos I};
+  \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
+        font=\small\bfseries, inner sep=2.2mm, text width=11.5cm]
+    at ([xshift=1.2cm,yshift=-4.4cm]current page.north west)
+    {Próxima sesión \textperiodcentered{} Semana 4: Circuito RC en serie: tipos e identificación de resistores y condensadores, análisis y Ley de Voltajes de Kirchhoff};
+  \node[anchor=south west, text=iubyellow, font=\small, align=left]
+    at ([xshift=1.2cm,yshift=0.9cm]current page.south west)
+    {Ing. Sergio Martinez Castilla \quad · \quad smartinezc@unibarranquilla.edu.co};
+  \fill[iubblue]   ([xshift=1.2cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+  \fill[iuborange] ([xshift=2.9cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+  \fill[iubgreen]  ([xshift=4.6cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+\end{tikzpicture}
+\end{frame}
+
+\end{document}

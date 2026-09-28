@@ -1,0 +1,141 @@
+{
+ "formato": 2,
+ "temario_hash": "cf45b1d9dd8300a8",
+ "modelo": "gpt-4o",
+ "fecha": "2026-09-28",
+ "partes": {
+  "apertura": {
+   "huella": "9c52d2840f5b1b98",
+   "diapositivas": [
+    {
+     "titulo": "Punto de partida de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 2: Bobinas o inductores\n  \\item \\textbf{Semana 3: Condensadores y bobinas en serie, en paralelo y mixto: cálculo y medición en circuitos L, C y LC}\n  \\item Semana 4: Circuito RC en serie\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular resistencias equivalentes en serie, en paralelo y mixtas\n  \\item Identificar el valor nominal y la tolerancia de condensadores\n  \\item Aplicar Q = CV y la relación v = L di/dt (semanas 1 y 2)\n  \\item Convertir entre pF, nF, µF y entre µH, mH y H\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Resultados de aprendizaje",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.45\\textwidth}\n\\begin{caja}{iubnavy}{IEL04-RA1}\n\\footnotesize Calcular un circuito capacitivo, inductivo y LC, sea en serie o paralelo.\n\\end{caja}\n\\vspace{1mm}\n\\begin{cajaplana}{iubblue}\n\\scriptsize \\textbf{CE1.} Identificar los tipos de capacitores e inductores.\\\\[2pt]\n\\textbf{CE2.} Realizar mediciones en un circuito capacitivo e inductivo.\\\\[2pt]\n\\textbf{CE3.} Realizar mediciones en un circuito LC.\n\\end{cajaplana}\n  \\column{0.52\\textwidth}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r0) at (1.25,0.00) {Calcular la capacitancia equivalente y la tensión de cada condensador en asociaciones en serie, en paralelo y mixtas.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Aplicar};\n  \\node[box, fill=iuborange, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular la inductancia equivalente de bobinas en serie, en paralelo y mixtas, y comparar sus reglas con las de condensadores y resistores.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Analizar};\n  \\node[box, fill=iubgreen, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r2) at (1.25,-2.90) {Medir la capacitancia y la inductancia equivalentes de asociaciones montadas en el protoboard y contrastarlas con el cálculo.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Evaluar};\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r3) at (1.25,-4.35) {Calcular y medir la frecuencia de resonancia de un circuito LC a partir de los valores de sus componentes.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};\n  \\draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);\n  \\draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);\n  \\draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);\n\\end{tikzpicture}\n\\end{adjustbox}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-01": {
+   "huella": "e94abebea3bcb4d4",
+   "diapositivas": [
+    {
+     "titulo": "Por qué asociar condensadores y bobinas",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Rara vez un circuito real usa un solo condensador o una sola bobina con exactamente el valor que el cálculo pide.\n  \\item Las reglas de asociación no son arbitrarias: salen de la física de cada elemento.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Esta sesión completa el RA1 antes del examen de la semana 5.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ruta de la sesión",
+     "cuerpo": "\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[bG, align=center, font=\\scriptsize, text width=2.41cm] (n0) at (1.33,3.91) {Kit verificado (semanas 1 y 2)};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.55cm] (n1) at (6.51,4.80) {Asociaciones de condensadores};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.38cm] (n2) at (6.51,2.84) {Asociaciones de bobinas};\n  \\node[bO, align=center, font=\\scriptsize, text width=2.38cm] (n3) at (11.67,3.91) {Valores equivalentes CT y LT};\n  \\node[bB, align=center, font=\\scriptsize, text width=1.71cm] (n4) at (11.67,0.61) {Circuito LC: fr};\n  \\node[bG, align=center, font=\\scriptsize, text width=2.57cm] (n5) at (6.51,0.61) {Medición y comparación};\n  \\draw[flecha] (n0) -- (n1);\n  \\draw[flecha] (n0) -- (n2);\n  \\draw[flecha] (n1) -- node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {serie, paralelo, mixto} (n3);\n  \\draw[flecha] (n2) -- node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {serie, paralelo, mixto} (n3);\n  \\draw[flecha] (n3) -- (n4);\n  \\draw[flecha] (n4) -- node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {LCR y osciloscopio} (n5);\n\\end{tikzpicture}\n\\end{adjustbox}\n\n\\vspace{1mm}{\\scriptsize Ruta de la sesión: de los componentes verificados al circuito LC medido\\par}"
+    }
+   ]
+  },
+  "bloque-02": {
+   "huella": "a89315f517d9327c",
+   "diapositivas": [
+    {
+     "titulo": "Condensadores en serie y divisor capacitivo de tensión",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item En consecuencia, todos los condensadores acumulan \\textbf{la misma carga} $Q$, igual a la carga total del conjunto $[1]$.\n  \\item Para \\textbf{dos condensadores} en serie, la capacitancia total es el producto dividido entre la suma, $C_T = C_1 C_2 / (C_1 + C_2)$ $[1]$; con 100 pF y 330 pF resulta $C_T = (100)(330)/430 \\approx 76.7\\ \\text{pF}$.\n  \\item La asociación en serie actúa además como un \\textbf{divisor de tensión}.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\frac{1}{C_T} = \\frac{1}{C_1} + \\frac{1}{C_2} + \\dots + \\frac{1}{C_n}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Condensadores en serie y divisor capacitivo",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.55\\textwidth}\n\\begin{cajaplana}{iubblue}\n\\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle V_x = \\left( \\frac{C_T}{C_x} \\right) V_T$\\end{adjustbox}\n\\end{cajaplana}\n  \\column{0.42\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Sumar directamente las capacitancias en serie, como si fueran resistencias.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Divisor capacitivo de tres condensadores en serie con 25 V",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Condensador} & \\hd{C (µF)} & \\hd{CT/Cx} & \\hd{Vx (V)}\\\\\n  C1 & 0.10 & 0.600 & 15.0\\\\\n  C2 & 0.47 & 0.128 & 3.19\\\\\n  C3 & 0.22 & 0.273 & 6.82\\\\\n  Total & CT = 0.06 & — & 25.0\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Divisor capacitivo de tres condensadores en serie con 25 V aplicados (ejemplo de $[1]$)\\par}"
+    }
+   ]
+  },
+  "bloque-03": {
+   "huella": "b12edfed93514b4f",
+   "diapositivas": [
+    {
+     "titulo": "Condensadores en paralelo y asociaciones mixtas",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item En una conexión en \\textbf{paralelo}, todos los condensadores quedan entre los mismos dos nodos y, por tanto, tienen la misma tensión.\n  \\item La conexión en paralelo tiene dos ventajas prácticas.\n  \\item Una \\textbf{asociación mixta} combina grupos en serie y grupos en paralelo.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle C_T = C_1 + C_2 + C_3 + \\dots + C_n$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Procedimiento de reducción de una asociación mixta",
+     "cuerpo": "\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[bG, align=center, font=\\scriptsize, text width=2.96cm] (n0) at (1.60,4.13) {Red mixta de condensadores};\n  \\node[bB, align=center, font=\\scriptsize, text width=1.91cm] (n1) at (6.78,4.13) {Reducir grupos en paralelo: \\ensuremath{\\Sigma}Ci};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.25cm] (n2) at (11.98,4.13) {Reducir grupos en serie: 1/CT = \\ensuremath{\\Sigma}1/Ci};\n  \\node[dec, align=center, font=\\tiny, text width=1.85cm, inner sep=1pt] (n3) at (11.98,1.06) {¿Queda un solo C?};\n  \\node[bG, align=center, font=\\scriptsize, text width=2.79cm] (n4) at (6.78,1.06) {Capacitancia equivalente};\n  \\draw[flecha] (n0) -- (n1);\n  \\draw[flecha] (n1) -- (n2);\n  \\draw[flecha] (n2) -- (n3);\n  \\draw[flecha] (n3) -- node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {sí} (n4);\n  \\draw[flecha] (n3) to[bend left=30] node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {no: repetir} (n1);\n\\end{tikzpicture}\n\\end{adjustbox}\n\n\\vspace{1mm}{\\scriptsize Procedimiento de reducción de una asociación mixta de condensadores\\par}"
+    }
+   ]
+  },
+  "bloque-04": {
+   "huella": "1a039afef2c3d14f",
+   "diapositivas": [
+    {
+     "titulo": "Bobinas en serie, en paralelo y mixtas",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item A diferencia de los condensadores, sus reglas son las mismas que las de los resistores.\n  \\item En el protoboard, las bobinas se montan separadas y con sus ejes perpendiculares; las toroidales, que confinan su campo, son las menos sensibles a este efecto.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle L_T = L_1 + L_2 + L_3 + \\dots + L_n$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Bobinas en serie, en paralelo y mixtas",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.55\\textwidth}\n\\begin{cajaplana}{iubblue}\n\\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}\\frac{1}{L_T} = \\frac{1}{L_1} + \\frac{1}{L_2} + \\dots + \\frac{1}{L_n} \\\\ L_T = \\frac{L_1 L_2}{L_1 + L_2}\\ \\text{(dos bobinas)}\\end{gathered}$\\end{adjustbox}\n\\end{cajaplana}\n  \\column{0.42\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Olvidar las resistencias de devanado al asociar bobinas.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Reglas de asociación de bobinas con ejemplos numéricos",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Conexión} & \\hd{Regla} & \\hd{Ejemplo} & \\hd{LT}\\\\\n  Serie & LT = L1 + L2 + … & 1 mH + 4.7 mH + 10 mH & 15.7 mH\\\\\n  Paralelo (dos) & LT = L1·L2/(L1 + L2) & 4.7 mH \\ensuremath{\\parallel} 10 mH & 3.20 mH\\\\\n  Paralelo (n) & 1/LT = \\ensuremath{\\Sigma} 1/Li & 10 mH \\ensuremath{\\parallel} 5 mH \\ensuremath{\\parallel} 2 mH & 1.25 mH\\\\\n  n iguales en serie & LT = n·L & 3 × 10 mH & 30 mH\\\\\n  n iguales en paralelo & LT = L/n & 2 × 10 mH & 5 mH\\\\\n  Mixta & reducir por grupos & (1 mH + 4.7 mH) \\ensuremath{\\parallel} 10 mH & 3.63 mH\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Reglas de asociación de bobinas con ejemplos numéricos\\par}"
+    }
+   ]
+  },
+  "bloque-05": {
+   "huella": "94932690f553ddd2",
+   "diapositivas": [
+    {
+     "titulo": "El circuito LC y su frecuencia de resonancia",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Cuando un condensador y una bobina se conectan entre sí, aparece un comportamiento que ninguno de los dos tiene por separado.\n  \\item Con un condensador de 100 nF cargado a 10 V y una bobina de 10 mH, $I_{max} = 10\\sqrt{10^{-7}/10^{-2}} \\approx 31.6\\ \\text{mA}$.\n  \\item Con $L = 10\\ \\text{mH}$ y $C = 100\\ \\text{nF}$, $\\sqrt{LC} = \\sqrt{10^{-2} \\times 10^{-7}} = 3.162 \\times 10^{-5}\\ \\text{s}$ y $f_r = 1/(2\\pi \\times 3.162 \\times 10^{-5}) \\approx 5.03\\ \\text{kHz}$.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle f_r = \\frac{1}{2\\pi\\sqrt{L\\,C}}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Frecuencia de resonancia de un circuito LC en función",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.62\\textwidth}\n\\centering\n\\begin{tikzpicture}\n  \\begin{semilogxaxis}[width=8.4cm, height=5.7cm, xmin=10, xmax=1000, ymin=294.13, ymax=24513,\n      xlabel={Capacitancia C (nF)}, ylabel={Frecuencia de resonancia fr (Hz)},\n      label style={font=\\scriptsize, text=iubnavy}, tick label style={font=\\tiny, text=iubnavy},\n      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},\n      legend style={font=\\tiny, fill=white}, legend pos=north east]\n    \\addplot[line width=1.4pt, iubblue] coordinates {(10,23215) (10.635,22511) (11.311,21828) (12.03,21166) (12.795,20524) (13.608,19901) (14.472,19298) (15.392,18712) (16.37,18145) (17.41,17594) (18.516,17061) (19.693,16543) (20.945,16041) (22.275,15555) (23.691,15083) (25.196,14625) (26.797,14182) (28.5,13751) (30.311,13334) (32.237,12930) (34.286,12538) (36.465,12157) (38.782,11788) (41.246,11431) (43.867,11084) (46.655,10748) (49.619,10422) (52.773,10106) (56.126,9799.2) (59.692,9501.9) (63.486,9213.7) (67.52,8934.2) (71.81,8663.2) (76.374,8400.4) (81.227,8145.6) (86.388,7898.5) (91.878,7658.9) (97.716,7426.6) (103.93,7201.3) (110.53,6982.8) (117.55,6771) (125.02,6565.6) (132.97,6366.5) (141.42,6173.3) (150.4,5986.1) (159.96,5804.5) (170.13,5628.4) (180.94,5457.7) (192.43,5292.1) (204.66,5131.6) (217.67,4975.9) (231.5,4825) (246.21,4678.6) (261.85,4536.7) (278.49,4399.1) (296.19,4265.7) (315.01,4136.3) (335.03,4010.8) (356.32,3889.1) (378.96,3771.1) (403.04,3656.8) (428.65,3545.8) (455.89,3438.3) (484.86,3334) (515.67,3232.8) (548.44,3134.8) (583.29,3039.7) (620.36,2947.5) (659.78,2858.1) (701.7,2771.4) (746.29,2687.3) (793.72,2605.8) (844.15,2526.7) (897.8,2450.1) (954.85,2375.8) (1000,2321.5)};\n    \\addlegendentry{L = 4.7 mH}\n    \\addplot[line width=1.4pt, iuborange] coordinates {(10,15915) (10.635,15433) (11.311,14965) (12.03,14511) (12.795,14070) (13.608,13644) (14.472,13230) (15.392,12828) (16.37,12439) (17.41,12062) (18.516,11696) (19.693,11341) (20.945,10997) (22.275,10664) (23.691,10340) (25.196,10027) (26.797,9722.4) (28.5,9427.5) (30.311,9141.5) (32.237,8864.2) (34.286,8595.3) (36.465,8334.6) (38.782,8081.8) (41.246,7836.6) (43.867,7598.9) (46.655,7368.4) (49.619,7144.9) (52.773,6928.1) (56.126,6718) (59.692,6514.2) (63.486,6316.6) (67.52,6125) (71.81,5939.2) (76.374,5759) (81.227,5584.3) (86.388,5414.9) (91.878,5250.7) (97.716,5091.4) (103.93,4937) (110.53,4787.2) (117.55,4642) (125.02,4501.2) (132.97,4364.6) (141.42,4232.2) (150.4,4103.8) (159.96,3979.4) (170.13,3858.7) (180.94,3741.6) (192.43,3628.1) (204.66,3518) (217.67,3411.3) (231.5,3307.9) (246.21,3207.5) (261.85,3110.2) (278.49,3015.9) (296.19,2924.4) (315.01,2835.7) (335.03,2749.7) (356.32,2666.2) (378.96,2585.4) (403.04,2506.9) (428.65,2430.9) (455.89,2357.2) (484.86,2285.7) (515.67,2216.3) (548.44,2149.1) (583.29,2083.9) (620.36,2020.7) (659.78,1959.4) (701.7,1900) (746.29,1842.3) (793.72,1786.4) (844.15,1732.2) (897.8,1679.7) (954.85,1628.7) (1000,1591.5)};\n    \\addlegendentry{L = 10 mH}\n    \\addplot[line width=1pt, dashed, iubnavy!70] coordinates {(100,294.13) (100,24513)};\n    \\addlegendentry{C = 100 nF}\n  \\end{semilogxaxis}\n\\end{tikzpicture}\n  \\column{0.35\\textwidth}\n\\begin{caja}{iubblue}{Lectura de la gráfica}\n\\footnotesize Con el eje de capacitancia en escala logarítmica, las curvas muestran que la frecuencia cae rápido al principio y cada vez más despacio: cada década de capacitancia divide la frecuencia entre $\\sqrt{10} \\approx 3.16$.\n\\end{caja}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-06": {
+   "huella": "dd568962a95f8e1c",
+   "diapositivas": [
+    {
+     "titulo": "Parámetros, unidades y dualidad de los circuitos L y C",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Las reglas de asociación de las tres magnitudes pasivas se recuerdan mejor como un sistema que como fórmulas sueltas.\n  \\item Si se asocian condensadores en serie, el resultado debe ser menor que el menor; si se asocian bobinas en serie, mayor que la mayor.\n  \\item En los planos del laboratorio conviene anotar junto a cada designador el valor medido, no solo el nominal, para poder comparar después cálculo y medición.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Una regla mnemotécnica útil: «la bobina se porta como el resistor; el condensador, al revés».\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Parámetros, unidades y reglas de asociación (1/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Característica} & \\hd{Resistor (R)} & \\hd{Condensador (C)} & \\hd{Bobina (L)}\\\\\n  Unidad & ohmio (\\ensuremath{\\Omega}) & faradio (F) & henrio (H)\\\\\n  Submúltiplos habituales & k\\ensuremath{\\Omega}, M\\ensuremath{\\Omega} & pF, nF, µF & µH, mH\\\\\n  Relación tensión-corriente & V = IR & i = C dv/dt & v = L di/dt\\\\\n  Energía & se disipa: P = I²R & se almacena: W = CV²/2 & se almacena: W = LI²/2\\\\\n  En serie & RT = \\ensuremath{\\Sigma}Ri & 1/CT = \\ensuremath{\\Sigma}1/Ci & LT = \\ensuremath{\\Sigma}Li\\\\\n  En paralelo & 1/RT = \\ensuremath{\\Sigma}1/Ri & CT = \\ensuremath{\\Sigma}Ci & 1/LT = \\ensuremath{\\Sigma}1/Li\\\\\n  En serie, el total es & mayor que el mayor & menor que el menor & mayor que el mayor\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Parámetros, unidades y reglas de asociación de resistores, condensadores y bobinas\\par}"
+    },
+    {
+     "titulo": "Parámetros, unidades y reglas de asociación (2/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Característica} & \\hd{Resistor (R)} & \\hd{Condensador (C)} & \\hd{Bobina (L)}\\\\\n  Comportamiento en cd estable & resistencia & circuito abierto & cortocircuito (más RW)\\\\\n  Designador en planos & R1, R2… & C1, C2… & L1, L2…\\\\\n  Límite de trabajo & potencia (W) & tensión (V) & corriente (A)\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Parámetros, unidades y reglas de asociación de resistores, condensadores y bobinas\\par}"
+    }
+   ]
+  },
+  "bloque-07": {
+   "huella": "e7c6bcae63109982",
+   "diapositivas": [
+    {
+     "titulo": "Montaje y medición de asociaciones L, C y de un circuito LC",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Las lecturas del LCR y del osciloscopio que se usan más abajo son valores de ejemplo para ilustrar el procedimiento.\n  \\item Para el montaje A, con valores nominales, $C_T = (22)(4.7)/(22 + 4.7) \\approx 3.87\\ \\text{nF}$; con los medidos, $C_T = (22.4)(4.52)/(26.92) \\approx 3.76\\ \\text{nF}$.\n  \\item Deja dos criterios de trabajo para el resto del curso.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle e_{\\%} = \\frac{X_{med} - X_{calc}}{X_{calc}} \\times 100$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Montaje y medición de asociaciones L, C",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.55\\textwidth}\n\\begin{cajaplana}{iubblue}\n\\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}f_r= \\frac{1}{2\\pi\\sqrt{(10.4 \\times 10^{-3})(97.8 \\times 10^{-9})}} \\\\ \\approx 4.99\\ \\text{kHz}\\end{gathered}$\\end{adjustbox}\n\\end{cajaplana}\n  \\column{0.42\\textwidth}\n\\begin{caja}{iubnavy}{Recuerde}\n\\footnotesize donde $f_r$ es la frecuencia de resonancia en hercios (Hz), calculada con la inductancia medida de L3 en henrios (10.4 mH) y la capacitancia medida de C2 en faradios (97.8 nF).\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Valores equivalentes calculados y medidos",
+     "cuerpo": "\\centering\\tiny\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Montaje} & \\hd{Asociación} & \\hd{Calc. nominal} & \\hd{Calc. con medidos} & \\hd{Medido (LCR)} & \\hd{e (\\%)}\\\\\n  A & C1 serie C3 & 3.87 nF & 3.76 nF & 3.78 nF & +0.5\\\\\n  B & C1 \\ensuremath{\\parallel} C2 & 122 nF & 120.2 nF & 120.6 nF & +0.3\\\\\n  C & L1 serie L2 & 5.70 mH & 5.65 mH & 5.68 mH & +0.5\\\\\n  D & L2 \\ensuremath{\\parallel} L3 & 3.20 mH & 3.20 mH & 3.21 mH & +0.3\\\\\n  E & (L1 + L2) \\ensuremath{\\parallel} L3 & 3.63 mH & 3.66 mH & 3.67 mH & +0.3\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Valores equivalentes calculados y medidos de las asociaciones (lecturas de ejemplo)\\par}"
+    }
+   ]
+  },
+  "bloque-08": {
+   "huella": "84fde7bba311b86b",
+   "diapositivas": [
+    {
+     "titulo": "Síntesis de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Condensadores en serie y divisor}\n\\scriptsize 1/CT = \\ensuremath{\\Sigma} 1/Ci, casos de dos y de n iguales, reparto de tensión Vx = (CT/Cx)VT\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Condensadores en paralelo y asociaciones}\n\\scriptsize CT = \\ensuremath{\\Sigma} Ci, tensión común y reducción paso a paso de redes mixtas\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Bobinas en serie, en paralelo y mixtas}\n\\scriptsize LT = \\ensuremath{\\Sigma} Li, 1/LT = \\ensuremath{\\Sigma} 1/Li, analogía con resistores y condición de no acoplamiento\n\\end{cardG}\n\\end{columns}\n\\vspace{2mm}\n\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{El circuito LC y su frecuencia}\n\\scriptsize Intercambio de energía entre L y C y fr = 1/(2\\ensuremath{\\pi}\\ensuremath{\\surd}LC)\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Parámetros, unidades y dualidad}\n\\scriptsize Tabla comparativa de reglas, magnitudes, unidades y símbolos de L, C y R\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Montaje y medición de asociaciones L, C}\n\\scriptsize Calcular con valores nominales y medidos, medir con LCR y osciloscopio, comparar\n\\end{cardG}\n\\end{columns}"
+    },
+    {
+     "titulo": "Reflexión para llevar",
+     "cuerpo": "\\centering\n\\begin{tikzpicture}\n  \\node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\\normalsize] (c) at (0,0) {\\itshape «En un montaje compartido, anotar los valores medidos de cada componente y montar las bobinas separadas es trabajo que ahorra horas al equipo: una diferencia que nadie sabe explicar suele venir de un dato que alguien no registró.»};\n  \\node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\\scriptsize\\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};\n\\end{tikzpicture}"
+    }
+   ]
+  }
+ }
+}

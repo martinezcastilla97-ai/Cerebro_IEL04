@@ -1,0 +1,796 @@
+% =====================================================================
+%  IEL04 - Circuitos Eléctricos I
+%  Semana 2: La bobina: inductancia, inducción electromagnética, tipos de núcleo e identificación de inductores
+%  Institución Universitaria de Barranquilla (IUB)
+%  Generada por src/presentaciones.py (diseño IUB 5). Compilador: pdfLaTeX (dos pasadas)
+% =====================================================================
+\documentclass[aspectratio=169,11pt,xcolor={table}]{beamer}
+
+% ---------------------------------------------------------------------
+%  Codificación, idioma y tipografía
+% ---------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot,es-noshorthands]{babel}
+\usepackage{avant}                       % Sans geométrica (emula Avenir Next)
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\ttdefault}{pcr}           % Monoespaciada para código
+\usepackage{textcomp}
+
+% ---------------------------------------------------------------------
+%  Paquetes
+% ---------------------------------------------------------------------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={.}, per-mode=symbol}
+\usepackage{booktabs,tabularx,multirow,array}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,shapes.misc,
+  decorations.pathreplacing,fit,backgrounds,babel}
+\usepackage[siunitx,RPvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+% ---------------------------------------------------------------------
+%  Paleta institucional IUB (Manual de Identidad Visual 2025)
+% ---------------------------------------------------------------------
+\definecolor{iubwhite}{HTML}{FFFFFF}
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+
+% ---------------------------------------------------------------------
+%  Configuración de Beamer
+% ---------------------------------------------------------------------
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=0.6cm, text margin right=0.6cm}
+\setbeamercolor{normal text}{fg=iubnavy, bg=iubwhite}
+\setbeamercolor{background canvas}{bg=iubwhite}
+\setbeamercolor{structure}{fg=iubnavy}
+\setbeamercolor{alerted text}{fg=iuborange}
+\setbeamertemplate{itemize item}{\textcolor{iubblue}{\small$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\textcolor{iuborange}{\scriptsize$\bullet$}}
+\setbeamertemplate{enumerate item}{\textcolor{iubblue}{\bfseries\insertenumlabel.}}
+\setbeamertemplate{frametitle}{}         % el título vive en el headline
+
+% Parches: el headline se pre-mide antes del primer frame
+\makeatletter
+\providecommand{\insertframetitle}{}
+\providecommand{\insertframesubtitle}{}
+\makeatother
+
+% ---------- Encabezado ----------
+\setbeamertemplate{headline}{%
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,1.05cm);
+    \fill[iubnavy] (0,0) rectangle (\paperwidth,1.05cm);
+    \fill[iubyellow] (0,0) rectangle (\paperwidth,0.05cm);
+    \node[anchor=west, text=iubyellow, font=\large\bfseries]
+      at (0.6cm,0.55cm) {\strut\insertframetitle};
+    \node[anchor=east, text=iubyellow, font=\footnotesize\bfseries]
+      at ([xshift=-0.6cm]\paperwidth,0.55cm) {IUB};
+  \end{tikzpicture}}
+
+% ---------- Pie de página ----------
+\setbeamertemplate{footline}{%
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\paperwidth,0.55cm);
+    \fill[iubnavy] (0,0) rectangle (\paperwidth,0.55cm);
+    \node[anchor=west, text=iubyellow, font=\tiny]
+      at (0.6cm,0.275cm) {IEL04 \textperiodcentered{} Circuitos Eléctricos I};
+    \node[anchor=center, text=iubyellow, font=\tiny]
+      at (0.66\paperwidth,0.275cm) {Ing. Sergio Martinez Castilla};
+    \node[anchor=east, text=iubyellow, font=\tiny\bfseries]
+      at ([xshift=-0.6cm]\paperwidth,0.275cm)
+      {Semana 2 \quad \insertframenumber\,/\,\inserttotalframenumber};
+  \end{tikzpicture}}
+
+% ---------------------------------------------------------------------
+%  Cajas tcolorbox (texto blanco sobre la paleta complementaria)
+%  \begin{caja}[opciones]{color}{título} ... \end{caja}
+%  \begin{cajaplana}[opciones]{color} ... \end{cajaplana}
+%  \begin{cardB|cardO|cardG|cardN}[opciones]{título} ... \end{cardX}
+% ---------------------------------------------------------------------
+\tcbset{
+  iubbase/.style={enhanced, arc=1.5mm, boxrule=0pt, coltext=white, coltitle=white,
+    fonttitle=\bfseries\footnotesize, fontupper=\footnotesize,
+    left=1.8mm, right=1.8mm, top=1mm, bottom=1.2mm,
+    toptitle=0.6mm, bottomtitle=0.6mm, halign=left,
+    before upper={\hyphenpenalty=5000\setbeamercolor{itemize item}{fg=white}%
+                  \setbeamercolor{itemize/enumerate body}{fg=white}%
+                  \setbeamercolor{itemize/enumerate subbody}{fg=white}%
+                  \setbeamercolor{itemize subitem}{fg=white}%
+                  \setbeamercolor{enumerate item}{fg=white}%
+                  \setbeamertemplate{itemize item}{\textcolor{white}{\small$\blacktriangleright$}}}}
+}
+\newtcolorbox{caja}[3][]{iubbase, colback=#2, colframe=#2,
+  colbacktitle=#2!78!iubnavy, title={#3}, #1}
+\newtcolorbox{cajaplana}[2][]{iubbase, colback=#2, colframe=#2, #1}
+\newtcolorbox{cardB}[2][]{iubbase, colback=iubblue,   colframe=iubblue,
+  colbacktitle=iubblue!78!iubnavy,   title={#2}, #1}
+\newtcolorbox{cardO}[2][]{iubbase, colback=iuborange, colframe=iuborange,
+  colbacktitle=iuborange!78!iubnavy, title={#2}, #1}
+\newtcolorbox{cardG}[2][]{iubbase, colback=iubgreen,  colframe=iubgreen,
+  colbacktitle=iubgreen!78!iubnavy,  title={#2}, #1}
+\newtcolorbox{cardN}[2][]{iubbase, colback=iubnavy,   colframe=iubnavy,
+  colbacktitle=iubnavy, coltitle=iubyellow, title={#2}, #1}
+
+% Celda de encabezado de tabla (texto amarillo sobre \rowcolor{iubnavy}) y código en línea
+\newcommand{\hd}[1]{\textcolor{iubyellow}{\bfseries #1}}
+\newcommand{\thc}[1]{\textcolor{iubyellow}{\textbf{#1}}}
+\newcommand{\cod}[1]{\texttt{\textbf{#1}}}
+
+% ---------------------------------------------------------------------
+%  Código sobre fondo oscuro:
+%  \begin{codebox}[listing options app={language=Python,firstnumber=1}]{título}
+% ---------------------------------------------------------------------
+\lstdefinestyle{iubcode}{
+  basicstyle=\ttfamily\fontsize{7}{8.4}\selectfont\color{white},
+  keywordstyle=\color{iubblue}\bfseries,
+  commentstyle=\color{iubgreen!55!white}\itshape,
+  stringstyle=\color{iuborange!80!white},
+  numbers=left, numberstyle=\tiny\color{iubyellow}, numbersep=6pt,
+  showstringspaces=false, breaklines=true, tabsize=4,
+  columns=fullflexible, keepspaces=true, upquote=true}
+\newtcblisting{codebox}[2][]{enhanced, listing only, colback=iubnavy,
+  colframe=iubnavy, colbacktitle=iubnavy!85!white, coltitle=iubyellow,
+  fonttitle=\bfseries\scriptsize, title={#2}, arc=1.5mm, boxrule=0pt,
+  left=6mm, right=1mm, top=0.5mm, bottom=0.5mm, toptitle=0.5mm, bottomtitle=0.5mm,
+  listing options={style=iubcode}, #1}
+
+% ---------------------------------------------------------------------
+%  Estilos TikZ
+% ---------------------------------------------------------------------
+\tikzset{
+  bloque/.style={rectangle, rounded corners=2mm, fill=#1, text=white,
+    font=\scriptsize\bfseries, align=center, minimum height=1.1cm,
+    text width=1.8cm, inner sep=1.2mm},
+  flecha/.style={-{Stealth[length=2.2mm]}, line width=1pt, draw=iubnavy},
+  arr/.style={flecha},
+  term/.style={rectangle, draw=#1, line width=1.2pt, fill=white,
+    text=iubnavy, font=\tiny\bfseries, minimum width=1.05cm,
+    minimum height=0.5cm, inner sep=1pt},
+  nodo/.style={rectangle, rounded corners=1mm, fill=#1, text=white,
+    font=\scriptsize\bfseries, minimum size=0.75cm, align=center},
+  cable/.style={line width=1.4pt, draw=#1},
+  box/.style={rectangle, rounded corners=1.5mm, draw=none, text=white,
+    font=\scriptsize\bfseries, align=center, minimum height=0.8cm, inner sep=3pt},
+  bB/.style={box, fill=iubblue}, bO/.style={box, fill=iuborange},
+  bG/.style={box, fill=iubgreen}, bN/.style={box, fill=iubnavy},
+  dec/.style={diamond, aspect=1.9, fill=iuborange, text=white,
+    font=\scriptsize\bfseries, align=center, inner sep=1pt},
+  tag/.style={fill=#1, text=white, font=\scriptsize\bfseries, rounded corners=1mm,
+    minimum width=0.7cm, anchor=north west},
+}
+
+% ---------------------------------------------------------------------
+%  Diapositiva separadora de bloque
+%  #1 número  #2 título  #3 duración  #4 color
+% ---------------------------------------------------------------------
+\newcommand{\bloque}[4]{%
+\section{#2}
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[#4] (current page.north west) rectangle
+        ([xshift=5.2cm]current page.south west);
+  \node[anchor=north west, text=white, font=\bfseries\large]
+    at ([xshift=0.8cm,yshift=-2.2cm]current page.north west) {BLOQUE};
+  \node[anchor=north west, text=white, font=\bfseries\fontsize{72}{72}\selectfont]
+    at ([xshift=0.65cm,yshift=-2.9cm]current page.north west) {#1};
+  \node[anchor=north west, text=iubnavy, font=\bfseries\LARGE,
+        text width=9.4cm, align=left]
+    at ([xshift=6.2cm,yshift=-2.8cm]current page.north west)
+    {\hyphenpenalty=10000\exhyphenpenalty=10000 #2};
+  \node[anchor=north west, fill=iubnavy, text=iubyellow, rounded corners=1.5mm,
+        font=\small\bfseries, inner sep=2mm]
+    at ([xshift=6.2cm,yshift=-6.0cm]current page.north west) {Duración: #3};
+  \fill[iubnavy] ([xshift=5.2cm]current page.south west) rectangle
+        ([yshift=0.35cm]current page.south east);
+  \fill[iubyellow] ([xshift=5.2cm,yshift=0.35cm]current page.south west)
+        rectangle ([yshift=0.42cm]current page.south east);
+  \node[anchor=north east, text=iubnavy, font=\small\bfseries]
+    at ([xshift=-0.6cm,yshift=-0.5cm]current page.north east) {IUB · IEL04};
+\end{tikzpicture}
+\end{frame}}
+
+% =====================================================================
+\begin{document}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+%  PORTADA
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  % Panel institucional
+  \fill[iubnavy] (current page.north west) rectangle
+        ([xshift=5.6cm]current page.south west);
+  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{54}{54}\selectfont]
+    at ([xshift=0.7cm,yshift=-1.0cm]current page.north west) {IUB};
+  \node[anchor=north west, text=white, font=\footnotesize, text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=-3.0cm]current page.north west)
+    {Institución Universitaria de Barranquilla};
+  \draw[iubyellow, line width=1.2pt]
+    ([xshift=0.75cm,yshift=-4.25cm]current page.north west) --
+    ([xshift=2.6cm,yshift=-4.25cm]current page.north west);
+  \node[anchor=north west, text=iubyellow, font=\scriptsize\bfseries,
+        text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=-4.5cm]current page.north west)
+    {Tecnología en Gestión de Sistemas Eléctricos};
+  \node[anchor=south west, text=white, font=\scriptsize, text width=4.3cm, align=left]
+    at ([xshift=0.75cm,yshift=0.9cm]current page.south west)
+    {Ing. Sergio Martinez Castilla\\[1pt]\textcolor{iubyellow}{\tiny smartinezc@unibarranquilla.edu.co}};
+  % Bloque de título
+  \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
+        font=\scriptsize\bfseries, inner sep=2mm]
+    at ([xshift=6.4cm,yshift=-1.0cm]current page.north west)
+    {IEL04 \textperiodcentered{} Semana 2 de 14 \textperiodcentered{} Corte evaluativo 1};
+  \node[anchor=north west, text=iubnavy, font=\small, text width=9.0cm, align=left] (a)
+    at ([xshift=6.4cm,yshift=-1.9cm]current page.north west)
+    {Circuitos Eléctricos I};
+  \node[anchor=north west, text=iubnavy, font=\bfseries\fontsize{15}{18}\selectfont,
+        text width=9.0cm, align=left] (t)
+    at ([yshift=-0.35cm]a.south west)
+    {\hyphenpenalty=10000 La bobina: inductancia, inducción electromagnética, tipos de núcleo e identificación de inductores};
+  % Franjas de la paleta complementaria
+  \fill[iubblue]   ([xshift=6.4cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \fill[iuborange] ([xshift=8.1cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \fill[iubgreen]  ([xshift=9.8cm,yshift=1.1cm]current page.south west)
+    rectangle ++(1.6cm,0.18cm);
+  \node[anchor=north west, text=iubnavy, font=\scriptsize]
+    at ([xshift=6.4cm,yshift=0.95cm]current page.south west)
+    {Sesión teórico-práctica \textperiodcentered{} 240 min};
+\end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Punto de partida de la sesión}
+\begin{columns}[T,onlytextwidth]
+  \column{0.34\textwidth}
+\begin{caja}[height=5.9cm]{iubblue}{Continuidad}
+\scriptsize \begin{itemize}\setlength{\itemsep}{2pt}
+  \item Semana 1: Condensadores
+  \item \textbf{Semana 2: Bobinas o inductores: estructura, comportamiento interno, identificación y tipos}
+  \item Semana 3: Condensadores y bobinas en serie, en paralelo y mixto
+\end{itemize}
+\end{caja}
+  \column{0.34\textwidth}
+\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}
+\scriptsize \begin{itemize}\setlength{\itemsep}{2pt}
+  \item Explicar qué es un campo magnético alrededor de un conductor
+  \item Definir la capacitancia y calcular la energía almacenada
+  \item Leer el código de colores de un resistor y el código de tres dígitos
+  \item Convertir unidades con prefijos métricos (m, µ, n)
+\end{itemize}
+\end{caja}
+  \column{0.29\textwidth}
+\begin{caja}[height=5.9cm]{iubgreen}{Competencia}
+\scriptsize \textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Resultados de aprendizaje}
+\begin{columns}[c,onlytextwidth]
+  \column{0.45\textwidth}
+\begin{caja}{iubnavy}{IEL04-RA1}
+\footnotesize Calcular un circuito capacitivo, inductivo y LC, sea en serie o paralelo.
+\end{caja}
+\vspace{1mm}
+\begin{cajaplana}{iubblue}
+\scriptsize \textbf{CE1.} Identificar los tipos de capacitores e inductores.\\[2pt]
+\textbf{CE2.} Realizar mediciones en un circuito capacitivo e inductivo.\\[2pt]
+\textbf{CE3.} Realizar mediciones en un circuito LC.
+\end{cajaplana}
+  \column{0.52\textwidth}
+\centering
+\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
+\begin{tikzpicture}
+  \node[box, fill=iubblue, text width=4.9cm, align=left, font=\tiny, anchor=west] (r0) at (1.25,0.00) {Explicar cómo una bobina se opone a los cambios de corriente a partir de las leyes de Faraday y de Lenz.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Comprender};
+  \node[box, fill=iuborange, text width=4.9cm, align=left, font=\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular la inductancia de una bobina a partir de sus parámetros físicos, y la tensión inducida y la energía almacenada a partir de su corriente.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Aplicar};
+  \node[box, fill=iubgreen, text width=4.9cm, align=left, font=\tiny, anchor=west] (r2) at (1.25,-2.90) {Identificar el tipo de núcleo, el valor nominal y la tolerancia de inductores comerciales a partir de su construcción y su marcado.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Aplicar};
+  \node[box, fill=iubblue, text width=4.9cm, align=left, font=\tiny, anchor=west] (r3) at (1.25,-4.35) {Medir la inductancia y la resistencia de devanado de bobinas y decidir si son aptas para las mediciones en circuitos inductivos y LC.};
+  \node[tag=iubnavy, font=\tiny\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};
+  \draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);
+  \draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);
+  \draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);
+\end{tikzpicture}
+\end{adjustbox}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ruta de la sesión \textperiodcentered{} 240 minutos}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,0.00) {1};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,0.00) {La bobina como elemento que se opone a los cambios de corriente y almacena energía magnética};
+  \fill[iubblue] (8.3,-0.20) rectangle ++(2.04,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (10.44,0.00) {20 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-0.76) {2};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-0.76) {Espiras, núcleo, permeabilidad y L = N\texttwosuperior{}\textmu{}A/l};
+  \fill[iuborange] (8.3,-0.96) rectangle ++(3.58,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.98,-0.76) {35 min};
+  \node[circle, fill=iubgreen, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-1.51) {3};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-1.51) {Tensión inducida v = L di/dt, oposición al cambio, W = LI\texttwosuperior{}/2 y modelo real con RW y CW};
+  \fill[iubgreen] (8.3,-1.71) rectangle ++(3.58,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.98,-1.51) {35 min};
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-2.27) {4};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-2.27) {Núcleo de aire, de hierro y de ferrita; toroidales, moldeados, de montaje superficial y variables};
+  \fill[iubblue] (8.3,-2.47) rectangle ++(3.58,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.98,-2.27) {35 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-3.03) {5};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-3.03) {Lectura del valor, la tolerancia y la corriente nominal en el cuerpo del inductor};
+  \fill[iuborange] (8.3,-3.23) rectangle ++(3.07,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (11.47,-3.03) {30 min};
+  \node[circle, fill=iubgreen, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-3.79) {6};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-3.79) {Henrio, mH y \textmu{}H, conversiones y símbolos de núcleo de aire, hierro, ferrita y variable};
+  \fill[iubgreen] (8.3,-3.99) rectangle ++(2.56,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (10.96,-3.79) {25 min};
+  \node[circle, fill=iubblue, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-4.54) {7};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-4.54) {Decodificar el marcado, medir inductancia y resistencia de devanado, y detectar abiertos y cortos};
+  \fill[iubblue] (8.3,-4.74) rectangle ++(4.60,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (13.00,-4.54) {45 min};
+  \node[circle, fill=iuborange, text=white, font=\scriptsize\bfseries, minimum size=0.6cm, inner sep=0] at (0,-5.30) {8};
+  \node[anchor=west, font=\scriptsize, text width=7.6cm] at (0.45,-5.30) {Síntesis, cierre actitudinal y bibliografía};
+  \fill[iuborange] (8.3,-5.50) rectangle ++(1.53,0.4);
+  \node[anchor=west, font=\scriptsize\bfseries] at (9.93,-5.30) {15 min};
+  \draw[iubnavy, line width=0.6pt] (8.3,0.45) -- (8.3,-5.70);
+\end{tikzpicture}
+\end{frame}
+
+% =====================================================================
+\bloque{01}{La bobina como elemento que se opone a los cambios de corriente y almacena energía magnética}{20 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Por qué estudiar la bobina}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item La semana anterior mostró que el condensador guarda energía en un campo eléctrico y se opone a los cambios bruscos de tensión.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{cardO}{Advertencia de seguridad}
+\footnotesize Al trabajar con inductores pueden desarrollarse tensiones inducidas altas cuando el campo magnético cambia con rapidez, por ejemplo al abrir el circuito o al cambiar la corriente abruptamente $[1]$.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Cadena causal de la autoinducción}
+\centering
+\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
+\begin{tikzpicture}
+  \node[bG, align=center, font=\scriptsize, text width=1.63cm] (n0) at (0.94,3.38) {Corriente por las espiras};
+  \node[bB, align=center, font=\scriptsize, text width=1.35cm] (n1) at (4.52,3.38) {Campo magnético en el núcleo};
+  \node[dec, align=center, font=\tiny, text width=1.45cm, inner sep=1pt] (n2) at (8.46,3.38) {¿Cambia la corriente?};
+  \node[bB, align=center, font=\scriptsize, text width=1.35cm] (n3) at (12.60,2.57) {Tensión inducida (Faraday)};
+  \node[bO, align=center, font=\scriptsize, text width=1.35cm] (n4) at (12.60,0.61) {Oposición al cambio (Lenz)};
+  \node[bG, align=center, font=\scriptsize, text width=1.75cm] (n5) at (12.60,4.19) {Energía almacenada estable};
+  \draw[flecha] (n0) -- (n1);
+  \draw[flecha] (n1) -- (n2);
+  \draw[flecha] (n2) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {sí: di/dt \ensuremath{\neq} 0} (n3);
+  \draw[flecha] (n3) -- (n4);
+  \draw[flecha] (n2) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {no: cd constante} (n5);
+\end{tikzpicture}
+\end{adjustbox}
+
+\vspace{1mm}{\scriptsize Cadena causal de la autoinducción: el cambio de corriente induce una tensión que se opone a ese cambio\par}
+\end{frame}
+
+% =====================================================================
+\bloque{02}{Espiras, núcleo, permeabilidad y L = N\texttwosuperior{}\textmu{}A/l}{35 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Estructura de la bobina y definición de inductancia}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Un inductor es un componente pasivo formado por un alambre enrollado alrededor de un \textbf{núcleo}, que exhibe la propiedad de inductancia $[1]$.
+  \item Al igual que la capacitancia, la inductancia es una propiedad de la construcción, no de la corriente que circula.
+  \item Una bobina de 350 vueltas sobre un núcleo de 1.5 cm de longitud y 0.5 cm de diámetro, con $\mu = 0.25 \times 10^{-3}\ \text{H/m}$, tiene $A = 1.96 \times 10^{-5}\ \text{m}^2$ y $L = (350)^2 (0.25 \times 10^{-3})(1.96 \times 10^{-5}) / 0.015 \approx 40\ \text{mH}$ $[1]$.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}L = \frac{N^{2}\,\mu\,A}{l} \\ \mu = \mu_r\,\mu_0 \\ \mu_0 = 4\pi \times 10^{-7}\ \text{H/m}\end{gathered}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Efecto del núcleo y del número de vueltas sobre}
+\centering\tiny
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Bobina} & \hd{N} & \hd{Núcleo} & \hd{\ensuremath{\mu} (H/m)} & \hd{A (m²)} & \hd{l (m)} & \hd{L}\\
+  Solenoide de aire & 100 & Aire (\ensuremath{\mu}r = 1) & 1.257 × 10\ensuremath{^{-}}\ensuremath{^{6}} & 12.57 × 10\ensuremath{^{-}}\ensuremath{^{6}} & 0.100 & 1.58 µH\\
+  Mismo solenoide & 100 & Hierro (\ensuremath{\mu}r = 2000) & 2.51 × 10\ensuremath{^{-}}³ & 12.57 × 10\ensuremath{^{-}}\ensuremath{^{6}} & 0.100 & 3.16 mH\\
+  Bobina con núcleo magnético & 350 & \ensuremath{\mu} = 0.25 × 10\ensuremath{^{-}}³ H/m & 0.25 × 10\ensuremath{^{-}}³ & 1.96 × 10\ensuremath{^{-}}\ensuremath{^{5}} & 0.015 & 40 mH\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Efecto del núcleo y del número de vueltas sobre la inductancia (ejemplos de $[1]$ y $[2]$)\par}
+\end{frame}
+
+% =====================================================================
+\bloque{03}{Tensión inducida v = L di/dt, oposición al cambio, W = LI\texttwosuperior{}/2 y modelo real con RW y CW}{35 min}{iubgreen}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Comportamiento interno}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item El comportamiento de la bobina se apoya en dos leyes del electromagnetismo.
+  \item En un inductor no hace falta un imán externo: la propia corriente crea el flujo.
+  \item Como en el condensador, la dependencia es cuadrática: duplicar la corriente cuadruplica la energía.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle v_{ind} = L\,\frac{di}{dt}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ecuaciones: Comportamiento interno}
+\begin{columns}[c,onlytextwidth]
+  \column{0.55\textwidth}
+\begin{cajaplana}{iubblue}
+\centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle W = \frac{1}{2} L I^{2}$\end{adjustbox}
+\end{cajaplana}
+  \column{0.42\textwidth}
+\begin{cardO}{Hallazgo contraintuitivo}
+\footnotesize A diferencia del condensador, que en la práctica puede tratarse como ideal, la bobina casi nunca es ideal: su resistencia de devanado se mide con un ohmímetro y debe incluirse en los cálculos cuando no es despreciable frente a las demás resistencias del circuito.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Energía almacenada en función de la corriente para bobinas}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.62\textwidth}
+\centering
+\begin{tikzpicture}
+  \begin{axis}[width=8.4cm, height=5.7cm, xmin=0, xmax=1, ymin=0, ymax=0.0212,
+      xlabel={Corriente I (A)}, ylabel={Energía W (J)},
+      label style={font=\scriptsize, text=iubnavy}, tick label style={font=\tiny, text=iubnavy},
+      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},
+      legend style={font=\tiny, fill=white}, legend pos=north east]
+    \addplot[line width=1.4pt, iubblue] coordinates {(0,0) (0.013378,8.9484e-07) (0.026756,3.5794e-06) (0.040134,8.0536e-06) (0.053512,1.4318e-05) (0.06689,2.2371e-05) (0.080268,3.2214e-05) (0.093645,4.3847e-05) (0.10702,5.727e-05) (0.1204,7.2482e-05) (0.13378,8.9484e-05) (0.14716,0.00010828) (0.16054,0.00012886) (0.17391,0.00015123) (0.18729,0.00017539) (0.20067,0.00020134) (0.21405,0.00022908) (0.22742,0.00025861) (0.2408,0.00028993) (0.25418,0.00032304) (0.26756,0.00035794) (0.28094,0.00039463) (0.29431,0.0004331) (0.30769,0.00047337) (0.32107,0.00051543) (0.33445,0.00055928) (0.34783,0.00060491) (0.3612,0.00065234) (0.37458,0.00070156) (0.38796,0.00075256) (0.40134,0.00080536) (0.41472,0.00085995) (0.42809,0.00091632) (0.44147,0.00097449) (0.45485,0.0010344) (0.46823,0.0010962) (0.48161,0.0011597) (0.49498,0.001225) (0.50836,0.0012922) (0.52174,0.0013611) (0.53512,0.0014318) (0.54849,0.0015042) (0.56187,0.0015785) (0.57525,0.0016546) (0.58863,0.0017324) (0.60201,0.0018121) (0.61538,0.0018935) (0.62876,0.0019767) (0.64214,0.0020617) (0.65552,0.0021485) (0.6689,0.0022371) (0.68227,0.0023275) (0.69565,0.0024197) (0.70903,0.0025136) (0.72241,0.0026094) (0.73579,0.0027069) (0.74916,0.0028062) (0.76254,0.0029074) (0.77592,0.0030103) (0.7893,0.003115) (0.80268,0.0032214) (0.81605,0.0033297) (0.82943,0.0034398) (0.84281,0.0035516) (0.85619,0.0036653) (0.86957,0.0037807) (0.88294,0.0038979) (0.89632,0.004017) (0.9097,0.0041378) (0.92308,0.0042604) (0.93645,0.0043847) (0.94983,0.0045109) (0.96321,0.0046389) (0.97659,0.0047686) (0.98997,0.0049002) (1,0.005)};
+    \addlegendentry{L = 10 mH}
+    \addplot[line width=1.4pt, iuborange] coordinates {(0,0) (0.013378,3.5794e-06) (0.026756,1.4318e-05) (0.040134,3.2214e-05) (0.053512,5.727e-05) (0.06689,8.9484e-05) (0.080268,0.00012886) (0.093645,0.00017539) (0.10702,0.00022908) (0.1204,0.00028993) (0.13378,0.00035794) (0.14716,0.0004331) (0.16054,0.00051543) (0.17391,0.00060491) (0.18729,0.00070156) (0.20067,0.00080536) (0.21405,0.00091632) (0.22742,0.0010344) (0.2408,0.0011597) (0.25418,0.0012922) (0.26756,0.0014318) (0.28094,0.0015785) (0.29431,0.0017324) (0.30769,0.0018935) (0.32107,0.0020617) (0.33445,0.0022371) (0.34783,0.0024197) (0.3612,0.0026094) (0.37458,0.0028062) (0.38796,0.0030103) (0.40134,0.0032214) (0.41472,0.0034398) (0.42809,0.0036653) (0.44147,0.0038979) (0.45485,0.0041378) (0.46823,0.0043847) (0.48161,0.0046389) (0.49498,0.0049002) (0.50836,0.0051686) (0.52174,0.0054442) (0.53512,0.005727) (0.54849,0.0060169) (0.56187,0.006314) (0.57525,0.0066183) (0.58863,0.0069297) (0.60201,0.0072482) (0.61538,0.007574) (0.62876,0.0079068) (0.64214,0.0082469) (0.65552,0.0085941) (0.6689,0.0089484) (0.68227,0.00931) (0.69565,0.0096786) (0.70903,0.010054) (0.72241,0.010437) (0.73579,0.010828) (0.74916,0.011225) (0.76254,0.011629) (0.77592,0.012041) (0.7893,0.01246) (0.80268,0.012886) (0.81605,0.013319) (0.82943,0.013759) (0.84281,0.014207) (0.85619,0.014661) (0.86957,0.015123) (0.88294,0.015592) (0.89632,0.016068) (0.9097,0.016551) (0.92308,0.017041) (0.93645,0.017539) (0.94983,0.018044) (0.96321,0.018555) (0.97659,0.019075) (0.98997,0.019601) (1,0.02)};
+    \addlegendentry{L = 40 mH}
+    \addplot[line width=1pt, dashed, iubnavy!70] coordinates {(0.5,0) (0.5,0.0212)};
+    \addlegendentry{I = 0.5 A}
+  \end{axis}
+\end{tikzpicture}
+  \column{0.35\textwidth}
+\begin{caja}{iubblue}{Lectura de la gráfica}
+\footnotesize Como en el condensador, la dependencia es cuadrática: duplicar la corriente cuadruplica la energía.
+\end{caja}
+\end{columns}
+\end{frame}
+
+% =====================================================================
+\bloque{04}{Núcleo de aire, de hierro y de ferrita; toroidales, moldeados, de montaje superficial y variables}{35 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Tipos de inductores según su núcleo y su construcción}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Los inductores se fabrican en una gran diversidad de formas y tamaños, pero caen en dos categorías generales: \textbf{fijos} y \textbf{variables} $[1]$.
+  \item Los fabricantes las ofrecen con pocas espiras, de 1 a 32 vueltas, para aplicaciones de alta frecuencia $[2]$.
+  \item Las de microhenrios, de aire, ferrita o montaje superficial, trabajan en circuitos de radiofrecuencia y en electrónica miniaturizada.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{cardO}{Error frecuente}
+\footnotesize Tomar un inductor moldeado por un resistor.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Clasificación de los inductores según su ajuste}
+\centering
+\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
+\begin{tikzpicture}
+  \node[bG, align=center, font=\scriptsize, text width=2.73cm] (n0) at (1.49,2.68) {Inductores};
+  \node[bB, align=center, font=\scriptsize, text width=1.38cm] (n1) at (7.10,3.88) {Fijos};
+  \node[bB, align=center, font=\scriptsize, text width=2.51cm] (n2) at (7.10,1.90) {Variables (núcleo deslizante)};
+  \node[bO, align=center, font=\scriptsize, text width=2.14cm] (n3) at (12.41,4.66) {Núcleo de aire};
+  \node[bO, align=center, font=\scriptsize, text width=2.14cm] (n4) at (12.41,2.68) {Núcleo de hierro};
+  \node[bO, align=center, font=\scriptsize, text width=2.14cm] (n5) at (12.41,0.69) {Núcleo de ferrita};
+  \draw[flecha] (n0) -- (n1);
+  \draw[flecha] (n0) -- (n2);
+  \draw[flecha] (n1) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {alta frecuencia} (n3);
+  \draw[flecha] (n1) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {baja frecuencia} (n4);
+  \draw[flecha] (n1) -- (n5);
+  \draw[flecha] (n2) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {ajuste por tornillo} (n5);
+\end{tikzpicture}
+\end{adjustbox}
+
+\vspace{1mm}{\scriptsize Clasificación de los inductores según su ajuste y el material de su núcleo\par}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Tipos de inductores, valores típicos y aplicaciones}}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Tipo} & \hd{Valores típicos} & \hd{Aplicación típica}\\
+  Bobina de núcleo abierto & 3 mH a 40 mH & filtros pasa bajos, redes de distribución de frecuencias\\
+  Bobina toroidal & 1 mH a 30 mH & choke en líneas de ca, reducción de transitorios y EMI\\
+  Choke de modo común & 0.6 mH a 50 mH & filtros de línea de ca, fuentes conmutadas, cargadores\\
+  Choke de RF & 10 µH a 50 µH & radio, televisión, comunicaciones\\
+  Bobina ajustable de RF & 1 µH a 100 µH & osciladores y circuitos de RF\\
+  Inductor de montaje superficial & 0.01 µH a 100 µH & circuitos miniaturizados en PCB multicapa\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Tipos de inductores, valores típicos y aplicaciones $[2]$\par}
+\end{frame}
+
+% =====================================================================
+\bloque{05}{Lectura del valor, la tolerancia y la corriente nominal en el cuerpo del inductor}{30 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Identificación}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item El punto de partida de la identificación son los \textbf{valores estándar}.
+  \item La diferencia es la unidad: el resultado de un inductor se expresa en microhenrios.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle L_{n} = (10\,a + b) \times 10^{\,m}\ \mu\text{H}$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ecuaciones: Identificación}
+\begin{columns}[c,onlytextwidth]
+  \column{0.55\textwidth}
+\begin{cajaplana}{iubblue}
+\centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}L_{\min} = L_{n}\,(1 - t) \\ L_{\max} = L_{n}\,(1 + t)\end{gathered}$\end{adjustbox}
+\end{cajaplana}
+  \column{0.42\textwidth}
+\begin{cardO}{Nota pedagógica}
+\footnotesize Un buen hábito es comprobar que el valor leído pertenece a la serie estándar.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Lectura de marcados frecuentes de inductores}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Marcado} & \hd{Valor nominal} & \hd{Tolerancia} & \hd{Observación}\\
+  4R7 & 4.7 µH & no indicada & R marca el punto decimal\\
+  101 & 100 µH & no indicada & montaje superficial o radial\\
+  102J & 1000 µH = 1 mH & ±5 \% & —\\
+  472K & 4700 µH = 4.7 mH & ±10 \% & —\\
+  103 & 10 000 µH = 10 mH & no indicada & mismo código que 10 nF en un condensador\\
+  marrón-negro-rojo-plata & 1000 µH = 1 mH & ±10 \% & inductor moldeado con bandas\\
+  10 mH 0.5 A & 10 mH & según fabricante & corriente nominal impresa\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Lectura de marcados frecuentes de inductores [fuente no cargada]\par}
+\end{frame}
+
+% =====================================================================
+\bloque{06}{Henrio, mH y \textmu{}H, conversiones y símbolos de núcleo de aire, hierro, ferrita y variable}{25 min}{iubgreen}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Unidades, múltiplos, submúltiplos, simbología y nomenclatura}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item La \textbf{simbología} del inductor representa las espiras del devanado: una línea ondulada o una sucesión de semicírculos entre dos terminales $[1]$.
+  \item En los planos, cada bobina se identifica con la letra \textbf{L} y un número correlativo, del mismo modo que los condensadores usan la C.
+  \item La comparación con la semana anterior es directa.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{cardO}{Error frecuente}
+\footnotesize Escribir «mH» cuando se quiere decir «µH», o al revés.
+\end{cardO}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Unidades de inductancia y conversiones}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Unidad} & \hd{Símbolo} & \hd{Valor en H} & \hd{Equivalencia práctica} & \hd{Uso típico}\\
+  henrio & H & 1 & 1000 mH & filtros de potencia, reactores\\
+  milihenrio & mH & 10\ensuremath{^{-}}³ & 1000 µH & filtros de línea, bobinas de laboratorio\\
+  microhenrio & µH & 10\ensuremath{^{-}}\ensuremath{^{6}} & 1000 nH & RF, montaje superficial\\
+  nanohenrio & nH & 10\ensuremath{^{-}}\ensuremath{^{9}} & — & pistas y bobinas de muy alta frecuencia\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Unidades de inductancia y conversiones\par}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Símbolos y nomenclatura de los inductores}
+\centering\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Elemento} & \hd{Representación} & \hd{Significado}\\
+  Inductor de núcleo de aire & espiras sin líneas adicionales & núcleo no magnético\\
+  Inductor de núcleo de hierro & espiras con dos líneas continuas & núcleo ferromagnético laminado\\
+  Inductor de núcleo de ferrita & espiras con líneas discontinuas & núcleo cerámico magnético\\
+  Inductor variable & símbolo con flecha & núcleo deslizante ajustable\\
+  Designador & L1, L2, L3… & referencia del componente en el plano\\
+  RW o DCR & resistencia de devanado & se dibuja en serie con L en el equivalente\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Símbolos y nomenclatura de los inductores\par}
+\end{frame}
+
+% =====================================================================
+\bloque{07}{Decodificar el marcado, medir inductancia y resistencia de devanado, y detectar abiertos y cortos}{45 min}{iubblue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Identificación y verificación de las bobinas de un kit}}
+\begin{columns}[c,onlytextwidth]
+  \column{0.57\textwidth}
+\small
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Las lecturas que se usan más abajo son valores de ejemplo para ilustrar el procedimiento.
+  \item El circuito abierto se detecta con facilidad con un ohmímetro, que indica una resistencia infinita $[2]$.
+  \item L2: 472 son 4.7 mH, con K (±10 \%); el intervalo va de 4.23 mH a 5.17 mH, y 4.62 mH da $e_{\%} = -1.7\ \%$.
+\end{itemize}
+  \column{0.4\textwidth}
+\begin{caja}{iubblue}{Ecuación clave}
+\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle e_{\%} = \frac{L_{m} - L_{n}}{L_{n}} \times 100$\end{adjustbox}
+\end{caja}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Identificación y verificación de las bobinas del kit}}
+\centering\tiny
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{iubnavy!6}{white}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+  \rowcolor{iubnavy}
+  \hd{Ref.} & \hd{Marcado} & \hd{Ln} & \hd{Tolerancia} & \hd{Intervalo admisible} & \hd{Lm} & \hd{e (\%)} & \hd{RW medida} & \hd{Aislamiento al núcleo} & \hd{Decisión}\\
+  L1 & 102J & 1 mH & ±5 \% & 0.95 a 1.05 mH & 1.03 mH & +3.0 & 3.2 \ensuremath{\Omega} & no aplica & Acepta\\
+  L2 & 472K & 4.7 mH & ±10 \% & 4.23 a 5.17 mH & 4.62 mH & \ensuremath{-}1.7 & 9.8 \ensuremath{\Omega} & no aplica & Acepta\\
+  L3 & 103K & 10 mH & ±10 \% & 9.0 a 11.0 mH & 10.4 mH & +4.0 & 24.6 \ensuremath{\Omega} & correcto & Acepta\\
+  L4 & 33 mH ±20 \% & 33 mH & ±20 \% & 26.4 a 39.6 mH & 21.5 mH & \ensuremath{-}34.8 & 12.1 \ensuremath{\Omega} & correcto & Rechaza\\
+\end{tabularx}
+\end{adjustbox}
+\vspace{2mm}
+{\scriptsize Identificación y verificación de las bobinas del kit (lecturas de ejemplo)\par}
+\end{frame}
+
+% =====================================================================
+\bloque{08}{Síntesis, cierre actitudinal y bibliografía}{15 min}{iuborange}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Síntesis de la sesión}
+\begin{columns}[T,onlytextwidth]
+  \column{0.32\textwidth}
+\begin{cardB}{Estructura de la bobina y definición}
+\scriptsize Espiras, núcleo, permeabilidad y L = N²µA/l
+\end{cardB}
+  \column{0.32\textwidth}
+\begin{cardO}{Comportamiento interno}
+\scriptsize Tensión inducida v = L di/dt, oposición al cambio, W = LI²/2 y modelo real con RW y CW
+\end{cardO}
+  \column{0.32\textwidth}
+\begin{cardG}{Tipos de inductores según su núcleo}
+\scriptsize Núcleo de aire, de hierro y de ferrita; toroidales, moldeados, de montaje superficial y variables
+\end{cardG}
+\end{columns}
+\vspace{2mm}
+\begin{columns}[T,onlytextwidth]
+  \column{0.32\textwidth}
+\begin{cardB}{Identificación}
+\scriptsize Lectura del valor, la tolerancia y la corriente nominal en el cuerpo del inductor
+\end{cardB}
+  \column{0.32\textwidth}
+\begin{cardO}{Unidades, múltiplos, submúltiplos}
+\scriptsize Henrio, mH y µH, conversiones y símbolos de núcleo de aire, hierro, ferrita y variable
+\end{cardO}
+  \column{0.32\textwidth}
+\begin{cardG}{Identificación y verificación}
+\scriptsize Decodificar el marcado, medir inductancia y resistencia de devanado, y detectar abiertos y cortos
+\end{cardG}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Reflexión para llevar}
+\centering
+\begin{tikzpicture}
+  \node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\normalsize] (c) at (0,0) {\itshape «Registrar con cuidado la inductancia y la resistencia de devanado de cada bobina, y no solo si funciona, es un trabajo que beneficia a todo el equipo: esos datos permitirán a los compañeros de los próximos semestres detectar a tiempo una bobina deteriorada.»};
+  \node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\scriptsize\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};
+\end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Referencias bibliográficas}
+\small
+\begin{itemize}\setlength{\itemsep}{8pt}
+  \item[{$[1]$}] T. L. Floyd, Principios de circuitos eléctricos, 8.\textordfeminine{} ed. México: Pearson Educación, 2007.
+  \item[{$[2]$}] R. L. Boylestad, Introducción al análisis de circuitos, 10.\textordfeminine{} ed. México: Pearson Educación, 2004.
+  \item[{$[3]$}] Hoja de datos del fabricante de los inductores del kit de laboratorio (código de colores y código de tres dígitos de inductores); no está cargada en el wiki. (no cargada en el wiki)
+\end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+%  CIERRE
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[iubnavy] (current page.north west) rectangle (current page.south east);
+  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{40}{44}\selectfont]
+    at ([xshift=1.2cm,yshift=-1.6cm]current page.north west) {\textexclamdown{}Gracias!};
+  \node[anchor=north west, text=white, font=\normalsize, text width=14cm, align=left]
+    at ([xshift=1.2cm,yshift=-3.4cm]current page.north west)
+    {IEL04 \textperiodcentered{} Circuitos Eléctricos I};
+  \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
+        font=\small\bfseries, inner sep=2.2mm, text width=11.5cm]
+    at ([xshift=1.2cm,yshift=-4.4cm]current page.north west)
+    {Próxima sesión \textperiodcentered{} Semana 3: Condensadores y bobinas en serie, en paralelo y mixto: cálculo y medición en circuitos L, C y LC};
+  \node[anchor=south west, text=iubyellow, font=\small, align=left]
+    at ([xshift=1.2cm,yshift=0.9cm]current page.south west)
+    {Ing. Sergio Martinez Castilla \quad · \quad smartinezc@unibarranquilla.edu.co};
+  \fill[iubblue]   ([xshift=1.2cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+  \fill[iuborange] ([xshift=2.9cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+  \fill[iubgreen]  ([xshift=4.6cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
+\end{tikzpicture}
+\end{frame}
+
+\end{document}

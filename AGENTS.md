@@ -1,0 +1,14 @@
+# Instrucciones para asistentes de IA
+
+Este cerebro docente lo mantiene un asistente de IA — **cualquiera** (Claude, GPT, Gemini, Llama, un modelo local…). Las reglas y los protocolos están en **[CLAUDE.md](CLAUDE.md)**: el nombre del archivo es histórico; su contenido no depende de ningún modelo ni herramienta concreta. Léelo completo antes de actuar y sigue su lista «Sesión nueva — checklist». Si tu herramienta no lo carga sola, léelo tú: está en la raíz de esta carpeta.
+
+Lo esencial, por si solo lees esto (el detalle y los protocolos están en `CLAUDE.md`; si algo difiere, prevalece `CLAUDE.md`, y después `config/SCHEMA.md`):
+
+1. **`raw/` es de solo lectura.** Nunca lo modifiques. Lo que escribes va en `wiki/` (conocimiento) y `generacion/` (planeadores, temarios y presentaciones).
+2. **Escribe en español.**
+3. **El código calcula lo determinista; tú redactas solo lo que el protocolo te asigna.** Horas, cronograma, correlaciones y LaTeX los produce `src/`; no los calcules a mano ni los inventes. Los protocolos tienen un script (`python src/<script>.py`, desde la raíz de esta carpeta): úsalo, o sigue los pasos a mano si no puedes ejecutar comandos.
+4. **No inventes datos.** Si una fuente no está cargada o un dato no está en el currículo, dilo (`[FUENTE NO CARGADA EN raw/]`, `pendiente_revision`…) y pregunta al usuario.
+5. **Antes de generar las presentaciones, pregunta al usuario el nombre del docente y el programa** y pásalos con `--docente` y `--programa`; los scripts no piden nada por teclado cuando los ejecutas tú. Cada presentación cuesta una llamada al modelo por parte del temario (la apertura y cada bloque: ~9); rehacerla mientras el temario no cambie, no. No escribas su LaTeX a mano: el script pide al modelo las diapositivas, las verifica con una lista de comandos permitidos y `src/diseno_iub.py` pone el diseño institucional.
+6. **Los scripts de `src/` no dependen de un proveedor:** cualquier servidor compatible con la API de OpenAI, o ninguno (`--sin-llm`, o siguiendo los pasos a mano). Se configuran con variables de entorno `CEREBRO_*` (ver `README.md`, «Configurar el modelo de IA»).
+7. En cada operación, actualiza `wiki/index.md` y `wiki/log.md` (los scripts de generación ya anotan el log). `python src/lint.py` revisa la salud del vault.
+8. **Antes de releer o regenerar nada, cuando llega algo nuevo** (un currículo o una versión nueva, un manual, bibliografía): corre `python src/analizar_cambios.py` (sin LLM, solo lectura). Dice qué secciones de un currículo cambiaron (lee solo esas), qué experimentos de un manual (`ingest_manual.py --solo`), qué RA volver a correlacionar (`correlate.py --ra`) y qué semanas rehacer, con su costo. Para llevar una versión nueva de la plantilla a esta copia: `python src/actualizar_estructura.py --origen RUTA` (prueba en seco; `--aplicar` respalda y actualiza sin tocar `raw/`, `wiki/` ni `generacion/`).
