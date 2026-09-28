@@ -78,3 +78,9 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - tema: Circuito RC en paralelo: análisis y Ley de Corrientes de Kirchhoff
 - 3795 palabras, 5 ecuaciones, 3 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
 - redactado por el asistente de la sesión con los prompts de `src/prompts/prompt-temario-*.md` (sin proveedor `CEREBRO_*`); `src/temario.py` validó, armó y dibujó. Las lecturas del caso de estudio son valores de ejemplo, no mediciones reales; los componentes son los del caso de la semana 4.
+
+## [2026-09-28] /temario IEL04 semana 7
+- RA: IEL04-RA2
+- tema: Cálculo y medición de parámetros en circuitos RC serie y paralelo: unidades, simbología y nomenclatura
+- 3739 palabras, 5 ecuaciones, 5 tablas, 2 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- redactado por el asistente de la sesión con los prompts de `src/prompts/prompt-temario-*.md` (sin proveedor `CEREBRO_*`); `src/temario.py` validó, armó y dibujó. Las lecturas del caso de estudio son valores de ejemplo, no mediciones reales; R2 y C son los componentes de las semanas 4 y 6.
