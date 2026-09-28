@@ -8,28 +8,31 @@ corte_evaluativo: 1
 horas_sesion: 4
 horas_trabajo_independiente: 5
 estadisticas:
-  palabras: 4252
+  palabras: 4266
   ecuaciones: 6
   tablas: 6
   figuras: 3
   pasajes: 35
-bibliografia_estado: revisar
+bibliografia_estado: vacio_detectado
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
+bibliografia_via: marcador
+bibliografia_justificacion: 3 cita(s) marcada(s) como fuente no cargada
+bibliografia_faltantes:
+- 'Los inductores moldeados usan un **código de colores** con la misma estructura que el de los resistores: la primera banda es el primer dígito, la segunda el segundo dígito, la tercera el multiplicador'
+- '**Tabla 3.** Lectura de marcados frecuentes de inductores [FUENTE NO CARGADA EN raw/]'
+- '[3] Hoja de datos del fabricante de los inductores del kit de laboratorio (código de colores y código de tres dígitos de inductores); no está cargada en el wiki. [FUENTE NO CARGADA EN raw/]'
+bibliografia_fecha: '2026-09-28'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana02.tex
 presentacion_avisos: []
-presentacion_temario_hash: 0eeb18acf15ffc86
+presentacion_temario_hash: 314cbaf8d2a883a0
 presentacion_fecha: '2026-09-28'
 presentacion_diseno: 5
 presentacion_diapositivas: 34
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
-bibliografia_via: juez
-bibliografia_justificacion: 'Faraday, energía, tipos, valores estándar y tolerancias de inductores están en los resúmenes (Floyd cap. 13, Boylestad §12.5), pero no la lectura del marcado de inductores (código de colores, código de tres dígitos con R decimal, corriente nominal impresa: Tabla 3).'
-bibliografia_faltantes: []
-bibliografia_fecha: '2026-09-28'
 ---
 
 # La bobina: inductancia, inducción electromagnética, tipos de núcleo e identificación de inductores
@@ -215,7 +218,7 @@ Identificar una bobina exige los mismos tres datos que un condensador —valor n
 
 El punto de partida de la identificación son los **valores estándar**. Los inductores emplean los mismos multiplicadores numéricos que los resistores y los condensadores: los de mayor demanda usan la serie de los resistores más comunes, con tolerancias del 5 %, 10 % y 20 %, y también se encuentran los multiplicadores de la serie de 5 % y 10 % [2]. En la práctica aparecen valores como 0.10, 0.12, 0.15, 0.18, 0.22, 0.27, 0.33, 0.39, 0.47, 0.56, 0.68 y 0.82, multiplicados por la potencia de diez que corresponda: 1.0, 1.2, 1.5, 1.8, 2.2, 2.7… [2]. Saber que un valor medido de 4.62 mH corresponde a una bobina de 4.7 mH, y no a una de 4.5 mH, que no existe en la serie, es parte de la identificación.
 
-Los inductores moldeados usan un **código de colores** con la misma estructura que el de los resistores: la primera banda es el primer dígito, la segunda el segundo dígito, la tercera el multiplicador (el número de ceros) y la cuarta la tolerancia [1]. La diferencia es la unidad: el resultado de un inductor se expresa en microhenrios. Los inductores de montaje superficial y muchos radiales usan un **código de tres dígitos**, también en microhenrios: los dos primeros son las cifras significativas y el tercero el número de ceros. Cuando el valor tiene decimales, la letra R marca la posición del punto: 4R7 significa 4.7 µH. El valor nominal se obtiene así:
+Los inductores moldeados usan un **código de colores** con la misma estructura que el de los resistores: la primera banda es el primer dígito, la segunda el segundo dígito, la tercera el multiplicador (el número de ceros) y la cuarta la tolerancia [FUENTE NO CARGADA EN raw/]. La diferencia es la unidad: el resultado de un inductor se expresa en microhenrios. Los inductores de montaje superficial y muchos radiales usan un **código de tres dígitos**, también en microhenrios: los dos primeros son las cifras significativas y el tercero el número de ceros. Cuando el valor tiene decimales, la letra R marca la posición del punto: 4R7 significa 4.7 µH [FUENTE NO CARGADA EN raw/]. El valor nominal se obtiene así:
 
 $$
 L_{n} = (10\,a + b) \times 10^{\,m}\ \mu\text{H}
@@ -231,7 +234,7 @@ $$
 
 donde $L_{\min}$ y $L_{\max}$ son los límites de la inductancia admisible, $L_n$ la inductancia nominal, ambas en la misma unidad (µH, mH o H), y $t$ la tolerancia como fracción (adimensional). Una bobina **472K** tiene $L_n = 4.7\ \text{mH}$ y $t = 0.10$: su valor real debe estar entre 4.23 mH y 5.17 mH. La tabla reúne ejemplos de lectura.
 
-**Tabla 3.** Lectura de marcados frecuentes de inductores
+**Tabla 3.** Lectura de marcados frecuentes de inductores [FUENTE NO CARGADA EN raw/]
 
 | Marcado | Valor nominal | Tolerancia | Observación |
 | --- | --- | --- | --- |
@@ -343,3 +346,5 @@ La bobina es el elemento dual del condensador. Donde el condensador acumula carg
 [1] T. L. Floyd, Principios de circuitos eléctricos, 8.ª ed. México: Pearson Educación, 2007.
 
 [2] R. L. Boylestad, Introducción al análisis de circuitos, 10.ª ed. México: Pearson Educación, 2004.
+
+[3] Hoja de datos del fabricante de los inductores del kit de laboratorio (código de colores y código de tres dígitos de inductores); no está cargada en el wiki. [FUENTE NO CARGADA EN raw/]

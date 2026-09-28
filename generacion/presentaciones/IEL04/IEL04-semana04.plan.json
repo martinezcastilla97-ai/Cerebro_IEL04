@@ -1,6 +1,6 @@
 {
  "formato": 2,
- "temario_hash": "939b9b8956538ed6",
+ "temario_hash": "1183ad305461ba20",
  "modelo": "gpt-4o",
  "fecha": "2026-09-28",
  "partes": {
@@ -18,11 +18,11 @@
    ]
   },
   "bloque-01": {
-   "huella": "44821ad7b06c84b1",
+   "huella": "23da7e2557ef95e6",
    "diapositivas": [
     {
      "titulo": "Por qué el circuito RC en serie",
-     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Un resistor en serie con un condensador es probablemente el circuito más útil que se puede construir con dos componentes.\n  \\item El análisis tiene dos caras, según cómo se alimente el circuito.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize El libro de cátedra de la UNLP llama circuito «GC» a su dual del RL, con conductancia y capacidad $[3]$; en esta asignatura se usa la denominación RC, la de Floyd y Boylestad.\n\\end{cardO}\n\\end{columns}"
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Un resistor en serie con un condensador es probablemente el circuito más útil que se puede construir con dos componentes.\n  \\item El análisis tiene dos caras, según cómo se alimente el circuito.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize El libro de cátedra de la UNLP no estudia el RC en serie con fuente de tensión: su circuito «GC» es un capacitor alimentado por una fuente de corriente real (conductancia G en paralelo con C), el dual del RL en serie $[3]$.\n\\end{cardO}\n\\end{columns}"
     },
     {
      "titulo": "Dos caminos de análisis del circuito RC en serie según",

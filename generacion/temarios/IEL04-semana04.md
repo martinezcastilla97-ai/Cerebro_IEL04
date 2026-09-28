@@ -8,7 +8,7 @@ corte_evaluativo: 1
 horas_sesion: 4
 horas_trabajo_independiente: 5
 estadisticas:
-  palabras: 3958
+  palabras: 4007
   ecuaciones: 6
   tablas: 4
   figuras: 3
@@ -16,20 +16,20 @@ estadisticas:
 bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
+bibliografia_via: juez
+bibliografia_justificacion: El código de colores de resistores (Floyd §2–5), el transitorio RC y τ = RC (Boylestad cap. 10), la reactancia, la impedancia y la LVK del RC en serie (Floyd cap. 15, Boylestad cap. 15) están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
+bibliografia_faltantes: []
+bibliografia_fecha: '2026-09-28'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana04.tex
 presentacion_avisos: []
-presentacion_temario_hash: 939b9b8956538ed6
+presentacion_temario_hash: 1183ad305461ba20
 presentacion_fecha: '2026-09-28'
 presentacion_diseno: 5
 presentacion_diapositivas: 33
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
-bibliografia_via: juez
-bibliografia_justificacion: El código de colores de resistores (Floyd §2–5), el transitorio RC y τ = RC (Boylestad cap. 10), la reactancia, la impedancia y la LVK del RC en serie (Floyd cap. 15, Boylestad cap. 15) están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
-bibliografia_faltantes: []
-bibliografia_fecha: '2026-09-28'
 ---
 
 # El circuito RC en serie: carga del condensador, reactancia capacitiva, impedancia y ley de voltajes de Kirchhoff
@@ -114,7 +114,7 @@ El análisis tiene dos caras, según cómo se alimente el circuito. Con una fuen
 
 El diagrama organiza la sesión. Tras repasar cómo se identifican los resistores y condensadores que forman el circuito, se sigue primero la rama de cd, con las curvas de carga y descarga y la constante de tiempo, y luego la rama de ca, que pasa por la reactancia capacitiva, la impedancia con su ángulo de fase y la ley de voltajes de Kirchhoff con fasores. Cada rama termina en una medición de laboratorio: una onda cuadrada del generador permite ver la carga exponencial y medir $\tau$, y una onda sinusoidal permite medir las tensiones del resistor y del condensador y comprobar que no suman aritméticamente la tensión de la fuente.
 
-> **Nota pedagógica:** El libro de cátedra de la UNLP llama circuito «GC» a su dual del RL, con conductancia y capacidad [3]; en esta asignatura se usa la denominación RC, la de Floyd y Boylestad.
+> **Nota pedagógica:** El libro de cátedra de la UNLP no estudia el RC en serie con fuente de tensión: su circuito «GC» es un capacitor alimentado por una fuente de corriente real (conductancia G en paralelo con C), el dual del RL en serie [3]. Su constante de tiempo, C/G, equivale a RC con G = 1/R, así que la respuesta exponencial tiene la misma forma, pero es otro circuito; el RC en serie de esta sesión es el de Floyd y Boylestad.
 
 ### 4.2 Conceptos Clave
 

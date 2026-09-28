@@ -1,6 +1,6 @@
 {
  "formato": 2,
- "temario_hash": "0eeb18acf15ffc86",
+ "temario_hash": "314cbaf8d2a883a0",
  "modelo": "gpt-4o",
  "fecha": "2026-09-28",
  "partes": {
@@ -78,7 +78,7 @@
    ]
   },
   "bloque-05": {
-   "huella": "0705d84e62297855",
+   "huella": "d70722671e2b59d2",
    "diapositivas": [
     {
      "titulo": "Identificación",
@@ -90,7 +90,7 @@
     },
     {
      "titulo": "Lectura de marcados frecuentes de inductores",
-     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Marcado} & \\hd{Valor nominal} & \\hd{Tolerancia} & \\hd{Observación}\\\\\n  4R7 & 4.7 µH & no indicada & R marca el punto decimal\\\\\n  101 & 100 µH & no indicada & montaje superficial o radial\\\\\n  102J & 1000 µH = 1 mH & ±5 \\% & —\\\\\n  472K & 4700 µH = 4.7 mH & ±10 \\% & —\\\\\n  103 & 10 000 µH = 10 mH & no indicada & mismo código que 10 nF en un condensador\\\\\n  marrón-negro-rojo-plata & 1000 µH = 1 mH & ±10 \\% & inductor moldeado con bandas\\\\\n  10 mH 0.5 A & 10 mH & según fabricante & corriente nominal impresa\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Lectura de marcados frecuentes de inductores\\par}"
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Marcado} & \\hd{Valor nominal} & \\hd{Tolerancia} & \\hd{Observación}\\\\\n  4R7 & 4.7 µH & no indicada & R marca el punto decimal\\\\\n  101 & 100 µH & no indicada & montaje superficial o radial\\\\\n  102J & 1000 µH = 1 mH & ±5 \\% & —\\\\\n  472K & 4700 µH = 4.7 mH & ±10 \\% & —\\\\\n  103 & 10 000 µH = 10 mH & no indicada & mismo código que 10 nF en un condensador\\\\\n  marrón-negro-rojo-plata & 1000 µH = 1 mH & ±10 \\% & inductor moldeado con bandas\\\\\n  10 mH 0.5 A & 10 mH & según fabricante & corriente nominal impresa\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Lectura de marcados frecuentes de inductores [fuente no cargada]\\par}"
     }
    ]
   },

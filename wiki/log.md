@@ -212,3 +212,39 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - Formato: línea `**Definición:**` agregada en [[capacitancia]], [[inductancia]], [[leyes-de-kirchhoff]], [[circuitos-rc]], [[circuitos-rl]] y [[circuitos-rlc]]; su «Ver también» enlaza los conceptos nuevos
 - Creadas: [[impedancia-y-admitancia]], [[reactancia]], [[fasores]] y [[constante-de-tiempo]] (3 fuentes), [[resonancia]] y [[factor-de-potencia]] (2 fuentes: Deorsola no las trata); cada sección citada se verificó en el texto completo de `raw/bibliografia/`
 - `wiki/index.md`: tabla de conceptos actualizada (12 páginas)
+
+## [2026-09-28] /temario IEL04 semana 2
+- RA: IEL04-RA1
+- tema: Bobinas o inductores: estructura, comportamiento interno, identificación y tipos
+- 4266 palabras, 6 ecuaciones, 6 tablas, 3 figuras; 35 pasajes de 2 fuente(s) cargada(s)
+
+## [2026-09-28] /temario IEL04 semana 4
+- RA: IEL04-RA2
+- tema: Circuito RC en serie: tipos e identificación de resistores y condensadores, análisis y Ley de Voltajes de Kirchhoff
+- 4007 palabras, 6 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+
+## [2026-09-28] /temario IEL04 semana 7
+- RA: IEL04-RA2
+- tema: Cálculo y medición de parámetros en circuitos RC serie y paralelo: unidades, simbología y nomenclatura
+- 3763 palabras, 5 ecuaciones, 5 tablas, 2 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+
+## [2026-09-28] /correlate-bibliografia IEL04
+- IEL04-semana01: cubierta (juez)
+- IEL04-semana02: vacio_detectado (marcador)
+- IEL04-semana03: cubierta (juez)
+- IEL04-semana04: cubierta (juez)
+- IEL04-semana06: cubierta (juez)
+- IEL04-semana07: vacio_detectado (marcador)
+- IEL04-semana08: cubierta (juez)
+- IEL04-semana09: cubierta (juez)
+- IEL04-semana11: cubierta (juez)
+- IEL04-semana12: cubierta (juez)
+- IEL04-semana13: cubierta (juez)
+
+## [2026-09-28] correcciones en temarios y presentaciones | IEL04 semanas 2, 4 y 7
+- semana 4: la nota pedagógica del bloque 1 decía que el «GC» de Deorsola es el RC con otro nombre; ahora dice que es un capacitor con fuente de corriente real, dual del RL en serie, con τ = C/G equivalente a RC (igual que la corrección de [[circuitos-rc]])
+- semana 2: el código de colores y el código de tres dígitos de inductores citaban a Floyd [1], que no los trae; ahora llevan el marcador `[FUENTE NO CARGADA EN raw/]` y la referencia [3] a la hoja de datos del fabricante (por cargar)
+- semana 7: la resistencia de salida de 50 Ω del generador, el ancho de banda del multímetro y las tierras comunes llevan el marcador y la referencia [4] a los manuales de los instrumentos del laboratorio (por cargar); las puntas ×1 y ×10 siguen citadas a Floyd §11–10
+- los tres temarios se regeneraron con `temario.py` desde las secciones corregidas (redactadas por el asistente, sin proveedor `CEREBRO_*`); el resto del texto, las figuras y la continuidad no cambian
+- CORRELATE-BIBLIOGRAFIA: semanas 2 y 7 pasan a `vacio_detectado` (vía marcador, sin LLM); semana 4 sigue `cubierta`
+- presentaciones de las semanas 2, 4 y 7 rehechas y recompiladas sin errores; las diapositivas muestran «[fuente no cargada]» donde el temario lleva el marcador, y las referencias incluyen las fuentes por cargar; las otras 8 estaban al día

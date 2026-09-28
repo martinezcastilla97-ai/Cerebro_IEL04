@@ -1,6 +1,6 @@
 {
  "formato": 2,
- "temario_hash": "557bfa30b98c03bd",
+ "temario_hash": "d7d85eb67c0207df",
  "modelo": "gpt-4o",
  "fecha": "2026-09-28",
  "partes": {
@@ -74,15 +74,15 @@
    ]
   },
   "bloque-05": {
-   "huella": "3bb54987b4ec5e0b",
+   "huella": "f216be94ae1c96c5",
    "diapositivas": [
     {
      "titulo": "Instrumentos de medición y sus efectos en circuitos RC",
-     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Todo instrumento que se conecta a un circuito se convierte, durante la medición, en parte del circuito.\n  \\item La \\textbf{punta de osciloscopio} es el caso típico.\n  \\item El \\textbf{generador de funciones} también forma parte del circuito: tiene una resistencia interna, típicamente de 50 \\ensuremath{\\Omega}, en serie con su salida.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle X_{Cp} = \\frac{1}{2\\pi f C_p}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Todo instrumento que se conecta a un circuito se convierte, durante la medición, en parte del circuito.\n  \\item La \\textbf{punta de osciloscopio} es el caso típico.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle X_{Cp} = \\frac{1}{2\\pi f C_p}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
     },
     {
      "titulo": "Efectos de los instrumentos en las mediciones de circuitos",
-     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Instrumento} & \\hd{Parámetro interno} & \\hd{Efecto sobre la medición} & \\hd{Cómo reducirlo}\\\\\n  Generador de funciones & resistencia de salida (\\ensuremath{\\approx}50 \\ensuremath{\\Omega}) & la tensión aplicada baja al conectar la carga & medir VS en los bornes del circuito\\\\\n  Osciloscopio con punta ×1 & \\ensuremath{\\approx}1 M\\ensuremath{\\Omega} \\ensuremath{\\parallel} capacitancia alta & carga capacitiva a frecuencias altas & usar punta ×10 compensada\\\\\n  Osciloscopio con punta ×10 & \\ensuremath{\\approx}10 M\\ensuremath{\\Omega} \\ensuremath{\\parallel} pocos pF & efecto mínimo & compensarla con la onda cuadrada de referencia\\\\\n  Multímetro como voltímetro ca & ancho de banda limitado & lectura baja a frecuencias altas & verificar la especificación; usar el osciloscopio\\\\\n  Multímetro como amperímetro & resistencia en serie & reduce ligeramente la corriente de la rama & preferir un resistor sensor pequeño\\\\\n  Puntas con tierra común & tierras unidas al chasis & cortocircuita elementos flotantes & medir con resta de canales\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Efectos de los instrumentos en las mediciones de circuitos RC\\par}"
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Instrumento} & \\hd{Parámetro interno} & \\hd{Efecto sobre la medición} & \\hd{Cómo reducirlo}\\\\\n  Generador de funciones & resistencia de salida (\\ensuremath{\\approx}50 \\ensuremath{\\Omega}) & la tensión aplicada baja al conectar la carga & medir VS en los bornes del circuito\\\\\n  Osciloscopio con punta ×1 & \\ensuremath{\\approx}1 M\\ensuremath{\\Omega} \\ensuremath{\\parallel} capacitancia alta & carga capacitiva a frecuencias altas & usar punta ×10 compensada\\\\\n  Osciloscopio con punta ×10 & \\ensuremath{\\approx}10 M\\ensuremath{\\Omega} \\ensuremath{\\parallel} pocos pF & efecto mínimo & compensarla con la onda cuadrada de referencia\\\\\n  Multímetro como voltímetro ca & ancho de banda limitado & lectura baja a frecuencias altas & verificar la especificación; usar el osciloscopio\\\\\n  Multímetro como amperímetro & resistencia en serie & reduce ligeramente la corriente de la rama & preferir un resistor sensor pequeño\\\\\n  Puntas con tierra común & tierras unidas al chasis & cortocircuita elementos flotantes & medir con resta de canales\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Efectos de los instrumentos en las mediciones de circuitos RC (puntas ×1 y ×10: $[1]$; generador, multímetro y tierras: [fuente no cargada])\\par}"
     }
    ]
   },

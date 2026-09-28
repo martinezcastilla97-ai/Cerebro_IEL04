@@ -8,28 +8,31 @@ corte_evaluativo: 2
 horas_sesion: 4
 horas_trabajo_independiente: 5
 estadisticas:
-  palabras: 3739
+  palabras: 3763
   ecuaciones: 5
   tablas: 5
   figuras: 2
   pasajes: 35
-bibliografia_estado: revisar
+bibliografia_estado: vacio_detectado
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
+bibliografia_via: marcador
+bibliografia_justificacion: 3 cita(s) marcada(s) como fuente no cargada
+bibliografia_faltantes:
+- 'El **generador de funciones** también forma parte del circuito: tiene una resistencia interna, típicamente de 50 Ω, en serie con su salida [FUENTE NO CARGADA EN raw/]. Si el circuito tiene una impedan'
+- '**Tabla 3.** Efectos de los instrumentos en las mediciones de circuitos RC (puntas ×1 y ×10: [1]; generador, multímetro y tierras: [FUENTE NO CARGADA EN raw/])'
+- '[4] Manuales del generador de funciones, del multímetro digital y del osciloscopio del laboratorio (resistencia de salida, ancho de banda y referencia de tierra); no están cargados en el wiki. [FUENTE'
+bibliografia_fecha: '2026-09-28'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana07.tex
 presentacion_avisos: []
-presentacion_temario_hash: 557bfa30b98c03bd
+presentacion_temario_hash: d7d85eb67c0207df
 presentacion_fecha: '2026-09-28'
 presentacion_diseno: 5
 presentacion_diapositivas: 32
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
-bibliografia_via: juez
-bibliografia_justificacion: El método general, los RC mixtos, los filtros RC, el efecto de carga y las puntas ×1 y ×10 están en los resúmenes (Floyd caps. 15, §7–4, §11–10; Boylestad caps. 15 y 23), pero no la resistencia de salida de 50 Ω del generador, el ancho de banda del multímetro ni el problema de las tierras comunes (Tabla 3).
-bibliografia_faltantes: []
-bibliografia_fecha: '2026-09-28'
 ---
 
 # Cálculo y medición de parámetros en circuitos RC en serie, en paralelo y mixtos: método, filtros, instrumentos y nomenclatura
@@ -214,9 +217,9 @@ $$
 
 donde $X_{Cp}$ es la reactancia de la capacitancia de entrada del instrumento en ohmios (Ω), $f$ la frecuencia de la señal en hercios (Hz) y $C_p$ la capacitancia total de entrada de la punta, el cable y el osciloscopio en faradios (F). Con $C_p = 100\ \text{pF}$, a 1 kHz la reactancia es de 1.59 MΩ, más de mil veces los 1.5 kΩ del circuito del caso: el efecto es despreciable. A 100 kHz baja a 15.9 kΩ, apenas diez veces la resistencia del circuito, y la medición ya se ve afectada. La regla práctica es que la impedancia de entrada del instrumento, a la frecuencia de trabajo, sea al menos cien veces mayor que la impedancia del punto que se mide.
 
-El **generador de funciones** también forma parte del circuito: tiene una resistencia interna, típicamente de 50 Ω, en serie con su salida. Si el circuito tiene una impedancia de unos 2 kΩ, la caída en esa resistencia es del orden del 2 %, y la tensión en los bornes del generador depende de la carga. Por eso la tensión aplicada se mide siempre en los bornes del circuito, con el circuito conectado, y no se toma el valor que indica el dial del generador. El **multímetro digital**, por su parte, tiene un ancho de banda limitado en ca: muchos modelos solo miden con exactitud hasta unos cientos de hercios o pocos kilohercios, y solo los de verdadero valor eficaz leen correctamente formas de onda no sinusoidales. Como amperímetro, además, introduce una pequeña resistencia en serie que modifica la corriente de la rama. La tabla resume estos efectos.
+El **generador de funciones** también forma parte del circuito: tiene una resistencia interna, típicamente de 50 Ω, en serie con su salida [FUENTE NO CARGADA EN raw/]. Si el circuito tiene una impedancia de unos 2 kΩ, la caída en esa resistencia es del orden del 2 %, y la tensión en los bornes del generador depende de la carga. Por eso la tensión aplicada se mide siempre en los bornes del circuito, con el circuito conectado, y no se toma el valor que indica el dial del generador. El **multímetro digital**, por su parte, tiene un ancho de banda limitado en ca: muchos modelos solo miden con exactitud hasta unos cientos de hercios o pocos kilohercios, y solo los de verdadero valor eficaz leen correctamente formas de onda no sinusoidales [FUENTE NO CARGADA EN raw/]. Como amperímetro, además, introduce una pequeña resistencia en serie que modifica la corriente de la rama. La tabla resume estos efectos.
 
-**Tabla 3.** Efectos de los instrumentos en las mediciones de circuitos RC
+**Tabla 3.** Efectos de los instrumentos en las mediciones de circuitos RC (puntas ×1 y ×10: [1]; generador, multímetro y tierras: [FUENTE NO CARGADA EN raw/])
 
 | Instrumento | Parámetro interno | Efecto sobre la medición | Cómo reducirlo |
 | --- | --- | --- | --- |
@@ -318,3 +321,5 @@ La sesión convirtió dos listas de fórmulas en un solo método. Cualquier circ
 [2] R. L. Boylestad, Introducción al análisis de circuitos, 10.ª ed. México: Pearson Educación, 2004.
 
 [3] M. F. P. Deorsola y P. Morcelle del Valle, Circuitos eléctricos. Parte 1, 1.ª ed. La Plata: Editorial de la Universidad de La Plata, 2017.
+
+[4] Manuales del generador de funciones, del multímetro digital y del osciloscopio del laboratorio (resistencia de salida, ancho de banda y referencia de tierra); no están cargados en el wiki. [FUENTE NO CARGADA EN raw/]
