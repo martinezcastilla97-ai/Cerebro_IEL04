@@ -16,6 +16,16 @@ estadisticas:
 bibliografia_estado: null
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
+presentacion_estado: generada
+presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana11.tex
+presentacion_avisos: []
+presentacion_temario_hash: 586797ffaef99ab2
+presentacion_fecha: '2026-09-28'
+presentacion_diseno: 5
+presentacion_diapositivas: 30
+presentacion_docente: Ing. Sergio Martinez Castilla
+presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
+presentacion_contacto: smartinezc@unibarranquilla.edu.co
 ---
 
 # El circuito RLC en serie: reactancias opuestas, ley de voltajes de Kirchhoff y resonancia en serie

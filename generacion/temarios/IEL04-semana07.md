@@ -16,6 +16,16 @@ estadisticas:
 bibliografia_estado: null
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
+presentacion_estado: generada
+presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana07.tex
+presentacion_avisos: []
+presentacion_temario_hash: 09c671076386fc4a
+presentacion_fecha: '2026-09-28'
+presentacion_diseno: 5
+presentacion_diapositivas: 32
+presentacion_docente: Ing. Sergio Martinez Castilla
+presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
+presentacion_contacto: smartinezc@unibarranquilla.edu.co
 ---
 
 # Cálculo y medición de parámetros en circuitos RC en serie, en paralelo y mixtos: método, filtros, instrumentos y nomenclatura

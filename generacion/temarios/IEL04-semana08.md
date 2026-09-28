@@ -16,6 +16,16 @@ estadisticas:
 bibliografia_estado: null
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
+presentacion_estado: generada
+presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana08.tex
+presentacion_avisos: []
+presentacion_temario_hash: 14b04972e8aed069
+presentacion_fecha: '2026-09-28'
+presentacion_diseno: 5
+presentacion_diapositivas: 33
+presentacion_docente: Ing. Sergio Martinez Castilla
+presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
+presentacion_contacto: smartinezc@unibarranquilla.edu.co
 ---
 
 # Circuitos RL en serie y en paralelo: reactancia inductiva, impedancia y leyes de Kirchhoff con la bobina real

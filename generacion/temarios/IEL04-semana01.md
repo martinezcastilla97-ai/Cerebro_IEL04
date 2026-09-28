@@ -16,6 +16,16 @@ estadisticas:
 bibliografia_estado: null
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
+presentacion_estado: generada
+presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana01.tex
+presentacion_avisos: []
+presentacion_temario_hash: 4aa40113fc2d922d
+presentacion_fecha: '2026-09-28'
+presentacion_diseno: 5
+presentacion_diapositivas: 35
+presentacion_docente: Ing. Sergio Martinez Castilla
+presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
+presentacion_contacto: smartinezc@unibarranquilla.edu.co
 ---
 
 # El condensador: estructura, capacitancia, tipos e identificación de componentes comerciales

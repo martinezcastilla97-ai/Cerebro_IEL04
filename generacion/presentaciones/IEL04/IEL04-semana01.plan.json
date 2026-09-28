@@ -1,0 +1,145 @@
+{
+ "formato": 2,
+ "temario_hash": "4aa40113fc2d922d",
+ "modelo": "gpt-4o",
+ "fecha": "2026-09-28",
+ "partes": {
+  "apertura": {
+   "huella": "2b242e5024e819ce",
+   "diapositivas": [
+    {
+     "titulo": "Punto de partida de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item \\textbf{Semana 1: Condensadores}\n  \\item Semana 2: Bobinas o inductores\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Definir carga eléctrica, diferencia de potencial\n  \\item Aplicar la ley de Ohm a un resistor y calcular potencia en cd\n  \\item Usar notación científica y de ingeniería con prefijos métricos\n  \\item Leer el código de colores y la tolerancia de un resistor\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Resultados de aprendizaje",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.45\\textwidth}\n\\begin{caja}{iubnavy}{IEL04-RA1}\n\\footnotesize Calcular un circuito capacitivo, inductivo y LC, sea en serie o paralelo.\n\\end{caja}\n\\vspace{1mm}\n\\begin{cajaplana}{iubblue}\n\\scriptsize \\textbf{CE1.} Identificar los tipos de capacitores e inductores.\\\\[2pt]\n\\textbf{CE2.} Realizar mediciones en un circuito capacitivo e inductivo.\\\\[2pt]\n\\textbf{CE3.} Realizar mediciones en un circuito LC.\n\\end{cajaplana}\n  \\column{0.52\\textwidth}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r0) at (1.25,0.00) {Explicar la estructura interna de un condensador y el papel del dieléctrico en su capacitancia.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Comprender};\n  \\node[box, fill=iuborange, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular la capacitancia, la carga y la energía almacenada de un condensador a partir de su geometría o de su tensión de trabajo.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Aplicar};\n  \\node[box, fill=iubgreen, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r2) at (1.25,-2.90) {Identificar el tipo, el valor nominal, la tolerancia y la tensión de trabajo de condensadores comerciales a partir de su marcado.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Aplicar};\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r3) at (1.25,-4.35) {Medir la capacitancia de condensadores con un capacímetro y contrastarla con su intervalo de tolerancia, como base de las mediciones en circuitos capacitivos y LC.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};\n  \\draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);\n  \\draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);\n  \\draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);\n\\end{tikzpicture}\n\\end{adjustbox}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-01": {
+   "huella": "9080d56102beef00",
+   "diapositivas": [
+    {
+     "titulo": "Por qué estudiar el condensador",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Un capacitor, también llamado condensador, es un dispositivo que guarda carga eléctrica y, con ella, crea un campo eléctrico que a su vez almacena energía $[1]$.\n  \\item En todos los casos el principio físico es el mismo: dos superficies conductoras separadas por un material aislante, el \\textbf{dieléctrico} $[1]$, $[2]$.\n  \\item Si el circuito externo permanece abierto, el condensador conserva la carga; si se cierra un camino, la energía vuelve al circuito.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Advertencia de seguridad}\n\\footnotesize Los capacitores pueden guardar carga durante mucho tiempo después de cortar la alimentación de un circuito $[1]$.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Cadena de funcionamiento del condensador",
+     "cuerpo": "\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[bG, align=center, font=\\scriptsize, text width=1.86cm] (n0) at (1.38,4.63) {Fuente aplica tensión};\n  \\node[bB, align=center, font=\\scriptsize, text width=1.67cm] (n1) at (6.72,4.63) {Placas acumulan carga ±Q};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.16cm] (n2) at (11.88,4.63) {Campo eléctrico en dieléctrico};\n  \\node[bO, align=center, font=\\scriptsize, text width=2.00cm] (n3) at (11.88,1.34) {Energía almacenada};\n  \\node[dec, align=center, font=\\tiny, text width=1.78cm, inner sep=1pt] (n4) at (6.72,1.34) {¿Circuito externo cerrado?};\n  \\node[bG, align=center, font=\\scriptsize, text width=2.52cm] (n5) at (1.38,1.34) {Energía devuelta al circuito};\n  \\draw[flecha] (n0) -- node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {V} (n1);\n  \\draw[flecha] (n1) -- (n2);\n  \\draw[flecha] (n2) -- (n3);\n  \\draw[flecha] (n3) -- (n4);\n  \\draw[flecha] (n4) -- node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {sí} (n5);\n  \\draw[flecha] (n4) to[bend left=30] node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {no: conserva carga} (n3);\n\\end{tikzpicture}\n\\end{adjustbox}\n\n\\vspace{1mm}{\\scriptsize Cadena de funcionamiento del condensador: de la fuente al almacenamiento y la devolución de energía\\par}"
+    }
+   ]
+  },
+  "bloque-02": {
+   "huella": "4ff8b1200888bba9",
+   "diapositivas": [
+    {
+     "titulo": "Estructura del condensador y definición de capacitancia",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Un faradio es la capacitancia de un condensador que guarda un culombio de carga cuando entre sus placas hay un voltio $[1]$.\n  \\item Con placas de 0.01 m² separadas 1 mil (2.54 × 10\\ensuremath{^{-}}\\ensuremath{^{5}} m) y mica ($\\varepsilon_r = 5$), la capacitancia es $C = (5)(8.85 \\times 10^{-12})(0.01) / (2.54 \\times 10^{-5}) \\approx 0.017\\ \\mu\\text{F}$ $[1]$.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle C = \\frac{Q}{V}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Estructura del condensador y definición",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.55\\textwidth}\n\\begin{cajaplana}{iubblue}\n\\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}C = \\frac{\\varepsilon_r \\, \\varepsilon_0 \\, A}{d} \\\\ \\varepsilon_0 = 8.85 \\times 10^{-12}\\ \\text{F/m}\\end{gathered}$\\end{adjustbox}\n\\end{cajaplana}\n  \\column{0.42\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Confundir la carga $Q$ (culombios) con la capacitancia $C$ (faradios).\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Constantes dieléctricas típicas de materiales usados",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Material} & \\hd{Constante dieléctrica \\ensuremath{\\epsilon}r típica}\\\\\n  Aire (vacío) & 1.0\\\\\n  Teflón & 2.0\\\\\n  Papel parafinado & 2.5\\\\\n  Aceite & 4.0\\\\\n  Mica & 5.0\\\\\n  Vidrio & 7.5\\\\\n  Cerámica & 1200\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Constantes dieléctricas típicas de materiales usados en condensadores $[1]$\\par}"
+    }
+   ]
+  },
+  "bloque-03": {
+   "huella": "954393413ff03e93",
+   "diapositivas": [
+    {
+     "titulo": "Comportamiento interno",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Lo que ocupa el espacio entre ambas es un \\textbf{campo eléctrico}, y en él reside la energía almacenada $[1]$.\n  \\item Tras la ruptura, el condensador se comporta prácticamente como un conductor.\n  \\item El dieléctrico real tampoco es un aislante perfecto.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\mathcal{E} = \\frac{V}{d}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Comportamiento interno",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.55\\textwidth}\n\\begin{cajaplana}{iubblue}\n\\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle W = \\frac{1}{2} C V^{2}$\\end{adjustbox}\n\\end{cajaplana}\n  \\column{0.42\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Las 0.147 J del ejemplo parecen poca energía, pero liberadas en microsegundos a través de un destornillador o de los dedos producen chispa y quemaduras.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Energía almacenada en función de la tensión",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.62\\textwidth}\n\\centering\n\\begin{tikzpicture}\n  \\begin{axis}[width=8.4cm, height=5.7cm, xmin=0, xmax=30, ymin=0, ymax=0.22419,\n      xlabel={Tensión entre terminales V (V)}, ylabel={Energía W (J)},\n      label style={font=\\scriptsize, text=iubnavy}, tick label style={font=\\tiny, text=iubnavy},\n      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},\n      legend style={font=\\tiny, fill=white}, legend pos=north east]\n    \\addplot[line width=1.4pt, iubblue] coordinates {(0,0) (0.40134,8.0536e-06) (0.80268,3.2214e-05) (1.204,7.2482e-05) (1.6054,0.00012886) (2.0067,0.00020134) (2.408,0.00028993) (2.8094,0.00039463) (3.2107,0.00051543) (3.612,0.00065234) (4.0134,0.00080536) (4.4147,0.00097449) (4.8161,0.0011597) (5.2174,0.0013611) (5.6187,0.0015785) (6.0201,0.0018121) (6.4214,0.0020617) (6.8227,0.0023275) (7.2241,0.0026094) (7.6254,0.0029074) (8.0268,0.0032214) (8.4281,0.0035516) (8.8294,0.0038979) (9.2308,0.0042604) (9.6321,0.0046389) (10.033,0.0050335) (10.435,0.0054442) (10.836,0.0058711) (11.237,0.006314) (11.639,0.0067731) (12.04,0.0072482) (12.441,0.0077395) (12.843,0.0082469) (13.244,0.0087704) (13.645,0.00931) (14.047,0.0098657) (14.448,0.010437) (14.849,0.011025) (15.251,0.011629) (15.652,0.01225) (16.054,0.012886) (16.455,0.013538) (16.856,0.014207) (17.258,0.014891) (17.659,0.015592) (18.06,0.016309) (18.462,0.017041) (18.863,0.01779) (19.264,0.018555) (19.666,0.019337) (20.067,0.020134) (20.468,0.020947) (20.87,0.021777) (21.271,0.022623) (21.672,0.023484) (22.074,0.024362) (22.475,0.025256) (22.876,0.026166) (23.278,0.027092) (23.679,0.028035) (24.08,0.028993) (24.482,0.029967) (24.883,0.030958) (25.284,0.031965) (25.686,0.032988) (26.087,0.034026) (26.488,0.035081) (26.89,0.036153) (27.291,0.03724) (27.692,0.038343) (28.094,0.039463) (28.495,0.040598) (28.896,0.04175) (29.298,0.042918) (29.699,0.044102) (30,0.045)};\n    \\addlegendentry{C = 100 µF}\n    \\addplot[line width=1.4pt, iuborange] coordinates {(0,0) (0.40134,3.7852e-05) (0.80268,0.00015141) (1.204,0.00034067) (1.6054,0.00060563) (2.0067,0.0009463) (2.408,0.0013627) (2.8094,0.0018547) (3.2107,0.0024225) (3.612,0.003066) (4.0134,0.0037852) (4.4147,0.0045801) (4.8161,0.0054507) (5.2174,0.006397) (5.6187,0.007419) (6.0201,0.0085167) (6.4214,0.0096901) (6.8227,0.010939) (7.2241,0.012264) (7.6254,0.013665) (8.0268,0.015141) (8.4281,0.016693) (8.8294,0.01832) (9.2308,0.020024) (9.6321,0.021803) (10.033,0.023657) (10.435,0.025588) (10.836,0.027594) (11.237,0.029676) (11.639,0.031833) (12.04,0.034067) (12.441,0.036376) (12.843,0.03876) (13.244,0.041221) (13.645,0.043757) (14.047,0.046369) (14.448,0.049056) (14.849,0.051819) (15.251,0.054658) (15.652,0.057573) (16.054,0.060563) (16.455,0.063629) (16.856,0.066771) (17.258,0.069988) (17.659,0.073281) (18.06,0.07665) (18.462,0.080095) (18.863,0.083615) (19.264,0.087211) (19.666,0.090882) (20.067,0.09463) (20.468,0.098453) (20.87,0.10235) (21.271,0.10633) (21.672,0.11038) (22.074,0.1145) (22.475,0.1187) (22.876,0.12298) (23.278,0.12733) (23.679,0.13176) (24.08,0.13627) (24.482,0.14085) (24.883,0.1455) (25.284,0.15023) (25.686,0.15504) (26.087,0.15992) (26.488,0.16488) (26.89,0.16992) (27.291,0.17503) (27.692,0.18021) (28.094,0.18547) (28.495,0.19081) (28.896,0.19622) (29.298,0.20171) (29.699,0.20728) (30,0.2115)};\n    \\addlegendentry{C = 470 µF}\n    \\addplot[line width=1pt, dashed, iubnavy!70] coordinates {(25,0) (25,0.22419)};\n    \\addlegendentry{Tensión nominal 25 V}\n  \\end{axis}\n\\end{tikzpicture}\n  \\column{0.35\\textwidth}\n\\begin{caja}{iubblue}{Lectura de la gráfica}\n\\footnotesize La gráfica muestra las dos parábolas: a igual tensión, el condensador de mayor capacitancia almacena proporcionalmente más energía, y en ambos la energía crece con rapidez al acercarse a la tensión nominal.\n\\end{caja}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-04": {
+   "huella": "07d037847628c0ae",
+   "diapositivas": [
+    {
+     "titulo": "Tipos de condensadores según su dieléctrico y construcción",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Igual que los resistores, los condensadores se agrupan en dos grandes categorías: \\textbf{fijos} y \\textbf{variables} $[2]$.\n  \\item Los \\textbf{condensadores cerámicos} aprovechan la constante dieléctrica muy alta de la cerámica (1200 es un valor típico) para lograr valores comparativamente altos en tamaños pequeños $[1]$.\n  \\item La mayoría tienen menos de 1 µF, aunque algunos llegan a 100 µF $[1]$.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Advertencia de seguridad}\n\\footnotesize Un condensador electrolítico conectado con la polaridad invertida puede explotar y provocar lesiones $[1]$.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Clasificación de los condensadores según su construcción",
+     "cuerpo": "\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[bG, align=center, font=\\scriptsize, text width=3.09cm] (n0) at (5.01,5.15) {Condensadores};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.36cm] (n1) at (4.48,3.00) {Fijos no polarizados};\n  \\node[bB, align=center, font=\\scriptsize, text width=3.42cm] (n2) at (8.19,3.00) {Fijos polarizados (electrolíticos)};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.36cm] (n3) at (1.30,3.00) {Variables y trimmers};\n  \\node[bO, align=center, font=\\scriptsize, text width=3.07cm] (n4) at (3.51,0.65) {Mica, cerámica, película};\n  \\node[bO, align=center, font=\\scriptsize, text width=2.18cm] (n5) at (6.96,0.65) {Aluminio y tantalio};\n  \\draw[flecha] (n0) -- (n1);\n  \\draw[flecha] (n0) -- (n2);\n  \\draw[flecha] (n0) -- (n3);\n  \\draw[flecha] (n1) -- node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {según dieléctrico} (n4);\n  \\draw[flecha] (n2) -- node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {según óxido} (n5);\n\\end{tikzpicture}\n\\end{adjustbox}\n\n\\vspace{1mm}{\\scriptsize Clasificación de los condensadores según su construcción y su dieléctrico\\par}"
+    },
+    {
+     "titulo": "Comparación de los tipos de condensadores fijos",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Tipo} & \\hd{Dieléctrico} & \\hd{Intervalo típico} & \\hd{Tensión} & \\hd{Polarizado}\\\\\n  Mica & Mica (\\ensuremath{\\epsilon}r \\ensuremath{\\approx} 5) & 1 pF a 0.1 µF & 100 V a 2500 V & No\\\\\n  Cerámico & Cerámica (\\ensuremath{\\epsilon}r \\ensuremath{\\approx} 1200) & 1 pF a 2.2 µF & hasta 6 kV & No\\\\\n  Película plástica & Poliéster, polipropileno, policarbonato & mayoría < 1 µF & según serie & No\\\\\n  Electrolítico de aluminio & Óxido de aluminio & 1 µF a > 200 000 µF & \\ensuremath{\\leq} 350 V típico & Sí\\\\\n  Electrolítico de tantalio & Pentóxido de tantalio & valores medios en poco volumen & bajas & Sí\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Comparación de los tipos de condensadores fijos $[1]$\\par}"
+    }
+   ]
+  },
+  "bloque-05": {
+   "huella": "5dbf84cf159f6951",
+   "diapositivas": [
+    {
+     "titulo": "Identificación: marcado, código numérico y tolerancia",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Identificar un condensador es leer en su cuerpo tres datos: la capacitancia nominal, la tolerancia y la tensión de trabajo.\n  \\item En los condensadores grandes, como los electrolíticos, el valor se imprime completo: «470 µF 25 V», con el signo menos sobre la franja del terminal negativo.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle C_{n} = (10\\,a + b) \\times 10^{\\,m}\\ \\text{pF}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Identificación",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.55\\textwidth}\n\\begin{cajaplana}{iubblue}\n\\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}C_{\\min} = C_{n}\\,(1 - t) \\\\ C_{\\max} = C_{n}\\,(1 + t)\\end{gathered}$\\end{adjustbox}\n\\end{cajaplana}\n  \\column{0.42\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Leer «104» como 104 pF.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Lectura de marcados frecuentes de condensadores",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Marcado} & \\hd{Valor nominal} & \\hd{Tolerancia} & \\hd{Otros datos}\\\\\n  103 & 10 000 pF = 10 nF & no indicada & cerámico o película\\\\\n  104K 100V & 100 000 pF = 0.1 µF & ±10 \\% & 100 V de trabajo\\\\\n  472J & 4700 pF = 4.7 nF & ±5 \\% & —\\\\\n  .01 & 0.01 µF = 10 nF & no indicada & unidad implícita µF\\\\\n  330 (cerámico) & 330 pF & no indicada & unidad implícita pF\\\\\n  NP0 & — & — & coeficiente de temperatura nulo\\\\\n  470 µF 25 WVDC & 470 µF & según fabricante & electrolítico, 25 V cd\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Lectura de marcados frecuentes de condensadores\\par}"
+    }
+   ]
+  },
+  "bloque-06": {
+   "huella": "248f94b824d24d15",
+   "diapositivas": [
+    {
+     "titulo": "Unidades, múltiplos, submúltiplos, simbología y nomenclatura",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Es una unidad enorme para la electrónica y para la mayoría de las aplicaciones de potencia: los valores reales se expresan casi siempre con submúltiplos.\n  \\item Con el nanofaradio como paso intermedio, cada salto entre unidades consecutivas es un factor 1000.\n  \\item La \\textbf{simbología} del condensador reproduce su estructura: dos trazos paralelos que representan las placas, con un terminal a cada lado $[1]$.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Confundir la «m» minúscula (mili, $10^{-3}$) con la «µ» (micro, $10^{-6}$) o con la «M» mayúscula (mega, $10^{6}$).\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Submúltiplos del faradio y reglas de conversión",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Unidad} & \\hd{Símbolo} & \\hd{Valor en F} & \\hd{Para pasar a la unidad inmediatamente menor}\\\\\n  milifaradio & mF & 10\\ensuremath{^{-}}³ & × 1000 (a µF)\\\\\n  microfaradio & µF & 10\\ensuremath{^{-}}\\ensuremath{^{6}} & × 1000 (a nF)\\\\\n  nanofaradio & nF & 10\\ensuremath{^{-}}\\ensuremath{^{9}} & × 1000 (a pF)\\\\\n  picofaradio & pF & 10\\ensuremath{^{-}}¹² & —\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Submúltiplos del faradio y reglas de conversión $[1]$\\par}"
+    },
+    {
+     "titulo": "Símbolos y nomenclatura usados en planos y en el cuerpo",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Elemento} & \\hd{Representación o marca} & \\hd{Significado}\\\\\n  Condensador fijo & dos trazos paralelos & no polarizado\\\\\n  Condensador polarizado & trazo recto y trazo curvo, o signo + & placa recta positiva\\\\\n  Condensador variable & símbolo con flecha diagonal & capacitancia ajustable\\\\\n  Designador & C1, C2, C3… & referencia del componente en el plano\\\\\n  MF, MFD, uF & µF & microfaradio en rotulación abreviada\\\\\n  WV, WVDC & tensión de trabajo & tensión continua admisible\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Símbolos y nomenclatura usados en planos y en el cuerpo de los condensadores\\par}"
+    }
+   ]
+  },
+  "bloque-07": {
+   "huella": "55ec6548d6744002",
+   "diapositivas": [
+    {
+     "titulo": "Identificación y verificación de los condensadores de un kit",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Antes de la primera práctica de circuitos capacitivos, el técnico de laboratorio debe dejar listo un kit de cinco condensadores para cada grupo de trabajo.\n  \\item Para C1, el código 223 da $C_n = 22 \\times 10^3\\ \\text{pF} = 22\\ \\text{nF}$ y la letra J indica ±5 \\%, así que el intervalo es de $22 \\times 0.95 = 20.9\\ \\text{nF}$ a $22 \\times 1.05 = 23.1\\ \\text{nF}$.\n  \\item Cuatro componentes están dentro de su tolerancia.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle e_{\\%} = \\frac{C_{m} - C_{n}}{C_{n}} \\times 100$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Identificación y verificación de los condensadores del kit",
+     "cuerpo": "\\centering\\tiny\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Ref.} & \\hd{Marcado} & \\hd{Tipo} & \\hd{Cn} & \\hd{Tolerancia} & \\hd{Intervalo admisible} & \\hd{Cm} & \\hd{e (\\%)} & \\hd{Decisión}\\\\\n  C1 & 223J & Cerámico multicapa & 22 nF & ±5 \\% & 20.9 a 23.1 nF & 22.4 nF & +1.8 & Acepta\\\\\n  C2 & 104K 100V & Película & 100 nF & ±10 \\% & 90 a 110 nF & 97.8 nF & \\ensuremath{-}2.2 & Acepta\\\\\n  C3 & 472K & Cerámico de disco & 4.7 nF & ±10 \\% & 4.23 a 5.17 nF & 4.52 nF & \\ensuremath{-}3.8 & Acepta\\\\\n  C4 & 470 µF 25 V & Electrolítico & 470 µF & ±20 \\% & 376 a 564 µF & 512 µF & +8.9 & Acepta\\\\\n  C5 & 100 µF 16 V & Electrolítico reutilizado & 100 µF & ±20 \\% & 80 a 120 µF & 71.3 µF & \\ensuremath{-}28.7 & Rechaza\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Identificación y verificación de los condensadores del kit (lecturas de ejemplo)\\par}"
+    }
+   ]
+  },
+  "bloque-08": {
+   "huella": "d55c80b15b955af9",
+   "diapositivas": [
+    {
+     "titulo": "Síntesis de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Estructura del condensador y definición}\n\\scriptsize Placas, dieléctrico, C = Q/V y capacitancia de placas paralelas\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Comportamiento interno}\n\\scriptsize Separación de cargas, rigidez dieléctrica, tensión nominal y energía W = CV²/2\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Tipos de condensadores según}\n\\scriptsize Cerámicos, de película, de mica, electrolíticos de aluminio y tantalio, variables\n\\end{cardG}\n\\end{columns}\n\\vspace{2mm}\n\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Identificación}\n\\scriptsize Lectura del valor, la tolerancia y la tensión en el cuerpo del condensador\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Unidades, múltiplos, submúltiplos}\n\\scriptsize Faradio y sus submúltiplos, conversiones y símbolos normalizados\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Identificación y verificación}\n\\scriptsize Decodificar el marcado, calcular el intervalo de tolerancia y contrastarlo con la medición\n\\end{cardG}\n\\end{columns}"
+    },
+    {
+     "titulo": "Reflexión para llevar",
+     "cuerpo": "\\centering\n\\begin{tikzpicture}\n  \\node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\\normalsize] (c) at (0,0) {\\itshape «Verificar y descargar cada condensador antes de entregarlo al grupo es un acto de responsabilidad con los compañeros: un electrolítico cargado o mal identificado puede lastimar a alguien o arruinar las mediciones de todo el equipo en la práctica siguiente.»};\n  \\node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\\scriptsize\\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};\n\\end{tikzpicture}"
+    }
+   ]
+  }
+ }
+}

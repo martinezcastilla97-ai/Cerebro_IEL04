@@ -319,7 +319,7 @@ def portada(doc: Documento) -> str:
     c = doc.conv
     etiqueta = [doc.codigo, f"Semana {doc.semana} de {doc.total_semanas}"] + ([f"Corte evaluativo {doc.corte}"] if doc.corte else [])
     sesion = ([f"Sesión {doc.tipo_sesion}"] if doc.tipo_sesion else []) + ([f"{doc.duracion_min} min"] if doc.duracion_min else [])
-    pie_docente = c.escapar(_recorte(doc.docente, 60)) + (rf"\\[1pt]\textcolor{{iubyellow}}{{{c.escapar(_recorte(doc.contacto, 60))}}}" if doc.contacto else "")
+    pie_docente = c.escapar(_recorte(doc.docente, 60)) + (rf"\\[1pt]\textcolor{{iubyellow}}{{\tiny {c.escapar(_recorte(doc.contacto, 60))}}}" if doc.contacto else "")
     subtitulo = (rf"""  \node[anchor=north west, text=iubnavy, font=\normalsize, text width=9.0cm, align=left]
     at ([yshift=-0.3cm]t.south west)
     {{\hyphenpenalty=10000 {c.inline(_recorte(doc.subtitulo, 140))}}};

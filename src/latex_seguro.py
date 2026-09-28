@@ -697,6 +697,8 @@ _TEXTO_LATEX = """
     cmidrule addlinespace multicolumn multirow arraybackslash tabularnewline ldots dots textbullet textendash textemdash
     textquotedblleft textquotedblright textquoteleft textquoteright guillemotleft guillemotright textquestiondown textexclamdown
     textperiodcentered textdegree textpm texttimes textdiv textmu textonehalf textcopyright textregistered texttrademark texteuro
+    textlnot textordfeminine textordmasculine texttwosuperior textthreesuperior textonesuperior textonequarter textthreequarters
+    textperthousand
     dag ddag textasciitilde textasciicircum textbackslash textunderscore textbar textless textgreater checkmark alert structure
     column tcblower hd thc cod
 """

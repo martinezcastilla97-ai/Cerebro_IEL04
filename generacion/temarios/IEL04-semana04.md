@@ -16,6 +16,16 @@ estadisticas:
 bibliografia_estado: null
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
+presentacion_estado: generada
+presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana04.tex
+presentacion_avisos: []
+presentacion_temario_hash: 2354f91b19fcdfc5
+presentacion_fecha: '2026-09-28'
+presentacion_diseno: 5
+presentacion_diapositivas: 33
+presentacion_docente: Ing. Sergio Martinez Castilla
+presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
+presentacion_contacto: smartinezc@unibarranquilla.edu.co
 ---
 
 # El circuito RC en serie: carga del condensador, reactancia capacitiva, impedancia y ley de voltajes de Kirchhoff

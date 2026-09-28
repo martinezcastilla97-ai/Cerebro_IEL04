@@ -114,3 +114,10 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - tema: Cálculo y medición de parámetros en circuitos RLC serie y paralelo: unidades, simbología y nomenclatura
 - 3672 palabras, 4 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
 - redactado por el asistente de la sesión con los prompts de `src/prompts/prompt-temario-*.md` (sin proveedor `CEREBRO_*`); `src/temario.py` validó, armó y dibujó. Las lecturas del caso de estudio son valores de ejemplo, no mediciones reales; L3 y C2 son los componentes del kit de las semanas 1 y 2. Con esta sesión quedan generados los 11 temarios de las semanas de clase de IEL04.
+
+## [2026-09-28] /presentaciones IEL04
+- 11 presentaciones escritas en generacion/presentaciones/IEL04/ (semanas 1, 2, 3, 4, 6, 7, 8, 9, 11, 12 y 13), de 30 a 35 diapositivas cada una; estado `generada`, sin avisos
+- docente: Ing. Sergio Martinez Castilla · programa: Tecnología en Gestión de Sistemas Eléctricos · contacto: smartinezc@unibarranquilla.edu.co
+- 99 partes (apertura y 8 bloques por temario) escritas por el asistente de la sesión a partir de los datos estructurados de cada temario (sin proveedor `CEREBRO_*`) y verificadas con `presentaciones.validar_parte` (lista de permitidos); `src/presentaciones.py` armó el marco y la verificación estática
+- compiladas con `presentaciones.compilar` (pdfLaTeX de TeX Live, -no-shell-escape, openin_any=p/openout_any=p): 11 PDF sin errores
+- corrección de la plantilla: `latex_seguro.COMANDOS_CUERPO` no admitía `\texttwosuperior` y otros símbolos que el propio `Conversor` escribe (², ³, ª, º, ¼, ¾, ‰, ¬), así que un título del índice con «CV²/2» impedía escribir el .tex; se agregaron con su prueba en `test_presentaciones.py`. En la portada, el contacto va en `\tiny` para que un correo largo no se salga del panel (`diseno_iub.portada`)

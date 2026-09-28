@@ -1,0 +1,129 @@
+{
+ "formato": 2,
+ "temario_hash": "779ac30c85636f33",
+ "modelo": "gpt-4o",
+ "fecha": "2026-09-28",
+ "partes": {
+  "apertura": {
+   "huella": "c59f9b43f2a52cf3",
+   "diapositivas": [
+    {
+     "titulo": "Punto de partida de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 5: evaluación\n  \\item \\textbf{Semana 6: Circuito RC en paralelo: análisis y Ley de Corrientes de Kirchhoff}\n  \\item Semana 7: Cálculo y medición de parámetros en circuitos RC serie y paralelo\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular la reactancia capacitiva, la impedancia y el ángulo de fase\n  \\item Aplicar la ley de corrientes de Kirchhoff y el divisor de corriente\n  \\item Sumar fasores en forma rectangular y convertirlos a forma polar\n  \\item Identificar resistores por su código de colores y condensadores\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Resultados de aprendizaje",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.45\\textwidth}\n\\begin{caja}{iubnavy}{IEL04-RA2}\n\\footnotesize Calcular un circuito resistivo, capacitivo y RC, sea en serie o paralelo.\n\\end{caja}\n\\vspace{1mm}\n\\begin{cajaplana}{iubblue}\n\\scriptsize \\textbf{CE1.} Identificar los tipos de resistores y capacitores.\\\\[2pt]\n\\textbf{CE2.} Realizar mediciones en un circuito resistivo y capacitivo.\\\\[2pt]\n\\textbf{CE3.} Realizar mediciones en un circuito RC.\n\\end{cajaplana}\n  \\column{0.52\\textwidth}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r0) at (1.25,0.00) {Identificar el resistor y el condensador de un RC en paralelo y verificar sus valores antes del montaje.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Aplicar};\n  \\node[box, fill=iuborange, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular la impedancia, la admitancia y el ángulo de fase de un circuito RC en paralelo a una frecuencia dada.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Aplicar};\n  \\node[box, fill=iubgreen, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r2) at (1.25,-2.90) {Analizar el reparto de corrientes de un circuito RC en paralelo aplicando la ley de corrientes de Kirchhoff con fasores.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Analizar};\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r3) at (1.25,-4.35) {Medir las corrientes de rama y la corriente total de un RC en paralelo y verificar la ley de corrientes de Kirchhoff.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};\n  \\draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);\n  \\draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);\n  \\draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);\n\\end{tikzpicture}\n\\end{adjustbox}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-01": {
+   "huella": "2676ebce0670ae4a",
+   "diapositivas": [
+    {
+     "titulo": "Del circuito en serie al circuito en paralelo",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item En la semana 4, el resistor y el condensador estaban en serie: compartían la corriente y se repartían la tensión de la fuente.\n  \\item Esta configuración es tan frecuente como la serie.\n  \\item Con ellas, las fórmulas del paralelo se escriben con la misma estructura que las del serie.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Al usar los mismos componentes de la semana 4 (1.5 k\\ensuremath{\\Omega} y el condensador de 97.8 nF), cualquier diferencia entre los resultados de ambas sesiones se debe solo a la forma de conexión, lo que hace la comparación mucho más instructiva.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Relaciones de fase en el circuito RC en paralelo",
+     "cuerpo": "\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[bG, align=center, font=\\scriptsize, text width=3.63cm] (n0) at (3.96,5.15) {Tensión común VS};\n  \\node[bB, align=center, font=\\scriptsize, text width=3.42cm] (n1) at (1.84,3.00) {IR en fase con VS};\n  \\node[bB, align=center, font=\\scriptsize, text width=3.42cm] (n2) at (6.08,3.00) {IC adelanta 90° a VS};\n  \\node[bO, align=center, font=\\scriptsize, text width=3.60cm] (n3) at (3.96,0.65) {LCK fasorial: IT = IR + IC};\n  \\node[bG, align=center, font=\\scriptsize, text width=3.27cm] (n4) at (11.11,0.65) {IT adelanta un ángulo \\ensuremath{\\theta}};\n  \\draw[flecha] (n0) -- node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {rama R} (n1);\n  \\draw[flecha] (n0) -- node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {rama C} (n2);\n  \\draw[flecha] (n1) -- (n3);\n  \\draw[flecha] (n2) -- (n3);\n  \\draw[flecha] (n3) -- (n4);\n\\end{tikzpicture}\n\\end{adjustbox}\n\n\\vspace{1mm}{\\scriptsize Relaciones de fase en el circuito RC en paralelo: la tensión común da lugar a dos corrientes desfasadas que se suman fasorialmente\\par}"
+    }
+   ]
+  },
+  "bloque-02": {
+   "huella": "5c54bdacf927fae8",
+   "diapositivas": [
+    {
+     "titulo": "Impedancia y ángulo de fase del circuito RC en paralelo",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Dos ejemplos de Floyd fijan los órdenes de magnitud.\n  \\item La dependencia con la frecuencia es la contraria a la del circuito en serie.\n  \\item Y la magnitud se comporta al revés: en serie la impedancia nunca baja de $R$, mientras que en paralelo nunca la supera.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}Z = \\frac{R\\,X_C}{\\sqrt{R^{2} + X_C^{2}}} \\\\ \\theta = -\\tan^{-1}\\!\\left(\\frac{R}{X_C}\\right)\\end{gathered}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Impedancia y ángulo de fase de un RC en paralelo",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{f (Hz)} & \\hd{XC (\\ensuremath{\\Omega})} & \\hd{Z (\\ensuremath{\\Omega})} & \\hd{\\ensuremath{\\theta} (°)} & \\hd{Comportamiento}\\\\\n  200 & 7958 & 1474 & \\ensuremath{-}10.7 & casi resistivo\\\\\n  500 & 3183 & 1357 & \\ensuremath{-}25.2 & predomina R\\\\\n  1000 & 1592 & 1092 & \\ensuremath{-}43.3 & equilibrado\\\\\n  1061 & 1500 & 1061 & \\ensuremath{-}45.0 & XC = R\\\\\n  2000 & 796 & 703 & \\ensuremath{-}62.1 & predomina C\\\\\n  10 000 & 159 & 158 & \\ensuremath{-}83.9 & casi capacitivo\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Impedancia y ángulo de fase de un RC en paralelo (R = 1.5 k\\ensuremath{\\Omega}, C = 0.1 µF) en función de la frecuencia\\par}"
+    }
+   ]
+  },
+  "bloque-03": {
+   "huella": "4abec719dee8c50e",
+   "diapositivas": [
+    {
+     "titulo": "Conductancia, susceptancia capacitiva y admitancia",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item En los circuitos en paralelo, las oposiciones se combinan con recíprocos, y las fórmulas se vuelven engorrosas.\n  \\item Una vez obtenida la admitancia, la impedancia es su recíproca, $\\mathbf{Z} = 1/\\mathbf{Y}$, y la ley de Ohm puede escribirse directamente con admitancias: $\\mathbf{I} = \\mathbf{V}\\mathbf{Y}$, $\\mathbf{V} = \\mathbf{I}/\\mathbf{Y}$ e $\\mathbf{Y} = \\mathbf{I}/\\mathbf{V}$ $[1]$.\n  \\item La susceptancia capacitiva tiene una ventaja práctica: $B_C = 2\\pi f C$ es \\textbf{directamente proporcional} a la frecuencia y a la capacitancia, sin fracciones.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}G = \\frac{1}{R} \\\\ B_C = \\frac{1}{X_C} = 2\\pi f C \\\\ \\mathbf{Y} = G + jB_C = \\sqrt{G^{2} + B_C^{2}}\\ \\angle \\tan^{-1}\\!\\left(\\frac{B_C}{G}\\right)\\end{gathered}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Procedimiento de cálculo de un circuito RC en paralelo",
+     "cuerpo": "\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[bG, align=center, font=\\scriptsize, text width=3.48cm] (n0) at (2.16,4.76) {Resistencia R};\n  \\node[bG, align=center, font=\\scriptsize, text width=4.07cm] (n1) at (2.16,2.90) {Capacitancia C y frecuencia f};\n  \\node[bB, align=center, font=\\scriptsize, text width=1.86cm] (n2) at (6.90,4.54) {G = 1/R};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.26cm] (n3) at (6.90,2.90) {BC = 2\\ensuremath{\\pi}fC};\n  \\node[bO, align=center, font=\\scriptsize, text width=2.66cm] (n4) at (11.54,3.72) {Y = G + jBC};\n  \\node[bG, align=center, font=\\scriptsize, text width=3.87cm] (n5) at (11.54,0.50) {Z = 1/Y, I = VY};\n  \\draw[flecha] (n0) -- (n2);\n  \\draw[flecha] (n1) -- (n3);\n  \\draw[flecha] (n2) -- node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {0°} (n4);\n  \\draw[flecha] (n3) -- node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {+90°} (n4);\n  \\draw[flecha] (n4) -- (n5);\n\\end{tikzpicture}\n\\end{adjustbox}\n\n\\vspace{1mm}{\\scriptsize Procedimiento de cálculo de un circuito RC en paralelo con admitancias\\par}"
+    }
+   ]
+  },
+  "bloque-04": {
+   "huella": "ec31ee2023b1b4e0",
+   "diapositivas": [
+    {
+     "titulo": "Ley de corrientes de Kirchhoff en el circuito RC en paralelo",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Con los componentes del caso ($R = 1.5\\ \\text{k}\\Omega$, $C = 0.1\\ \\mu\\text{F}$) y 5 V eficaces a 1 kHz: $I_R = 5/1500 \\approx 3.33\\ \\text{mA}$, $I_C = 5 \\times 0.628 \\times 10^{-3} \\approx 3.14\\ \\text{mA}$, $I_T = \\sqrt{3.33^2 + 3.14^2} \\approx 4.58\\ \\text{mA}$ y $\\theta = \\tan^{-1}(3.14/3.33) \\approx 43.3^\\circ$.\n  \\item La corriente del resistor no depende de la frecuencia; la del condensador crece en proporción a ella, porque $B_C = 2\\pi f C$.\n  \\item A 5 kHz, la rama del condensador lleva unos 15.7 mA, casi cinco veces la del resistor.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}\\mathbf{I}_T = \\mathbf{I}_R + \\mathbf{I}_C = I_R + jI_C \\\\ I_T = \\sqrt{I_R^{2} + I_C^{2}} \\\\ \\theta = \\tan^{-1}\\!\\left(\\frac{I_C}{I_R}\\right)\\end{gathered}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Corrientes de rama y corriente total de un RC en paralelo",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.62\\textwidth}\n\\centering\n\\begin{tikzpicture}\n  \\begin{semilogxaxis}[width=8.4cm, height=5.7cm, xmin=100, xmax=5000, ymin=0, ymax=17.002,\n      xlabel={Frecuencia f (Hz)}, ylabel={Corriente eficaz (mA)},\n      label style={font=\\scriptsize, text=iubnavy}, tick label style={font=\\tiny, text=iubnavy},\n      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},\n      legend style={font=\\tiny, fill=white}, legend pos=north east]\n    \\addplot[line width=1.4pt, iubblue] coordinates {(100,0.31416) (105.37,0.33104) (111.03,0.34882) (117,0.36757) (123.29,0.38732) (129.91,0.40813) (136.89,0.43005) (144.25,0.45316) (152,0.47751) (160.16,0.50316) (168.77,0.5302) (177.83,0.55868) (187.39,0.5887) (197.46,0.62033) (208.07,0.65366) (219.25,0.68878) (231.03,0.72579) (243.44,0.76478) (256.52,0.80587) (270.3,0.84917) (284.82,0.8948) (300.13,0.94287) (316.25,0.99353) (333.24,1.0469) (351.15,1.1032) (370.01,1.1624) (389.89,1.2249) (410.84,1.2907) (432.92,1.36) (456.18,1.4331) (480.69,1.5101) (506.51,1.5913) (533.73,1.6767) (562.4,1.7668) (592.62,1.8618) (624.46,1.9618) (658.01,2.0672) (693.36,2.1783) (730.62,2.2953) (769.87,2.4186) (811.24,2.5486) (854.82,2.6855) (900.75,2.8298) (949.15,2.9818) (1000.1,3.142) (1053.9,3.3109) (1110.5,3.4888) (1170.2,3.6762) (1233,3.8737) (1299.3,4.0818) (1369.1,4.3012) (1442.7,4.5322) (1520.2,4.7758) (1601.8,5.0323) (1687.9,5.3027) (1778.6,5.5876) (1874.2,5.8879) (1974.9,6.2042) (2081,6.5375) (2192.8,6.8888) (2310.6,7.2589) (2434.7,7.6489) (2565.5,8.0599) (2703.4,8.4929) (2848.6,8.9492) (3001.7,9.4301) (3163,9.9367) (3332.9,10.471) (3512,11.033) (3700.7,11.626) (3899.5,12.251) (4109,12.909) (4329.8,13.602) (4562.4,14.333) (4807.5,15.103) (5000,15.708)};\n    \\addlegendentry{IC}\n    \\addplot[line width=1.4pt, iuborange] coordinates {(100,3.3481) (105.37,3.3497) (111.03,3.3515) (117,3.3535) (123.29,3.3558) (129.91,3.3582) (136.89,3.361) (144.25,3.364) (152,3.3674) (160.16,3.3711) (168.77,3.3752) (177.83,3.3798) (187.39,3.3849) (197.46,3.3906) (208.07,3.3968) (219.25,3.4038) (231.03,3.4114) (243.44,3.4199) (256.52,3.4294) (270.3,3.4398) (284.82,3.4513) (300.13,3.4641) (316.25,3.4782) (333.24,3.4939) (351.15,3.5111) (370.01,3.5302) (389.89,3.5513) (410.84,3.5745) (432.92,3.6001) (456.18,3.6284) (480.69,3.6594) (506.51,3.6937) (533.73,3.7313) (562.4,3.7726) (592.62,3.818) (624.46,3.8678) (658.01,3.9223) (693.36,3.982) (730.62,4.0472) (769.87,4.1184) (811.24,4.196) (854.82,4.2805) (900.75,4.3725) (949.15,4.4724) (1000.1,4.5808) (1053.9,4.6982) (1110.5,4.8252) (1170.2,4.9624) (1233,5.1105) (1299.3,5.27) (1369.1,5.4416) (1442.7,5.626) (1520.2,5.824) (1601.8,6.0362) (1687.9,6.2634) (1778.6,6.5064) (1874.2,6.7659) (1974.9,7.043) (2081,7.3383) (2192.8,7.6529) (2310.6,7.9877) (2434.7,8.3437) (2565.5,8.722) (2703.4,9.1237) (2848.6,9.5499) (3001.7,10.002) (3163,10.481) (3332.9,10.988) (3512,11.526) (3700.7,12.094) (3899.5,12.696) (4109,13.332) (4329.8,14.005) (4562.4,14.716) (4807.5,15.467) (5000,16.058)};\n    \\addlegendentry{IT}\n    \\addplot[line width=1pt, dashed, iubnavy!70] coordinates {(1061,0) (1061,17.002)};\n    \\addlegendentry{IC = IR (1.06 kHz)}\n    \\addplot[line width=1pt, dashed, iubnavy!70] coordinates {(100,3.33) (5000,3.33)};\n    \\addlegendentry{IR = 3.33 mA}\n  \\end{semilogxaxis}\n\\end{tikzpicture}\n  \\column{0.35\\textwidth}\n\\begin{caja}{iubblue}{Lectura de la gráfica}\n\\footnotesize A 5 kHz, la rama del condensador lleva unos 15.7 mA, casi cinco veces la del resistor.\n\\end{caja}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-05": {
+   "huella": "07b253990430276f",
+   "diapositivas": [
+    {
+     "titulo": "Descarga de un condensador a través de un resistor",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item El circuito RC en paralelo también tiene una respuesta en el tiempo, y es la que más importa para la seguridad.\n  \\item La aplicación más común es el \\textbf{filtro de una fuente de alimentación}.\n  \\item Para bajar a 50 V hacen falta $t_{seg} = 47 \\ln(170/50) \\approx 57.5\\ \\text{s}$, y para descargarse prácticamente por completo, unas cinco constantes de tiempo, casi cuatro minutos.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}v_C(t) = V_0\\,e^{-t/(RC)} \\\\ t_{seg} = R\\,C\\,\\ln\\!\\left(\\frac{V_0}{V_{seg}}\\right)\\end{gathered}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-06": {
+   "huella": "020bfaa64d82ebea",
+   "diapositivas": [
+    {
+     "titulo": "Comparación entre los circuitos RC en serie y en paralelo",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Con las semanas 4 y 6 completas, conviene reunir en un solo cuadro lo que distingue a los dos circuitos RC.\n  \\item Basta escribir la impedancia del paralelo en forma rectangular: la parte real es la resistencia equivalente en serie y la parte imaginaria, la reactancia equivalente.\n  \\item En cuanto a los parámetros, unidades y nomenclatura que pide el procedimental del RA, la sesión suma tres magnitudes nuevas a las de la semana 4.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Una forma rápida de elegir el método: si el circuito está en serie, se suman impedancias; si está en paralelo, se suman admitancias.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Comparación de los circuitos RC en serie y en paralelo (1/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Característica} & \\hd{RC en serie (semana 4)} & \\hd{RC en paralelo (semana 6)}\\\\\n  Magnitud común & corriente & tensión\\\\\n  Referencia del diagrama fasorial & I a 0° & V a 0°\\\\\n  Ley de Kirchhoff que se aplica & LVK: VS = VR \\ensuremath{-} jVC & LCK: IT = IR + jIC\\\\\n  Suma natural & Z = R \\ensuremath{-} jXC & Y = G + jBC\\\\\n  Magnitud & Z = \\ensuremath{\\surd}(R² + XC²) & Z = R·XC/\\ensuremath{\\surd}(R² + XC²)\\\\\n  Ángulo de la impedancia & \\ensuremath{-}tan\\ensuremath{^{-}}¹(XC/R) & \\ensuremath{-}tan\\ensuremath{^{-}}¹(R/XC)\\\\\n  Z a 1 kHz & 2187 \\ensuremath{\\Omega} & 1092 \\ensuremath{\\Omega}\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Comparación de los circuitos RC en serie y en paralelo (R = 1.5 k\\ensuremath{\\Omega}, C = 0.1 µF, 5 V eficaces a 1 kHz)\\par}"
+    },
+    {
+     "titulo": "Comparación de los circuitos RC en serie y en paralelo (2/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Característica} & \\hd{RC en serie (semana 4)} & \\hd{RC en paralelo (semana 6)}\\\\\n  \\ensuremath{\\theta} a 1 kHz & \\ensuremath{-}46.7° & \\ensuremath{-}43.3°\\\\\n  Corriente de la fuente a 1 kHz & 2.29 mA & 4.58 mA\\\\\n  Z frente a R & siempre mayor que R & siempre menor que R\\\\\n  A frecuencias bajas & casi capacitivo & casi resistivo\\\\\n  A frecuencias altas & casi resistivo & casi capacitivo\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Comparación de los circuitos RC en serie y en paralelo (R = 1.5 k\\ensuremath{\\Omega}, C = 0.1 µF, 5 V eficaces a 1 kHz)\\par}"
+    }
+   ]
+  },
+  "bloque-07": {
+   "huella": "28edf41a1828a097",
+   "diapositivas": [
+    {
+     "titulo": "Medición de un circuito RC en paralelo y verificación",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Antes del montaje se verifican de nuevo con el ohmímetro y el medidor LCR, lo que cubre la identificación del criterio CE1.\n  \\item Por la ley de Ohm en cada rama, $I_R = 5.00/1492 \\approx 3.35\\ \\text{mA}$ e $I_C = 5.00/1627 \\approx 3.07\\ \\text{mA}$.\n  \\item La corriente se duplicó porque la impedancia se redujo a la mitad, y los ángulos son prácticamente complementarios, como predice la teoría.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}I_T= \\sqrt{I_R^{2} + I_C^{2}} \\\\ = \\sqrt{(3.35)^2 + (3.07)^2}\\ \\text{mA} \\\\ \\approx 4.55\\ \\text{mA} \\\\ \\theta = \\tan^{-1}\\!\\left(\\frac{3.07}{3.35}\\right) \\approx 42.5^\\circ\\end{gathered}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Valores calculados y medidos del circuito RC (1/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Magnitud} & \\hd{Calculado con valores medidos} & \\hd{Medido} & \\hd{Instrumento} & \\hd{Diferencia}\\\\\n  VS & 5.00 V & 5.00 V & osciloscopio y multímetro & —\\\\\n  IR & 3.35 mA & 3.34 mA & multímetro en la rama R & \\ensuremath{-}0.3 \\%\\\\\n  IC & 3.07 mA & 3.09 mA & multímetro en la rama C & +0.7 \\%\\\\\n  IR + IC (aritmética) & 6.42 mA & 6.43 mA & — & —\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Valores calculados y medidos del circuito RC en paralelo a 1 kHz (lecturas de ejemplo)\\par}"
+    },
+    {
+     "titulo": "Valores calculados y medidos del circuito RC (2/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Magnitud} & \\hd{Calculado con valores medidos} & \\hd{Medido} & \\hd{Instrumento} & \\hd{Diferencia}\\\\\n  \\ensuremath{\\surd}(IR² + IC²) & 4.55 mA & 4.55 mA & calculado de las lecturas & 0.0 \\%\\\\\n  IT & 4.55 mA & 4.56 mA & multímetro en la fuente & +0.2 \\%\\\\\n  \\ensuremath{\\Delta}t entre VS e IT & 118 µs & 117 µs & osciloscopio, resistor sensor & \\ensuremath{-}0.8 \\%\\\\\n  \\ensuremath{\\theta} & 42.5° & 42.1° & calculado de \\ensuremath{\\Delta}t & 0.4°\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Valores calculados y medidos del circuito RC en paralelo a 1 kHz (lecturas de ejemplo)\\par}"
+    }
+   ]
+  },
+  "bloque-08": {
+   "huella": "72c9fe548f846477",
+   "diapositivas": [
+    {
+     "titulo": "Síntesis de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Impedancia y ángulo de fase del circuito}\n\\scriptsize Z = R·XC/\\ensuremath{\\surd}(R² + XC²), ángulo de fase y variación con la frecuencia\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Conductancia, susceptancia capacitiva}\n\\scriptsize G = 1/R, BC = 1/XC, Y = G + jBC y conversión a impedancia\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Ley de corrientes de Kirchhoff}\n\\scriptsize IT = IR + jIC, suma fasorial de corrientes y adelanto de la corriente total\n\\end{cardG}\n\\end{columns}\n\\vspace{2mm}\n\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Descarga de un condensador a través}\n\\scriptsize Resistencias de descarga, constante de tiempo y seguridad en fuentes y bancos\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Comparación entre los circuitos RC}\n\\scriptsize Magnitud común, ley de Kirchhoff, fórmulas y comportamiento en frecuencia\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Medición de un circuito RC en paralelo}\n\\scriptsize Medir IR, IC e IT a 1 kHz con los componentes de la semana 4 y comparar con el cálculo\n\\end{cardG}\n\\end{columns}"
+    },
+    {
+     "titulo": "Reflexión para llevar",
+     "cuerpo": "\\centering\n\\begin{tikzpicture}\n  \\node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\\normalsize] (c) at (0,0) {\\itshape «Instalar y verificar la resistencia de descarga de una fuente, o medir la tensión de un banco antes de tocarlo, es un acto de responsabilidad con los compañeros: quien intervenga el equipo después confía en que ese condensador ya no guarda energía.»};\n  \\node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\\scriptsize\\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};\n\\end{tikzpicture}"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,133 @@
+{
+ "formato": 2,
+ "temario_hash": "09c671076386fc4a",
+ "modelo": "gpt-4o",
+ "fecha": "2026-09-28",
+ "partes": {
+  "apertura": {
+   "huella": "6bd020d7b9604fc3",
+   "diapositivas": [
+    {
+     "titulo": "Punto de partida de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 6: Circuito RC en paralelo: análisis y Ley de Corrientes de Kirchhoff\n  \\item \\textbf{Semana 7: Cálculo y medición de parámetros en circuitos RC serie y paralelo}\n  \\item Semana 8: Circuitos RL en serie y en paralelo\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular impedancia, ángulo de fase y tensiones de un RC en serie\n  \\item Calcular admitancia y corrientes de un RC en paralelo aplicando la LCK\n  \\item Convertir fasores entre forma rectangular y polar, y operar con ellos\n  \\item Identificar y verificar resistores y condensadores con ohmímetro\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Resultados de aprendizaje",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.45\\textwidth}\n\\begin{caja}{iubnavy}{IEL04-RA2}\n\\footnotesize Calcular un circuito resistivo, capacitivo y RC, sea en serie o paralelo.\n\\end{caja}\n\\vspace{1mm}\n\\begin{cajaplana}{iubblue}\n\\scriptsize \\textbf{CE1.} Identificar los tipos de resistores y capacitores.\\\\[2pt]\n\\textbf{CE2.} Realizar mediciones en un circuito resistivo y capacitivo.\\\\[2pt]\n\\textbf{CE3.} Realizar mediciones en un circuito RC.\n\\end{cajaplana}\n  \\column{0.52\\textwidth}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r0) at (1.25,0.00) {Identificar los componentes y la topología de un circuito RC y elegir el método de cálculo adecuado para cada parte.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Analizar};\n  \\node[box, fill=iuborange, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular impedancias, corrientes y tensiones de circuitos RC en serie, en paralelo y mixtos con fasores.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Aplicar};\n  \\node[box, fill=iubgreen, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r2) at (1.25,-2.90) {Calcular la frecuencia de corte de un filtro RC y predecir la tensión de salida a una frecuencia dada.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Aplicar};\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r3) at (1.25,-4.35) {Medir tensiones y corrientes en un circuito RC mixto, evaluar el efecto de los instrumentos y justificar las diferencias con el cálculo.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};\n  \\draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);\n  \\draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);\n  \\draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);\n\\end{tikzpicture}\n\\end{adjustbox}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-01": {
+   "huella": "b2cb8f20fecbc801",
+   "diapositivas": [
+    {
+     "titulo": "Un solo método para todos los circuitos RC",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Pero los circuitos reales rara vez son puramente de un tipo.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Esta sesión es también una preparación para el RA3: en la semana 8, el mismo diagrama sirve para los circuitos RL, cambiando solo el cálculo de la reactancia y el signo del ángulo.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Procedimiento general de cálculo y medición de un circuito",
+     "cuerpo": "\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[bG, align=center, font=\\scriptsize, text width=3.51cm] (n0) at (1.88,4.53) {Identificar y verificar componentes};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.80cm] (n1) at (6.77,4.53) {XC a la frecuencia de trabajo};\n  \\node[bB, align=center, font=\\scriptsize, text width=3.03cm] (n2) at (11.43,4.53) {Reducir: Z en serie, Y en paralelo};\n  \\node[bB, align=center, font=\\scriptsize, text width=3.03cm] (n3) at (11.43,1.07) {Ley de Ohm fasorial: I y V};\n  \\node[bO, align=center, font=\\scriptsize, text width=2.58cm] (n4) at (6.77,1.07) {Verificar LVK y LCK};\n  \\node[bG, align=center, font=\\scriptsize, text width=2.84cm] (n5) at (1.88,1.07) {Medir y comparar};\n  \\draw[flecha] (n0) -- (n1);\n  \\draw[flecha] (n1) -- (n2);\n  \\draw[flecha] (n2) -- (n3);\n  \\draw[flecha] (n3) -- (n4);\n  \\draw[flecha] (n4) -- (n5);\n\\end{tikzpicture}\n\\end{adjustbox}\n\n\\vspace{1mm}{\\scriptsize Procedimiento general de cálculo y medición de un circuito RC\\par}"
+    }
+   ]
+  },
+  "bloque-02": {
+   "huella": "60aaf1c4940cd112",
+   "diapositivas": [
+    {
+     "titulo": "Método general de cálculo con impedancias y admitancias",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Con estas herramientas, el método general tiene seis pasos.\n  \\item Cambiar la referencia gira todo el diagrama fasorial, pero no altera ni las magnitudes ni las diferencias de fase entre las magnitudes.\n  \\item En los circuitos mixtos se combinan ambos, como muestra la siguiente unidad.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}\\mathbf{Z} = R + jX = Z\\angle\\theta \\\\ Z = \\sqrt{R^{2} + X^{2}},\\ \\ \\theta = \\tan^{-1}\\!\\left(\\frac{X}{R}\\right) \\\\ R = Z\\cos\\theta,\\ \\ X = Z\\sin\\theta\\end{gathered}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Método general aplicado al RC en serie de la semana 4",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Paso} & \\hd{Operación} & \\hd{Forma} & \\hd{Resultado}\\\\\n  1 & Identificar y medir componentes & — & R = 1.5 k\\ensuremath{\\Omega}, C = 0.1 µF\\\\\n  2 & XC = 1/(2\\ensuremath{\\pi}fC) & magnitud & 1592 \\ensuremath{\\Omega}\\\\\n  3 & Z = R \\ensuremath{-} jXC & rectangular \\ensuremath{\\rightarrow} polar & 2187 \\ensuremath{\\angle} \\ensuremath{-}46.7° \\ensuremath{\\Omega}\\\\\n  4 & I = V/Z & polar & 2.29 \\ensuremath{\\angle} 46.7° mA\\\\\n  5 & VR = IR, VC = IXC & polar & 3.43 \\ensuremath{\\angle} 46.7° V; 3.64 \\ensuremath{\\angle} \\ensuremath{-}43.3° V\\\\\n  6 & VR + VC = VS & rectangular & 5.00 \\ensuremath{\\angle} 0° V\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Método general aplicado al RC en serie de la semana 4 (1.5 k\\ensuremath{\\Omega}, 0.1 µF, 5 V eficaces a 1 kHz)\\par}"
+    }
+   ]
+  },
+  "bloque-03": {
+   "huella": "2f57f7f02bfe9e55",
+   "diapositivas": [
+    {
+     "titulo": "Circuitos RC mixtos (serie-paralelo)",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Un circuito RC mixto combina grupos en serie y grupos en paralelo.\n  \\item Su admitancia es $\\mathbf{Y}_p = G_2 + jB_C$, y su impedancia, $\\mathbf{Z}_p = 1/\\mathbf{Y}_p$, se pasa a forma rectangular para poder sumarla con $R_1$.\n  \\item Con 5 V eficaces a 0°, la corriente total es $\\mathbf{I} = \\mathbf{V}_S/\\mathbf{Z}_T = 2.57 \\angle 22.6^\\circ\\ \\text{mA}$.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\mathbf{Z}_T = R_1 + \\mathbf{Z}_p = R_1 + \\frac{1}{G_2 + jB_C}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Resultados del circuito mixto R1 + (R2 \\ensuremath{\\parallel} C) (1/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Magnitud} & \\hd{Valor} & \\hd{Ángulo (ref. VS)} & \\hd{Comprobación}\\\\\n  ZT & 1945 \\ensuremath{\\Omega} & \\ensuremath{-}22.6° & 1795 \\ensuremath{-} j749 \\ensuremath{\\Omega}\\\\\n  I & 2.57 mA & +22.6° & VS/ZT\\\\\n  VR1 & 2.57 V & +22.6° & en fase con I\\\\\n  Vp & 2.81 V & \\ensuremath{-}20.7° & común a R2 y C\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Resultados del circuito mixto R1 + (R2 \\ensuremath{\\parallel} C) con valores nominales (5 V eficaces a 1 kHz)\\par}"
+    },
+    {
+     "titulo": "Resultados del circuito mixto R1 + (R2 \\ensuremath{\\parallel} C) (2/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Magnitud} & \\hd{Valor} & \\hd{Ángulo (ref. VS)} & \\hd{Comprobación}\\\\\n  IR2 & 1.87 mA & \\ensuremath{-}20.7° & en fase con Vp\\\\\n  IC & 1.76 mA & +69.3° & 90° delante de Vp\\\\\n  \\ensuremath{\\surd}(IR2² + IC²) & 2.57 mA & — & LCK: igual a I\\\\\n  VR1 + Vp (fasorial) & 5.00 V & 0° & LVK: igual a VS\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Resultados del circuito mixto R1 + (R2 \\ensuremath{\\parallel} C) con valores nominales (5 V eficaces a 1 kHz)\\par}"
+    }
+   ]
+  },
+  "bloque-04": {
+   "huella": "79cff1d2b7a2980f",
+   "diapositivas": [
+    {
+     "titulo": "El circuito RC como filtro",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item La aplicación más extendida del circuito RC en serie es el \\textbf{filtro}: un circuito que deja pasar unas frecuencias y atenúa otras.\n  \\item La frontera entre las frecuencias que pasan y las que se atenúan se define por convención.\n  \\item En el laboratorio, $f_c$ se mide barriendo la frecuencia del generador hasta que la salida cae al 70.7 \\% de su valor en baja frecuencia.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}f_c = \\frac{1}{2\\pi R C} \\\\ \\frac{V_{sal}}{V_{ent}}\\bigg|_{pasabajas} = \\frac{1}{\\sqrt{1 + (f/f_c)^{2}}} \\\\ \\frac{V_{sal}}{V_{ent}}\\bigg|_{pasaaltas} = \\frac{f/f_c}{\\sqrt{1 + (f/f_c)^{2}}}\\end{gathered}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Respuesta en frecuencia de un filtro RC pasabajas",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.62\\textwidth}\n\\centering\n\\begin{tikzpicture}\n  \\begin{semilogxaxis}[width=8.4cm, height=5.7cm, xmin=10, xmax=1e+05, ymin=0, ymax=1.0594,\n      xlabel={Frecuencia f (Hz)}, ylabel={Vsal / Vent},\n      label style={font=\\scriptsize, text=iubnavy}, tick label style={font=\\tiny, text=iubnavy},\n      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},\n      legend style={font=\\tiny, fill=white}, legend pos=north east]\n    \\addplot[line width=1.4pt, iubblue] coordinates {(10,0.99996) (11.311,0.99994) (12.795,0.99993) (14.472,0.99991) (16.37,0.99988) (18.516,0.99985) (20.945,0.99981) (23.691,0.99975) (26.797,0.99968) (30.311,0.99959) (34.286,0.99948) (38.782,0.99933) (43.867,0.99915) (49.619,0.99891) (56.126,0.9986) (63.486,0.99821) (71.81,0.99772) (81.227,0.99708) (91.878,0.99627) (103.93,0.99524) (117.55,0.99392) (132.97,0.99224) (150.4,0.9901) (170.13,0.98739) (192.43,0.98395) (217.67,0.9796) (246.21,0.97412) (278.49,0.96724) (315.01,0.95864) (356.32,0.94797) (403.04,0.93482) (455.89,0.91878) (515.67,0.8994) (583.29,0.87631) (659.78,0.8492) (746.29,0.81793) (844.15,0.78254) (954.85,0.74331) (1080.1,0.70079) (1221.7,0.65571) (1381.9,0.609) (1563.1,0.56163) (1768,0.51456) (1999.9,0.46866) (2262.1,0.42464) (2558.7,0.38303) (2894.3,0.34419) (3273.8,0.3083) (3703.1,0.27544) (4188.6,0.24555) (4737.9,0.21853) (5359.2,0.19421) (6061.9,0.17241) (6856.8,0.15292) (7755.9,0.13554) (8772.9,0.12007) (9923.3,0.10631) (11225,0.094106) (12696,0.083277) (14361,0.073679) (16244,0.065176) (18374,0.057647) (20784,0.050983) (23509,0.045085) (26592,0.039868) (30079,0.035252) (34023,0.03117) (38484,0.027559) (43531,0.024366) (49239,0.021543) (55695,0.019047) (62999,0.016839) (71260,0.014888) (80604,0.013162) (91173,0.011636) (1e+05,0.010609)};\n    \\addlegendentry{Pasabajas (salida en C)}\n    \\addplot[line width=1.4pt, iuborange] coordinates {(10,0.0094247) (11.311,0.01066) (12.795,0.012058) (14.472,0.013639) (16.37,0.015427) (18.516,0.017449) (20.945,0.019737) (23.691,0.022323) (26.797,0.025249) (30.311,0.028557) (34.286,0.032298) (38.782,0.036528) (43.867,0.04131) (49.619,0.046716) (56.126,0.052825) (63.486,0.059729) (71.81,0.067527) (81.227,0.076333) (91.878,0.086273) (103.93,0.097484) (117.55,0.11012) (132.97,0.12435) (150.4,0.14035) (170.13,0.15832) (192.43,0.17846) (217.67,0.20097) (246.21,0.22605) (278.49,0.25388) (315.01,0.28462) (356.32,0.31836) (403.04,0.35511) (455.89,0.39478) (515.67,0.43713) (583.29,0.48176) (659.78,0.52807) (746.29,0.57532) (844.15,0.6226) (954.85,0.66894) (1080.1,0.71337) (1221.7,0.75501) (1381.9,0.79317) (1563.1,0.82739) (1768,0.85746) (1999.9,0.88338) (2262.1,0.90536) (2558.7,0.92373) (2894.3,0.9389) (3273.8,0.95129) (3703.1,0.96132) (4188.6,0.96938) (4737.9,0.97583) (5359.2,0.98096) (6061.9,0.98503) (6856.8,0.98824) (7755.9,0.99077) (8772.9,0.99277) (9923.3,0.99433) (11225,0.99556) (12696,0.99653) (14361,0.99728) (16244,0.99787) (18374,0.99834) (20784,0.9987) (23509,0.99898) (26592,0.9992) (30079,0.99938) (34023,0.99951) (38484,0.99962) (43531,0.9997) (49239,0.99977) (55695,0.99982) (62999,0.99986) (71260,0.99989) (80604,0.99991) (91173,0.99993) (1e+05,0.99994)};\n    \\addlegendentry{Pasaaltas (salida en R)}\n    \\addplot[line width=1pt, dashed, iubnavy!70] coordinates {(1061,0) (1061,1.0594)};\n    \\addlegendentry{fc = 1061 Hz}\n    \\addplot[line width=1pt, dashed, iubnavy!70] coordinates {(10,0.707) (1e+05,0.707)};\n    \\addlegendentry{70.7 \\%}\n  \\end{semilogxaxis}\n\\end{tikzpicture}\n  \\column{0.35\\textwidth}\n\\begin{caja}{iubblue}{Lectura de la gráfica}\n\\footnotesize La gráfica muestra que las dos curvas se cruzan en la frecuencia de corte, a 0.707, y son simétricas respecto a ella en escala logarítmica.\n\\end{caja}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-05": {
+   "huella": "3bb54987b4ec5e0b",
+   "diapositivas": [
+    {
+     "titulo": "Instrumentos de medición y sus efectos en circuitos RC",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Todo instrumento que se conecta a un circuito se convierte, durante la medición, en parte del circuito.\n  \\item La \\textbf{punta de osciloscopio} es el caso típico.\n  \\item El \\textbf{generador de funciones} también forma parte del circuito: tiene una resistencia interna, típicamente de 50 \\ensuremath{\\Omega}, en serie con su salida.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle X_{Cp} = \\frac{1}{2\\pi f C_p}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Efectos de los instrumentos en las mediciones de circuitos",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Instrumento} & \\hd{Parámetro interno} & \\hd{Efecto sobre la medición} & \\hd{Cómo reducirlo}\\\\\n  Generador de funciones & resistencia de salida (\\ensuremath{\\approx}50 \\ensuremath{\\Omega}) & la tensión aplicada baja al conectar la carga & medir VS en los bornes del circuito\\\\\n  Osciloscopio con punta ×1 & \\ensuremath{\\approx}1 M\\ensuremath{\\Omega} \\ensuremath{\\parallel} capacitancia alta & carga capacitiva a frecuencias altas & usar punta ×10 compensada\\\\\n  Osciloscopio con punta ×10 & \\ensuremath{\\approx}10 M\\ensuremath{\\Omega} \\ensuremath{\\parallel} pocos pF & efecto mínimo & compensarla con la onda cuadrada de referencia\\\\\n  Multímetro como voltímetro ca & ancho de banda limitado & lectura baja a frecuencias altas & verificar la especificación; usar el osciloscopio\\\\\n  Multímetro como amperímetro & resistencia en serie & reduce ligeramente la corriente de la rama & preferir un resistor sensor pequeño\\\\\n  Puntas con tierra común & tierras unidas al chasis & cortocircuita elementos flotantes & medir con resta de canales\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Efectos de los instrumentos en las mediciones de circuitos RC\\par}"
+    }
+   ]
+  },
+  "bloque-06": {
+   "huella": "c9595d512faca7c3",
+   "diapositivas": [
+    {
+     "titulo": "Parámetros, unidades, simbología y nomenclatura",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item El contenido procedimental del RA2 pide diferenciar los parámetros del circuito RC identificando unidades de medida, múltiplos y submúltiplos, simbología y nomenclatura.\n  \\item Tres observaciones evitan los errores más comunes al leer la tabla.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Mezclar valores eficaces con valores pico a pico en un mismo cálculo.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Parámetros de los circuitos RC (1/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Parámetro} & \\hd{Símbolo} & \\hd{Unidad} & \\hd{Submúltiplos habituales} & \\hd{Fórmula o definición}\\\\\n  Resistencia & R & ohmio (\\ensuremath{\\Omega}) & k\\ensuremath{\\Omega}, M\\ensuremath{\\Omega} & V/I en el resistor\\\\\n  Capacitancia & C & faradio (F) & pF, nF, µF & Q/V\\\\\n  Reactancia capacitiva & XC & ohmio (\\ensuremath{\\Omega}) & k\\ensuremath{\\Omega} & 1/(2\\ensuremath{\\pi}fC)\\\\\n  Impedancia & Z, Z\\ensuremath{\\angle}\\ensuremath{\\theta} & ohmio (\\ensuremath{\\Omega}) & k\\ensuremath{\\Omega} & R \\ensuremath{-} jXC (serie)\\\\\n  Conductancia & G & siemens (S) & mS, µS & 1/R\\\\\n  Susceptancia capacitiva & BC & siemens (S) & mS, µS & 2\\ensuremath{\\pi}fC\\\\\n  Admitancia & Y, Y\\ensuremath{\\angle}\\ensuremath{\\theta} & siemens (S) & mS, µS & G + jBC (paralelo)\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Parámetros de los circuitos RC: símbolo, unidad, submúltiplos habituales y fórmula\\par}"
+    },
+    {
+     "titulo": "Parámetros de los circuitos RC (2/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Parámetro} & \\hd{Símbolo} & \\hd{Unidad} & \\hd{Submúltiplos habituales} & \\hd{Fórmula o definición}\\\\\n  Constante de tiempo & \\ensuremath{\\tau} & segundo (s) & ms, µs & RC\\\\\n  Frecuencia de corte & fc & hercio (Hz) & kHz & 1/(2\\ensuremath{\\pi}RC)\\\\\n  Ángulo de fase & \\ensuremath{\\theta} & grado (°) & — & tan\\ensuremath{^{-}}¹ de la relación reactiva/resistiva\\\\\n  Tensión y corriente eficaces & V, I & voltio (V), amperio (A) & mV, mA & magnitud del fasor\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Parámetros de los circuitos RC: símbolo, unidad, submúltiplos habituales y fórmula\\par}"
+    }
+   ]
+  },
+  "bloque-07": {
+   "huella": "382101c69dc7752f",
+   "diapositivas": [
+    {
+     "titulo": "Cálculo y medición de un circuito RC mixto en el laboratorio",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item La identificación y la verificación de los tres componentes cubren el criterio CE1.\n  \\item Siguiendo el método general: $G_2 = 1/1492 = 0.670\\ \\text{mS}$ y $B_C = 2\\pi(1000)(97.8 \\times 10^{-9}) = 0.615\\ \\text{mS}$, de modo que $\\mathbf{Y}_p = 0.909 \\angle 42.5^\\circ\\ \\text{mS}$ y $\\mathbf{Z}_p = 1100 \\angle -42.5^\\circ\\ \\Omega = 811 - j743\\ \\Omega$.\n  \\item Ambas leyes de Kirchhoff se cumplen solo en forma fasorial.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}\\mathbf{Z}_T= 996 + (811 - j743) \\\\ = 1807 - j743\\ \\Omega \\\\ = 1954 \\angle -22.4^\\circ\\ \\Omega\\end{gathered}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Circuito RC mixto R1 + (R2 \\ensuremath{\\parallel} C) a 1 kHz",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Magnitud} & \\hd{Predicción} & \\hd{Medido} & \\hd{Diferencia} & \\hd{Causa probable de la diferencia}\\\\\n  I & 2.56 mA & 2.55 mA & \\ensuremath{-}0.4 \\% & resistencia del amperímetro\\\\\n  VR1 & 2.55 V & 2.54 V & \\ensuremath{-}0.4 \\% & resolución del multímetro\\\\\n  Vp & 2.81 V & 2.82 V & +0.4 \\% & tolerancia de lectura en ca\\\\\n  IR2 & 1.89 mA & 1.88 mA & \\ensuremath{-}0.5 \\% & resistencia del amperímetro\\\\\n  IC & 1.73 mA & 1.73 mA & 0.0 \\% & —\\\\\n  \\ensuremath{\\Delta}t (I respecto a VS) & 62 µs & 61 µs & \\ensuremath{-}1.6 \\% & resolución de los cursores\\\\\n  \\ensuremath{\\theta} & 22.4° & 22.0° & 0.4° & resolución de los cursores\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Circuito RC mixto R1 + (R2 \\ensuremath{\\parallel} C) a 1 kHz: predicción con valores medidos y mediciones (lecturas de ejemplo)\\par}"
+    }
+   ]
+  },
+  "bloque-08": {
+   "huella": "43f4c13206207c5b",
+   "diapositivas": [
+    {
+     "titulo": "Síntesis de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Método general de cálculo con impedancias}\n\\scriptsize Pasos del análisis fasorial: reactancias, reducción, ley de Ohm y verificación con Kirchhoff\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Circuitos RC mixtos (serie-paralelo)}\n\\scriptsize Reducción de un resistor en serie con un paralelo RC y reparto de tensiones y corrientes\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{El circuito RC como filtro}\n\\scriptsize Filtros pasabajas y pasaaltas, fc = 1/(2\\ensuremath{\\pi}RC) y el 70.7 \\%\n\\end{cardG}\n\\end{columns}\n\\vspace{2mm}\n\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Instrumentos de medición y sus efectos}\n\\scriptsize Resistencia interna del generador, carga de la punta del osciloscopio, ancho de banda del multímetro\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Parámetros, unidades, simbología}\n\\scriptsize Cuadro de magnitudes, unidades, prefijos, símbolos y notación fasorial\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Cálculo y medición de un circuito RC mixto}\n\\scriptsize Resistor en serie con un paralelo RC a 1 kHz: predecir, medir y justificar las diferencias\n\\end{cardG}\n\\end{columns}"
+    },
+    {
+     "titulo": "Reflexión para llevar",
+     "cuerpo": "\\centering\n\\begin{tikzpicture}\n  \\node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\\normalsize] (c) at (0,0) {\\itshape «Un informe que justifica cada diferencia con una causa medible es un acto de honestidad profesional: quien lo lea, en el laboratorio o en una empresa, puede confiar en los datos sin tener que repetir las mediciones del equipo.»};\n  \\node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\\scriptsize\\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};\n\\end{tikzpicture}"
+    }
+   ]
+  }
+ }
+}

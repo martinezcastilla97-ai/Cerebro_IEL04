@@ -89,7 +89,7 @@ Nodo único compartido por todas las asignaturas: [[marco-pedagogico]] (transcri
 
 ## Generación y auditoría
 
-Capa de generación (`generacion/planeador/`, `generacion/temarios/`, `generacion/presentaciones/`), vacía hasta que se corra PLANEADOR, TEMARIO y PRESENTACIONES. Vistas de auditoría en `correlaciones/`: [[../correlaciones/matriz-ra-practica]] · [[../correlaciones/matriz-ra-planeador]] · [[../correlaciones/matriz-temario-bibliografia]] · [[../correlaciones/matriz-ra-bibliografia]] (reservada, sin protocolo todavía) · [[../correlaciones/matriz-temario-presentacion]] · [[../correlaciones/matriz-temario-profundidad]] (palabras, ecuaciones, tablas, figuras y pasajes de fuentes de cada temario). Ver `CLAUDE.md` § "Capa de generación".
+Capa de generación (`generacion/planeador/`, `generacion/temarios/`, `generacion/presentaciones/`). **IEL04:** planeador `generacion/planeador/IEL04-planeador.md` (14 semanas, sesiones de 4 h); 11 temarios `generacion/temarios/IEL04-semana{01,02,03,04,06,07,08,09,11,12,13}.md` (las semanas 5, 10 y 14 son de examen); 11 presentaciones Beamer en `generacion/presentaciones/IEL04/` (`.tex`, `.plan.json` y `.pdf` compilado con pdfLaTeX). Vistas de auditoría en `correlaciones/`: [[../correlaciones/matriz-ra-practica]] · [[../correlaciones/matriz-ra-planeador]] · [[../correlaciones/matriz-temario-bibliografia]] · [[../correlaciones/matriz-ra-bibliografia]] (reservada, sin protocolo todavía) · [[../correlaciones/matriz-temario-presentacion]] · [[../correlaciones/matriz-temario-profundidad]] (palabras, ecuaciones, tablas, figuras y pasajes de fuentes de cada temario). Ver `CLAUDE.md` § "Capa de generación".
 
 ---
 

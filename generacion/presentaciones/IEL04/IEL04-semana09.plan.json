@@ -1,0 +1,133 @@
+{
+ "formato": 2,
+ "temario_hash": "9d94cf3c3d666d38",
+ "modelo": "gpt-4o",
+ "fecha": "2026-09-28",
+ "partes": {
+  "apertura": {
+   "huella": "16ec718ae2d30610",
+   "diapositivas": [
+    {
+     "titulo": "Punto de partida de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 8: Circuitos RL en serie y en paralelo\n  \\item \\textbf{Semana 9: Cálculo y medición de parámetros en circuitos RL serie y paralelo}\n  \\item Semana 10: evaluación\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular impedancia, ángulo de fase, tensiones y corrientes\n  \\item Aplicar el método general de análisis fasorial con impedancias\n  \\item Calcular la constante de tiempo \\ensuremath{\\tau} = L/R de un circuito RL en serie\n  \\item Calcular potencia en cd como P = VI = I²R\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Resultados de aprendizaje",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.45\\textwidth}\n\\begin{caja}{iubnavy}{IEL04-RA3}\n\\footnotesize Calcular un circuito resistivo, inductivo y RL, sea en serie o paralelo.\n\\end{caja}\n\\vspace{1mm}\n\\begin{cajaplana}{iubblue}\n\\scriptsize \\textbf{CE1.} Identificar los tipos de resistores e inductores.\\\\[2pt]\n\\textbf{CE2.} Realizar mediciones en un circuito resistivo e inductivo.\\\\[2pt]\n\\textbf{CE3.} Realizar mediciones en un circuito RL.\n\\end{cajaplana}\n  \\column{0.52\\textwidth}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r0) at (1.25,0.00) {Identificar los componentes de un circuito RL y representar la bobina real con su modelo en serie o en paralelo según el conexionado.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Aplicar};\n  \\node[box, fill=iuborange, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular impedancias, corrientes y tensiones de circuitos RL mixtos y la frecuencia de corte de un filtro RL.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Aplicar};\n  \\node[box, fill=iubgreen, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r2) at (1.25,-2.90) {Calcular la potencia activa, reactiva y aparente y el factor de potencia de un circuito RL.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Analizar};\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r3) at (1.25,-4.35) {Medir una inductancia desconocida por su constante de tiempo y por su impedancia, y evaluar la concordancia entre ambos métodos.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};\n  \\draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);\n  \\draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);\n  \\draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);\n\\end{tikzpicture}\n\\end{adjustbox}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-01": {
+   "huella": "68b38b6d19cfb3e7",
+   "diapositivas": [
+    {
+     "titulo": "Del análisis a la medición en los circuitos RL",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Para responder, la sesión amplía las herramientas de la semana 8 en cuatro direcciones.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Esta es la última sesión antes del examen de la semana 10, que evalúa los RA2 y RA3.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Procedimiento de cálculo y medición de parámetros",
+     "cuerpo": "\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[bG, align=center, font=\\scriptsize, text width=3.20cm] (n0) at (1.72,4.39) {Identificar R y bobina (L, RW)};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.14cm] (n1) at (6.32,4.39) {Elegir modelo serie o paralelo};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.76cm] (n2) at (10.69,4.39) {Reducir: Z, I y V};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.34cm] (n3) at (10.69,0.98) {Potencia: P, Q, S y FP};\n  \\node[bO, align=center, font=\\scriptsize, text width=2.76cm] (n4) at (6.32,0.98) {Medir L, V, I y desfase};\n  \\node[bG, align=center, font=\\scriptsize, text width=2.99cm] (n5) at (1.72,0.98) {Comparar y explicar};\n  \\draw[flecha] (n0) -- (n1);\n  \\draw[flecha] (n1) -- (n2);\n  \\draw[flecha] (n2) -- (n3);\n  \\draw[flecha] (n3) -- (n4);\n  \\draw[flecha] (n4) -- (n5);\n\\end{tikzpicture}\n\\end{adjustbox}\n\n\\vspace{1mm}{\\scriptsize Procedimiento de cálculo y medición de parámetros en un circuito RL\\par}"
+    }
+   ]
+  },
+  "bloque-02": {
+   "huella": "10b6698278f1c821",
+   "diapositivas": [
+    {
+     "titulo": "Modelo serie y modelo paralelo de la bobina real",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item La semana 8 representó la bobina real como su inductancia en serie con la resistencia de devanado, $R_W + jX_L$.\n  \\item La conversión se obtiene igualando las admitancias de ambos modelos.\n  \\item Para la bobina L3 del kit, con 10.4 mH y 24.6 \\ensuremath{\\Omega}, a 10 kHz $X_L = 653.5\\ \\Omega$ y $Q = 26.6$; entonces $R_p = 24.6(1 + 26.6^2) \\approx 17.4\\ \\text{k}\\Omega$ y $X_{Lp} \\approx 654\\ \\Omega$, prácticamente igual a $X_L$.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}R_p = R_W\\,(1 + Q^{2}) \\\\ X_{Lp} = X_L\\,\\frac{1 + Q^{2}}{Q^{2}} \\\\ Q = \\frac{X_L}{R_W}\\end{gathered}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Equivalente en paralelo de la bobina L3",
+     "cuerpo": "\\centering\\tiny\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{f (Hz)} & \\hd{XL (\\ensuremath{\\Omega})} & \\hd{Q} & \\hd{Rp (\\ensuremath{\\Omega})} & \\hd{XLp (\\ensuremath{\\Omega})} & \\hd{XLp/XL}\\\\\n  1000 & 65.3 & 2.66 & 198 & 74.6 & 1.14\\\\\n  5000 & 327 & 13.3 & 4364 & 329 & 1.006\\\\\n  10 000 & 653 & 26.6 & 17 390 & 654 & 1.001\\\\\n  20 000 & 1307 & 53.1 & 69 470 & 1307 & 1.000\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Equivalente en paralelo de la bobina L3 (L = 10.4 mH, RW = 24.6 \\ensuremath{\\Omega}) a distintas frecuencias\\par}"
+    }
+   ]
+  },
+  "bloque-03": {
+   "huella": "fb5e9b7649690560",
+   "diapositivas": [
+    {
+     "titulo": "Circuitos RL mixtos (serie-paralelo)",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Un circuito RL mixto combina, igual que en la semana 7, un grupo en serie con un grupo en paralelo.\n  \\item Un ejemplo con valores nominales: $R_1 = 470\\ \\Omega$, $R_2 = 680\\ \\Omega$ y $L = 10\\ \\text{mH}$, a 10 kHz y con 5 V eficaces.\n  \\item El comportamiento con la frecuencia también se invierte respecto al RC.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}\\mathbf{Z}_T = R_1 + \\frac{1}{G_2 - jB_L} \\\\ G_2 = \\frac{1}{R_2} \\\\ B_L = \\frac{1}{2\\pi f L}\\end{gathered}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Circuito RL mixto R1 + (R2 \\ensuremath{\\parallel} L) con valores nominales (1/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Magnitud} & \\hd{Valor} & \\hd{Ángulo (ref. VS)} & \\hd{Comprobación}\\\\\n  ZT & 853.5 \\ensuremath{\\Omega} & +23.4° & 783.3 + j338.9 \\ensuremath{\\Omega}\\\\\n  I & 5.86 mA & \\ensuremath{-}23.4° & VS/ZT\\\\\n  VR1 & 2.75 V & \\ensuremath{-}23.4° & en fase con I\\\\\n  Vp & 2.70 V & +23.9° & común a R2 y L\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Circuito RL mixto R1 + (R2 \\ensuremath{\\parallel} L) con valores nominales (5 V eficaces a 10 kHz)\\par}"
+    },
+    {
+     "titulo": "Circuito RL mixto R1 + (R2 \\ensuremath{\\parallel} L) con valores nominales (2/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Magnitud} & \\hd{Valor} & \\hd{Ángulo (ref. VS)} & \\hd{Comprobación}\\\\\n  IR2 & 3.98 mA & +23.9° & en fase con Vp\\\\\n  IL & 4.30 mA & \\ensuremath{-}66.1° & 90° detrás de Vp\\\\\n  \\ensuremath{\\surd}(IR2² + IL²) & 5.86 mA & — & LCK: igual a I\\\\\n  VR1 + Vp (fasorial) & 5.00 V & 0° & LVK: igual a VS\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Circuito RL mixto R1 + (R2 \\ensuremath{\\parallel} L) con valores nominales (5 V eficaces a 10 kHz)\\par}"
+    }
+   ]
+  },
+  "bloque-04": {
+   "huella": "e0a7332d5a871eaa",
+   "diapositivas": [
+    {
+     "titulo": "El circuito RL como filtro: frecuencia de corte",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Igual que el RC, el circuito RL en serie funciona como filtro según dónde se tome la salida, pero con los papeles intercambiados.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}f_c = \\frac{R}{2\\pi L} \\\\ \\frac{V_{sal}}{V_{ent}}\\bigg|_{salida\\ en\\ R} = \\frac{1}{\\sqrt{1 + (f/f_c)^{2}}} \\\\ \\frac{V_{sal}}{V_{ent}}\\bigg|_{salida\\ en\\ L} = \\frac{f/f_c}{\\sqrt{1 + (f/f_c)^{2}}}\\end{gathered}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Respuesta en frecuencia de un circuito RL en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.62\\textwidth}\n\\centering\n\\begin{tikzpicture}\n  \\begin{semilogxaxis}[width=8.4cm, height=5.7cm, xmin=100, xmax=1e+06, ymin=0, ymax=1.0594,\n      xlabel={Frecuencia f (Hz)}, ylabel={Vsal / Vent},\n      label style={font=\\scriptsize, text=iubnavy}, tick label style={font=\\tiny, text=iubnavy},\n      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},\n      legend style={font=\\tiny, fill=white}, legend pos=north east]\n    \\addplot[line width=1.4pt, iubblue] coordinates {(100,0.99996) (113.11,0.99995) (127.95,0.99993) (144.72,0.99991) (163.7,0.99989) (185.16,0.99985) (209.45,0.99981) (236.91,0.99976) (267.97,0.99969) (303.11,0.99961) (342.86,0.9995) (387.82,0.99936) (438.67,0.99918) (496.19,0.99895) (561.26,0.99866) (634.86,0.99828) (718.1,0.99781) (812.27,0.9972) (918.78,0.99642) (1039.3,0.99542) (1175.5,0.99415) (1329.7,0.99254) (1504,0.99048) (1701.3,0.98787) (1924.3,0.98456) (2176.7,0.98037) (2462.1,0.97509) (2784.9,0.96845) (3150.1,0.96016) (3563.2,0.94985) (4030.4,0.93713) (4558.9,0.92158) (5156.7,0.90277) (5832.9,0.8803) (6597.8,0.85385) (7462.9,0.82326) (8441.5,0.78852) (9548.5,0.74988) (10801,0.70784) (12217,0.66312) (13819,0.6166) (15631,0.56927) (17680,0.52209) (19999,0.47595) (22621,0.43159) (25587,0.38957) (28943,0.35026) (32738,0.31389) (37031,0.28053) (41886,0.25017) (47379,0.2227) (53592,0.19796) (60619,0.17576) (68568,0.15591) (77559,0.13821) (87729,0.12244) (99233,0.10842) (1.1225e+05,0.095978) (1.2696e+05,0.084937) (1.4361e+05,0.07515) (1.6244e+05,0.066479) (1.8374e+05,0.058801) (2.0784e+05,0.052004) (2.3509e+05,0.045989) (2.6592e+05,0.040667) (3.0079e+05,0.035959) (3.4023e+05,0.031795) (3.8484e+05,0.028112) (4.3531e+05,0.024855) (4.9239e+05,0.021975) (5.5695e+05,0.019429) (6.2999e+05,0.017177) (7.126e+05,0.015186) (8.0604e+05,0.013426) (9.1173e+05,0.01187) (1e+06,0.010822)};\n    \\addlegendentry{Salida en R (pasabajas)}\n    \\addplot[line width=1.4pt, iuborange] coordinates {(100,0.0092392) (113.11,0.010451) (127.95,0.011821) (144.72,0.013371) (163.7,0.015123) (185.16,0.017106) (209.45,0.019348) (236.91,0.021884) (267.97,0.024752) (303.11,0.027995) (342.86,0.031663) (387.82,0.03581) (438.67,0.040498) (496.19,0.045798) (561.26,0.051788) (634.86,0.058557) (718.1,0.066204) (812.27,0.07484) (918.78,0.084587) (1039.3,0.095583) (1175.5,0.10798) (1329.7,0.12194) (1504,0.13764) (1701.3,0.15528) (1924.3,0.17506) (2176.7,0.19717) (2462.1,0.22182) (2784.9,0.2492) (3150.1,0.27946) (3563.2,0.31271) (4030.4,0.34898) (4558.9,0.38819) (5156.7,0.43013) (5832.9,0.47442) (6597.8,0.52051) (7462.9,0.56767) (8441.5,0.61501) (9548.5,0.66157) (10801,0.70637) (12217,0.74851) (13819,0.78727) (15631,0.82215) (17680,0.85289) (19999,0.87947) (22621,0.90207) (25587,0.921) (28943,0.93665) (32738,0.94946) (37031,0.95984) (41886,0.9682) (47379,0.97489) (53592,0.98021) (60619,0.98443) (68568,0.98777) (77559,0.9904) (87729,0.99248) (99233,0.9941) (1.1225e+05,0.99538) (1.2696e+05,0.99639) (1.4361e+05,0.99717) (1.6244e+05,0.99779) (1.8374e+05,0.99827) (2.0784e+05,0.99865) (2.3509e+05,0.99894) (2.6592e+05,0.99917) (3.0079e+05,0.99935) (3.4023e+05,0.99949) (3.8484e+05,0.9996) (4.3531e+05,0.99969) (4.9239e+05,0.99976) (5.5695e+05,0.99981) (6.2999e+05,0.99985) (7.126e+05,0.99988) (8.0604e+05,0.99991) (9.1173e+05,0.99993) (1e+06,0.99994)};\n    \\addlegendentry{Salida en L (pasaaltas)}\n    \\addplot[line width=1pt, dashed, iubnavy!70] coordinates {(10823,0) (10823,1.0594)};\n    \\addlegendentry{fc = 10.8 kHz}\n    \\addplot[line width=1pt, dashed, iubnavy!70] coordinates {(100,0.707) (1e+06,0.707)};\n    \\addlegendentry{70.7 \\%}\n  \\end{semilogxaxis}\n\\end{tikzpicture}\n  \\column{0.35\\textwidth}\n\\begin{caja}{iubblue}{Lectura de la gráfica}\n\\footnotesize Con la bobina L3 del kit y 680 \\ensuremath{\\Omega}, ese piso es de $24.6/704.6 \\approx 3.5\\ \\%$ de la entrada.\n\\end{caja}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-05": {
+   "huella": "a10463ae9ddbbcc1",
+   "diapositivas": [
+    {
+     "titulo": "Potencia en circuitos RL y factor de potencia",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item En un circuito de ca puramente resistivo, la resistencia disipa en forma de calor toda la energía que entrega la fuente.\n  \\item La \\textbf{potencia real} o activa, $P$, es la que disipa la resistencia, en vatios (W).\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}P = I^{2}R = VI\\cos\\theta \\\\ Q = I^{2}X_L = VI\\sin\\theta \\\\ S = VI = \\sqrt{P^{2} + Q^{2}} \\\\ FP = \\cos\\theta = \\frac{P}{S}\\end{gathered}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Potencias del circuito RL mixto R1 + (R2 \\ensuremath{\\parallel} L) con 5 V",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Elemento} & \\hd{Corriente (mA)} & \\hd{Fórmula} & \\hd{Potencia}\\\\\n  R1 = 470 \\ensuremath{\\Omega} & 5.86 & P = I²R1 & 16.1 mW\\\\\n  R2 = 680 \\ensuremath{\\Omega} & 3.98 & P = I²R2 & 10.8 mW\\\\\n  L (XL = 628 \\ensuremath{\\Omega}) & 4.30 & Q = I²XL & 11.6 mVAR\\\\\n  Total real & — & P1 + P2 & 26.9 mW\\\\\n  Total aparente & 5.86 & S = VI & 29.3 mVA\\\\\n  Comprobación & — & \\ensuremath{\\surd}(P² + Q²) & 29.3 mVA\\\\\n  Factor de potencia & — & cos 23.4° = P/S & 0.918\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Potencias del circuito RL mixto R1 + (R2 \\ensuremath{\\parallel} L) con 5 V eficaces a 10 kHz\\par}"
+    }
+   ]
+  },
+  "bloque-06": {
+   "huella": "ff61f5a0d8d6e643",
+   "diapositivas": [
+    {
+     "titulo": "Medición de inductancia con la constante de tiempo",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item No siempre se dispone de un medidor LCR, y no todas las bobinas llevan marcado.\n  \\item Si es más cómodo medir el instante en que llega al 50 \\%, se usa $\\tau = t_{50}/\\ln 2 \\approx t_{50}/0.693$.\n  \\item La elección del resistor es un compromiso.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle L = \\tau\\,(R + R_W + R_g)$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Procedimiento para medir una inductancia desconocida",
+     "cuerpo": "\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[bG, align=center, font=\\scriptsize, text width=2.50cm] (n0) at (1.37,3.55) {Medir RW con ohmímetro};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.47cm] (n1) at (6.91,3.55) {Montar bobina en serie con R};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.28cm] (n2) at (12.33,3.55) {Aplicar onda cuadrada (T/2 > 5\\ensuremath{\\tau})};\n  \\node[bB, align=center, font=\\scriptsize, text width=2.28cm] (n3) at (12.33,0.68) {Medir t al 63 \\% de VR};\n  \\node[bG, align=center, font=\\scriptsize, text width=2.68cm] (n4) at (6.91,0.68) {L = \\ensuremath{\\tau} (R + RW + Rg)};\n  \\draw[flecha] (n0) -- (n1);\n  \\draw[flecha] (n1) -- (n2);\n  \\draw[flecha] (n2) -- node[midway, above, fill=white, font=\\tiny, inner sep=1pt] {osciloscopio en R} (n3);\n  \\draw[flecha] (n3) -- (n4);\n\\end{tikzpicture}\n\\end{adjustbox}\n\n\\vspace{1mm}{\\scriptsize Procedimiento para medir una inductancia desconocida por su constante de tiempo\\par}"
+    }
+   ]
+  },
+  "bloque-07": {
+   "huella": "953068ce83146e45",
+   "diapositivas": [
+    {
+     "titulo": "Identificación de una bobina sin marcado y medición",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item En el almacén del laboratorio aparece una bobina toroidal sin ningún marcado y hay que saber si sirve para las prácticas.\n  \\item Con el mismo montaje, el generador se cambia a una onda sinusoidal de 10 kHz y 5.00 V eficaces en los bornes del circuito.\n  \\item Se monta $R_1 = 468\\ \\Omega$ en serie con el paralelo de $R_2 = 676\\ \\Omega$ y la bobina, con 5.00 V eficaces a 10 kHz.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{caja}{iubblue}{Ecuación clave}\n\\footnotesize \\centering\\small \\begin{adjustbox}{max width=\\linewidth}$\\displaystyle \\begin{gathered}X_L= \\sqrt{Z_{bob}^{2} - R_W^{2}} \\\\ = \\sqrt{207.8^{2} - 12.3^{2}} \\\\ \\approx 207.4\\ \\Omega \\\\ L= \\frac{X_L}{2\\pi f} \\\\ = \\frac{207.4}{2\\pi(10\\ 000)} \\\\ \\approx 3.30\\ \\text{mH}\\end{gathered}$\\end{adjustbox}\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Bobina sin marcado y circuito RL mixto a 10 kHz (1/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Magnitud} & \\hd{Calculado} & \\hd{Medido} & \\hd{Diferencia}\\\\\n  L por constante de tiempo & — & 3.30 mH & —\\\\\n  L por impedancia & — & 3.30 mH & 0.0 \\% entre métodos\\\\\n  Mixto: I & 8.84 mA & 8.82 mA & \\ensuremath{-}0.2 \\%\\\\\n  Mixto: VR1 & 4.14 V & 4.13 V & \\ensuremath{-}0.2 \\%\\\\\n  Mixto: Vp & 1.73 V & 1.73 V & 0.0 \\%\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Bobina sin marcado y circuito RL mixto a 10 kHz: cálculo con valores medidos y medición (lecturas de ejemplo)\\par}"
+    },
+    {
+     "titulo": "Bobina sin marcado y circuito RL mixto a 10 kHz (2/2)",
+     "cuerpo": "\\centering\\scriptsize\n\\renewcommand{\\arraystretch}{1.35}\n\\rowcolors{2}{iubnavy!6}{white}\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=5.6cm}\n\\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X>{\\raggedright\\arraybackslash}X}\n  \\rowcolor{iubnavy}\n  \\hd{Magnitud} & \\hd{Calculado} & \\hd{Medido} & \\hd{Diferencia}\\\\\n  Mixto: IR2 & 2.55 mA & 2.55 mA & 0.0 \\%\\\\\n  Mixto: Ibob & 8.31 mA & 8.30 mA & \\ensuremath{-}0.1 \\%\\\\\n  Mixto: \\ensuremath{\\theta} & 18.9° & 19.1° & 0.2°\\\\\n  Mixto: FP = cos \\ensuremath{\\theta} & 0.946 & 0.945 & \\ensuremath{-}0.1 \\%\\\\\n\\end{tabularx}\n\\end{adjustbox}\n\\vspace{2mm}\n{\\scriptsize Bobina sin marcado y circuito RL mixto a 10 kHz: cálculo con valores medidos y medición (lecturas de ejemplo)\\par}"
+    }
+   ]
+  },
+  "bloque-08": {
+   "huella": "aec2816aa508e2f2",
+   "diapositivas": [
+    {
+     "titulo": "Síntesis de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Modelo serie y modelo paralelo}\n\\scriptsize Equivalencia entre RW + jXL y un paralelo Rp \\ensuremath{\\parallel} jXLp, y su uso según el conexionado\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Circuitos RL mixtos (serie-paralelo)}\n\\scriptsize Resistor en serie con un paralelo RL: reducción, reparto de tensiones y corrientes\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{El circuito RL como filtro}\n\\scriptsize Filtros pasabajas y pasaaltas RL y fc = R/(2\\ensuremath{\\pi}L)\n\\end{cardG}\n\\end{columns}\n\\vspace{2mm}\n\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Potencia en circuitos RL y factor}\n\\scriptsize Potencia activa, reactiva y aparente, triángulo de potencia y FP = cos \\ensuremath{\\theta}\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Medición de inductancia con la constante}\n\\scriptsize Onda cuadrada, cinco constantes de tiempo y cálculo de L = \\ensuremath{\\tau}R\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Identificación de una bobina sin marcado}\n\\scriptsize Medir L por \\ensuremath{\\tau} y por impedancia, y comprobar un circuito RL mixto con su potencia\n\\end{cardG}\n\\end{columns}"
+    },
+    {
+     "titulo": "Reflexión para llevar",
+     "cuerpo": "\\centering\n\\begin{tikzpicture}\n  \\node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\\normalsize] (c) at (0,0) {\\itshape «Rotular la bobina identificada con su valor medido y devolverla al almacén en su lugar es un gesto pequeño de responsabilidad con el equipo: evita que el próximo grupo repita las mismas mediciones o, peor, use un componente equivocado.»};\n  \\node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\\scriptsize\\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};\n\\end{tikzpicture}"
+    }
+   ]
+  }
+ }
+}

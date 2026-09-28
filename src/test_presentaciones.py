@@ -115,6 +115,8 @@ def probar_latex_seguro() -> None:
     assert c.escapar("50 % de $x_1$ & #3 {a} ~ \\ ^") == r"50 \% de \$x\_1\$ \& \#3 \{a\} \textasciitilde{} \textbackslash{} \^{}"
     assert c.inline("texto \\input{/etc/passwd}") == r"texto \textbackslash{}input\{/etc/passwd\}", "en los datos, una barra invertida es texto"
     assert c.matematicas(r"\input{x} + a^^5c").count(r"\text{\textbackslash{}") == 1 and "^^" not in c.matematicas("a^^5c")
+    simbolos = c.escapar("W = CV² · 2.ª ed. · 5 m³ · ¼ · ‰ · ¬ · nº 1")
+    assert not ls.comandos_no_admitidos(simbolos), "lo que escribe el Conversor pasa la lista de permitidos"
     print("A1. los datos del temario y del wiki (títulos, docente, referencias) se escapan, y sus fórmulas solo admiten comandos matemáticos -- OK")
 
     for clave in _fixtures.CUERPOS_FALSOS:
