@@ -110,6 +110,12 @@ Capa de generación (`generacion/planeador/`, `generacion/temarios/`, `generacio
 | [[circuitos-rc]] | Impedancia, análisis serie/paralelo y transitorio RC | 3 |
 | [[circuitos-rl]] | Impedancia, análisis serie/paralelo y transitorio RL | 3 |
 | [[circuitos-rlc]] | Análisis serie/paralelo y resonancia | 3 |
+| [[impedancia-y-admitancia]] | Z = R ± jX, Y = G + jB; serie con Z, paralelo con Y | 3 |
+| [[reactancia]] | X_C = 1/(2πfC), X_L = 2πfL; dependencia de la frecuencia | 3 |
+| [[fasores]] | Representación compleja de magnitudes sinusoidales; diagrama fasorial | 3 |
+| [[resonancia]] | X_L = X_C, f_r, factor de calidad Q, ancho de banda, tanque real y filtros | 2 |
+| [[factor-de-potencia]] | P, Q, S, triángulo de potencia y corrección con capacitores | 2 |
+| [[constante-de-tiempo]] | τ = RC y τ = L/R; 63.2 % y 5τ; medición con onda cuadrada | 3 |
 
 ---
 

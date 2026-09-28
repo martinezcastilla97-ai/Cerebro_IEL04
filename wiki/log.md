@@ -206,3 +206,9 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - sin manual de banco (`equipo-laboratorio`): CORRELATE no puede asignar prácticas pese al gate abierto
 - lectura por confirmar con el docente: nivel «Pregrado» y tipo de módulo «ESPECÍFICO» salen de casillas con la «X» después de la etiqueta (criterio documentado en la ingesta)
 - `fuentes_count: 3` en todos los conceptos: ninguno con una sola fuente
+
+## [2026-09-28] lint (correcciones) | conceptos
+- Corregidas: [[circuitos-rc]] (el GC de Deorsola §6.3 es un capacitor con fuente de corriente real, dual del RL en serie, no el RC en serie), [[circuitos-rlc]] (la resonancia como ampliación de los temarios sobre el currículo, semanas 3, 11, 12 y 13; Deorsola no la trata)
+- Formato: línea `**Definición:**` agregada en [[capacitancia]], [[inductancia]], [[leyes-de-kirchhoff]], [[circuitos-rc]], [[circuitos-rl]] y [[circuitos-rlc]]; su «Ver también» enlaza los conceptos nuevos
+- Creadas: [[impedancia-y-admitancia]], [[reactancia]], [[fasores]] y [[constante-de-tiempo]] (3 fuentes), [[resonancia]] y [[factor-de-potencia]] (2 fuentes: Deorsola no las trata); cada sección citada se verificó en el texto completo de `raw/bibliografia/`
+- `wiki/index.md`: tabla de conceptos actualizada (12 páginas)

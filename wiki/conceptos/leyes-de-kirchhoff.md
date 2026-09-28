@@ -10,6 +10,8 @@ fuentes_count: 3
 
 # Leyes de Kirchhoff
 
+**Definición:** La suma algebraica de las tensiones en un lazo cerrado es cero (LVK) y la de las corrientes en un nodo es cero (LCK).
+
 ## Explicación
 Ley de voltajes (LVK): la suma algebraica de las tensiones alrededor de cualquier lazo cerrado es cero. Ley de corrientes (LCK): la suma algebraica de las corrientes que entran y salen de un nodo es cero. En circuitos de ca se aplican a los fasores, de modo que en un RC, RL o RLC en serie las tensiones se suman como vectores, no aritméticamente.
 
@@ -22,4 +24,4 @@ Ley de voltajes (LVK): la suma algebraica de las tensiones alrededor de cualquie
 El currículo escribe "Kirchoff"; la grafía correcta es Kirchhoff.
 
 ## Ver también
-[[IEL04-RA2]] | [[IEL04-RA3]] | [[IEL04-RA4]] | [[circuitos-rc]] | [[circuitos-rl]] | [[circuitos-rlc]]
+[[IEL04-RA2]] | [[IEL04-RA3]] | [[IEL04-RA4]] | [[circuitos-rc]] | [[circuitos-rl]] | [[circuitos-rlc]] | [[fasores]]

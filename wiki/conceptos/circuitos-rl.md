@@ -10,6 +10,8 @@ fuentes_count: 3
 
 # Circuitos RL
 
+**Definición:** Circuitos formados por resistores e inductores, en serie, en paralelo o mixtos, analizados en régimen transitorio (τ = L/R) y sinusoidal (impedancia).
+
 ## Explicación
 Circuitos con resistores e inductores. En serie, la impedancia es Z = R + jX_L y la corriente atrasa a la tensión; en paralelo, se trabaja con la admitancia. En cd, la respuesta transitoria es exponencial con τ = L/R.
 
@@ -22,4 +24,4 @@ Circuitos con resistores e inductores. En serie, la impedancia es Z = R + jX_L y
 Sin matices entre las fuentes.
 
 ## Ver también
-[[IEL04-RA3]] | [[inductancia]] | [[leyes-de-kirchhoff]]
+[[IEL04-RA3]] | [[inductancia]] | [[leyes-de-kirchhoff]] | [[impedancia-y-admitancia]] | [[constante-de-tiempo]] | [[factor-de-potencia]]

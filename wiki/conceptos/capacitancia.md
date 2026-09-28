@@ -10,6 +10,8 @@ fuentes_count: 3
 
 # Capacitancia
 
+**Definición:** Propiedad de un capacitor de almacenar carga eléctrica entre dos conductores separados por un dieléctrico, C = Q/V, medida en faradios (F).
+
 ## Explicación
 Propiedad de un capacitor de almacenar carga eléctrica (y energía en el campo eléctrico) entre dos conductores separados por un dieléctrico; se mide en faradios (F). En cd, un capacitor se carga y se descarga con constante de tiempo τ = RC; en ca, se opone al paso de la corriente con una reactancia capacitiva que disminuye con la frecuencia. Los capacitores en paralelo suman sus capacitancias; en serie, suman sus inversos.
 
@@ -22,4 +24,4 @@ Propiedad de un capacitor de almacenar carga eléctrica (y energía en el campo 
 Las reglas de combinación en serie y en paralelo son las inversas de las de los resistores (y de los inductores).
 
 ## Ver también
-[[IEL04-RA1]] | [[IEL04-RA2]] | [[IEL04-RA4]] | [[inductancia]] | [[circuitos-rc]]
+[[IEL04-RA1]] | [[IEL04-RA2]] | [[IEL04-RA4]] | [[inductancia]] | [[circuitos-rc]] | [[reactancia]] | [[constante-de-tiempo]]

@@ -10,6 +10,8 @@ fuentes_count: 3
 
 # Inductancia
 
+**Definición:** Propiedad de una bobina de oponerse a los cambios de su corriente mediante la tensión que induce su propio campo magnético, v = L·di/dt, medida en henrios (H).
+
 ## Explicación
 Propiedad de un conductor, en general una bobina, de oponerse a los cambios de corriente mediante la tensión que induce su propio campo magnético (ley de Faraday); se mide en henrios (H). En cd, la corriente de un inductor crece o decae con constante de tiempo τ = L/R; en ca, presenta una reactancia inductiva que aumenta con la frecuencia. Los inductores en serie suman sus inductancias; en paralelo, suman sus inversos (si no hay acoplamiento mutuo).
 
@@ -22,4 +24,4 @@ Propiedad de un conductor, en general una bobina, de oponerse a los cambios de c
 Las reglas de combinación suponen inductores sin acoplamiento mutuo; con acoplamiento (Deorsola, cap. 5; Floyd, §14–1) hay que sumar o restar la inductancia mutua.
 
 ## Ver también
-[[IEL04-RA1]] | [[IEL04-RA3]] | [[IEL04-RA4]] | [[capacitancia]] | [[circuitos-rl]]
+[[IEL04-RA1]] | [[IEL04-RA3]] | [[IEL04-RA4]] | [[capacitancia]] | [[circuitos-rl]] | [[reactancia]] | [[constante-de-tiempo]]
