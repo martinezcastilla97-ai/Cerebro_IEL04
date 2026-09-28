@@ -54,3 +54,9 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - tema: Condensadores: estructura, comportamiento interno, identificación y tipos
 - 4278 palabras, 7 ecuaciones, 6 tablas, 3 figuras; 35 pasajes de 2 fuente(s) cargada(s)
 - el plan, las unidades y el cierre los redactó el asistente de la sesión con los prompts de `src/prompts/prompt-temario-*.md` y los pasajes que eligió `src/pasajes.py` (sin proveedor `CEREBRO_*` configurado); `src/temario.py` validó cada respuesta, armó la página y dibujó las figuras. Las lecturas del caso de estudio son valores de ejemplo, no mediciones reales.
+
+## [2026-09-28] /temario IEL04 semana 2
+- RA: IEL04-RA1
+- tema: Bobinas o inductores: estructura, comportamiento interno, identificación y tipos
+- 4252 palabras, 6 ecuaciones, 6 tablas, 3 figuras; 35 pasajes de 2 fuente(s) cargada(s)
+- redactado por el asistente de la sesión con los prompts de `src/prompts/prompt-temario-*.md` (sin proveedor `CEREBRO_*`); `src/temario.py` validó, armó y dibujó. Las lecturas del caso de estudio son valores de ejemplo, no mediciones reales.
