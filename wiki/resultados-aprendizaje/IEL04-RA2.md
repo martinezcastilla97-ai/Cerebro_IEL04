@@ -37,7 +37,7 @@ bibliografia:
 requiere_practica: null
 practica_experimentos: []
 aplicacion_potencial: null
-correlacion_estado: null
+correlacion_estado: sin_candidato
 correlacion_revisado_por_docente: false
 correlacion_nota_docente: null
 correlacion_fecha_revision: null
@@ -52,6 +52,12 @@ planeador_semanas:
 planeador_semanas_con_problema: []
 planeador_justificacion: 'Los temas cubren los cuatro contenidos conceptuales (RC en serie con LVK en la semana 4, RC en paralelo con LCK en la 6) y los tres criterios: identificación de resistores y condensadores en la semana 4 y medición en circuitos resistivos, capacitivos y RC en la 7.'
 planeador_fecha: '2026-09-28'
+correlacion_score_ra: 0.94
+correlacion_fecha: '2026-09-28'
+correlacion_semantica: null
+correlacion_confianza: null
+correlacion_justificacion: null
+correlacion_alternativas: []
 ---
 
 # IEL04-RA2 — Calcular un circuito resistivo, capacitivo y RC, sea en serie o paralelo.

@@ -36,7 +36,7 @@ bibliografia:
 requiere_practica: null
 practica_experimentos: []
 aplicacion_potencial: null
-correlacion_estado: null
+correlacion_estado: sin_candidato
 correlacion_revisado_por_docente: false
 correlacion_nota_docente: null
 correlacion_fecha_revision: null
@@ -50,6 +50,12 @@ planeador_semanas:
 planeador_semanas_con_problema: []
 planeador_justificacion: 'Los temas cubren los cuatro contenidos conceptuales (RL en serie y en paralelo con LVK y LCK en la semana 8) y los tres criterios: identificación de resistores e inductores en la semana 8 y medición en circuitos resistivos, inductivos y RL en la 9.'
 planeador_fecha: '2026-09-28'
+correlacion_score_ra: 0.94
+correlacion_fecha: '2026-09-28'
+correlacion_semantica: null
+correlacion_confianza: null
+correlacion_justificacion: null
+correlacion_alternativas: []
 ---
 
 # IEL04-RA3 — Calcular un circuito resistivo, inductivo y RL, sea en serie o paralelo.

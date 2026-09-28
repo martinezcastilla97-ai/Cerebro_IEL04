@@ -28,6 +28,7 @@ from schema_correlacion import EstadoCorrelacion, JuicioCorrelacion, RelacionPro
 # Capturada ANTES de que ninguna prueba sustituya correlate.juzgar_correlacion (varias lo
 # hacen con una funcion de prueba): probar_prompt_real_del_juez() necesita la funcion REAL.
 _JUZGAR_CORRELACION_REAL = correlate.juzgar_correlacion
+_RECALL_REAL, _INDEXAR_REAL = correlate.recall_practicas_candidatas, correlate.indexar_practicas
 from schema_extraccion import (
     Asignatura,
     CategoriaAccionCE,
@@ -393,6 +394,15 @@ def probar_prompt_real_del_juez() -> None:
           "(código compuesto incluido); los códigos los fija correlate.py, no el LLM -- OK")
 
 
+def probar_sin_manuales() -> None:
+    """Sin ningun manual de banco en wiki/fuentes/ no hay indice (--indexar indexa 0 y no lo crea): Recall no pide el
+    indice ni embeddings, devuelve [] y el RA cierra sin_candidato en vez de fallar."""
+    from types import SimpleNamespace
+    assert _INDEXAR_REAL() == 0 and not correlate.DB_PATH.exists()
+    assert _RECALL_REAL(SimpleNamespace(enunciado="x", contenido=SimpleNamespace(conceptual=[]))) == []
+    print("21. sin manuales de banco: --indexar indexa 0 y Recall devuelve [] sin pedir el índice (el RA queda sin_candidato) -- OK")
+
+
 def main() -> None:
     original = Path.cwd()
     with tempfile.TemporaryDirectory() as tmp:
@@ -413,6 +423,12 @@ def main() -> None:
         os.chdir(tmp)
         try:
             probar_teorica_no_busca_practica()
+        finally:
+            os.chdir(original)
+    with tempfile.TemporaryDirectory() as tmp:
+        os.chdir(tmp)
+        try:
+            probar_sin_manuales()
         finally:
             os.chdir(original)
     probar_prompt_real_del_juez()   # no toca disco: no necesita tempdir

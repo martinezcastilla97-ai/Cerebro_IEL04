@@ -166,7 +166,11 @@ def indexar_practicas() -> int:
 
 
 def recall_practicas_candidatas(ra: ResultadoAprendizajeModulo, k: int = 3) -> list[tuple[str, str]]:
-    """Los k pares (fuente, codigo) mas cercanos al RA en el store vectorial."""
+    """Los k pares (fuente, codigo) mas cercanos al RA en el store vectorial. Sin ninguna Practica en wiki/fuentes/ (ningun
+    manual de banco ingerido) no hay candidatos: el RA cierra sin_candidato, sin indice ni embeddings (--indexar no crea
+    un indice vacio)."""
+    if not listar_practicas():
+        return []
     if not DB_PATH.exists():
         raise FileNotFoundError(f"No hay indice de practicas en {DB_PATH}: corre `python src/correlate.py --indexar`.")
     archivo = DB_PATH.parent / ARCHIVO_MODELO

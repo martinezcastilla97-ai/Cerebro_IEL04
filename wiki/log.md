@@ -179,3 +179,17 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - IEL04-RA4: cubierto — Los temas cubren los cuatro contenidos conceptuales (RLC en serie con LVK en la semana 11, RLC en paralelo con LCK en la 12) y los tres criterios: identificación de resistores, inductores y condensadores en la semana 11 y medición en circuitos RLC en la 13.
 - segunda corrida, tras editar los temas de las semanas 4, 8 y 11: los 4 RA quedan `cubierto` (RA1 0.9; RA2, RA3 y RA4 0.85); juez: el asistente de la sesión, solo con el RA y los temas
 
+
+## [2026-09-28] /correlate IEL04-RA1
+- estado: sin_candidato
+
+## [2026-09-28] /correlate IEL04-RA2
+- estado: sin_candidato
+
+## [2026-09-28] /correlate IEL04-RA3
+- estado: sin_candidato
+
+## [2026-09-28] /correlate IEL04-RA4
+- estado: sin_candidato
+- nota: el gate está abierto en los 4 RA (score_RA = 0.94: HP = 26 > 0, casilla de laboratorio marcada y CE de manipulación física), pero no hay ningún manual de banco ingerido (`equipo-laboratorio` en `wiki/fuentes/`): 0 prácticas indexadas, así que los 4 quedan `sin_candidato` sin llamar al modelo. Se volverá a correr cuando se ingiera el manual del banco con `ingest_manual.py` y `correlate.py --indexar`
+- corrección de la plantilla: con 0 prácticas, `--indexar` no crea el índice y `recall_practicas_candidatas` fallaba («No hay indice de practicas») en vez de devolver cero candidatos; ahora devuelve `[]` sin pedir índice ni embeddings (prueba 21 en `test_correlate_fuentes.py`)
