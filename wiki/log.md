@@ -35,3 +35,11 @@ Siguiente: correr LINT (hecho: 0 errores, 1 aviso L13). CORRELATE cuando haya un
 ## [2026-09-28] corrección | IEL04: horas presenciales confirmadas por el docente
 
 El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de 2 h de práctica. Se cambió `had_totales` de 26 a 52 en [[IEL04 - Circuitos Eléctricos I]] (26 teóricas + 26 prácticas; en el vault `had_totales` incluye las HP). `hp_totales` sigue en 26 y `tipo_abordaje` en teórico-práctica. Efecto en PLANEADOR: 52/14 ≥ 3 → sesiones de 4 h. LINT L13 sigue avisando (52 + 65 = 117 ≠ 2 × 48 = 96): inconsistencia horas/créditos del propio documento.
+
+## [2026-09-28] ingest | Bibliografía de IEL04 (3 libros)
+- Creadas: [[floyd-principios-circuitos-electricos]], [[boylestad-introduccion-analisis-circuitos]], [[deorsola-morcelle-circuitos-electricos-parte-1]]; conceptos [[capacitancia]], [[inductancia]], [[leyes-de-kirchhoff]], [[circuitos-rc]], [[circuitos-rl]], [[circuitos-rlc]].
+- Actualizadas: `bibliografia` de [[IEL04-RA1]] (Floyd, Boylestad), [[IEL04-RA2]], [[IEL04-RA3]] y [[IEL04-RA4]] (Floyd, Boylestad, Deorsola); sección Bibliografía de [[IEL04 - Circuitos Eléctricos I]]; [[index]].
+- Originales en `raw/bibliografia/` (Markdown; TEMARIO los lee completos: 2697, 4281 y 340 pasajes). Están en `.gitignore`: son obras con derechos de autor y el repositorio es público, así que no se suben a GitHub.
+- Notas: solo Floyd está en la bibliografía del currículo (básica; el currículo no indica edición y se cargó la 8.ª). Boylestad y Deorsola son fuentes adicionales del docente. Deorsola no se enlaza a RA1: no trata tipos, estructura ni identificación de capacitores e inductores. Siguen faltando Nahvi/Edminister (básica), Johnson et al., Hayt y Martínez Ramos (complementaria).
+- Se recibió un archivo `Circuitos_Electricos_III.md` vacío (0 bytes): no se ingirió.
+- Entidades: no se crearon páginas de autores ni editoriales; no aportan al uso curricular del wiki.

@@ -89,13 +89,17 @@ Computadores · Aula virtual · Sala de cómputo · Biblioteca · Equipo de labo
 ## Bibliografía
 
 ### Básica
-- Floyd, Thomas L.. *Principios de circuitos eléctricos*. Pearson-Prentice Hall. — `[FUENTE NO CARGADA EN raw/]`
+- [[floyd-principios-circuitos-electricos]] — Floyd, Thomas L. *Principios de circuitos eléctricos*, 8.ª ed. Pearson, 2007. ISBN 978-970-26-0967-4. (El currículo no indica edición; se cargó la 8.ª.)
 - Nahvi, Mahmood; Edminister, Joseph. *Circuitos eléctricos y electrónicos*. McGraw-Hill. — `[FUENTE NO CARGADA EN raw/]`
 
 ### Complementaria
-- Johnson, David E.; Hilburn, John L.; Johnson, Johnny R.; Scott, Peter D.. *Análisis básico de circuitos eléctricos*. Prentice Hall. — `[FUENTE NO CARGADA EN raw/]`
-- Hayt, William H.. *Análisis de circuitos en ingeniería*. McGraw-Hill. — `[FUENTE NO CARGADA EN raw/]`
+- Johnson, David E.; Hilburn, John L.; Johnson, Johnny R.; Scott, Peter D. *Análisis básico de circuitos eléctricos*. Prentice Hall. — `[FUENTE NO CARGADA EN raw/]`
+- Hayt, William H. *Análisis de circuitos en ingeniería*. McGraw-Hill. — `[FUENTE NO CARGADA EN raw/]`
 - Martínez Ramos, José Luis. *Fundamentos de teoría de circuitos*. Thomson. — `[FUENTE NO CARGADA EN raw/]`
+
+### Fuentes adicionales del docente (no figuran en el currículo)
+- [[boylestad-introduccion-analisis-circuitos]] — Boylestad, Robert L. *Introducción al análisis de circuitos*, 10.ª ed. Pearson, 2004.
+- [[deorsola-morcelle-circuitos-electricos-parte-1]] — Deorsola, M.; Morcelle del Valle, P. *Circuitos eléctricos. Parte 1*. Edulp (UNLP), 2017.
 
 ## Normas técnicas
 

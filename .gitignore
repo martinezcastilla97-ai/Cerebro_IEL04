@@ -1,2 +1,7 @@
 __pycache__/
 *.pyc
+
+# Textos completos de libros con derechos de autor: se quedan solo en la copia local
+raw/bibliografia/floyd-principios-de-circuitos-electricos-8ed.md
+raw/bibliografia/boylestad-introduccion-al-analisis-de-circuitos-10ed.md
+raw/bibliografia/deorsola-morcelle-circuitos-electricos-parte-1.md

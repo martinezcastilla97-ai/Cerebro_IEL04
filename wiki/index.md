@@ -1,9 +1,9 @@
 ---
 tipo: index
 fecha_actualizacion: 2026-09-28
-total_fuentes: 0
+total_fuentes: 3
 total_entidades: 0
-total_conceptos: 0
+total_conceptos: 6
 total_consultas: 0
 total_programas: 1
 total_asignaturas: 1
@@ -22,6 +22,9 @@ Catálogo completo de todas las páginas. El LLM lee este archivo primero al res
 
 | Página | Resumen | Fecha |
 |--------|---------|-------|
+| [[floyd-principios-circuitos-electricos]] | Floyd, 8.ª ed. (2007). Bibliografía básica de IEL04: capacitores, inductores, circuitos RC, RL y RLC en serie y paralelo. | 2026-09-28 |
+| [[boylestad-introduccion-analisis-circuitos]] | Boylestad, 10.ª ed. (2004). Fuente adicional: análisis de cd y ca, transitorios, resonancia, simulación. | 2026-09-28 |
+| [[deorsola-morcelle-circuitos-electricos-parte-1]] | Deorsola y Morcelle del Valle, UNLP (2017). Fuente adicional: elementos pasivos, Kirchhoff, fasores, régimen transitorio RL/GC/RLC. | 2026-09-28 |
 
 ---
 
@@ -101,6 +104,12 @@ Capa de generación (`generacion/planeador/`, `generacion/temarios/`, `generacio
 
 | Página | Descripción breve | Fuentes |
 |--------|-------------------|---------|
+| [[capacitancia]] | Almacenamiento de carga; τ = RC; serie y paralelo | 3 |
+| [[inductancia]] | Oposición a cambios de corriente; τ = L/R; serie y paralelo | 3 |
+| [[leyes-de-kirchhoff]] | LVK y LCK, también con fasores | 3 |
+| [[circuitos-rc]] | Impedancia, análisis serie/paralelo y transitorio RC | 3 |
+| [[circuitos-rl]] | Impedancia, análisis serie/paralelo y transitorio RL | 3 |
+| [[circuitos-rlc]] | Análisis serie/paralelo y resonancia | 3 |
 
 ---
 

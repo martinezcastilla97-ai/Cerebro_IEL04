@@ -30,7 +30,10 @@ contenido_procedimental:
 contenido_actitudinal:
 - Puntualidad y responsabilidad en el trabajo intra y extracurricular.
 - Participación responsable del trabajo en equipo.
-bibliografia: []
+bibliografia:
+- '[[floyd-principios-circuitos-electricos]]'
+- '[[boylestad-introduccion-analisis-circuitos]]'
+- '[[deorsola-morcelle-circuitos-electricos-parte-1]]'
 requiere_practica: null
 practica_experimentos: []
 aplicacion_potencial: null
@@ -78,7 +81,9 @@ fecha_actualizacion: '2026-09-28'
 
 ## Bibliografía
 
-Ninguna fuente de la bibliografía del módulo está cargada todavía en `wiki/fuentes/`, así que `bibliografia` queda en `[]` (ver [[IEL04 - Circuitos Eléctricos I#Bibliografía]]).
+- [[floyd-principios-circuitos-electricos]]
+- [[boylestad-introduccion-analisis-circuitos]]
+- [[deorsola-morcelle-circuitos-electricos-parte-1]]
 
 ## Ver también
 [[IEL04 - Circuitos Eléctricos I]] · [[IEL04-RA1]] · [[IEL04-RA2]] · [[IEL04-RA3]]
