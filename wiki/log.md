@@ -43,3 +43,8 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - Notas: solo Floyd está en la bibliografía del currículo (básica; el currículo no indica edición y se cargó la 8.ª). Boylestad y Deorsola son fuentes adicionales del docente. Deorsola no se enlaza a RA1: no trata tipos, estructura ni identificación de capacitores e inductores. Siguen faltando Nahvi/Edminister (básica), Johnson et al., Hayt y Martínez Ramos (complementaria).
 - Se recibió un archivo `Circuitos_Electricos_III.md` vacío (0 bytes): no se ingirió.
 - Entidades: no se crearon páginas de autores ni editoriales; no aportan al uso curricular del wiki.
+
+## [2026-09-28] /planeador IEL04
+- cronograma de 14 semanas, sesión de 4 h, 4 RA
+- temas redactados por el LLM
+- los temas los redactó el asistente de la sesión siguiendo `src/prompts/prompt-planeador.md` (sin proveedor `CEREBRO_*` configurado); cronograma calculado por `src/planeador.py`
