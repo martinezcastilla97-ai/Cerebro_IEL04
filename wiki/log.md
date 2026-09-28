@@ -248,3 +248,9 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - los tres temarios se regeneraron con `temario.py` desde las secciones corregidas (redactadas por el asistente, sin proveedor `CEREBRO_*`); el resto del texto, las figuras y la continuidad no cambian
 - CORRELATE-BIBLIOGRAFIA: semanas 2 y 7 pasan a `vacio_detectado` (vía marcador, sin LLM); semana 4 sigue `cubierta`
 - presentaciones de las semanas 2, 4 y 7 rehechas y recompiladas sin errores; las diapositivas muestran «[fuente no cargada]» donde el temario lleva el marcador, y las referencias incluyen las fuentes por cargar; las otras 8 estaban al día
+
+## [2026-09-28] analizar-cambios IEL04
+- sección 1 (raw/): primera corrida, sin línea base; los 4 documentos (currículo IEL04, Floyd, Boylestad, Deorsola) ya tienen página en el wiki
+- sección 2 (wiki/ contra generacion/): IEL04 al día: el cronograma y la duración del planeador, los RA, las horas y la alineación de los 11 temarios y la correlación de los 4 RA coinciden con el wiki
+- plan mínimo: nada que actualizar (0 llamadas al modelo)
+- línea base fijada con `--confirmar` en `memory_store/estado-cambios.json` (4 archivos de raw/): la próxima corrida dirá qué cambió desde hoy
