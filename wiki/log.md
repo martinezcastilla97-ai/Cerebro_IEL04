@@ -193,3 +193,16 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - estado: sin_candidato
 - nota: el gate está abierto en los 4 RA (score_RA = 0.94: HP = 26 > 0, casilla de laboratorio marcada y CE de manipulación física), pero no hay ningún manual de banco ingerido (`equipo-laboratorio` en `wiki/fuentes/`): 0 prácticas indexadas, así que los 4 quedan `sin_candidato` sin llamar al modelo. Se volverá a correr cuando se ingiera el manual del banco con `ingest_manual.py` y `correlate.py --indexar`
 - corrección de la plantilla: con 0 prácticas, `--indexar` no crea el índice y `recall_practicas_candidatas` fallaba («No hay indice de practicas») en vez de devolver cero candidatos; ahora devuelve `[]` sin pedir índice ni embeddings (prueba 21 en `test_correlate_fuentes.py`)
+
+## [2026-09-28] lint | wiki completo
+- script (`lint.py`): 0 errores, 1 aviso (L13: 52 + 65 = 117 ≠ 2 créditos × 48 = 96, inconsistencia del propio currículo, ya documentada en la asignatura)
+- capa curricular: `tipo_abordaje` acorde con `hp_totales`, ningún `requiere_practica` en teóricas, score_RA 0.94 ≥ 0.40 en los 4 RA: sin hallazgos
+- huérfanas: ninguna (todas las páginas tienen enlaces entrantes desde el wiki, salvo `log.md`, que no los necesita)
+- contenido: [[circuitos-rc]] dice que Deorsola «nombra GC al circuito que Floyd y Boylestad llaman RC»; en Deorsola §6.3 el GC es un capacitor alimentado por una fuente de corriente real (G en paralelo con C), el dual del RL en serie, no el RC en serie: corregir el matiz
+- contenido: [[circuitos-rlc]] dice que el currículo no menciona la resonancia; los temarios la desarrollan (semanas 3, 11, 12 y 13) apoyados en las fuentes: no es contradicción, pero conviene anotarlo como ampliación sobre el currículo
+- formato: las 6 páginas de `wiki/conceptos/` no tienen la línea `**Definición:**` que pide la plantilla
+- conceptos sin página propia muy usados en temarios: impedancia y admitancia, reactancia, fasores, resonancia (con factor de calidad y ancho de banda), factor de potencia, constante de tiempo
+- fuentes del currículo sin página en `wiki/fuentes/`: Nahvi y Edminister (básica), Johnson et al., Hayt y Martínez Ramos (complementaria)
+- sin manual de banco (`equipo-laboratorio`): CORRELATE no puede asignar prácticas pese al gate abierto
+- lectura por confirmar con el docente: nivel «Pregrado» y tipo de módulo «ESPECÍFICO» salen de casillas con la «X» después de la etiqueta (criterio documentado en la ingesta)
+- `fuentes_count: 3` en todos los conceptos: ninguno con una sola fuente
