@@ -27,7 +27,7 @@ presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
 bibliografia_via: juez
-bibliografia_justificacion: Las asociaciones en serie, paralelo y mixtas de condensadores y bobinas (Floyd §12–3, §12–4, §13–3; Boylestad §10.13, §12.12) y la resonancia LC (Floyd cap. 17, Boylestad cap. 20) están en los resúmenes, y el caso aplica esas mismas relaciones con lecturas declaradas de ejemplo.
+bibliografia_justificacion: Las asociaciones en serie, paralelo y mixtas de condensadores y bobinas (Floyd §12–3, §12–4, §13–3; Boylestad §10.13, §12.12) y la resonancia LC (Floyd cap. 17, Boylestad cap. 20) están en los resúmenes, y el caso aplica esas relaciones con lecturas declaradas de ejemplo.
 bibliografia_faltantes: []
 bibliografia_fecha: '2026-09-28'
 ---

@@ -137,3 +137,24 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - vía: ningún temario tiene el marcador `[FUENTE NO CARGADA EN raw/]`, así que los 11 pasaron al juez de respaldo; hizo de juez el asistente de la sesión (sin proveedor `CEREBRO_*`), con `prompt-correlate-bibliografia.md` y solo con los resúmenes de las fuentes, como pide el protocolo
 - resultado: 4 `cubierta` (semanas 3, 6, 8 y 11) y 7 `revisar` (semanas 1, 2, 4, 7, 9, 12 y 13); ningún `vacio_detectado`
 - nota fuera del juicio (búsqueda en el texto completo de `raw/bibliografia/`): el código de colores de resistores (Floyd), las letras de tolerancia de condensadores (Boylestad), las puntas ×10 (Floyd), Rp = RW(Q² + 1) (Floyd), la corrección del factor de potencia (Boylestad) y los filtros pasabanda y rechazabanda (Floyd, Boylestad) sí están en los libros cargados: esos `revisar` se deben a que el resumen de la página de la fuente no los menciona (el de Floyd se corta en §17–3). El marcado de inductores (semana 2) no aparece en ninguna fuente cargada
+
+## [2026-09-28] ingest (actualización) | Resúmenes de Floyd y Boylestad
+- Actualizadas: [[floyd-principios-circuitos-electricos]], [[boylestad-introduccion-analisis-circuitos]]
+- Notas: se reescribieron `## Resumen` y `## Puntos clave` para que quepan enteros en los ~1800 caracteres que leen TEMARIO y el juez de CORRELATE-BIBLIOGRAFIA (el de Floyd se cortaba en §17–3). Se agregaron, con su sección verificada en el texto completo de `raw/bibliografia/`: Floyd §2–5 (código de colores), §7–4 (efecto de carga), §11–10 (puntas ×1 y ×10), §12–2 y apéndice C (rotulado de capacitores), §16–7 (corrección del factor de potencia), §17–6 (Rp(eq) = RW(Q² + 1)), §17–8 y cap. 18 (ancho de banda, filtros pasabanda y rechazabanda); Boylestad §10.6 (rotulado y letras de tolerancia J y K), §12.5 (valores estándar y tolerancias de inductores), §19.8 (corrección del factor de potencia), §20.8 (resonancia en paralelo con la resistencia de la bobina), §23.7 y §23.8 (filtros pasa-banda y rechaza-banda)
+
+## [2026-09-28] /correlate-bibliografia IEL04
+- IEL04-semana01: cubierta (juez)
+- IEL04-semana02: revisar (juez)
+- IEL04-semana03: cubierta (juez)
+- IEL04-semana04: cubierta (juez)
+- IEL04-semana06: cubierta (juez)
+- IEL04-semana07: revisar (juez)
+- IEL04-semana08: cubierta (juez)
+- IEL04-semana09: cubierta (juez)
+- IEL04-semana11: cubierta (juez)
+- IEL04-semana12: cubierta (juez)
+- IEL04-semana13: cubierta (juez)
+- segunda corrida, tras ampliar los resúmenes de Floyd y Boylestad: 9 `cubierta` y 2 `revisar`; juez: el asistente de la sesión (sin proveedor `CEREBRO_*`), solo con los resúmenes
+- semana 2 (`revisar`, hueco real): ninguna fuente cargada trae la lectura del marcado de inductores (código de colores, código de tres dígitos, «R» decimal); además, el temario cita [1] (Floyd) para el código de colores de inductores y Floyd solo lo menciona de pasada: conviene revisar esa cita o cargar una hoja de datos de fabricante
+- semana 7 (`revisar`): la salida de 50 Ω del generador, el ancho de banda del multímetro y las tierras comunes no están en ninguna fuente cargada; las puntas ×10 y el efecto de carga sí (Floyd §11–10 y §7–4)
+

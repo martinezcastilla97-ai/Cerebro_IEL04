@@ -13,7 +13,7 @@ estadisticas:
   tablas: 4
   figuras: 3
   pasajes: 35
-bibliografia_estado: revisar
+bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
@@ -27,7 +27,7 @@ presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
 bibliografia_via: juez
-bibliografia_justificacion: La comparación serie-paralelo, la resonancia, el factor de calidad y la nomenclatura están en los resúmenes (Boylestad cap. 20, Deorsola apéndice A), pero los filtros resonantes pasabanda y rechazabanda y el tanque real del circuito mixto no aparecen en ellos (el resumen de Floyd se corta en §17–3).
+bibliografia_justificacion: La comparación serie-paralelo, el tanque real (Floyd §17–6), el ancho de banda y Q (Floyd §17–8, Boylestad cap. 20), los filtros pasabanda y rechazabanda (Floyd §18–3 y §18–4, Boylestad §23.7 y §23.8) y la nomenclatura (Deorsola apéndice A) están en los resúmenes.
 bibliografia_faltantes: []
 bibliografia_fecha: '2026-09-28'
 ---

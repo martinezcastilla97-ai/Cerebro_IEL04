@@ -27,7 +27,7 @@ presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
 bibliografia_via: juez
-bibliografia_justificacion: Impedancia, admitancia, susceptancia y LCK del RC en paralelo (Floyd §15–5 y §15–6, Boylestad cap. 15), la descarga RC (Boylestad cap. 10) y la comparación serie-paralelo están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
+bibliografia_justificacion: Impedancia, admitancia, susceptancia y LCK del RC en paralelo (Floyd cap. 15, Boylestad cap. 15), la descarga RC (Boylestad cap. 10) y la comparación serie-paralelo están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
 bibliografia_faltantes: []
 bibliografia_fecha: '2026-09-28'
 ---

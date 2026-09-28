@@ -27,7 +27,7 @@ presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
 bibliografia_via: juez
-bibliografia_justificacion: Inductancia, ley de Faraday, energía y tipos están en los resúmenes (Floyd cap. 13, Boylestad cap. 12), pero el marcado de inductores, sus valores estándar y tolerancias (Tabla 3) no aparecen en ninguna de las fuentes entregadas.
+bibliografia_justificacion: 'Faraday, energía, tipos, valores estándar y tolerancias de inductores están en los resúmenes (Floyd cap. 13, Boylestad §12.5), pero no la lectura del marcado de inductores (código de colores, código de tres dígitos con R decimal, corriente nominal impresa: Tabla 3).'
 bibliografia_faltantes: []
 bibliografia_fecha: '2026-09-28'
 ---

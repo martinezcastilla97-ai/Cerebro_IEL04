@@ -13,7 +13,7 @@ estadisticas:
   tablas: 5
   figuras: 3
   pasajes: 35
-bibliografia_estado: revisar
+bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
@@ -27,7 +27,7 @@ presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
 bibliografia_via: juez
-bibliografia_justificacion: 'El RLC en paralelo y la resonancia en paralelo están en los resúmenes (Boylestad caps. 15 y 20), pero el tanque con bobina real (Rp = RW(Q² + 1), Tabla 3) y la corrección del factor de potencia con un condensador (Tabla 4) no se confirman con ellos: el resumen de Floyd se corta en §17–3.'
+bibliografia_justificacion: El RLC en paralelo y su resonancia (Floyd §17–4 a §17–6, Boylestad cap. 20), el tanque con bobina real y Rp(eq) = RW(Q² + 1) (Floyd §17–6, Boylestad §20.8) y la corrección del factor de potencia con condensador (Floyd §16–7, Boylestad §19.8) están en los resúmenes.
 bibliografia_faltantes: []
 bibliografia_fecha: '2026-09-28'
 ---

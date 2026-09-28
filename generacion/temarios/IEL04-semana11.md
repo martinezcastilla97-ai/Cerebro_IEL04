@@ -27,7 +27,7 @@ presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
 bibliografia_via: juez
-bibliografia_justificacion: Impedancia del RLC en serie, LVK, resonancia en serie con factor de calidad y ancho de banda (Floyd §17–1 a §17–3, Boylestad cap. 20) y potencia (Boylestad cap. 19) están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
+bibliografia_justificacion: Impedancia del RLC en serie, LVK, resonancia en serie con factor de calidad y ancho de banda (Floyd §17–1 a §17–3 y §17–8, Boylestad cap. 20) y potencia (Boylestad cap. 19) están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
 bibliografia_faltantes: []
 bibliografia_fecha: '2026-09-28'
 ---

@@ -27,21 +27,17 @@ Bibliografía **básica** del currículo de [[IEL04 - Circuitos Eléctricos I]].
 
 ## Resumen
 
-Texto introductorio de circuitos de cd y ca con énfasis en aplicaciones y localización de fallas. Parte de cantidades y unidades, ley de Ohm, energía y potencia, y construye el análisis de circuitos resistivos en serie (cap. 5, con la ley de voltajes de Kirchhoff), en paralelo (cap. 6, ley de corrientes de Kirchhoff), serie-paralelo (cap. 7), teoremas (cap. 8) y métodos de ramas, lazos y nodos (cap. 9).
-
-La segunda mitad trata magnetismo (cap. 10), la onda sinusoidal y los fasores (cap. 11) y los elementos reactivos: capacitores (cap. 12: estructura, tipos, serie y paralelo, cd y ca) e inductores (cap. 13: estructura, tipos, serie y paralelo, cd y ca). Siguen los capítulos de análisis por tipo de circuito: circuitos RC (cap. 15), RL (cap. 16) y RLC con resonancia (cap. 17), cada uno dividido en serie, paralelo, serie-paralelo y temas especiales (potencia, aplicaciones, fallas).
-
-Es la fuente que mejor calza con la secuencia del módulo IEL04: sus capítulos 12, 13, 15, 16 y 17 siguen casi uno a uno los RA1 a RA4. Cada sección abre con objetivos y cierra con problemas y "una aplicación de circuito".
+Texto introductorio de circuitos de cd y ca con énfasis en aplicaciones y localización de fallas. Sus capítulos 12, 13, 15, 16 y 17 siguen casi uno a uno los RA1 a RA4 de IEL04: capacitores, inductores y circuitos RC, RL y RLC, cada uno en serie, en paralelo y serie-paralelo, con potencia, aplicaciones y fallas. Cada sección abre con objetivos y cierra con problemas y «una aplicación de circuito».
 
 ## Puntos clave
 
-- Cap. 12 (Capacitores): el capacitor básico, tipos (§12–2), capacitores en serie (§12–3) y en paralelo (§12–4), en circuitos de cd (constante de tiempo RC) y de ca (reactancia capacitiva).
-- Cap. 13 (Inductores): el inductor básico, tipos (§13–2), inductores en serie y en paralelo (§13–3), en cd (constante de tiempo L/R) y en ca (reactancia inductiva).
-- Cap. 15 (Circuitos RC): impedancia y análisis en serie (§15–2 a 15–4), admitancia y análisis en paralelo (§15–5, 15–6), serie-paralelo y potencia.
-- Cap. 16 (Circuitos RL): misma estructura que el cap. 15 para RL.
-- Cap. 17 (Circuitos RLC y resonancia): impedancia y análisis RLC en serie (§17–1, 17–2), resonancia en serie (§17–3), RLC en paralelo (§17–4, 17–5) y resonancia en paralelo (§17–6).
-- Leyes de Kirchhoff: voltajes en el cap. 5 (circuitos en serie) y corrientes en §6–3.
-- Mediciones: §2–7 (mediciones de circuito básicas), §5–9 (mediciones de voltaje) y el osciloscopio (§11–10), útiles para los CE de medición.
+- Caps. 5–6: LVK (cap. 5) y LCK (§6–3); mediciones básicas (§2–7, §5–9).
+- §2–5: tipos de resistores y código de colores de 4 bandas (tabla 2-1). §7–4: efecto de carga de un voltímetro.
+- Cap. 12: capacitor básico (dieléctrico, capacitancia, energía, voltaje nominal); tipos y rotulado (valor, voltaje, tolerancia en %; §12–2); serie y paralelo (§12–3, §12–4); constante RC y reactancia capacitiva (§12–5, §12–6). Apéndice C: código estándar de marcado de capacitores (tabla C-2).
+- Cap. 13: inductor básico, tipos (§13–2), serie y paralelo (§13–3), constante L/R y reactancia inductiva.
+- §11–10: osciloscopio; puntas de prueba ×1 y ×10, efecto de carga y compensación de la punta.
+- Caps. 15 (RC) y 16 (RL): impedancia, ángulo de fase y LVK en serie; admitancia y LCK en paralelo; serie-paralelo; potencia y factor de potencia, con corrección del factor de potencia (§16–7); filtros pasabajas y pasaaltas (§15–9, §16–8).
+- Cap. 17: RLC en serie y resonancia en serie (§17–1 a §17–3); RLC en paralelo (§17–4, §17–5); resonancia en paralelo con tanque no ideal, Rp(eq) = RW(Q² + 1) (§17–6); ancho de banda (§17–8). Cap. 18: filtros pasivos, pasabanda (§18–3) y rechazabanda (§18–4).
 
 ## Citas relevantes
 

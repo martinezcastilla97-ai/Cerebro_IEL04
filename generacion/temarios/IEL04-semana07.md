@@ -27,7 +27,7 @@ presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
 bibliografia_via: juez
-bibliografia_justificacion: El método general, los RC mixtos y la respuesta en frecuencia están en los resúmenes (Floyd cap. 15, Boylestad cap. 15), pero los datos concretos de los instrumentos (salida de 50 Ω del generador, puntas ×1 y ×10, ancho de banda del multímetro, Tabla 3) no se confirman con la mención genérica de «instrumentos y mediciones» de Deorsola §2.6.
+bibliografia_justificacion: El método general, los RC mixtos, los filtros RC, el efecto de carga y las puntas ×1 y ×10 están en los resúmenes (Floyd caps. 15, §7–4, §11–10; Boylestad caps. 15 y 23), pero no la resistencia de salida de 50 Ω del generador, el ancho de banda del multímetro ni el problema de las tierras comunes (Tabla 3).
 bibliografia_faltantes: []
 bibliografia_fecha: '2026-09-28'
 ---
