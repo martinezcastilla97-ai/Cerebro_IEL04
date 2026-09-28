@@ -13,7 +13,7 @@ estadisticas:
   tablas: 6
   figuras: 3
   pasajes: 35
-bibliografia_estado: null
+bibliografia_estado: revisar
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
@@ -26,6 +26,10 @@ presentacion_diapositivas: 34
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
+bibliografia_via: juez
+bibliografia_justificacion: Inductancia, ley de Faraday, energía y tipos están en los resúmenes (Floyd cap. 13, Boylestad cap. 12), pero el marcado de inductores, sus valores estándar y tolerancias (Tabla 3) no aparecen en ninguna de las fuentes entregadas.
+bibliografia_faltantes: []
+bibliografia_fecha: '2026-09-28'
 ---
 
 # La bobina: inductancia, inducción electromagnética, tipos de núcleo e identificación de inductores

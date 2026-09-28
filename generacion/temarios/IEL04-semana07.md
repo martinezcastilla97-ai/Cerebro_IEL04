@@ -13,7 +13,7 @@ estadisticas:
   tablas: 5
   figuras: 2
   pasajes: 35
-bibliografia_estado: null
+bibliografia_estado: revisar
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
@@ -26,6 +26,10 @@ presentacion_diapositivas: 32
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
+bibliografia_via: juez
+bibliografia_justificacion: El método general, los RC mixtos y la respuesta en frecuencia están en los resúmenes (Floyd cap. 15, Boylestad cap. 15), pero los datos concretos de los instrumentos (salida de 50 Ω del generador, puntas ×1 y ×10, ancho de banda del multímetro, Tabla 3) no se confirman con la mención genérica de «instrumentos y mediciones» de Deorsola §2.6.
+bibliografia_faltantes: []
+bibliografia_fecha: '2026-09-28'
 ---
 
 # Cálculo y medición de parámetros en circuitos RC en serie, en paralelo y mixtos: método, filtros, instrumentos y nomenclatura

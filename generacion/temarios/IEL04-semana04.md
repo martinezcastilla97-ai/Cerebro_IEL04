@@ -13,7 +13,7 @@ estadisticas:
   tablas: 4
   figuras: 3
   pasajes: 35
-bibliografia_estado: null
+bibliografia_estado: revisar
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
@@ -26,6 +26,10 @@ presentacion_diapositivas: 33
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
+bibliografia_via: juez
+bibliografia_justificacion: El transitorio RC, la reactancia, la impedancia y la LVK del RC en serie están en los resúmenes (Floyd cap. 15, Boylestad caps. 10 y 15), pero el código de colores de resistores (Tabla 1) no aparece en ellos.
+bibliografia_faltantes: []
+bibliografia_fecha: '2026-09-28'
 ---
 
 # El circuito RC en serie: carga del condensador, reactancia capacitiva, impedancia y ley de voltajes de Kirchhoff

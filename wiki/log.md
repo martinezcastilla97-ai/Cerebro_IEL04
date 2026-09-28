@@ -121,3 +121,19 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - 99 partes (apertura y 8 bloques por temario) escritas por el asistente de la sesión a partir de los datos estructurados de cada temario (sin proveedor `CEREBRO_*`) y verificadas con `presentaciones.validar_parte` (lista de permitidos); `src/presentaciones.py` armó el marco y la verificación estática
 - compiladas con `presentaciones.compilar` (pdfLaTeX de TeX Live, -no-shell-escape, openin_any=p/openout_any=p): 11 PDF sin errores
 - corrección de la plantilla: `latex_seguro.COMANDOS_CUERPO` no admitía `\texttwosuperior` y otros símbolos que el propio `Conversor` escribe (², ³, ª, º, ¼, ¾, ‰, ¬), así que un título del índice con «CV²/2» impedía escribir el .tex; se agregaron con su prueba en `test_presentaciones.py`. En la portada, el contacto va en `\tiny` para que un correo largo no se salga del panel (`diseno_iub.portada`)
+
+## [2026-09-28] /correlate-bibliografia IEL04
+- IEL04-semana01: revisar (juez)
+- IEL04-semana02: revisar (juez)
+- IEL04-semana03: cubierta (juez)
+- IEL04-semana04: revisar (juez)
+- IEL04-semana06: cubierta (juez)
+- IEL04-semana07: revisar (juez)
+- IEL04-semana08: cubierta (juez)
+- IEL04-semana09: revisar (juez)
+- IEL04-semana11: cubierta (juez)
+- IEL04-semana12: revisar (juez)
+- IEL04-semana13: revisar (juez)
+- vía: ningún temario tiene el marcador `[FUENTE NO CARGADA EN raw/]`, así que los 11 pasaron al juez de respaldo; hizo de juez el asistente de la sesión (sin proveedor `CEREBRO_*`), con `prompt-correlate-bibliografia.md` y solo con los resúmenes de las fuentes, como pide el protocolo
+- resultado: 4 `cubierta` (semanas 3, 6, 8 y 11) y 7 `revisar` (semanas 1, 2, 4, 7, 9, 12 y 13); ningún `vacio_detectado`
+- nota fuera del juicio (búsqueda en el texto completo de `raw/bibliografia/`): el código de colores de resistores (Floyd), las letras de tolerancia de condensadores (Boylestad), las puntas ×10 (Floyd), Rp = RW(Q² + 1) (Floyd), la corrección del factor de potencia (Boylestad) y los filtros pasabanda y rechazabanda (Floyd, Boylestad) sí están en los libros cargados: esos `revisar` se deben a que el resumen de la página de la fuente no los menciona (el de Floyd se corta en §17–3). El marcado de inductores (semana 2) no aparece en ninguna fuente cargada

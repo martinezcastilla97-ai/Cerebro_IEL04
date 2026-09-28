@@ -13,7 +13,7 @@ estadisticas:
   tablas: 4
   figuras: 3
   pasajes: 35
-bibliografia_estado: null
+bibliografia_estado: revisar
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
@@ -26,6 +26,10 @@ presentacion_diapositivas: 32
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
+bibliografia_via: juez
+bibliografia_justificacion: Los RL mixtos, el filtro RL, la potencia y el factor de potencia y la medición de L con τ = L/R están en los resúmenes (Floyd cap. 16, Boylestad caps. 12 y 19), pero la conversión de la bobina real a su equivalente en paralelo (Rp = RW(Q² + 1), Tabla 1) no aparece en ellos.
+bibliografia_faltantes: []
+bibliografia_fecha: '2026-09-28'
 ---
 
 # Cálculo y medición de parámetros en circuitos RL según el conexionado: equivalentes serie-paralelo, circuitos mixtos, potencia y medición de inductancia

@@ -13,7 +13,7 @@ estadisticas:
   tablas: 4
   figuras: 3
   pasajes: 35
-bibliografia_estado: null
+bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
@@ -26,6 +26,10 @@ presentacion_diapositivas: 33
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
+bibliografia_via: juez
+bibliografia_justificacion: La constante de tiempo L/R, la reactancia inductiva y los circuitos RL en serie y en paralelo con LVK y LCK están en los resúmenes (Floyd caps. 13 y 16, Boylestad caps. 12 y 15, Deorsola §2.4 y §6.2); la bobina con resistencia de devanado se trata como un RL en serie.
+bibliografia_faltantes: []
+bibliografia_fecha: '2026-09-28'
 ---
 
 # Circuitos RL en serie y en paralelo: reactancia inductiva, impedancia y leyes de Kirchhoff con la bobina real

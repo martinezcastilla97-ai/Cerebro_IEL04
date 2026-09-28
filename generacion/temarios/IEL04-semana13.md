@@ -13,7 +13,7 @@ estadisticas:
   tablas: 4
   figuras: 3
   pasajes: 35
-bibliografia_estado: null
+bibliografia_estado: revisar
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
@@ -26,6 +26,10 @@ presentacion_diapositivas: 33
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
+bibliografia_via: juez
+bibliografia_justificacion: La comparación serie-paralelo, la resonancia, el factor de calidad y la nomenclatura están en los resúmenes (Boylestad cap. 20, Deorsola apéndice A), pero los filtros resonantes pasabanda y rechazabanda y el tanque real del circuito mixto no aparecen en ellos (el resumen de Floyd se corta en §17–3).
+bibliografia_faltantes: []
+bibliografia_fecha: '2026-09-28'
 ---
 
 # Cálculo y medición de parámetros en circuitos RLC en serie, en paralelo y mixtos: filtros resonantes, frecuencia de resonancia, ancho de banda y nomenclatura

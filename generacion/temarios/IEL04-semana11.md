@@ -13,7 +13,7 @@ estadisticas:
   tablas: 4
   figuras: 3
   pasajes: 35
-bibliografia_estado: null
+bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
@@ -26,6 +26,10 @@ presentacion_diapositivas: 30
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
+bibliografia_via: juez
+bibliografia_justificacion: Impedancia del RLC en serie, LVK, resonancia en serie con factor de calidad y ancho de banda (Floyd §17–1 a §17–3, Boylestad cap. 20) y potencia (Boylestad cap. 19) están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
+bibliografia_faltantes: []
+bibliografia_fecha: '2026-09-28'
 ---
 
 # El circuito RLC en serie: reactancias opuestas, ley de voltajes de Kirchhoff y resonancia en serie

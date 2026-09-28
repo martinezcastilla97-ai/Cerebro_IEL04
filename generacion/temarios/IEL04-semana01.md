@@ -13,7 +13,7 @@ estadisticas:
   tablas: 6
   figuras: 3
   pasajes: 35
-bibliografia_estado: null
+bibliografia_estado: revisar
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
@@ -26,6 +26,10 @@ presentacion_diapositivas: 35
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
+bibliografia_via: juez
+bibliografia_justificacion: Estructura, capacitancia, rigidez dieléctrica, energía y tipos están en los resúmenes (Floyd cap. 12, Boylestad cap. 10), pero la lectura del marcado (código numérico tipo 223J, letras de tolerancia, Tabla 3) y la nomenclatura de planos no aparecen en ellos.
+bibliografia_faltantes: []
+bibliografia_fecha: '2026-09-28'
 ---
 
 # El condensador: estructura, capacitancia, tipos e identificación de componentes comerciales
