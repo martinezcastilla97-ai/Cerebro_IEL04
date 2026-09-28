@@ -90,3 +90,9 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - tema: Circuitos RL en serie y en paralelo: análisis con las leyes de voltajes y corrientes de Kirchhoff
 - 3827 palabras, 7 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
 - redactado por el asistente de la sesión con los prompts de `src/prompts/prompt-temario-*.md` (sin proveedor `CEREBRO_*`); `src/temario.py` validó, armó y dibujó. Las lecturas del caso de estudio son valores de ejemplo, no mediciones reales; la bobina es L3 del kit de la semana 2.
+
+## [2026-09-28] /temario IEL04 semana 9
+- RA: IEL04-RA3
+- tema: Cálculo y medición de parámetros en circuitos RL serie y paralelo según el tipo de conexionado
+- 3712 palabras, 6 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- redactado por el asistente de la sesión con los prompts de `src/prompts/prompt-temario-*.md` (sin proveedor `CEREBRO_*`); `src/temario.py` validó, armó y dibujó. Las lecturas del caso de estudio son valores de ejemplo, no mediciones reales; la bobina de 3.3 mH sin marcado es un componente hipotético del caso.
