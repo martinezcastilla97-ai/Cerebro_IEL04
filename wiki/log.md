@@ -72,3 +72,9 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - tema: Circuito RC en serie: análisis y Ley de Voltajes de Kirchhoff
 - 3958 palabras, 6 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
 - redactado por el asistente de la sesión con los prompts de `src/prompts/prompt-temario-*.md` (sin proveedor `CEREBRO_*`); `src/temario.py` validó, armó y dibujó. Las lecturas del caso de estudio son valores de ejemplo, no mediciones reales; el condensador es el C2 del kit de la semana 1.
+
+## [2026-09-28] /temario IEL04 semana 6
+- RA: IEL04-RA2
+- tema: Circuito RC en paralelo: análisis y Ley de Corrientes de Kirchhoff
+- 3795 palabras, 5 ecuaciones, 3 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- redactado por el asistente de la sesión con los prompts de `src/prompts/prompt-temario-*.md` (sin proveedor `CEREBRO_*`); `src/temario.py` validó, armó y dibujó. Las lecturas del caso de estudio son valores de ejemplo, no mediciones reales; los componentes son los del caso de la semana 4.
