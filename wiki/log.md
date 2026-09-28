@@ -48,3 +48,9 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - cronograma de 14 semanas, sesión de 4 h, 4 RA
 - temas redactados por el LLM
 - los temas los redactó el asistente de la sesión siguiendo `src/prompts/prompt-planeador.md` (sin proveedor `CEREBRO_*` configurado); cronograma calculado por `src/planeador.py`
+
+## [2026-09-28] /temario IEL04 semana 1
+- RA: IEL04-RA1
+- tema: Condensadores: estructura, comportamiento interno, identificación y tipos
+- 4278 palabras, 7 ecuaciones, 6 tablas, 3 figuras; 35 pasajes de 2 fuente(s) cargada(s)
+- el plan, las unidades y el cierre los redactó el asistente de la sesión con los prompts de `src/prompts/prompt-temario-*.md` y los pasajes que eligió `src/pasajes.py` (sin proveedor `CEREBRO_*` configurado); `src/temario.py` validó cada respuesta, armó la página y dibujó las figuras. Las lecturas del caso de estudio son valores de ejemplo, no mediciones reales.
