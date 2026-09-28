@@ -1,15 +1,15 @@
 ---
 tipo: index
-fecha_actualizacion: YYYY-MM-DD
+fecha_actualizacion: 2026-09-28
 total_fuentes: 0
 total_entidades: 0
 total_conceptos: 0
 total_consultas: 0
-total_programas: 0
-total_asignaturas: 0
-total_resultados_aprendizaje: 0
-total_recursos_web: 0
-modulos: []
+total_programas: 1
+total_asignaturas: 1
+total_resultados_aprendizaje: 4
+total_recursos_web: 2
+modulos: [IEL04]
 ---
 
 # Índice del Wiki — Cerebro Docente
@@ -38,12 +38,32 @@ Bancos de entrenamiento físico y sus manuales. A diferencia de las demás fuent
 
 | Página | Nivel | Asignaturas |
 |--------|-------|-------------|
+| [[Tecnología en Gestión de Sistemas Eléctricos]] | Pregrado | 1 |
 
 ---
 
 ## Asignaturas
 
-Capa curricular lista para usar pero **vacía**: sin currículos cargados y sin asignaturas/RA creados todavía. Ver `CLAUDE.md` § "Capa curricular" para la regla de bifurcación teórica/teórico-práctica, y [[../correlaciones/matriz-ra-practica]] para la vista de correlación (también vacía hasta que haya contenido).
+| Asignatura | Programa | Abordaje | HAD / HP / HTI | Créditos | RA | Competencias |
+|---|---|---|---|---|---|---|
+| [[IEL04 - Circuitos Eléctricos I]] | [[Tecnología en Gestión de Sistemas Eléctricos]] | teórico-práctica | 26 / 26 / 65 | 2 | [[IEL04-RA1]] · [[IEL04-RA2]] · [[IEL04-RA3]] · [[IEL04-RA4]] | [[UC2]] |
+
+### Resultados de aprendizaje
+
+| RA | Enunciado | Horas |
+|---|---|---|
+| [[IEL04-RA1]] | Calcular un circuito capacitivo, inductivo y LC, sea en serie o paralelo. | 29 |
+| [[IEL04-RA2]] | Calcular un circuito resistivo, capacitivo y RC, sea en serie o paralelo. | 29 |
+| [[IEL04-RA3]] | Calcular un circuito resistivo, inductivo y RL, sea en serie o paralelo. | 29 |
+| [[IEL04-RA4]] | Calcular un circuito resistivo, inductivo, capacitivo y RLC, sea en serie o paralelo. | 30 |
+
+### Competencias
+
+| Página | Alcance | Asignaturas |
+|---|---|---|
+| [[UC2]] | programa | [[IEL04 - Circuitos Eléctricos I]] |
+
+Ver `CLAUDE.md` § "Capa curricular" para la regla de bifurcación teórica/teórico-práctica, y [[../correlaciones/matriz-ra-practica]] para la vista de correlación (también vacía hasta que haya contenido).
 
 ---
 
@@ -53,12 +73,14 @@ Webgrafía y bases de datos institucionales que citan los currículos. Nunca se 
 
 | Página | Tipo | Asignaturas |
 |--------|------|-------------|
+| [[recursos-bibliograficos-institucionales]] | base_datos_institucional | [[IEL04 - Circuitos Eléctricos I]] |
+| [[acienciasgalilei]] | pagina_web | [[IEL04 - Circuitos Eléctricos I]] |
 
 ---
 
 ## Marco pedagógico institucional
 
-Nodo único compartido por todas las asignaturas: [[marco-pedagogico]] (esqueleto sin texto hasta el primer currículo que traiga su Anexo de estrategias de enseñanza).
+Nodo único compartido por todas las asignaturas: [[marco-pedagogico]] (transcrito desde el Anexo de IEL04; lo sigue [[IEL04 - Circuitos Eléctricos I]]).
 
 ---
 
