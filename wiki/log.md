@@ -84,3 +84,9 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - tema: Cálculo y medición de parámetros en circuitos RC serie y paralelo: unidades, simbología y nomenclatura
 - 3739 palabras, 5 ecuaciones, 5 tablas, 2 figuras; 35 pasajes de 3 fuente(s) cargada(s)
 - redactado por el asistente de la sesión con los prompts de `src/prompts/prompt-temario-*.md` (sin proveedor `CEREBRO_*`); `src/temario.py` validó, armó y dibujó. Las lecturas del caso de estudio son valores de ejemplo, no mediciones reales; R2 y C son los componentes de las semanas 4 y 6.
+
+## [2026-09-28] /temario IEL04 semana 8
+- RA: IEL04-RA3
+- tema: Circuitos RL en serie y en paralelo: análisis con las leyes de voltajes y corrientes de Kirchhoff
+- 3827 palabras, 7 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- redactado por el asistente de la sesión con los prompts de `src/prompts/prompt-temario-*.md` (sin proveedor `CEREBRO_*`); `src/temario.py` validó, armó y dibujó. Las lecturas del caso de estudio son valores de ejemplo, no mediciones reales; la bobina es L3 del kit de la semana 2.
