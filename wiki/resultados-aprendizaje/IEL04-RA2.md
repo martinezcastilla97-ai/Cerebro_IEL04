@@ -43,6 +43,16 @@ correlacion_nota_docente: null
 correlacion_fecha_revision: null
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
+planeador_estado: revisar
+planeador_confianza: 0.65
+planeador_semanas:
+- 4
+- 6
+- 7
+planeador_semanas_con_problema:
+- 4
+planeador_justificacion: Los temas cubren el análisis y las leyes de Kirchhoff del RC en serie y en paralelo y la medición (semana 7), pero ninguno nombra el criterio «Identificar los tipos de resistores y capacitores», que debería aparecer, por ejemplo, en la semana 4.
+planeador_fecha: '2026-09-28'
 ---
 
 # IEL04-RA2 — Calcular un circuito resistivo, capacitivo y RC, sea en serie o paralelo.

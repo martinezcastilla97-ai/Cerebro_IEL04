@@ -42,6 +42,15 @@ correlacion_nota_docente: null
 correlacion_fecha_revision: null
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
+planeador_estado: revisar
+planeador_confianza: 0.65
+planeador_semanas:
+- 8
+- 9
+planeador_semanas_con_problema:
+- 8
+planeador_justificacion: Los temas cubren el análisis y las leyes de Kirchhoff del RL en serie y en paralelo y la medición (semana 9), pero ninguno nombra el criterio «Identificar los tipos de resistores e inductores», que debería aparecer, por ejemplo, en la semana 8.
+planeador_fecha: '2026-09-28'
 ---
 
 # IEL04-RA3 — Calcular un circuito resistivo, inductivo y RL, sea en serie o paralelo.

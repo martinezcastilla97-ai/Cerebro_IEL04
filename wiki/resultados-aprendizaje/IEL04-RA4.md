@@ -43,6 +43,16 @@ correlacion_nota_docente: null
 correlacion_fecha_revision: null
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
+planeador_estado: revisar
+planeador_confianza: 0.65
+planeador_semanas:
+- 11
+- 12
+- 13
+planeador_semanas_con_problema:
+- 11
+planeador_justificacion: Los temas cubren el análisis y las leyes de Kirchhoff del RLC en serie y en paralelo y la medición (semana 13), pero ninguno nombra el criterio «Identificar los tipos de resistores, inductores y capacitores», que debería aparecer, por ejemplo, en la semana 11.
+planeador_fecha: '2026-09-28'
 ---
 
 # IEL04-RA4 — Calcular un circuito resistivo, inductivo, capacitivo y RLC, sea en serie o paralelo.

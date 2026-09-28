@@ -46,6 +46,15 @@ correlacion_nota_docente: null
 correlacion_fecha_revision: null
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
+planeador_estado: cubierto
+planeador_confianza: 0.9
+planeador_semanas:
+- 1
+- 2
+- 3
+planeador_semanas_con_problema: []
+planeador_justificacion: 'Las semanas 1 a 3 cubren los ocho contenidos conceptuales (estructura, comportamiento interno, identificación, tipos y asociaciones de condensadores y bobinas) y los tres criterios: identificación en las semanas 1 y 2 y medición en circuitos L, C y LC en la semana 3.'
+planeador_fecha: '2026-09-28'
 ---
 
 # IEL04-RA1 — Calcular un circuito capacitivo, inductivo y LC, sea en serie o paralelo.

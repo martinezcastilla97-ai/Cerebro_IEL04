@@ -158,3 +158,11 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - semana 2 (`revisar`, hueco real): ninguna fuente cargada trae la lectura del marcado de inductores (código de colores, código de tres dígitos, «R» decimal); además, el temario cita [1] (Floyd) para el código de colores de inductores y Floyd solo lo menciona de pasada: conviene revisar esa cita o cargar una hoja de datos de fabricante
 - semana 7 (`revisar`): la salida de 50 Ω del generador, el ancho de banda del multímetro y las tierras comunes no están en ninguna fuente cargada; las puntas ×10 y el efecto de carga sí (Floyd §11–10 y §7–4)
 
+
+## [2026-09-28] /correlate-planeador IEL04
+- IEL04-RA1: cubierto — Las semanas 1 a 3 cubren los ocho contenidos conceptuales (estructura, comportamiento interno, identificación, tipos y asociaciones de condensadores y bobinas) y los tres criterios: identificación en las semanas 1 y 2 y medición en circuitos L, C y LC en la semana 3.
+- IEL04-RA2: revisar — Los temas cubren el análisis y las leyes de Kirchhoff del RC en serie y en paralelo y la medición (semana 7), pero ninguno nombra el criterio «Identificar los tipos de resistores y capacitores», que debería aparecer, por ejemplo, en la semana 4.
+- IEL04-RA3: revisar — Los temas cubren el análisis y las leyes de Kirchhoff del RL en serie y en paralelo y la medición (semana 9), pero ninguno nombra el criterio «Identificar los tipos de resistores e inductores», que debería aparecer, por ejemplo, en la semana 8.
+- IEL04-RA4: revisar — Los temas cubren el análisis y las leyes de Kirchhoff del RLC en serie y en paralelo y la medición (semana 13), pero ninguno nombra el criterio «Identificar los tipos de resistores, inductores y capacitores», que debería aparecer, por ejemplo, en la semana 11.
+- juez: el asistente de la sesión (sin proveedor `CEREBRO_*`), solo con el RA y los temas del planeador, como pide el protocolo
+- el `revisar` de RA2, RA3 y RA4 está solo en el texto del planeador: los temarios de las semanas 4, 8 y 11 sí desarrollan la identificación de tipos en su bloque 2 (4.2.1). Para cerrarlo basta con nombrar la identificación en el tema de esas semanas del planeador (editándolo a mano, sin `--forzar`, que regeneraría todos los temas)
