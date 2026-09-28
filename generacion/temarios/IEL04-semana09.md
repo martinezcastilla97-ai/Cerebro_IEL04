@@ -19,7 +19,7 @@ fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana09.tex
 presentacion_avisos: []
-presentacion_temario_hash: 9d94cf3c3d666d38
+presentacion_temario_hash: dedf5cc222c6c89e
 presentacion_fecha: '2026-09-28'
 presentacion_diseno: 5
 presentacion_diapositivas: 32
@@ -47,7 +47,7 @@ bibliografia_fecha: '2026-09-28'
 
 La semana 8 presentó los circuitos RL en serie y en paralelo, con sus leyes de Kirchhoff y el papel de la resistencia de devanado. Esta sesión cierra el RA3 profundizando en el cálculo según el tipo de conexionado: cómo convertir una bobina real entre sus modelos en serie y en paralelo, cómo resolver circuitos RL mixtos, cómo se comporta el RL como filtro, cómo se reparte la potencia entre resistencia e inductancia —el origen del factor de potencia en las instalaciones— y cómo medir una inductancia desconocida con instrumentos básicos. La semana 10 es de examen; la semana 11 abre el RA4 con los circuitos RLC.
 
-1. Semana 8: Circuitos RL en serie y en paralelo: análisis con las leyes de voltajes y corrientes de Kirchhoff
+1. Semana 8: Circuitos RL en serie y en paralelo: tipos e identificación de resistores e inductores, análisis con las leyes de voltajes y corrientes de Kirchhoff
 2. **→ Presente sesión (semana 9):** Cálculo y medición de parámetros en circuitos RL serie y paralelo según el tipo de conexionado
 3. Semana 10: evaluación (semana de examen)
 

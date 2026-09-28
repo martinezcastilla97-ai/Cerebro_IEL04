@@ -42,14 +42,13 @@ correlacion_nota_docente: null
 correlacion_fecha_revision: null
 fecha_creacion: '2026-09-28'
 fecha_actualizacion: '2026-09-28'
-planeador_estado: revisar
-planeador_confianza: 0.65
+planeador_estado: cubierto
+planeador_confianza: 0.85
 planeador_semanas:
 - 8
 - 9
-planeador_semanas_con_problema:
-- 8
-planeador_justificacion: Los temas cubren el análisis y las leyes de Kirchhoff del RL en serie y en paralelo y la medición (semana 9), pero ninguno nombra el criterio «Identificar los tipos de resistores e inductores», que debería aparecer, por ejemplo, en la semana 8.
+planeador_semanas_con_problema: []
+planeador_justificacion: 'Los temas cubren los cuatro contenidos conceptuales (RL en serie y en paralelo con LVK y LCK en la semana 8) y los tres criterios: identificación de resistores e inductores en la semana 8 y medición en circuitos resistivos, inductivos y RL en la 9.'
 planeador_fecha: '2026-09-28'
 ---
 

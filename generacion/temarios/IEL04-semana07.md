@@ -19,7 +19,7 @@ fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana07.tex
 presentacion_avisos: []
-presentacion_temario_hash: 09c671076386fc4a
+presentacion_temario_hash: 557bfa30b98c03bd
 presentacion_fecha: '2026-09-28'
 presentacion_diseno: 5
 presentacion_diapositivas: 32
@@ -49,7 +49,7 @@ Las semanas 4 y 6 analizaron por separado el circuito RC en serie, con la ley de
 
 1. Semana 6: Circuito RC en paralelo: análisis y Ley de Corrientes de Kirchhoff
 2. **→ Presente sesión (semana 7):** Cálculo y medición de parámetros en circuitos RC serie y paralelo: unidades, simbología y nomenclatura
-3. Semana 8: Circuitos RL en serie y en paralelo: análisis con las leyes de voltajes y corrientes de Kirchhoff
+3. Semana 8: Circuitos RL en serie y en paralelo: tipos e identificación de resistores e inductores, análisis con las leyes de voltajes y corrientes de Kirchhoff
 
 ### 1.2 Prerrequisitos
 

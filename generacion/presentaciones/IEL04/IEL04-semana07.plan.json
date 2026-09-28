@@ -1,15 +1,15 @@
 {
  "formato": 2,
- "temario_hash": "09c671076386fc4a",
+ "temario_hash": "557bfa30b98c03bd",
  "modelo": "gpt-4o",
  "fecha": "2026-09-28",
  "partes": {
   "apertura": {
-   "huella": "6bd020d7b9604fc3",
+   "huella": "21cf7041c9a8b0a1",
    "diapositivas": [
     {
      "titulo": "Punto de partida de la sesión",
-     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 6: Circuito RC en paralelo: análisis y Ley de Corrientes de Kirchhoff\n  \\item \\textbf{Semana 7: Cálculo y medición de parámetros en circuitos RC serie y paralelo}\n  \\item Semana 8: Circuitos RL en serie y en paralelo\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular impedancia, ángulo de fase y tensiones de un RC en serie\n  \\item Calcular admitancia y corrientes de un RC en paralelo aplicando la LCK\n  \\item Convertir fasores entre forma rectangular y polar, y operar con ellos\n  \\item Identificar y verificar resistores y condensadores con ohmímetro\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 6: Circuito RC en paralelo\n  \\item \\textbf{Semana 7: Cálculo y medición de parámetros en circuitos RC serie y paralelo: unidades, simbología y nomenclatura}\n  \\item Semana 8: Circuitos RL en serie y en paralelo\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular impedancia, ángulo de fase y tensiones de un RC en serie\n  \\item Calcular admitancia y corrientes de un RC en paralelo aplicando la LCK\n  \\item Convertir fasores entre forma rectangular y polar, y operar con ellos\n  \\item Identificar y verificar resistores y condensadores con ohmímetro\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
     },
     {
      "titulo": "Resultados de aprendizaje",

@@ -1,15 +1,15 @@
 {
  "formato": 2,
- "temario_hash": "9d94cf3c3d666d38",
+ "temario_hash": "dedf5cc222c6c89e",
  "modelo": "gpt-4o",
  "fecha": "2026-09-28",
  "partes": {
   "apertura": {
-   "huella": "16ec718ae2d30610",
+   "huella": "f3ce2802d97d5cb4",
    "diapositivas": [
     {
      "titulo": "Punto de partida de la sesión",
-     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 8: Circuitos RL en serie y en paralelo\n  \\item \\textbf{Semana 9: Cálculo y medición de parámetros en circuitos RL serie y paralelo}\n  \\item Semana 10: evaluación\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular impedancia, ángulo de fase, tensiones y corrientes\n  \\item Aplicar el método general de análisis fasorial con impedancias\n  \\item Calcular la constante de tiempo \\ensuremath{\\tau} = L/R de un circuito RL en serie\n  \\item Calcular potencia en cd como P = VI = I²R\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 8: Circuitos RL en serie y en paralelo\n  \\item \\textbf{Semana 9: Cálculo y medición de parámetros en circuitos RL serie y paralelo según el tipo de conexionado}\n  \\item Semana 10: evaluación\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular impedancia, ángulo de fase, tensiones y corrientes\n  \\item Aplicar el método general de análisis fasorial con impedancias\n  \\item Calcular la constante de tiempo \\ensuremath{\\tau} = L/R de un circuito RL en serie\n  \\item Calcular potencia en cd como P = VI = I²R\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
     },
     {
      "titulo": "Resultados de aprendizaje",

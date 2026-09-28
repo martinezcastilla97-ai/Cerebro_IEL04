@@ -19,7 +19,7 @@ fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana12.tex
 presentacion_avisos: []
-presentacion_temario_hash: 6026ade05c09f17a
+presentacion_temario_hash: 379688a119f6262f
 presentacion_fecha: '2026-09-28'
 presentacion_diseno: 5
 presentacion_diapositivas: 31
@@ -47,7 +47,7 @@ bibliografia_fecha: '2026-09-28'
 
 La semana 11 abrió el RA4 con el circuito RLC en serie: reactancias que se restan, tensiones reactivas mayores que la de la fuente y una resonancia con impedancia mínima. Esta sesión estudia la configuración dual, los tres elementos en paralelo: las susceptancias capacitiva e inductiva se oponen, las corrientes de la bobina y del condensador se restan en la ley de corrientes de Kirchhoff y pueden superar la corriente de la fuente, y la resonancia en paralelo presenta una impedancia máxima. Se retoma el circuito tanque de la semana 3, ahora con la bobina real, y se aplica todo a la corrección del factor de potencia. La semana 13 cierra el curso con el cálculo y la medición de parámetros de circuitos RLC en serie y en paralelo.
 
-1. Semana 11: Circuito RLC en serie: análisis y Ley de Voltajes de Kirchhoff
+1. Semana 11: Circuito RLC en serie: tipos e identificación de resistores, inductores y condensadores, análisis y Ley de Voltajes de Kirchhoff
 2. **→ Presente sesión (semana 12):** Circuito RLC en paralelo: análisis y Ley de Corrientes de Kirchhoff
 3. Semana 13: Cálculo y medición de parámetros en circuitos RLC serie y paralelo: unidades, simbología y nomenclatura
 

@@ -19,7 +19,7 @@ fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana03.tex
 presentacion_avisos: []
-presentacion_temario_hash: 614dd7a6ee554f10
+presentacion_temario_hash: cf45b1d9dd8300a8
 presentacion_fecha: '2026-09-28'
 presentacion_diseno: 5
 presentacion_diapositivas: 34
@@ -49,7 +49,7 @@ Las semanas 1 y 2 presentaron por separado el condensador y la bobina: su estruc
 
 1. Semana 2: Bobinas o inductores: estructura, comportamiento interno, identificación y tipos
 2. **→ Presente sesión (semana 3):** Condensadores y bobinas en serie, en paralelo y mixto: cálculo y medición en circuitos L, C y LC
-3. Semana 4: Circuito RC en serie: análisis y Ley de Voltajes de Kirchhoff
+3. Semana 4: Circuito RC en serie: tipos e identificación de resistores y condensadores, análisis y Ley de Voltajes de Kirchhoff
 
 ### 1.2 Prerrequisitos
 

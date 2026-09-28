@@ -1,15 +1,15 @@
 {
  "formato": 2,
- "temario_hash": "614dd7a6ee554f10",
+ "temario_hash": "cf45b1d9dd8300a8",
  "modelo": "gpt-4o",
  "fecha": "2026-09-28",
  "partes": {
   "apertura": {
-   "huella": "7298e13297e177a6",
+   "huella": "9c52d2840f5b1b98",
    "diapositivas": [
     {
      "titulo": "Punto de partida de la sesión",
-     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 2: Bobinas o inductores\n  \\item \\textbf{Semana 3: Condensadores y bobinas en serie, en paralelo y mixto}\n  \\item Semana 4: Circuito RC en serie: análisis y Ley de Voltajes de Kirchhoff\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular resistencias equivalentes en serie, en paralelo y mixtas\n  \\item Identificar el valor nominal y la tolerancia de condensadores\n  \\item Aplicar Q = CV y la relación v = L di/dt (semanas 1 y 2)\n  \\item Convertir entre pF, nF, µF y entre µH, mH y H\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 2: Bobinas o inductores\n  \\item \\textbf{Semana 3: Condensadores y bobinas en serie, en paralelo y mixto: cálculo y medición en circuitos L, C y LC}\n  \\item Semana 4: Circuito RC en serie\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular resistencias equivalentes en serie, en paralelo y mixtas\n  \\item Identificar el valor nominal y la tolerancia de condensadores\n  \\item Aplicar Q = CV y la relación v = L di/dt (semanas 1 y 2)\n  \\item Convertir entre pF, nF, µF y entre µH, mH y H\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
     },
     {
      "titulo": "Resultados de aprendizaje",

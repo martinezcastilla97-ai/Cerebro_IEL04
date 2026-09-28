@@ -1,15 +1,15 @@
 {
  "formato": 2,
- "temario_hash": "586797ffaef99ab2",
+ "temario_hash": "61d3a91769c32fb1",
  "modelo": "gpt-4o",
  "fecha": "2026-09-28",
  "partes": {
   "apertura": {
-   "huella": "0be20b6bf8da9abe",
+   "huella": "504208c08bbe122e",
    "diapositivas": [
     {
      "titulo": "Punto de partida de la sesión",
-     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 10: evaluación\n  \\item \\textbf{Semana 11: Circuito RLC en serie: análisis y Ley de Voltajes de Kirchhoff}\n  \\item Semana 12: Circuito RLC en paralelo: análisis y Ley de Corrientes de Kirchhoff\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular la reactancia capacitiva y la inductiva a una frecuencia dada\n  \\item Aplicar la ley de voltajes de Kirchhoff con fasores en circuitos RC\n  \\item Calcular la frecuencia de resonancia de un circuito LC (semana 3)\n  \\item Calcular potencia activa, reactiva y aparente y factor de potencia\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 10: evaluación\n  \\item \\textbf{Semana 11: Circuito RLC en serie: tipos e identificación de resistores, inductores y condensadores, análisis y Ley de Voltajes de Kirchhoff}\n  \\item Semana 12: Circuito RLC en paralelo\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular la reactancia capacitiva y la inductiva a una frecuencia dada\n  \\item Aplicar la ley de voltajes de Kirchhoff con fasores en circuitos RC\n  \\item Calcular la frecuencia de resonancia de un circuito LC (semana 3)\n  \\item Calcular potencia activa, reactiva y aparente y factor de potencia\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
     },
     {
      "titulo": "Resultados de aprendizaje",

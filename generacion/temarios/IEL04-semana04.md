@@ -19,7 +19,7 @@ fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana04.tex
 presentacion_avisos: []
-presentacion_temario_hash: 2354f91b19fcdfc5
+presentacion_temario_hash: 939b9b8956538ed6
 presentacion_fecha: '2026-09-28'
 presentacion_diseno: 5
 presentacion_diapositivas: 33
@@ -48,7 +48,7 @@ bibliografia_fecha: '2026-09-28'
 Las semanas 1 a 3 estudiaron el condensador y la bobina por separado y en asociaciones, y cerraron el RA1 con el circuito LC. Esta sesión abre el RA2 al combinar el condensador con el resistor en serie, la configuración más usada de la electrónica y de los sistemas eléctricos: temporizadores, filtros, redes de protección y circuitos de disparo. Se estudia primero la respuesta en corriente continua (carga y constante de tiempo) y luego la respuesta sinusoidal (reactancia, impedancia y ángulo de fase), con la ley de voltajes de Kirchhoff aplicada a fasores. La semana 5 es de examen; al volver, la semana 6 trata el circuito RC en paralelo y la ley de corrientes de Kirchhoff.
 
 1. Semana 3: Condensadores y bobinas en serie, en paralelo y mixto: cálculo y medición en circuitos L, C y LC
-2. **→ Presente sesión (semana 4):** Circuito RC en serie: análisis y Ley de Voltajes de Kirchhoff
+2. **→ Presente sesión (semana 4):** Circuito RC en serie: tipos e identificación de resistores y condensadores, análisis y Ley de Voltajes de Kirchhoff
 3. Semana 5: evaluación (semana de examen)
 
 ### 1.2 Prerrequisitos

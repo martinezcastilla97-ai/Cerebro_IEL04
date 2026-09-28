@@ -1,15 +1,15 @@
 {
  "formato": 2,
- "temario_hash": "2354f91b19fcdfc5",
+ "temario_hash": "939b9b8956538ed6",
  "modelo": "gpt-4o",
  "fecha": "2026-09-28",
  "partes": {
   "apertura": {
-   "huella": "9d22a6256b04ae5d",
+   "huella": "801d5284b6c7919b",
    "diapositivas": [
     {
      "titulo": "Punto de partida de la sesión",
-     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 3: Condensadores y bobinas en serie, en paralelo y mixto\n  \\item \\textbf{Semana 4: Circuito RC en serie: análisis y Ley de Voltajes de Kirchhoff}\n  \\item Semana 5: evaluación\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Aplicar la ley de Ohm y la ley de voltajes de Kirchhoff a circuitos\n  \\item Calcular capacitancias equivalentes y aplicar Q = CV (semanas 1 y 3)\n  \\item Leer el código de colores de resistores y el marcado de condensadores\n  \\item Operar con funciones exponenciales, raíz cuadrada y tangente inversa\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 3: Condensadores y bobinas en serie, en paralelo y mixto\n  \\item \\textbf{Semana 4: Circuito RC en serie: tipos e identificación de resistores y condensadores, análisis y Ley de Voltajes de Kirchhoff}\n  \\item Semana 5: evaluación\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Aplicar la ley de Ohm y la ley de voltajes de Kirchhoff a circuitos\n  \\item Calcular capacitancias equivalentes y aplicar Q = CV (semanas 1 y 3)\n  \\item Leer el código de colores de resistores y el marcado de condensadores\n  \\item Operar con funciones exponenciales, raíz cuadrada y tangente inversa\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
     },
     {
      "titulo": "Resultados de aprendizaje",

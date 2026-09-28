@@ -166,3 +166,16 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - IEL04-RA4: revisar — Los temas cubren el análisis y las leyes de Kirchhoff del RLC en serie y en paralelo y la medición (semana 13), pero ninguno nombra el criterio «Identificar los tipos de resistores, inductores y capacitores», que debería aparecer, por ejemplo, en la semana 11.
 - juez: el asistente de la sesión (sin proveedor `CEREBRO_*`), solo con el RA y los temas del planeador, como pide el protocolo
 - el `revisar` de RA2, RA3 y RA4 está solo en el texto del planeador: los temarios de las semanas 4, 8 y 11 sí desarrollan la identificación de tipos en su bloque 2 (4.2.1). Para cerrarlo basta con nombrar la identificación en el tema de esas semanas del planeador (editándolo a mano, sin `--forzar`, que regeneraría todos los temas)
+
+## [2026-09-28] edición | Temas del planeador de IEL04 (semanas 4, 8 y 11)
+- Actualizadas: `generacion/planeador/IEL04-planeador.md` (frontmatter y tabla), a mano y sin `--forzar`: los temas de las semanas 4, 8 y 11 nombran ahora la identificación de tipos («tipos e identificación de resistores y condensadores», «… de resistores e inductores», «… de resistores, inductores y condensadores»), que ya desarrollaba el bloque 2 de esos temarios
+- Temarios: la lista de continuidad curricular (1.1, copiada del planeador) se actualizó en las semanas 3, 4, 7, 8, 9, 11 y 12; el resto del texto no cambia
+- Presentaciones: rehechas las 11 (la apertura muestra ahora el tema completo de la semana y el de las vecinas acortado; el cierre, la próxima sesión del planeador) y recompiladas con `presentaciones.compilar`, sin errores
+
+## [2026-09-28] /correlate-planeador IEL04
+- IEL04-RA1: cubierto — Las semanas 1 a 3 cubren los ocho contenidos conceptuales (estructura, comportamiento interno, identificación, tipos y asociaciones de condensadores y bobinas) y los tres criterios: identificación en las semanas 1 y 2 y medición en circuitos L, C y LC en la semana 3.
+- IEL04-RA2: cubierto — Los temas cubren los cuatro contenidos conceptuales (RC en serie con LVK en la semana 4, RC en paralelo con LCK en la 6) y los tres criterios: identificación de resistores y condensadores en la semana 4 y medición en circuitos resistivos, capacitivos y RC en la 7.
+- IEL04-RA3: cubierto — Los temas cubren los cuatro contenidos conceptuales (RL en serie y en paralelo con LVK y LCK en la semana 8) y los tres criterios: identificación de resistores e inductores en la semana 8 y medición en circuitos resistivos, inductivos y RL en la 9.
+- IEL04-RA4: cubierto — Los temas cubren los cuatro contenidos conceptuales (RLC en serie con LVK en la semana 11, RLC en paralelo con LCK en la 12) y los tres criterios: identificación de resistores, inductores y condensadores en la semana 11 y medición en circuitos RLC en la 13.
+- segunda corrida, tras editar los temas de las semanas 4, 8 y 11: los 4 RA quedan `cubierto` (RA1 0.9; RA2, RA3 y RA4 0.85); juez: el asistente de la sesión, solo con el RA y los temas
+

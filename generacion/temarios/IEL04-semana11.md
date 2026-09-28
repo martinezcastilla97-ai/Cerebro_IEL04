@@ -19,7 +19,7 @@ fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana11.tex
 presentacion_avisos: []
-presentacion_temario_hash: 586797ffaef99ab2
+presentacion_temario_hash: 61d3a91769c32fb1
 presentacion_fecha: '2026-09-28'
 presentacion_diseno: 5
 presentacion_diapositivas: 30
@@ -48,7 +48,7 @@ bibliografia_fecha: '2026-09-28'
 Las semanas 4 a 9 analizaron por separado los circuitos RC y RL, y la semana 3 presentó el circuito LC y su frecuencia de resonancia. Tras el examen de la semana 10, esta sesión abre el RA4 reuniendo los tres elementos en serie: la reactancia inductiva y la capacitiva se oponen, la reactancia total es su diferencia y, a la frecuencia de resonancia, se anulan. La ley de voltajes de Kirchhoff sigue valiendo con fasores, pero aparece un hecho nuevo: las tensiones en la bobina y en el condensador pueden superar la de la fuente. La semana 12 trata el circuito RLC en paralelo y la ley de corrientes de Kirchhoff, y la semana 13 cierra el curso con el cálculo y la medición de parámetros de circuitos RLC.
 
 1. Semana 10: evaluación (semana de examen)
-2. **→ Presente sesión (semana 11):** Circuito RLC en serie: análisis y Ley de Voltajes de Kirchhoff
+2. **→ Presente sesión (semana 11):** Circuito RLC en serie: tipos e identificación de resistores, inductores y condensadores, análisis y Ley de Voltajes de Kirchhoff
 3. Semana 12: Circuito RLC en paralelo: análisis y Ley de Corrientes de Kirchhoff
 
 ### 1.2 Prerrequisitos

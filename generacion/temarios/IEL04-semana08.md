@@ -19,7 +19,7 @@ fecha_actualizacion: '2026-09-28'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana08.tex
 presentacion_avisos: []
-presentacion_temario_hash: 14b04972e8aed069
+presentacion_temario_hash: efd5d71cab75822d
 presentacion_fecha: '2026-09-28'
 presentacion_diseno: 5
 presentacion_diapositivas: 33
@@ -48,7 +48,7 @@ bibliografia_fecha: '2026-09-28'
 Las semanas 4 a 7 desarrollaron el RA2 con los circuitos RC y cerraron con un método general de cálculo y medición. Esta sesión abre el RA3 sustituyendo el condensador por la bobina de la semana 2: el método es el mismo, pero la reactancia inductiva crece con la frecuencia, la tensión de la bobina adelanta a su corriente y la resistencia de devanado, que ya se midió en el kit, deja de ser despreciable. Se tratan en una sola sesión el circuito RL en serie, con la ley de voltajes de Kirchhoff, y el circuito RL en paralelo, con la ley de corrientes. La semana 9 completa el RA3 con el cálculo y la medición de parámetros según el conexionado, antes del examen de la semana 10.
 
 1. Semana 7: Cálculo y medición de parámetros en circuitos RC serie y paralelo: unidades, simbología y nomenclatura
-2. **→ Presente sesión (semana 8):** Circuitos RL en serie y en paralelo: análisis con las leyes de voltajes y corrientes de Kirchhoff
+2. **→ Presente sesión (semana 8):** Circuitos RL en serie y en paralelo: tipos e identificación de resistores e inductores, análisis con las leyes de voltajes y corrientes de Kirchhoff
 3. Semana 9: Cálculo y medición de parámetros en circuitos RL serie y paralelo según el tipo de conexionado
 
 ### 1.2 Prerrequisitos

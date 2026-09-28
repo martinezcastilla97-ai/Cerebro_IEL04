@@ -22,7 +22,7 @@ semanas:
 - semana: 4
   tipo: clase
   ra: IEL04-RA2
-  tema: 'Circuito RC en serie: análisis y Ley de Voltajes de Kirchhoff'
+  tema: 'Circuito RC en serie: tipos e identificación de resistores y condensadores, análisis y Ley de Voltajes de Kirchhoff'
 - semana: 5
   tipo: examen
   ra: null
@@ -38,7 +38,7 @@ semanas:
 - semana: 8
   tipo: clase
   ra: IEL04-RA3
-  tema: 'Circuitos RL en serie y en paralelo: análisis con las leyes de voltajes y corrientes de Kirchhoff'
+  tema: 'Circuitos RL en serie y en paralelo: tipos e identificación de resistores e inductores, análisis con las leyes de voltajes y corrientes de Kirchhoff'
 - semana: 9
   tipo: clase
   ra: IEL04-RA3
@@ -50,7 +50,7 @@ semanas:
 - semana: 11
   tipo: clase
   ra: IEL04-RA4
-  tema: 'Circuito RLC en serie: análisis y Ley de Voltajes de Kirchhoff'
+  tema: 'Circuito RLC en serie: tipos e identificación de resistores, inductores y condensadores, análisis y Ley de Voltajes de Kirchhoff'
 - semana: 12
   tipo: clase
   ra: IEL04-RA4
@@ -78,14 +78,14 @@ fecha_actualizacion: '2026-09-28'
 | 1 | clase | [[IEL04-RA1]] | Condensadores: estructura, comportamiento interno, identificación y tipos |
 | 2 | clase | [[IEL04-RA1]] | Bobinas o inductores: estructura, comportamiento interno, identificación y tipos |
 | 3 | clase | [[IEL04-RA1]] | Condensadores y bobinas en serie, en paralelo y mixto: cálculo y medición en circuitos L, C y LC |
-| 4 | clase | [[IEL04-RA2]] | Circuito RC en serie: análisis y Ley de Voltajes de Kirchhoff |
+| 4 | clase | [[IEL04-RA2]] | Circuito RC en serie: tipos e identificación de resistores y condensadores, análisis y Ley de Voltajes de Kirchhoff |
 | 5 | examen | — | Evaluación de aplicación práctica |
 | 6 | clase | [[IEL04-RA2]] | Circuito RC en paralelo: análisis y Ley de Corrientes de Kirchhoff |
 | 7 | clase | [[IEL04-RA2]] | Cálculo y medición de parámetros en circuitos RC serie y paralelo: unidades, simbología y nomenclatura |
-| 8 | clase | [[IEL04-RA3]] | Circuitos RL en serie y en paralelo: análisis con las leyes de voltajes y corrientes de Kirchhoff |
+| 8 | clase | [[IEL04-RA3]] | Circuitos RL en serie y en paralelo: tipos e identificación de resistores e inductores, análisis con las leyes de voltajes y corrientes de Kirchhoff |
 | 9 | clase | [[IEL04-RA3]] | Cálculo y medición de parámetros en circuitos RL serie y paralelo según el tipo de conexionado |
 | 10 | examen | — | Evaluación de aplicación práctica |
-| 11 | clase | [[IEL04-RA4]] | Circuito RLC en serie: análisis y Ley de Voltajes de Kirchhoff |
+| 11 | clase | [[IEL04-RA4]] | Circuito RLC en serie: tipos e identificación de resistores, inductores y condensadores, análisis y Ley de Voltajes de Kirchhoff |
 | 12 | clase | [[IEL04-RA4]] | Circuito RLC en paralelo: análisis y Ley de Corrientes de Kirchhoff |
 | 13 | clase | [[IEL04-RA4]] | Cálculo y medición de parámetros en circuitos RLC serie y paralelo: unidades, simbología y nomenclatura |
 | 14 | examen | — | Evaluación de aplicación práctica |
