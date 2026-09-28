@@ -12,7 +12,7 @@ nombre: Circuitos Eléctricos I
 programa:
 - '[[Tecnología en Gestión de Sistemas Eléctricos]]'
 tipo_modulo: ESPECÍFICO
-had_totales: 26
+had_totales: 52
 hp_totales: 26
 hti_totales: 65
 creditos: 2
@@ -54,12 +54,14 @@ Este módulo ofrece al estudiante las bases conceptuales para analizar circuitos
 
 ## Créditos académicos
 
-| HAD | HP | HTI | Total horas | Créditos |
+| HAD (incluye HP) | HP | HTI | Total horas | Créditos |
 |---|---|---|---|---|
-| 26 | 26 | 65 | 117 | 2 |
+| 52 | 26 | 65 | 117 | 2 |
 
-> [!warning] Horas por revisar
-> El documento declara un total de 117 horas = HAD 26 + HP 26 + HTI 65, es decir, trata HP como horas **aparte** de HAD. La convención de este vault es que `had_totales` ya incluye las HP. Se ingirieron los valores tal cual (26 / 26 / 65); ver `wiki/log.md`.
+> [!note] Horas presenciales (confirmado por el docente, 2026-09-28)
+> El documento lista HAD 26 y HP 26 por separado (26 + 26 + 65 = 117). El docente confirmó que cada semana hay una sesión de 2 h de teoría y una de 2 h de práctica, así que las horas presenciales son 52. Como en este vault `had_totales` ya incluye las HP, se registra `had_totales: 52` (26 teóricas + 26 prácticas).
+>
+> Queda el aviso L13 de LINT: 52 + 65 = 117 ≠ 2 créditos × 48 = 96. Es una inconsistencia del propio documento entre horas y créditos, no de la ingesta.
 
 ## Resultados de aprendizaje
 

@@ -31,3 +31,7 @@ Discrepancias y decisiones para revisar:
 - Tipo de módulo leído como ESPECÍFICO (la "X" sigue a la etiqueta, igual que en PREGRADO y en las casillas de estrategias). La fila Área básica / Profesional no tiene marca legible.
 
 Siguiente: correr LINT (hecho: 0 errores, 1 aviso L13). CORRELATE cuando haya un manual de banco ingerido.
+
+## [2026-09-28] corrección | IEL04: horas presenciales confirmadas por el docente
+
+El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de 2 h de práctica. Se cambió `had_totales` de 26 a 52 en [[IEL04 - Circuitos Eléctricos I]] (26 teóricas + 26 prácticas; en el vault `had_totales` incluye las HP). `hp_totales` sigue en 26 y `tipo_abordaje` en teórico-práctica. Efecto en PLANEADOR: 52/14 ≥ 3 → sesiones de 4 h. LINT L13 sigue avisando (52 + 65 = 117 ≠ 2 × 48 = 96): inconsistencia horas/créditos del propio documento.

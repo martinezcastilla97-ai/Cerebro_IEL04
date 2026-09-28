@@ -46,7 +46,7 @@ Bancos de entrenamiento físico y sus manuales. A diferencia de las demás fuent
 
 | Asignatura | Programa | Abordaje | HAD / HP / HTI | Créditos | RA | Competencias |
 |---|---|---|---|---|---|---|
-| [[IEL04 - Circuitos Eléctricos I]] | [[Tecnología en Gestión de Sistemas Eléctricos]] | teórico-práctica | 26 / 26 / 65 | 2 | [[IEL04-RA1]] · [[IEL04-RA2]] · [[IEL04-RA3]] · [[IEL04-RA4]] | [[UC2]] |
+| [[IEL04 - Circuitos Eléctricos I]] | [[Tecnología en Gestión de Sistemas Eléctricos]] | teórico-práctica | 52 / 26 / 65 | 2 | [[IEL04-RA1]] · [[IEL04-RA2]] · [[IEL04-RA3]] · [[IEL04-RA4]] | [[UC2]] |
 
 ### Resultados de aprendizaje
 
