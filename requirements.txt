@@ -1,0 +1,7 @@
+# Dependencias de src/ (Python 3.10 o superior). Instalar con:  pip install -r requirements.txt
+# Probado con: pydantic 2.13, pyyaml 6.0, openai 3.16, lancedb 0.39, matplotlib 3.11.
+pydantic>=2.13,<3
+pyyaml>=6.0,<7
+openai>=3.16,<4        # salida estructurada (chat.completions.parse) y embeddings
+lancedb>=0.39,<1       # solo para `correlate.py --indexar` y la busqueda de candidatos
+matplotlib>=3.8,<4     # las graficas y los diagramas de los temarios (figuras.py)
