@@ -100,6 +100,41 @@ def probar() -> None:
     print("5. las paginas sanas no generan falsos positivos -- OK")
 
 
+def probar_guias() -> None:
+    """L17: una semana sin practica de un manual pero con criterios practicos y bibliografia se cuenta «sin guía», salvo que el docente
+    haya revisado la correlacion del RA sin asignar practica; y una guia de otro formato dice cuanto cuesta rehacerla."""
+    import json
+
+    import guia_laboratorio
+    import temario_latex
+
+    temario = Path("generacion/temarios/TPR01-semana01.md")
+    pagina(temario.as_posix(), {"tipo": "temario", "asignatura": f"[[{_fixtures.TPR01}]]", "resultado_aprendizaje": "[[TPR01-RA1]]", "semana": 1})
+
+    def l17() -> list[str]:
+        return [h.mensaje for h in lint.revisar() if h.regla == "L17"]
+
+    assert any("se propondría a partir de la bibliografía" in m for m in l17()), l17()          # el RA1 tiene un CE practico y libro-a
+    ruta_ra = Path("wiki/resultados-aprendizaje/TPR01-RA1.md")
+    fm_ra, cuerpo_ra = vault.leer_pagina(ruta_ra)
+    vault.escribir_pagina(ruta_ra, {**fm_ra, "correlacion_revisado_por_docente": True}, cuerpo_ra)
+    assert not l17(), "el docente revisó la correlación y no asignó práctica: no se cuenta «sin guía»"
+
+    guia = guia_laboratorio.ruta_guia("TPR01", 1)
+    fm_guia = {"tipo": "guia_laboratorio", "semana": 1, "temario": "[[TPR01-semana01]]", "formato": 1,
+               "temario_hash": temario_latex.hash_cuerpo(vault.leer_pagina(temario)[1]), "archivo_tex": guia.with_suffix(".tex").as_posix()}
+    pagina(guia.as_posix(), fm_guia)
+    guia.with_suffix(".tex").write_text("%", encoding="utf-8")
+    contenido = guia_laboratorio.ruta_contenido(guia)
+    contenido.write_text(json.dumps({"formato": 1, "huella": "x", "guia": {}}), encoding="utf-8")
+    otro = [m for m in l17() if "guía de otro formato" in m]
+    assert len(otro) == 1 and "1 llamada al modelo" in otro[0] and "del 1 al 2: no tenía diagramas de flujo" in otro[0], otro
+    contenido.write_text(json.dumps({"formato": guia_laboratorio.FORMATO, "huella": "x", "guia": {}}), encoding="utf-8")
+    assert any("guía de otro formato" in m and "sin LLM" in m for m in l17()), l17()
+    print("6. L17: una semana con criterios prácticos y bibliografía, sin práctica de un manual, se cuenta «sin guía» salvo que el docente haya "
+          "revisado la correlación sin asignar práctica; una guía de otro formato dice si rehacerla cuesta 1 llamada (del 1 al 2) o no -- OK")
+
+
 def main() -> None:
     original = Path.cwd()
     with tempfile.TemporaryDirectory() as tmp:
@@ -107,6 +142,13 @@ def main() -> None:
         os.chdir(tmp)
         try:
             probar()
+        finally:
+            os.chdir(original)
+    with tempfile.TemporaryDirectory() as tmp:
+        _fixtures.armar_vault_muestra(Path(tmp))
+        os.chdir(tmp)
+        try:
+            probar_guias()
         finally:
             os.chdir(original)
     print("TODO OK -- lint.py detecta los defectos y no da falsos positivos en un vault sano.")

@@ -697,10 +697,9 @@ _TEXTO_LATEX = """
     cmidrule addlinespace multicolumn multirow arraybackslash tabularnewline ldots dots textbullet textendash textemdash
     textquotedblleft textquotedblright textquoteleft textquoteright guillemotleft guillemotright textquestiondown textexclamdown
     textperiodcentered textdegree textpm texttimes textdiv textmu textonehalf textcopyright textregistered texttrademark texteuro
-    textlnot textordfeminine textordmasculine texttwosuperior textthreesuperior textonesuperior textonequarter textthreequarters
-    textperthousand
     dag ddag textasciitilde textasciicircum textbackslash textunderscore textbar textless textgreater checkmark alert structure
-    column tcblower hd thc cod
+    column tcblower hd thc cod textordfeminine textordmasculine textperthousand texttwosuperior textthreesuperior
+    textonesuperior textonequarter textthreequarters textlnot elementoTemario
 """
 _TIKZ = """
     tikz node draw fill filldraw path coordinate foreach clip shade shadedraw useasboundingbox pic pgfmathsetmacro
@@ -915,6 +914,8 @@ CLAVES_PERMITIDAS = _lista_de_claves("""
     thick, very thick, ultra thick, solid, dashed, densely dashed, loosely dashed, dotted, densely dotted, loosely dotted,
     dash pattern, dash dot, line cap, line join, rounded corners, sharp corners, double, double distance, shorten >, shorten <,
     bloque, box, bB, bO, bG, bN, flecha, arr, nodo, term, cable, dec, tag,
+    iubejes, dcaja, destado, ddecision, dterminal, dflecha, drotulo, loop above, loop below, loop left, loop right,
+    major x grid style, major y grid style,
     anchor, above, below, left, right, above left, above right, below left, below right, centered, at, pos, midway, near start,
     near end, very near start, very near end, at start, at end, sloped, auto, swap, node distance, on grid, xshift, yshift, shift,
     x, y, scale, xscale, yscale, rotate, transform shape, remember picture, overlay, baseline, name, label, pin,
@@ -959,14 +960,15 @@ CLAVES_PERMITIDAS = _lista_de_claves("""
 _CLAVES_ANIDADAS = _lista_de_claves("""
     decoration, legend style, label style, tick label style, ticklabel style, xticklabel style, yticklabel style,
     x tick label style, y tick label style, xlabel style, ylabel style, title style, axis line style, tick style, grid style,
-    major grid style, minor grid style, nodes near coords style, mark options, extra tick style, legend image post style, nodes,
+    major grid style, minor grid style, major x grid style, major y grid style, nodes near coords style, mark options, extra tick style, legend image post style, nodes,
     postaction, preaction
 """)
 _CLAVES_DE_COLOR = _lista_de_claves("""
     color, draw, fill, text, bloque, nodo, term, cable, tag, colback, colframe, coltext, coltitle, colbacktitle
 """)
 _COLORES_BASE = frozenset("""
-    iubwhite iubnavy iubyellow iubblue iuborange iubgreen white black red green blue cyan magenta yellow gray darkgray lightgray
+    iubwhite iubnavy iubyellow iubblue iuborange iubgreen iubpurple iubgris iubgrisoscuro iubfondoazul iubfondonaranja iubfondoverde
+    iubfondogris white black red green blue cyan magenta yellow gray darkgray lightgray
     brown lime olive orange pink purple teal violet none
 """.split())
 _PALABRAS_DE_FLECHA = frozenset("""
@@ -1227,7 +1229,9 @@ def verificar_cuerpo(texto: str, titulo: bool = False) -> tuple[str, list[str]]:
         problemas.append("un # sin escapar: escribe \\#")
     if len(texto) > MAX_CUERPO:
         problemas.append(f"la diapositiva tiene {len(texto)} caracteres de LaTeX: el máximo es {MAX_CUERPO} (divídela en dos)")
-    salida = re.sub("\ue020(\\d+)\ue021", lambda m: "\n" + codigos[int(m.group(1))] + "\n", texto)
+    # cada codebox vuelve a su lugar en su propia linea; el salto que ya tenia antes o despues se reutiliza (no se suma otro): asi
+    # normalizar un cuerpo ya normalizado lo deja igual, y un plan guardado no crece en cada corrida
+    salida = re.sub("\n?\ue020(\\d+)\ue021\n?", lambda m: "\n" + codigos[int(m.group(1))] + "\n", texto)
     return salida.strip(), problemas
 
 
@@ -1239,7 +1243,7 @@ def verificar_cuerpo(texto: str, titulo: bool = False) -> tuple[str, list[str]]:
 # con ellos no se escribe ni se compila. Los demas (una llave suelta, un caracter sin soporte) solo impiden compilar o se ven mal.
 PROBLEMAS_GRAVES = ("primitivas de TeX peligrosas", "comandos o entornos no admitidos", "notación ^^", "un bloque de código contiene",
                     "lee o escribe archivos", "leen archivos o llaman a programas", "opciones no admitidas")
-_COMANDOS_DEL_DISENO = frozenset({"bloque", "section"})      # los que el diseno pone entre diapositivas (definidos en el preambulo)
+_COMANDOS_DEL_DISENO = frozenset({"bloque", "section", "logoIUBsimbolo", "logoIUBhorizontal", "logoIUBamarillo", "fuentetitulo"})      # los que el diseno pone entre diapositivas (definidos en el preambulo)
 
 
 def graves(problemas: list[str]) -> list[str]:

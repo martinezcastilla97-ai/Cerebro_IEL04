@@ -1,7 +1,9 @@
 """TEMARIO -- una sesion de clase por semana de clase (nunca por semana de examen).
 
 Lee el planeador (generacion/planeador/{codigo}-planeador.md), el RA que le toca a la semana, sus fuentes cargadas y las
-competencias de la asignatura, y escribe la sesion completa en generacion/temarios/{codigo}-semanaNN.md.
+competencias de la asignatura, y escribe la sesion completa en generacion/temarios/{codigo}-semanaNN.md y, en paralelo, la
+misma sesion en LaTeX en generacion/temarios/{codigo}-semanaNN.tex (temario_latex.py: las mismas piezas, con las tablas, las
+graficas en pgfplots y los diagramas en TikZ como codigo; sin llamadas extra al modelo).
 
 La sesion sigue la estructura de una guia de sesion universitaria (docs: CLAUDE.md, "Paginas de temario"):
 
@@ -29,12 +31,14 @@ Uso (desde la raiz del vault):
     python src/temario.py ABC01 --semana 3
     python src/temario.py ABC01 --todas          # todas las semanas de clase que aun no tengan temario
     python src/temario.py ABC01 --semana 3 --forzar
+    python src/temario.py ABC01 --semana 3 --compilar   # ademas compila el .tex con pdfLaTeX y anota errores o desbordes
 """
 
 from __future__ import annotations
 
 import argparse
 import re
+import shutil
 import sys
 from pathlib import Path
 from typing import Callable
@@ -42,6 +46,7 @@ from typing import Callable
 import correlate
 import figuras
 import pasajes
+import temario_latex as tl
 import vault
 from schema_extraccion import Asignatura, Practica, ResultadoAprendizajeModulo, TipoAbordaje
 from schema_planeador import SEMANAS_TOTALES, corte_evaluativo, horas_hti_semana, minutos_por_bloque
@@ -397,8 +402,10 @@ def _alineacion(ra: ResultadoAprendizajeModulo, competencias: list[tuple[str, st
 def renderizar_temario(nombre_pagina: str, codigo: str, asignatura: Asignatura, fm_asignatura: dict, ra: ResultadoAprendizajeModulo,
                        competencias: list[tuple[str, str]], semana: int, filas_plan: dict[int, dict], horas_sesion: int,
                        plan: PlanSesion, unidades: list[tuple[UnidadPlan, SeccionRedactada]], cierre: CierreSesion,
-                       enlace_practica: str | None, pasajes_usados: int) -> tuple[dict, str, list[tuple[str, object]]]:
-    """(frontmatter, cuerpo, figuras por dibujar) de la sesion. Los minutos del indice y toda la numeracion salen de aqui."""
+                       enlace_practica: str | None, pasajes_usados: int) -> tuple[dict, str, list[tuple[str, object]], tl.Sesion]:
+    """(frontmatter, cuerpo, figuras por dibujar, sesion para el .tex) de la sesion. Los minutos del indice y toda la numeracion
+    salen de aqui; la sesion LaTeX (temario_latex.Sesion) se arma en paralelo con el Markdown, con las mismas piezas y en el
+    mismo orden, asi el .tex lleva exactamente lo que lleva el .md."""
     hoy = vault.hoy()
     hti_semana = horas_hti_semana(asignatura)
     minutos = minutos_por_bloque([u.peso for u, _ in unidades], horas_sesion)
@@ -423,14 +430,24 @@ def renderizar_temario(nombre_pagina: str, codigo: str, asignatura: Asignatura, 
         cabecera.append(f"> **Plataforma de referencia:** {plan.plataforma_referencia.strip()}")
     cabecera.append(f"> **Semana:** {semana} de {SEMANAS_TOTALES} (corte evaluativo {corte_evaluativo(semana)}) · "
                     f"**Resultado de aprendizaje del módulo:** [[{ra.codigo}]] · **Trabajo independiente:** {hti_semana} h/semana")
+    cabecera_tex = [(m.group(1), m.group(2)) for linea in cabecera[:-1] if (m := re.match(r"> \*\*(.+?):\*\* (.*)", linea))]
+    cabecera_tex += [("Semana", f"{semana} de {SEMANAS_TOTALES} (corte evaluativo {corte_evaluativo(semana)})"),
+                     ("Resultado de aprendizaje del módulo", ra.codigo), ("Trabajo independiente", f"{hti_semana} h/semana")]
 
     # --- 1. metadatos ---
     anterior, presente, siguiente = (_sesion_vecina(filas_plan, semana - 1) if semana > 1 else None,
                                      f"**→ Presente sesión (semana {semana}):** {filas_plan.get(semana, {}).get('tema') or ra.enunciado}",
                                      _sesion_vecina(filas_plan, semana + 1) if semana < SEMANAS_TOTALES else None)
-    secuencia = _lista_numerada([x[0].upper() + x[1:] if x else x for x in (anterior, presente, siguiente) if x])
+    vecinas = [x[0].upper() + x[1:] if x else x for x in (anterior, presente, siguiente) if x]
+    secuencia = _lista_numerada(vecinas)
     metadatos = (f"## 1. Metadatos de la Sesión\n\n### 1.1 Continuidad curricular\n\n{' '.join(plan.continuidad.split())}\n\n{secuencia}\n\n"
                  f"### 1.2 Prerrequisitos\n\n" + "\n".join(f"- {p.strip()}" for p in plan.prerrequisitos))
+
+    piezas: list = [
+        tl.Seccion(1, "Metadatos de la Sesión"), tl.Seccion(2, "Continuidad curricular"), tl.Texto(plan.continuidad),
+        tl.Lista([v.replace("**→ ", "**") for v in vecinas], numerada=True),
+        tl.Seccion(2, "Prerrequisitos"), tl.Lista([p.strip() for p in plan.prerrequisitos]),
+    ]
 
     # --- 2. resultados de aprendizaje ---
     filas_resultados = [
@@ -440,28 +457,49 @@ def renderizar_temario(nombre_pagina: str, codigo: str, asignatura: Asignatura, 
     resultados = (f"## 2. Resultados de Aprendizaje\n\n{_alineacion(ra, competencias)}\n\n"
                   "Al finalizar la sesión, el estudiante estará en capacidad de lograr los siguientes resultados, que desarrollan el RA del módulo:\n\n"
                   + _tabla_md(["#", "Resultado de aprendizaje", "Nivel (Taxonomía de Bloom)"], filas_resultados))
+    alineacion: list = [tl.Texto(f"**RA {ra.codigo}:** {ra.enunciado}"), tl.Texto("**Criterios de evaluación:**"),
+                        tl.Lista([f"**{ce.codigo}** ({ce.categoria_accion.value}): {ce.texto}" for ce in ra.criterios_evaluacion]
+                                 or ["(sin criterios de evaluación cargados)"])]
+    if competencias:
+        alineacion += [tl.Texto("**Unidades de competencia de la asignatura:**"), tl.Lista([f"[[{n}]]: {t}" for n, t in competencias])]
+    piezas += [tl.Seccion(1, "Resultados de Aprendizaje"), tl.Caja("alineacion", alineacion),
+               tl.Texto("Al finalizar la sesión, el estudiante estará en capacidad de lograr los siguientes resultados, que desarrollan el RA del módulo:"),
+               tl.Tabla(["#", "Resultado de aprendizaje", "Nivel (Taxonomía de Bloom)"], filas_resultados,
+                        anchos=[r">{\raggedright\arraybackslash}p{1.1cm}", r">{\raggedright\arraybackslash}X", r">{\raggedright\arraybackslash}p{3.9cm}"])]
 
     # --- 3. indice temporizado ---
     filas_indice = [[str(k), u.descripcion.strip(), f"{m} min"] for k, ((u, _), m) in enumerate(zip(unidades, minutos), 1)]
     filas_indice.append(["", "**Total**", f"**{sum(minutos)} min**"])
     indice = f"## 3. Índice Temporizado ({horas_sesion * 60} minutos)\n\n" + _tabla_md(["Bloque", "Contenido", "Duración"], filas_indice)
+    piezas += [tl.Seccion(1, f"Índice Temporizado ({horas_sesion * 60} minutos)"),
+               tl.Tabla(["Bloque", "Contenido", "Duración"], filas_indice, total=True,
+                        anchos=[r">{\raggedright\arraybackslash}p{1.4cm}", r">{\raggedright\arraybackslash}X", r">{\raggedleft\arraybackslash}p{2.2cm}"])]
 
     # --- 4. desarrollo teorico ---
     desarrollo = [f"## 4. Desarrollo Teórico\n\n### 4.1 {TITULO_INTRODUCCION} (Bloque {k_intro})\n\n{_bloques_md(s_intro.bloques, numeracion, '4.1')}",
                   "### 4.2 Conceptos Clave"]
     for i, (k, u, s) in enumerate(conceptos, 1):
         desarrollo.append(f"#### 4.2.{i} {u.titulo.strip()} (Bloque {k})\n\n{_bloques_md(s.bloques, numeracion, f'4.2.{i}')}")
+    piezas += [tl.Seccion(1, "Desarrollo Teórico"), tl.Seccion(2, f"{TITULO_INTRODUCCION} (Bloque {k_intro})"), tl.Bloques(s_intro.bloques),
+               tl.Seccion(2, "Conceptos Clave")]
+    for k, u, s in conceptos:
+        piezas += [tl.Seccion(3, f"{u.titulo.strip()} (Bloque {k})"), tl.Bloques(s.bloques)]
 
     # --- 5..n. caso, analisis, implementacion, sintesis ---
     practica = f"**Práctica de referencia:** {enlace_practica}\n\n" if enlace_practica else ""
     secciones = [f"## 5. Caso de Estudio Aplicado: {u_caso.titulo.strip()} (Bloque {k_caso})\n\n{practica}{_bloques_md(s_caso.bloques, numeracion, '5')}"]
+    piezas += [tl.Seccion(1, f"Caso de Estudio Aplicado: {u_caso.titulo.strip()} (Bloque {k_caso})"),
+               *([tl.Texto(f"**Práctica de referencia:** {enlace_practica}")] if enlace_practica else []), tl.Bloques(s_caso.bloques)]
     numero = 5
     for k, u, s in extras:
         numero += 1
         secciones.append(f"## {numero}. {u.titulo.strip()} (Bloque {k})\n\n{_bloques_md(s.bloques, numeracion, str(numero))}")
+        piezas += [tl.Seccion(1, f"{u.titulo.strip()} (Bloque {k})"), tl.Bloques(s.bloques)]
     numero += 1
     secciones.append(f"## {numero}. Síntesis (Bloque {k_sintesis})\n\n{' '.join(cierre.sintesis.split())}\n\n### Componente Actitudinal\n\n"
                      f"> *{' '.join(cierre.reflexion_actitudinal.split())}*")
+    piezas += [tl.Seccion(1, f"Síntesis (Bloque {k_sintesis})"), tl.Texto(cierre.sintesis), tl.Seccion(2, "Componente Actitudinal", numerada=False),
+               tl.Caja("cita", [tl.Texto(cierre.reflexion_actitudinal)])]
 
     # --- bibliografia ---
     entradas = [f"[{i}] {_sin_numero(e)}" for i, e in enumerate(plan.referencias_cargadas, 1)]
@@ -474,6 +512,7 @@ def renderizar_temario(nombre_pagina: str, codigo: str, asignatura: Asignatura, 
             entradas.append(f"[{len(entradas) + 1}] {limpio} {MARCADOR}")
     numero += 1
     bibliografia = f"## {numero}. Bibliografía (Formato IEEE)\n\n" + ("\n\n".join(entradas) if entradas else "(la sesión no cita fuentes)")
+    piezas += [tl.Seccion(1, "Bibliografía (Formato IEEE)"), tl.Referencias(entradas) if entradas else tl.Texto("(la sesión no cita fuentes)")]
 
     todos_los_bloques = [b for _, s in unidades for b in s.bloques]
     cuenta = elementos_de(todos_los_bloques)
@@ -498,7 +537,9 @@ def renderizar_temario(nombre_pagina: str, codigo: str, asignatura: Asignatura, 
     separador = "\n\n---\n\n"
     cuerpo = ("\n\n# " + " ".join(plan.titulo.split()) + "\n\n" + "\n".join(cabecera) + separador + metadatos + separador + resultados + separador + indice
               + separador + "\n\n".join(desarrollo) + separador + separador.join(secciones) + separador + bibliografia + "\n")
-    return frontmatter, cuerpo, numeracion.por_dibujar
+    sesion_tex = tl.Sesion(codigo=codigo, asignatura=asignatura.nombre, titulo=plan.titulo, semana=semana, total_semanas=SEMANAS_TOTALES,
+                           cabecera=cabecera_tex, piezas=piezas)
+    return frontmatter, cuerpo, numeracion.por_dibujar, sesion_tex
 
 
 # ---------------------------------------------------------------------------
@@ -545,7 +586,10 @@ def _dibujar_figuras(por_dibujar: list[tuple[str, object]], codigo: str, semana:
     return hechas
 
 
-def generar_temario(codigo: str, semana: int, forzar: bool = False, progreso: Callable[[str], None] | None = None) -> Path:
+def generar_temario(codigo: str, semana: int, forzar: bool = False, progreso: Callable[[str], None] | None = None,
+                    compilar: bool = False) -> Path:
+    """Redacta la sesion y escribe el .md y, en paralelo, el .tex. Con `compilar`, ademas compila el .tex con pdfLaTeX (y deja el
+    PDF al lado): cada error o linea que se sale queda en `latex_avisos` y el temario en `latex_estado: revisar`."""
     def avisar(mensaje: str) -> None:
         if progreso:
             progreso(f"  [{codigo} semana {semana}] {mensaje}")
@@ -567,6 +611,8 @@ def generar_temario(codigo: str, semana: int, forzar: bool = False, progreso: Ca
         raise FileExistsError(f"{destino} ya existe; usa --forzar para sobrescribirlo")
     if not figuras.disponible():
         raise RuntimeError("Falta matplotlib, que dibuja las gráficas y los diagramas del temario: `pip install -r requirements.txt`")
+    if compilar and not shutil.which("pdflatex"):
+        raise RuntimeError("--compilar necesita pdflatex (MiKTeX o TeX Live): instálalo, o genera sin --compilar y sube el .tex a Overleaf")
 
     ra, fm_ra, _ = vault.cargar_ra(vault.RESULTADOS / f"{fila['ra']}.md")
     tema = fila.get("tema") or ra.enunciado
@@ -646,22 +692,50 @@ def generar_temario(codigo: str, semana: int, forzar: bool = False, progreso: Ca
 
     # --- escritura ---
     todas = [*redactadas, (sintesis, SeccionRedactada(bloques=[]))]
-    frontmatter, cuerpo, por_dibujar = renderizar_temario(
+    frontmatter, cuerpo, por_dibujar, sesion_tex = renderizar_temario(
         nombre_pagina, codigo, asignatura, fm_asignatura, ra, competencias, semana, filas, horas_sesion, plan, todas, cierre,
         enlace_practica, len(usados))
+    tex, avisos_tex = tl.documento(sesion_tex)          # antes de dibujar y escribir: si algo falla, no queda nada a medias
     avisar(f"dibujando {len(por_dibujar)} figuras")
     _dibujar_figuras(por_dibujar, codigo, semana)
-    vault.escribir_pagina(destino, frontmatter, cuerpo)
+    destino_tex = destino.with_suffix(".tex")
+    frontmatter.update({"latex_estado": "revisar" if avisos_tex else "generado", "latex_archivo": destino_tex.as_posix(),
+                        "latex_avisos": avisos_tex, "latex_temario_hash": tl.hash_cuerpo(cuerpo), "latex_formato": tl.VERSION})
+    destino_tex.parent.mkdir(parents=True, exist_ok=True)
+    destino_tex.write_text(tex, encoding="utf-8", newline="\n")
+    destino_tex.with_suffix(".pdf").unlink(missing_ok=True)        # un PDF de antes ya no es el de este .tex
+    vault.escribir_pagina(destino, frontmatter, cuerpo)           # primero el temario: lo que pago el modelo no depende de compilar
+    if compilar:
+        _compilar_tex(destino, destino_tex, avisar)
     est = frontmatter["estadisticas"]
     vault.anotar_log(f"/temario {codigo} semana {semana}", [
         f"RA: {ra.codigo}", f"tema: {tema}",
         f"{est['palabras']} palabras, {est['ecuaciones']} ecuaciones, {est['tablas']} tablas, {est['figuras']} figuras; "
         f"{est['pasajes']} pasajes de {len(fuentes)} fuente(s) cargada(s)",
+        f"LaTeX en paralelo: {destino_tex.as_posix()}" + (f" (revisar: {len(avisos_tex)} aviso(s))" if avisos_tex else ""),
         *([f"solo con su página del wiki (sin texto completo en raw/): {', '.join(f.nombre for f in fuentes if not f.archivos)}"] if any(not f.archivos for f in fuentes) else [])])
     return destino
 
 
-def generar_temarios(codigo: str, forzar: bool = False, progreso: Callable[[str], None] | None = None) -> tuple[list[Path], list[int]]:
+def _compilar_tex(destino: Path, destino_tex: Path, avisar: Callable[[str], None]) -> None:
+    """Compila el .tex del temario ya escrito y actualiza solo los campos latex_* de su frontmatter. Un fallo al compilar (tambien
+    una excepcion inesperada) queda como aviso en latex_avisos (latex_estado: revisar): nunca hace perder el temario."""
+    avisar("compilando el .tex con pdfLaTeX (dos pasadas)")
+    try:
+        problemas = tl.compilar(destino_tex)
+    except Exception as error:                                   # noqa: BLE001 -- cualquier fallo de la compilacion es un aviso
+        destino_tex.with_suffix(".pdf").unlink(missing_ok=True)
+        problemas = [f"no se pudo compilar: {type(error).__name__}: {str(error)[:300]}"]
+    fm, cuerpo = vault.leer_pagina(destino)
+    fm["latex_avisos"] = [*(fm.get("latex_avisos") or []), *problemas]
+    fm["latex_estado"] = "revisar" if fm["latex_avisos"] else "generado"
+    fm["latex_compilado"] = vault.hoy() if not problemas else None
+    vault.escribir_pagina(destino, fm, cuerpo)
+    avisar("compila sin errores ni desbordes" if not problemas else f"{len(problemas)} problema(s) al compilar: ver latex_avisos")
+
+
+def generar_temarios(codigo: str, forzar: bool = False, progreso: Callable[[str], None] | None = None,
+                     compilar: bool = False) -> tuple[list[Path], list[int]]:
     """Todas las semanas de clase. Devuelve (temarios escritos, semanas omitidas por ya tener temario)."""
     fm_plan, _ = vault.leer_pagina(vault.PLANEADOR / f"{codigo}-planeador.md")
     escritos, omitidas = [], []
@@ -671,7 +745,7 @@ def generar_temarios(codigo: str, forzar: bool = False, progreso: Callable[[str]
         if (vault.TEMARIOS / f"{codigo}-semana{fila['semana']:02d}.md").exists() and not forzar:
             omitidas.append(fila["semana"])
             continue
-        escritos.append(generar_temario(codigo, fila["semana"], forzar, progreso))
+        escritos.append(generar_temario(codigo, fila["semana"], forzar, progreso, compilar))
     return escritos, omitidas
 
 
@@ -683,13 +757,14 @@ if __name__ == "__main__":
     grupo.add_argument("--semana", type=int, help="número de semana (1-14)")
     grupo.add_argument("--todas", action="store_true", help="todas las semanas de clase que aún no tengan temario")
     parser.add_argument("--forzar", action="store_true", help="sobrescribe un temario ya existente")
+    parser.add_argument("--compilar", action="store_true", help="además compila el .tex con pdfLaTeX y anota los errores o desbordes (requiere pdflatex)")
     args = parser.parse_args()
     try:
         if args.todas:
-            escritos, omitidas = generar_temarios(args.codigo, args.forzar, print)
+            escritos, omitidas = generar_temarios(args.codigo, args.forzar, print, args.compilar)
             print(f"{len(escritos)} temarios escritos; omitidas por ya existir: {omitidas or 'ninguna'}")
         else:
-            print(f"Temario escrito en {generar_temario(args.codigo, args.semana, args.forzar, print)}")
+            print(f"Temario escrito en {generar_temario(args.codigo, args.semana, args.forzar, print, args.compilar)}")
     except (FileExistsError, FileNotFoundError, KeyError, RuntimeError, ValueError) as error:
         print(f"ERROR: {error}")
         sys.exit(1)

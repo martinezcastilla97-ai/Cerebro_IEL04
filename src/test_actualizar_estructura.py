@@ -287,6 +287,29 @@ def probar_clasificacion() -> None:
         print("C4. los efectos avisan de las dependencias, del nuevo diseño de las diapositivas (sin LLM las que tienen plan en el formato actual; ~9 llamadas por "
               "temario las demás, contadas en la copia), de una vista que falta en el indice y de como ver si lo generado quedo viejo -- OK")
 
+        # las guias de laboratorio: un prompt nuevo no las invalida (--replanificar, 1 llamada por guia); un esquema nuevo las revalida (las
+        # que no pasan, 1 llamada); un FORMATO nuevo las rehace sin LLM solo si lo guardado es de ese formato: del 1 al 2, 1 llamada cada una
+        escribir(copia, "generacion/guias-laboratorio/Z/Z-semana01.guia.json", '{"formato": 1, "huella": "a", "guia": {}}\n')
+        escribir(copia, "generacion/guias-laboratorio/Z/Z-semana02.guia.json", '{"formato": 1, "huella": "b", "guia": {}}\n')
+        escribir(copia, "generacion/guias-laboratorio/Z/Z-semana03.guia.json", '{"formato": 2, "huella": "c", "guia": {}}\n')
+        escribir(copia, "generacion/guias-laboratorio/Z/Z-semana04.guia.json", "{no es json\n")
+        assert ae.guias_hechas(copia) == 4 and ae.guias_por_formato(copia, 2) == (1, 3) and ae.guias_por_formato(copia, 1) == (2, 2)
+        prompt = [ae.Entrada("src/prompts/prompt-guia-laboratorio.md", "plantilla", "actualizar")]
+        texto = "\n".join(ae.efectos(prompt, v2, copia, []))
+        assert "las ya hechas siguen vigentes" in texto and "--replanificar" in texto and "(1 llamada por guía) (en esta copia: 4 guías, ~4 llamadas)" in texto, texto
+        texto = "\n".join(ae.efectos([ae.Entrada("src/schema_guia_laboratorio.py", "plantilla", "actualizar")], v2, copia, []))
+        assert "se vuelve a validar" in texto and "las que no se vuelven a pedir" in texto and "siguen vigentes" not in texto, texto
+        escribir(copia, "src/guia_laboratorio.py", "FORMATO = 1\n")
+        escribir(v2, "src/guia_laboratorio.py", "FORMATO = 2\n")
+        script = [ae.Entrada("src/guia_laboratorio.py", "plantilla", "actualizar")]
+        texto = "\n".join(ae.efectos(script, v2, copia, []))
+        assert "formato de las guías de laboratorio pasó a la versión 2" in texto and "del formato 1 al 2, todas: no tenían diagramas" in texto, texto
+        assert "(en esta copia: 1 sin LLM; 3 a pedir: ~3 llamadas)" in texto, texto
+        escribir(v2, "src/guia_laboratorio.py", "FORMATO = 1\n# otro cambio\n")
+        assert "formato de las guías" not in "\n".join(ae.efectos(script, v2, copia, [])), "sin cambio de FORMATO no hay aviso"
+        print("C5. los efectos de las guías de laboratorio: un prompt nuevo no las invalida (`--replanificar`, 1 llamada por guía), un esquema nuevo las "
+              "revalida y un FORMATO nuevo las rehace sin LLM solo si lo guardado es de ese formato (del 1 al 2, 1 llamada por guía, contadas en la copia) -- OK")
+
 
 # --- D. aplicar ------------------------------------------------------------------------------------------------------------
 

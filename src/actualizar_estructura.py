@@ -80,6 +80,7 @@ MAX_NOMBRES = 6                        # cuantas funciones o secciones se nombra
 MAX_TEXTO_RESUMEN = 600_000            # un archivo de texto mas grande no se compara linea a linea
 FORMATO_PLAN = 2                       # el de los .plan.json de las presentaciones (presentaciones.FORMATO_PLAN; aqui sin importarlo)
 LLAMADAS_POR_PRESENTACION = 9          # ~ una por parte del temario (la apertura y cada bloque): analizar_cambios.LLAMADAS_PRESENTACION
+LLAMADAS_POR_GUIA = 1                  # una por guia de laboratorio que se vuelve a pedir: analizar_cambios.LLAMADAS_GUIA
 
 
 # ---------------------------------------------------------------------------
@@ -351,6 +352,30 @@ def clasificar(origen: Path, destino: Path, instalado: dict | None, parcial: boo
     return entradas
 
 
+def guias_hechas(destino: Path) -> int:
+    """Cuantas guias de laboratorio tiene la copia (las que guardaron lo que escribio el modelo, .guia.json)."""
+    carpeta = destino / "generacion" / "guias-laboratorio"
+    return sum(1 for _ in carpeta.rglob("*.guia.json")) if carpeta.is_dir() else 0
+
+
+def guias_por_formato(destino: Path, formato: int) -> tuple[int, int]:
+    """(cuantos .guia.json de la copia se guardaron con `formato` —se rehacen desde lo guardado, sin LLM—, cuantos con otro o ilegibles
+    —no pasan la validacion de ese formato: 1 llamada cada uno—). Sin pydantic no se valida mas: se compara el campo `formato` que
+    guia_laboratorio guarda en cada .guia.json (del formato 1 al 2, uno del 1 nunca pasa: no tiene diagramas de flujo)."""
+    carpeta = destino / "generacion" / "guias-laboratorio"
+    mismo = otro = 0
+    for ruta in sorted(carpeta.rglob("*.guia.json")) if carpeta.is_dir() else []:
+        try:
+            datos = json.loads(_leer(ruta))
+        except ValueError:
+            datos = None
+        if isinstance(datos, dict) and datos.get("formato") == formato:
+            mismo += 1
+        else:
+            otro += 1
+    return mismo, otro
+
+
 def presentaciones_por_plan(destino: Path) -> tuple[int, int]:
     """(cuantas presentaciones registradas en los temarios de la copia tienen su plan guardado, cuantas no). Sin YAML: solo busca
     la linea `presentacion_archivo:` (este script usa solo la biblioteca estandar). Cuenta con plan solo un .plan.json del formato
@@ -408,6 +433,26 @@ def efectos(entradas: list[Entrada], origen: Path, destino: Path, migradas: list
     if cambia("src/prompts/prompt-presentacion.md", "src/schema_presentacion.py"):
         texto.append("cambió cómo se piden las diapositivas al modelo: las presentaciones ya hechas siguen vigentes; `--replanificar` las rehace con el cambio "
                      f"(~{LLAMADAS_POR_PRESENTACION} llamadas por temario)")
+    guias = guias_hechas(destino)
+    en_copia = f" (en esta copia: {guias} guías, ~{_llamadas(guias * LLAMADAS_POR_GUIA)})" if guias else ""
+    if cambia("src/prompts/prompt-guia-laboratorio.md"):
+        texto.append("cambió cómo se piden las guías de laboratorio al modelo: las ya hechas siguen vigentes; `python src/guia_laboratorio.py CODIGO "
+                     f"--replanificar` las rehace con el cambio ({LLAMADAS_POR_GUIA} llamada por guía){en_copia}")
+    if cambia("src/schema_guia_laboratorio.py"):
+        texto.append("cambió el esquema de las guías de laboratorio: en la próxima corrida de `python src/guia_laboratorio.py CODIGO` lo guardado "
+                     "(.guia.json) se vuelve a validar; las que lo pasen se conservan (sin LLM) y las que no se vuelven a pedir "
+                     f"({LLAMADAS_POR_GUIA} llamada por guía, como mucho{', ~' + _llamadas(guias * LLAMADAS_POR_GUIA) + ' en esta copia' if guias else ''})")
+    script_guia = "src/guia_laboratorio.py"
+    if script_guia in tocados and (origen / script_guia).is_file():
+        nuevo = re.search(r"(?m)^FORMATO = (\d+)", _leer(origen / script_guia))
+        viejo = re.search(r"(?m)^FORMATO = (\d+)", _leer(destino / script_guia)) if (destino / script_guia).is_file() else None
+        if nuevo and (not viejo or viejo.group(1) != nuevo.group(1)):
+            mismo, otro = guias_por_formato(destino, int(nuevo.group(1)))
+            texto.append(f"el formato de las guías de laboratorio pasó a la versión {nuevo.group(1)}: las ya hechas se rehacen en la próxima corrida de "
+                         "`python src/guia_laboratorio.py CODIGO`; desde lo que guardó el modelo (.guia.json), sin LLM, solo las que lo guardaron en el "
+                         f"formato {nuevo.group(1)}; las de otro formato no pasan la validación nueva y se vuelven a pedir ({LLAMADAS_POR_GUIA} llamada "
+                         "por guía; del formato 1 al 2, todas: no tenían diagramas de flujo)"
+                         + (f" (en esta copia: {mismo} sin LLM; {otro} a pedir: ~{_llamadas(otro * LLAMADAS_POR_GUIA)})" if mismo or otro else ""))
     if cambia("src/temario.py", "src/schema_temario.py", "src/figuras.py", "src/pasajes.py", "src/prompts/prompt-temario"):
         texto.append("cambió la redacción de los temarios: los ya generados siguen vigentes y solo los nuevos usan el cambio; rehacerlos con `--forzar` cuesta "
                      "~10 llamadas por sesión, así que decídelo asignatura por asignatura")
@@ -427,8 +472,8 @@ def efectos(entradas: list[Entrada], origen: Path, destino: Path, migradas: list
     for e in entradas:
         if e.ruta.startswith("config/framework_iub/") and e.accion == "conservar" and (origen / e.ruta).is_file():
             if huella(origen / e.ruta, e.ruta) != huella(destino / e.ruta, e.ruta):
-                texto.append("los logos institucionales del paquete difieren de los instalados: no se tocan (son de tu institución; para cambiarlos, "
-                             "reemplaza los PNG de config/framework_iub/logos/). Desde el diseño 5 las presentaciones no los usan: la marca va como texto")
+                texto.append("los archivos institucionales del paquete (config/framework_iub/: los logos y la plantilla de las guías de laboratorio) "
+                             "difieren de los instalados: no se tocan (son los de tu institución; para cambiarlos, reemplázalos en config/framework_iub/)")
                 break
     for m in migradas:
         texto.append(f"migración {m['version']}: {m['descripcion']} ({len(m['cambios'])} páginas)")

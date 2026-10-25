@@ -109,9 +109,12 @@ def probar(raiz: Path) -> None:
     fm_t1 = vault.leer_pagina(Path("generacion/temarios/TPR01-semana01.md"))[0]
     assert fm_t1["presentacion_estado"] == "generada" and fm_t1["bibliografia_estado"] == "cubierta"      # cada etapa conserva los campos de las demas
     tex = Path("generacion/presentaciones/TPR01/TPR01-semana01.tex").read_text(encoding="utf-8")
-    assert "\\includegraphics" not in tex and "\\bloque{01}" in tex and "\\begin{tikzpicture}" in tex     # sin imagenes: las figuras van en TikZ
-    assert not Path("generacion/presentaciones/TPR01/figuras").exists() and not Path("generacion/presentaciones/TPR01/logos").exists()
-    print("7. PRESENTACIONES: 11 presentaciones .tex (una llamada por parte de cada temario, con su plan), sin imágenes, sin pisar los campos de la auditoría bibliográfica -- OK")
+    documento = tex.partition("\\begin{document}")[2]
+    assert "\\includegraphics" not in documento and "\\bloque{01}" in tex and "\\begin{tikzpicture}" in tex     # las figuras van en TikZ; imagenes, solo los logos
+    assert not Path("generacion/presentaciones/TPR01/figuras").exists() and Path("generacion/presentaciones/TPR01/logos").is_dir()
+    assert fm_t1["presentacion_elementos"] > 0 and "\\textbf{Figura 1.}" in documento                           # los elementos del .tex del temario
+    print("7. PRESENTACIONES: 11 presentaciones .tex (una llamada por parte de cada temario, con su plan), con los elementos del .tex del temario y los "
+          "logos del manual, sin pisar los campos de la auditoría bibliográfica -- OK")
 
     hallazgos = lint.revisar()
     assert not [h for h in hallazgos if h.severidad == lint.ERROR], hallazgos
@@ -126,7 +129,7 @@ def probar(raiz: Path) -> None:
 def main() -> None:
     original = Path.cwd()
     with tempfile.TemporaryDirectory() as tmp:
-        _fixtures.armar_vault_muestra(Path(tmp))           # sin config/framework_iub: las presentaciones ya no usan los logos
+        _fixtures.armar_vault_muestra(Path(tmp))           # con los logos de config/framework_iub/logos/
         os.chdir(tmp)
         try:
             probar(Path(tmp))

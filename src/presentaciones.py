@@ -12,6 +12,14 @@ ejemplo del docente, en tres pasos:
        referencias y el cierre; la verificacion estatica del .tex completo (latex_seguro.verificar_latex) y el registro en el
        frontmatter del temario (`presentacion_*`).
 
+Las ECUACIONES, TABLAS, GRAFICAS y DIAGRAMAS del temario no los escribe el modelo: salen del .tex que TEMARIO escribe en paralelo al
+.md (elementos_tex.py), donde ya son LaTeX (pgfplots con los puntos de su especificacion, TikZ con su disposicion, tablas con encabezado
+oscuro). El modelo ve cada uno marcado en el texto y decide donde va con `\\elementoTemario{figura}{3}`; el codigo pone el LaTeX, y los
+que el modelo no uso van en diapositivas propias al final de su bloque (las ecuaciones sueltas, de a 3): ninguno se pierde. Si el
+temario no tiene su .tex, o el .md se edito despues de escribirlo (`latex_temario_hash`), se trabaja como antes, solo con el texto.
+
+Los logos del Manual de Identidad IUB (config/framework_iub/logos/) se copian a logos/, junto al .tex (diseno_iub.LOGOS).
+
 El plan (`{codigo}-semanaNN.plan.json`) guarda las diapositivas de cada parte con la huella de su texto: mientras una parte no
 cambie, no se vuelve a pedir. Rehacer la presentacion por otro docente, otro programa o una version nueva del diseno no llama al
 modelo; editar un bloque del temario solo vuelve a pedir ese bloque.
@@ -35,12 +43,14 @@ import re
 import shutil
 import subprocess
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import diseno_iub
+import elementos_tex as et
 import latex_seguro as ls
 import temario
+import temario_latex
 import vault
 from schema_presentacion import DiapositivasParte
 
@@ -51,6 +61,8 @@ PROGRAMA_POR_DEFECTO = "Institución Universitaria de Barranquilla"      # si el
 MINUTOS_POR_DIAPOSITIVA = 8         # orientativo: cuantas diapositivas se piden para un bloque segun su duracion
 EXTENSIONES_AUXILIARES = (".aux", ".log", ".nav", ".out", ".snm", ".toc", ".vrb")
 APERTURA = "apertura"
+LOGOS_ORIGEN = Path("config") / "framework_iub" / "logos"
+ECUACIONES_POR_DIAPOSITIVA = 3
 
 _ENCABEZADO_BLOQUE = re.compile(r"^(#{2,4})\s+(?:\d+(?:\.\d+)*\.?\s+)?(.*?)\s*\(Bloque\s+(\d+)\)\s*$")
 _ENCABEZADO = re.compile(r"^(#{1,6})\s")
@@ -81,8 +93,11 @@ class Parte:
     """Un trozo del temario que se convierte en diapositivas con una llamada: la apertura o un bloque del indice temporizado."""
     clave: str                       # "apertura" | "bloque-03"
     titulo: str
-    texto: str                       # el Markdown de esa parte del temario
+    texto: str                       # el Markdown de esa parte del temario (lo que da su huella)
     bloque: diseno_iub.BloqueSesion | None = None
+    crudo: str = ""                  # el Markdown tal cual (con las figuras): de aqui se marcan los elementos del .tex
+    texto_modelo: str = ""           # lo que ve el modelo: `texto`, o el crudo con cada elemento del .tex marcado
+    elementos: list = field(default_factory=list)   # los elementos del .tex de esta parte (elementos_tex.Elemento)
 
     @property
     def huella(self) -> str:
@@ -119,8 +134,11 @@ def partes_del_temario(cuerpo: str) -> list[Parte]:
     ini = next((i for i, l in enumerate(lineas) if re.match(r"^##\s+1\.\s", l)), None)
     fin = next((i for i, l in enumerate(lineas) if re.match(r"^##\s+3\.\s", l)), None)
     if ini is not None:
-        texto = "\n".join(lineas[ini:fin if fin is not None and fin > ini else ini + 1])
-        partes.append(Parte(APERTURA, "Apertura de la sesión", texto))
+        # hasta el siguiente `##` que no sea de la seccion 1 o 2, o el primer bloque: un temario editado a mano puede no tener `## 3.`
+        fin_apertura = next((i for i in range(ini + 1, len(lineas)) if _ENCABEZADO_BLOQUE.match(lineas[i])
+                             or (re.match(r"^##\s", lineas[i]) and not re.match(r"^##\s+[12]\.\s", lineas[i]))), len(lineas))
+        texto = "\n".join(lineas[ini:fin_apertura])
+        partes.append(Parte(APERTURA, "Apertura de la sesión", texto, crudo=texto))
 
     actual: dict | None = None
     bloques: list[dict] = []
@@ -141,8 +159,163 @@ def partes_del_temario(cuerpo: str) -> list[Parte]:
     for b in bloques:
         titulo, minutos = indice.get(b["numero"], (b["encabezado"], 0))
         bloque = diseno_iub.BloqueSesion(b["numero"], titulo or b["encabezado"], minutos)
-        partes.append(Parte(f"bloque-{b['numero']:02d}", bloque.titulo, _sin_imagenes("\n".join(b["lineas"])), bloque))
+        crudo = "\n".join(b["lineas"])
+        partes.append(Parte(f"bloque-{b['numero']:02d}", bloque.titulo, _sin_imagenes(crudo), bloque, crudo=crudo))
     return partes
+
+
+_NOMBRE_ELEMENTO = {"figura": "la figura", "tabla": "la tabla", "ecuacion": "la ecuación"}
+
+
+def ruta_tex_temario(codigo: str, semana: int) -> Path:
+    """El unico .tex del temario que se lee: el de ese mismo temario, junto a su .md (lo que escribe TEMARIO)."""
+    return vault.TEMARIOS / f"{codigo}-semana{semana:02d}.tex"
+
+
+def verificar_elemento(e: et.Elemento) -> list[str]:
+    """Los problemas de un elemento del .tex del temario con la misma verificacion del documento completo (comandos, entornos,
+    opciones, claves prohibidas, ^^ y balance): su LaTeX (cada trozo, si es una tabla) dentro de un documento minimo. Uno que
+    escribe temario_latex no da ninguno; uno editado a mano puede."""
+    problemas: list[str] = []
+    for k in range(len(e.trozos())) if e.clase == "tabla" else [0]:
+        documento = "\\documentclass{beamer}\n\\begin{document}\n\\begin{frame}{x}\n" + e.latex(trozo=k) + "\n\\end{frame}\n\\end{document}\n"
+        problemas += [q for q in ls.verificar_latex(documento) if q not in problemas]
+    return problemas
+
+
+def elementos_del_temario(fm: dict, cuerpo: str, codigo: str, semana: int) -> tuple[list[et.Elemento], list[str]]:
+    """(los elementos del .tex del temario que se pueden usar, avisos). Solo se lee el .tex de ESE temario (`latex_archivo` tiene que
+    ser, resuelto, generacion/temarios/{codigo}-semanaNN.tex: lo que se lee viaja al proveedor de IA en las leyendas y las formulas),
+    y solo si corresponde al .md (`latex_temario_hash`: uno viejo tendria otras figuras o tablas). Cada elemento pasa la verificacion
+    del documento completo (verificar_elemento); el que no, se descarta con un aviso, y para el el modelo trabaja con el texto. Sin
+    .tex (un temario de antes de la version LaTeX) no hay aviso: se trabaja con el texto, como antes."""
+    archivo = fm.get("latex_archivo")
+    if not archivo:
+        return [], []
+    esperado = ruta_tex_temario(codigo, semana)
+    try:
+        acotado = Path(archivo).resolve() == esperado.resolve()
+    except (OSError, ValueError):
+        acotado = False
+    if not acotado:
+        return [], [f"`latex_archivo` del temario ({archivo}) no es su .tex ({esperado.as_posix()}): no se lee; las figuras, tablas y "
+                    "ecuaciones no se toman de un .tex (rehaz el temario con `temario.py --forzar` o corrige el campo)"]
+    if not esperado.is_file():
+        return [], [f"el .tex del temario ({esperado.as_posix()}) ya no existe: las figuras, tablas y ecuaciones no se toman del .tex "
+                    "(rehaz el temario con `temario.py --forzar`)"]
+    if fm.get("latex_temario_hash") != temario_latex.hash_cuerpo(cuerpo):
+        return [], [f"el .md del temario se editó después de escribir su .tex ({esperado.as_posix()}): las figuras, tablas y ecuaciones no "
+                    "se toman del .tex (rehaz el temario con `temario.py --forzar` o copia el cambio en el .tex)"]
+    buenos, avisos = [], []
+    for e in et.leer(esperado):
+        problemas = verificar_elemento(e)
+        if problemas:
+            avisos.append(f"{_NOMBRE_ELEMENTO[e.clase]} {e.numero} del .tex del temario no pasa la verificación ({'; '.join(problemas)[:300]}): "
+                          f"no se usa; rehaz el temario con `temario.py {codigo} --semana {semana} --forzar`")
+        else:
+            buenos.append(e)
+    return buenos, avisos
+
+
+def repartir_elementos(partes: list[Parte], elementos: list[et.Elemento]) -> None:
+    """Asigna a cada parte sus elementos (los de su bloque; los que no son de ningun bloque, a la apertura si estan antes del primer
+    bloque o al ultimo bloque si no) y le prepara el texto que ve el modelo, con cada elemento marcado."""
+    por_bloque = {p.bloque.numero: p for p in partes if p.bloque}
+    apertura = next((p for p in partes if p.clave == APERTURA), None)
+    ultimo = next((p for p in reversed(partes) if p.bloque), apertura)
+    for e in elementos:
+        destino = (por_bloque.get(e.bloque) if e.bloque is not None else apertura) or ultimo
+        if destino is not None:
+            destino.elementos.append(e)
+    primera = 1
+    for p in partes:
+        if not elementos:
+            p.texto_modelo = p.texto
+            continue
+        marcado, n = et.marcar_elementos(p.crudo, elementos, primera)
+        primera += n
+        p.texto_modelo = _sin_imagenes(marcado)
+
+
+def preparar_partes(fm: dict, cuerpo: str, codigo: str, semana: int) -> tuple[list[Parte], list[et.Elemento], list[str]]:
+    """(partes del temario con sus elementos repartidos, elementos, avisos): lo mismo para generar la presentacion y para L14."""
+    partes = partes_del_temario(cuerpo)
+    elementos, avisos = elementos_del_temario(fm, cuerpo, codigo, semana)
+    repartir_elementos(partes, elementos)
+    return partes, elementos, avisos
+
+
+def vigente(guardada: dict | None, parte: Parte) -> bool:
+    """Una parte del plan guardado se reutiliza solo si tiene la huella de la parte y cada \\elementoTemario de sus diapositivas es un
+    elemento que la parte tiene ahora: con el .md editado a mano, el .tex borrado o un elemento descartado, esa orden quedaria sin
+    sustituir («[figura N del temario: no disponible]»), asi que la parte se vuelve a pedir (el modelo trabaja con el texto)."""
+    if not guardada or guardada.get("huella") != parte.huella:
+        return False
+    disponibles = {e.clave for e in parte.elementos}
+    return all(r in disponibles for d in guardada["diapositivas"] for r in et.referencias(d.cuerpo))
+
+
+def _titulo_elemento(e: et.Elemento) -> str:
+    plano = et._plano(e.leyenda)
+    if e.clase == "figura":
+        return e.leyenda if 0 < len(plano) <= 55 and "\\\\" not in e.leyenda else f"Figura {e.numero}"
+    return e.leyenda if 0 < len(plano) <= 55 and "\\\\" not in e.leyenda else f"Tabla {e.numero}"
+
+
+def componer_parte(diapositivas: list[diseno_iub.Diapositiva], parte: Parte) -> list[diseno_iub.Diapositiva]:
+    """Las diapositivas de una parte con el LaTeX de cada \\elementoTemario puesto, las continuaciones de una tabla larga y, al final,
+    una diapositiva por cada figura o tabla que el modelo no uso (y las ecuaciones sueltas, de a ECUACIONES_POR_DIAPOSITIVA)."""
+    por_clave = {e.clave: e for e in parte.elementos}
+    usados: set[str] = set()
+    salida: list[diseno_iub.Diapositiva] = []
+    for d in diapositivas:
+        referidos = [r for r in et.referencias(d.cuerpo) if r in por_clave]
+        usados |= set(referidos)
+        salida.append(diseno_iub.Diapositiva(d.titulo, et.sustituir(d.cuerpo, por_clave)))
+        for clave in referidos:
+            e = por_clave[clave]
+            if e.clase == "tabla":
+                for k in range(1, len(e.trozos())):
+                    salida.append(diseno_iub.Diapositiva(f"{d.titulo} (cont.)", e.latex(trozo=k)))
+    sueltas = [e for e in parte.elementos if e.clave not in usados]
+    for e in (e for e in sueltas if e.clase != "ecuacion"):
+        for k in range(len(e.trozos()) if e.clase == "tabla" else 1):
+            titulo = _titulo_elemento(e) + (" (cont.)" if k else "")
+            salida.append(diseno_iub.Diapositiva(titulo, e.latex(trozo=k)))
+    ecuaciones = [e for e in sueltas if e.clase == "ecuacion"]
+    for k in range(0, len(ecuaciones), ECUACIONES_POR_DIAPOSITIVA):
+        grupo = ecuaciones[k:k + ECUACIONES_POR_DIAPOSITIVA]
+        cuerpo = "\n\\vspace{2mm}\n".join(e.latex() for e in grupo)
+        salida.append(diseno_iub.Diapositiva("Ecuaciones clave" if len(ecuaciones) <= ECUACIONES_POR_DIAPOSITIVA
+                                             else f"Ecuaciones clave ({k // ECUACIONES_POR_DIAPOSITIVA + 1})", cuerpo))
+    return salida
+
+
+def partes_con_graves(obtenidas: dict[str, dict]) -> list[str]:
+    """Las partes del plan cuyas diapositivas, solas (con las ordenes \\elementoTemario sin sustituir), dan un problema grave en la
+    verificacion del documento completo: lo que escribio el modelo y hay que volver a pedir."""
+    culpables = []
+    for clave, parte in sorted(obtenidas.items()):
+        marcos = "".join(f"\\begin{{frame}}{{{d.titulo}}}\n{d.cuerpo}\n\\end{{frame}}\n" for d in parte["diapositivas"])
+        if ls.graves(ls.verificar_latex("\\documentclass{beamer}\n\\begin{document}\n" + marcos + "\\end{document}\n")):
+            culpables.append(clave)
+    return culpables
+
+
+def copiar_logos(carpeta: Path) -> list[str]:
+    """Copia a carpeta/logos/ los logos del Manual de Identidad (diseno_iub.LOGOS); devuelve los que faltan en config/framework_iub/logos/
+    (el preambulo escribe la marca como texto en su lugar: la presentacion compila igual)."""
+    faltan = []
+    destino = carpeta / "logos"
+    for nombre in diseno_iub.LOGOS.values():
+        origen = LOGOS_ORIGEN / nombre
+        if not origen.is_file():
+            faltan.append(nombre)
+            continue
+        destino.mkdir(parents=True, exist_ok=True)
+        if not (destino / nombre).is_file() or (destino / nombre).read_bytes() != origen.read_bytes():
+            shutil.copyfile(origen, destino / nombre)
+    return faltan
 
 
 def titulo_del_temario(cuerpo: str, respaldo: str) -> str:
@@ -195,10 +368,16 @@ _VISUAL = re.compile(r"\\begin\{(?:tikzpicture|axis|semilogyaxis|semilogxaxis|lo
 
 
 def validar_parte(salida: DiapositivasParte, parte: Parte, blando: bool = True) -> list[str]:
-    """Duro: el LaTeX de cada diapositiva cumple verificar_cuerpo. Blando (solo mientras quedan reintentos): una parte de mas de una
-    diapositiva usa algun recurso visual (TikZ, pgfplots, una tabla, cajas, codigo), no solo texto."""
+    """Duro: el LaTeX de cada diapositiva cumple verificar_cuerpo, y cada \\elementoTemario es un elemento de esta parte. Blando (solo
+    mientras quedan reintentos): una parte de mas de una diapositiva usa algun recurso visual (TikZ, pgfplots, una tabla, cajas,
+    codigo o un elemento del temario), no solo texto."""
     _, problemas = normalizar_parte(salida)
-    if blando and len(salida.diapositivas) > 1 and not any(_VISUAL.search(d.cuerpo) for d in salida.diapositivas):
+    disponibles = {e.clave for e in parte.elementos}
+    ajenos = sorted({r for d in salida.diapositivas for r in et.referencias(d.cuerpo)} - disponibles)
+    if ajenos:
+        lista = ", ".join(f"\\elementoTemario{{{e.clase}}}{{{e.numero}}}" for e in parte.elementos) or "ninguno"
+        problemas.append(f"\\elementoTemario a elementos que no son de esta parte: {', '.join(ajenos)} (los de esta parte: {lista})")
+    if blando and len(salida.diapositivas) > 1 and not any(_VISUAL.search(d.cuerpo) or et.ORDEN.search(d.cuerpo) for d in salida.diapositivas):
         problemas.append("ninguna diapositiva usa un recurso visual: integra al menos un diagrama TikZ, una gráfica pgfplots, una tabla o tarjetas (caja/card)")
     return problemas
 
@@ -230,10 +409,19 @@ def _encargo(parte: Parte, partes: list[Parte]) -> str:
             f"código: no los repitas.{extra}")
 
 
+def _encargo_elementos(parte: Parte) -> str:
+    if not parte.elementos:
+        return ""
+    return ("\n\nElementos del temario de esta parte, ya escritos en LaTeX (no los copies ni los redibujes: inclúyelos con su orden, "
+            "cada uno una sola vez; los que no incluyas los pone el código en diapositivas propias al final del bloque):\n"
+            + "\n".join(f"- {e.describir()}" for e in parte.elementos))
+
+
 def pedir_parte(codigo: str, nombre_asignatura: str, semana: int, total: int, minutos: int, parte: Parte, partes: list[Parte]) -> list[diseno_iub.Diapositiva]:
     sistema, plantilla = vault.cargar_prompt("prompt-presentacion.md")
     usuario = plantilla.format(codigo_asignatura=codigo, nombre_asignatura=nombre_asignatura, semana=semana, total_semanas=total,
-                               minutos_sesion=minutos, encargo=_encargo(parte, partes), texto=parte.texto.strip())
+                               minutos_sesion=minutos, encargo=_encargo(parte, partes) + _encargo_elementos(parte),
+                               texto=(parte.texto_modelo or parte.texto).strip())
     salida = temario._redactar(sistema, usuario, DiapositivasParte, lambda s, blando: validar_parte(s, parte, blando),
                                f"{codigo} semana {semana}: {parte.titulo}")
     diapositivas, _ = normalizar_parte(salida)
@@ -277,11 +465,13 @@ def guardar_plan(ruta: Path, huella: str, partes: dict[str, dict]) -> None:
     ruta.write_text(json.dumps(datos, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
 
 
-def partes_pendientes(ruta_tex: Path, cuerpo: str) -> list[str]:
-    """Las partes del temario que habria que pedir al modelo para rehacer su presentacion (las que no estan en el plan guardado, o
-    cambiaron). Vacio = se rehace sin LLM. Lo usa lint (L14)."""
+def partes_pendientes(ruta_tex: Path, fm: dict, cuerpo: str, codigo: str, semana: int) -> list[str]:
+    """Las partes del temario que habria que pedir al modelo para rehacer su presentacion: las que no estan en el plan guardado,
+    cambiaron o usan elementos del .tex del temario que ya no estan (la misma regla que generar_presentacion). Vacio = se rehace
+    sin LLM. Lo usa lint (L14)."""
+    partes, _, _ = preparar_partes(fm, cuerpo, codigo, semana)
     guardadas = leer_plan(ruta_plan(ruta_tex))
-    return [p.clave for p in partes_del_temario(cuerpo) if guardadas.get(p.clave, {}).get("huella") != p.huella]
+    return [p.clave for p in partes if not vigente(guardadas.get(p.clave), p)]
 
 
 # ---------------------------------------------------------------------------
@@ -352,16 +542,21 @@ def generar_presentacion(codigo: str, semana: int, docente: str | None = None, p
     fm, cuerpo = vault.leer_pagina(ruta_temario)
     huella = hash_cuerpo(cuerpo)
     destino = ruta_presentacion(codigo, semana)
-    partes = partes_del_temario(cuerpo)
+    partes, elementos, avisos_elementos = preparar_partes(fm, cuerpo, codigo, semana)
 
     docente_wiki, programa_wiki = datos_por_defecto(codigo)
     docente = docente or fm.get("presentacion_docente") or docente_wiki
     programa = programa or fm.get("presentacion_programa") or programa_wiki
     contacto = contacto if contacto is not None else (fm.get("presentacion_contacto") or "")
     guardadas = {} if replanificar else leer_plan(ruta_plan(destino))
-    vigentes = {p.clave: guardadas[p.clave] for p in partes if guardadas.get(p.clave, {}).get("huella") == p.huella}
+    vigentes = {p.clave: guardadas[p.clave] for p in partes if vigente(guardadas.get(p.clave), p)}
+    sin_elementos = [p.clave for p in partes if p.clave not in vigentes and guardadas.get(p.clave, {}).get("huella") == p.huella]
+    if sin_elementos:
+        avisos_elementos.append(f"{len(sin_elementos)} parte(s) del plan guardado usaban figuras, tablas o ecuaciones del .tex del temario que ya no "
+                                f"están disponibles ({', '.join(sin_elementos)}): se vuelven a pedir al modelo (una llamada cada una), que trabaja con el texto")
     al_dia = (fm.get("presentacion_temario_hash") == huella and fm.get("presentacion_diseno") == DISENO and fm.get("presentacion_estado")
-              and (fm.get("presentacion_docente"), fm.get("presentacion_programa"), fm.get("presentacion_contacto") or "") == (docente, programa, contacto))
+              and (fm.get("presentacion_docente"), fm.get("presentacion_programa"), fm.get("presentacion_contacto") or "") == (docente, programa, contacto)
+              and fm.get("presentacion_elementos", 0) == len(elementos))
     if not forzar and len(vigentes) == len(partes) and destino.exists() and al_dia:
         return destino, "omitida", 0
 
@@ -374,7 +569,7 @@ def generar_presentacion(codigo: str, semana: int, docente: str | None = None, p
         tipo_sesion=asignatura.tipo_abordaje.value if asignatura.tipo_abordaje else "", subtitulo=plataforma_del_temario(cuerpo),
         siguiente=_texto_siguiente(fm_plan["semanas"], semana, total), contacto=contacto, referencias=referencias_del_temario(cuerpo))
 
-    avisos: list[str] = []
+    avisos: list[str] = list(avisos_elementos)
     obtenidas = dict(vigentes)
     pedidas = 0
     for parte in partes:
@@ -390,9 +585,8 @@ def generar_presentacion(codigo: str, semana: int, docente: str | None = None, p
         guardar_plan(ruta_plan(destino), huella, obtenidas)            # lo ya pedido no se pierde si una parte posterior falla
 
     def de(parte: Parte) -> list[diseno_iub.Diapositiva]:
-        if parte.clave in obtenidas:
-            return obtenidas[parte.clave]["diapositivas"]
-        return [diseno_iub.provisional(doc, parte.bloque, "")]
+        propias = obtenidas[parte.clave]["diapositivas"] if parte.clave in obtenidas else [diseno_iub.provisional(doc, parte.bloque, "")]
+        return componer_parte(propias, parte)            # los elementos del temario, tambien si la parte quedo provisional
 
     apertura = [d for p in partes if p.clave == APERTURA for d in de(p)]
     bloques = [(p.bloque, de(p)) for p in partes if p.bloque]
@@ -401,22 +595,39 @@ def generar_presentacion(codigo: str, semana: int, docente: str | None = None, p
     avisos += list(doc.conv.avisos) + [f"verificación estática: {p}" for p in problemas]
 
     destino.parent.mkdir(parents=True, exist_ok=True)
+    faltan = copiar_logos(destino.parent)
+    if faltan:
+        avisos.append(f"faltan logos en {LOGOS_ORIGEN.as_posix()}/: {', '.join(faltan)} (la presentación escribe «IUB» en su lugar)")
     if ls.graves(problemas):
-        # el .tex podria leer o escribir archivos al compilarse: no se escribe (ni queda el de antes, ni el plan que lo produjo)
+        # el .tex podria leer o escribir archivos al compilarse: no se escribe (ni queda el de antes). El plan solo pierde lo que vino
+        # del modelo y causo el problema: esas partes se vuelven a pedir en la proxima corrida; lo demas que pago el modelo se conserva.
         destino.unlink(missing_ok=True)
-        ruta_plan(destino).unlink(missing_ok=True)
-        avisos.append("no se escribió el .tex: la verificación estática encontró algo que podría ejecutarse al compilar (ver arriba); "
-                      "corre de nuevo con --replanificar")
+        destino.with_suffix(".pdf").unlink(missing_ok=True)
+        culpables = partes_con_graves(obtenidas)
+        if culpables:
+            for clave in culpables:
+                obtenidas.pop(clave, None)
+            guardar_plan(ruta_plan(destino), huella, obtenidas)
+            avisos.append("no se escribió el .tex: la verificación estática encontró algo que podría ejecutarse al compilar en lo que escribió "
+                          f"el modelo ({', '.join(culpables)}); esas partes se quitaron del plan y la próxima corrida las vuelve a pedir "
+                          "(solo esas: no hace falta --replanificar)")
+        else:
+            guardar_plan(ruta_plan(destino), huella, obtenidas)
+            avisos.append("no se escribió el .tex: la verificación estática encontró algo que podría ejecutarse al compilar, y no viene de "
+                          "lo que escribió el modelo (el plan se conserva) sino de los datos de la portada, la ruta o las referencias "
+                          "(el título, el docente, el programa o la bibliografía del temario) o del diseño: revisa esos datos; "
+                          "--replanificar no lo arregla")
     else:
         guardar_plan(ruta_plan(destino), huella, obtenidas)
         destino.write_text(tex, encoding="utf-8", newline="\n")
+        destino.with_suffix(".pdf").unlink(missing_ok=True)       # el PDF de antes ya no es el de este .tex (--compilar hace el nuevo)
 
     estado = "revisar" if avisos else "generada"
     fm.update({
         "presentacion_estado": estado, "presentacion_archivo": destino.as_posix(), "presentacion_avisos": avisos,
         "presentacion_temario_hash": huella, "presentacion_fecha": vault.hoy(), "presentacion_diseno": DISENO,
         "presentacion_diapositivas": n_diapositivas, "presentacion_docente": docente, "presentacion_programa": programa,
-        "presentacion_contacto": contacto,
+        "presentacion_contacto": contacto, "presentacion_elementos": len(elementos), "presentacion_compilada": None,
     })
     vault.escribir_pagina(ruta_temario, fm, cuerpo)
     return destino, estado, pedidas
@@ -455,14 +666,70 @@ def compilar(ruta_tex: Path) -> Path:
     if not ejecutable:
         raise FileNotFoundError("pdflatex no está instalado: instala MiKTeX o TeX Live, o sube la carpeta a Overleaf (compilador pdfLaTeX)")
     entorno = dict(os.environ, openin_any="p", openout_any="p")
-    for _ in range(2):
-        r = subprocess.run([ejecutable, "-no-shell-escape", "-interaction=nonstopmode", "-halt-on-error", ruta_tex.name], cwd=ruta_tex.parent,
-                           capture_output=True, text=True, encoding="utf-8", errors="replace", env=entorno)
-        if r.returncode != 0:
-            raise RuntimeError(f"pdflatex falló con {ruta_tex.name}:\n" + "\n".join((r.stdout or "").splitlines()[-25:]))
-    for extension in EXTENSIONES_AUXILIARES:
-        ruta_tex.with_suffix(extension).unlink(missing_ok=True)
-    return ruta_tex.with_suffix(".pdf")
+    pdf = ruta_tex.with_suffix(".pdf")
+    try:
+        for _ in range(2):
+            try:
+                r = subprocess.run([ejecutable, "-no-shell-escape", "-interaction=nonstopmode", "-halt-on-error", ruta_tex.name], cwd=ruta_tex.parent,
+                                   capture_output=True, text=True, encoding="utf-8", errors="replace", env=entorno, timeout=600,
+                                   stdin=subprocess.DEVNULL)
+            except subprocess.TimeoutExpired:
+                raise RuntimeError(f"pdflatex tardó más de 10 minutos con {ruta_tex.name} y se detuvo") from None
+            if r.returncode != 0:
+                raise RuntimeError(f"pdflatex falló con {ruta_tex.name}:\n" + "\n".join((r.stdout or "").splitlines()[-25:]))
+    except RuntimeError:
+        pdf.unlink(missing_ok=True)                    # un PDF de antes, o a medias, no es el de este .tex
+        raise
+    finally:
+        for extension in EXTENSIONES_AUXILIARES:
+            ruta_tex.with_suffix(extension).unlink(missing_ok=True)
+    return pdf
+
+
+def pdf_desactualizado(ruta_tex: Path) -> bool:
+    """El .tex existe y no tiene PDF, o su PDF es mas viejo que el (de otra version del .tex)."""
+    pdf = ruta_tex.with_suffix(".pdf")
+    return ruta_tex.exists() and (not pdf.exists() or pdf.stat().st_mtime < ruta_tex.stat().st_mtime)
+
+
+def registrar_compilacion(ruta_tex: Path, error: str | None) -> None:
+    """Anota en el temario el resultado de compilar su presentacion: `presentacion_compilada` (la fecha, o null si fallo) y, si fallo,
+    el error en `presentacion_avisos` (estado `revisar`); una compilacion buena quita el error de una anterior."""
+    ruta_temario = vault.TEMARIOS / f"{ruta_tex.stem}.md"
+    if not ruta_temario.exists():
+        return
+    fm, cuerpo = vault.leer_pagina(ruta_temario)
+    avisos = [a for a in fm.get("presentacion_avisos") or [] if not str(a).startswith(AVISO_COMPILACION)]
+    if error:
+        avisos.append(f"{AVISO_COMPILACION}: {error[:500]}")
+    fm.update({"presentacion_compilada": None if error else vault.hoy(), "presentacion_avisos": avisos,
+               "presentacion_estado": "revisar" if avisos else "generada"})
+    vault.escribir_pagina(ruta_temario, fm, cuerpo)
+
+
+AVISO_COMPILACION = "no compiló con pdfLaTeX"
+
+
+def compilar_presentaciones(resultados: list[tuple[Path, str, int]]) -> list[str]:
+    """--compilar: compila las presentaciones escritas en esta corrida y las omitidas que no tienen PDF o cuyo PDF es mas viejo que
+    su .tex. Un fallo (pdflatex con error o que agota el tiempo, o un .tex que no pasa la verificacion) no corta las demas: queda
+    en el temario. Devuelve las lineas que imprime main(). FileNotFoundError si no hay pdflatex."""
+    lineas = []
+    for ruta, estado, _ in resultados:
+        if not ruta.exists():                        # no se escribio: la verificacion encontro algo que podria ejecutarse
+            lineas.append(f"  sin PDF: {ruta.name} no se escribió (ver presentacion_avisos del temario)")
+            continue
+        if estado == "omitida" and not pdf_desactualizado(ruta):
+            continue
+        try:
+            pdf = compilar(ruta)
+        except (ValueError, RuntimeError) as error:
+            registrar_compilacion(ruta, str(error))
+            lineas.append(f"  sin PDF: {str(error).splitlines()[0]}")
+            continue
+        registrar_compilacion(ruta, None)
+        lineas.append(f"  PDF: {pdf.as_posix()}")
+    return lineas
 
 
 def codigos_con_planeador() -> list[str]:
@@ -503,14 +770,8 @@ def main() -> int:
             for ruta, estado, _ in escritas:
                 print(f"  {ruta.as_posix()}" + ("   (revisar: avisos en el temario)" if estado == "revisar" else ""))
             if args.compilar:
-                for ruta, _, _ in escritas:
-                    if not ruta.exists():                # no se escribio: la verificacion encontro algo que podria ejecutarse
-                        print(f"  sin PDF: {ruta.name} no se escribió (ver presentacion_avisos del temario)")
-                        continue
-                    try:
-                        print(f"  PDF: {compilar(ruta).as_posix()}")
-                    except ValueError as error:
-                        print(f"  sin PDF: {error}")
+                for linea in compilar_presentaciones(resultados):
+                    print(linea)
         except (FileNotFoundError, ValueError, RuntimeError, KeyError) as error:
             errores.append(f"{codigo}: {error}")
     for error in errores:

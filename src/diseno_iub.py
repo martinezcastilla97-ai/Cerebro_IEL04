@@ -10,8 +10,21 @@ ejemplo del docente (ELE06 y ELE03). El CODIGO escribe, siempre igual y con los 
       y el cierre.
 
 El cuerpo de las demas diapositivas lo escribe el modelo en LaTeX (TikZ, pgfplots, circuitikz, tablas y las cajas de arriba),
-verificado antes con latex_seguro.verificar_cuerpo. Sin imagenes: la marca IUB va como texto y las figuras se dibujan con TikZ.
+verificado antes con latex_seguro.verificar_cuerpo; las figuras, tablas y ecuaciones del temario no las escribe el modelo: salen del
+.tex del temario (elementos_tex.py), y el preambulo define sus estilos (`iubejes`, `dcaja`, `dflecha`...) y sus colores.
 Todo dato que viene del wiki o del temario pasa por latex_seguro.Conversor (escapado).
+
+Diseno 6 -- el Manual de Identidad Visual IUB 2025 (C:/.../Manual_Ident_IUB/manualdeidentidadiub2025_IUB.pdf):
+    - tipografia: Helvetica para las presentaciones (manual, 1.2: «Helvetica, para documentos, presentaciones y papeleria»), con
+      `helvet` (Nimbus Sans, el clon libre de Helvetica en TeX Live y MiKTeX); Nexa para titulares y destacados, que pdfLaTeX no
+      tiene: se usa `avant` (URW Gothic, geometrica como Nexa) en los titulos (\fuentetitulo);
+    - paleta principal #FFDF2D, #121023 y #FFFFFF y complementarios #00ADE7, #E39037 y #3B9C6D (manual, 1.3 y 1.4);
+    - logos reales, como imagen (logos/ junto al .tex, copiados de config/framework_iub/logos/): el horizontal a una tinta en
+      amarillo sobre el panel oscuro de la portada y del cierre (manual, 3.3.1: portada con panel oscuro de esquina redondeada y el
+      logo; 3.1: sobre fondos de color, la version de una tinta), el horizontal a color en los separadores (fondo blanco) y el simbolo
+      en negativo en la franja del titulo. El horizontal nunca va por debajo de su tamano minimo (33,5 mm de ancho, manual 2.3); el
+      simbolo de la franja (0,72 cm) es una marca de pantalla, por debajo del minimo de impresion (12 mm). Si falta un logo, el
+      preambulo escribe «IUB» en su lugar (\IfFileExists), y la presentacion compila igual.
 
 Coordenadas en cm; la diapositiva mide 16 x 9 cm (aspectratio=169). La portada, los separadores y el cierre usan
 `remember picture, overlay`: hace falta compilar DOS veces. NO se ha compilado en el equipo donde se escribio (no hay LaTeX): la
@@ -26,10 +39,15 @@ from dataclasses import dataclass, field
 import latex_seguro as ls
 from schema_presentacion import _largo
 
-VERSION = 5                 # version del diseno (campo `presentacion_diseno`): si cambia, las presentaciones se rehacen desde su plan
+VERSION = 6                 # version del diseno (campo `presentacion_diseno`): si cambia, las presentaciones se rehacen desde su plan
 
 COLORES = {"iubwhite": "FFFFFF", "iubnavy": "121023", "iubyellow": "FFDF2D",
-           "iubblue": "00ADE7", "iuborange": "E39037", "iubgreen": "3B9C6D"}
+           "iubblue": "00ADE7", "iuborange": "E39037", "iubgreen": "3B9C6D",
+           # los que usan las figuras y tablas del temario (temario_latex.COLORES)
+           "iubpurple": "8E6BBF", "iubgris": "D5DAE3", "iubgrisoscuro": "7C8598", "iubfondoazul": "EBF7FD",
+           "iubfondonaranja": "FDF4EA", "iubfondoverde": "EDF8F2", "iubfondogris": "F4F6F9"}
+# Los logos que lleva cada presentacion (en logos/, junto al .tex): de config/framework_iub/logos/
+LOGOS = {"simbolo": "logo_iub_blanco.png", "horizontal": "logo_iub_horizontal.png", "amarillo": "logo_iub_horizontal_amarillo.png"}
 CICLO = ("iubblue", "iuborange", "iubgreen")            # se alternan para diferenciar bloques y conceptos
 MARCA = "IUB"
 INSTITUCION = "Institución Universitaria de Barranquilla"
@@ -101,8 +119,10 @@ _PREAMBULO = r"""% =============================================================
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish,es-nodecimaldot,es-noshorthands]{babel}
-\usepackage{avant}                       % Sans geométrica (emula Avenir Next)
+\usepackage[scaled=0.95]{helvet}          % Helvetica (Nimbus Sans): la del manual para presentaciones
 \renewcommand{\familydefault}{\sfdefault}
+\newcommand{\fuentetitulo}{\fontfamily{pag}\selectfont}   % URW Gothic (avant), en lugar de Nexa, para titulares
+\usepackage{graphicx}                    % solo para los logos del manual (macros \logoIUB...)
 \renewcommand{\ttdefault}{pcr}           % Monoespaciada para código
 \usepackage{textcomp}
 
@@ -127,6 +147,20 @@ _PREAMBULO = r"""% =============================================================
 %  Paleta institucional IUB (Manual de Identidad Visual 2025)
 % ---------------------------------------------------------------------
 <<COLORES>>
+
+% ---------------------------------------------------------------------
+%  Logos del Manual de Identidad (logos/, junto al .tex). Si falta el
+%  archivo, se escribe la marca como texto y la presentación compila igual.
+%  \logoIUBsimbolo{alto}     símbolo en negativo (sobre #121023)
+%  \logoIUBhorizontal{alto}  horizontal a color (sobre blanco)
+%  \logoIUBamarillo{alto}    horizontal a una tinta, amarillo (sobre #121023)
+% ---------------------------------------------------------------------
+\newcommand{\logoIUBsimbolo}[1]{\IfFileExists{logos/<<LOGO_SIMBOLO>>}{\includegraphics[height=#1]{logos/<<LOGO_SIMBOLO>>}}{\textcolor{iubyellow}{\bfseries <<MARCA>>}}}
+\newcommand{\logoIUBhorizontal}[1]{\IfFileExists{logos/<<LOGO_HORIZONTAL>>}{\includegraphics[height=#1]{logos/<<LOGO_HORIZONTAL>>}}{\textcolor{iubnavy}{\bfseries <<MARCA>>}}}
+\newcommand{\logoIUBamarillo}[1]{\IfFileExists{logos/<<LOGO_AMARILLO>>}{\includegraphics[height=#1]{logos/<<LOGO_AMARILLO>>}}{\textcolor{iubyellow}{\bfseries\Huge <<MARCA>>}}}
+
+% Un elemento del temario que no se pudo poner (no debería verse: el código sustituye cada uno por su LaTeX)
+\newcommand{\elementoTemario}[2]{\fcolorbox{iuborange}{white}{\scriptsize\textcolor{iuborange}{[#1 #2 del temario: no disponible]}}}
 
 % ---------------------------------------------------------------------
 %  Configuración de Beamer
@@ -154,10 +188,10 @@ _PREAMBULO = r"""% =============================================================
     \useasboundingbox (0,0) rectangle (\paperwidth,1.05cm);
     \fill[iubnavy] (0,0) rectangle (\paperwidth,1.05cm);
     \fill[iubyellow] (0,0) rectangle (\paperwidth,0.05cm);
-    \node[anchor=west, text=iubyellow, font=\large\bfseries]
+    \node[anchor=west, text=iubyellow, font=\fuentetitulo\large\bfseries]
       at (0.6cm,0.55cm) {\strut\insertframetitle};
-    \node[anchor=east, text=iubyellow, font=\footnotesize\bfseries]
-      at ([xshift=-0.6cm]\paperwidth,0.55cm) {<<MARCA>>};
+    \node[anchor=east, inner sep=0pt]
+      at ([xshift=-0.6cm]\paperwidth,0.55cm) {\logoIUBsimbolo{0.72cm}};
   \end{tikzpicture}}
 
 % ---------- Pie de página ----------
@@ -250,7 +284,19 @@ _PREAMBULO = r"""% =============================================================
     font=\scriptsize\bfseries, align=center, inner sep=1pt},
   tag/.style={fill=#1, text=white, font=\scriptsize\bfseries, rounded corners=1mm,
     minimum width=0.7cm, anchor=north west},
+  % los de los diagramas del temario (temario_latex.py), con la misma forma y paleta
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt, text=iubnavy},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt, text=iubnavy},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt, text=iubnavy},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt, text=iubnavy},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
 }
+% Las gráficas del temario (pgfplots), del tamaño del área útil de una diapositiva
+\pgfplotsset{iubejes/.style={width=0.86\linewidth, height=4.3cm, grid=major, grid style={iubgris}, axis lines*=left,
+  axis line style={iubnavy}, tick label style={font=\scriptsize}, label style={font=\scriptsize}, title style={font=\bfseries\scriptsize},
+  legend cell align=left, legend style={draw=none, fill=none, font=\scriptsize, anchor=north, legend columns=-1,
+  /tikz/every even column/.append style={column sep=6pt}}, unbounded coords=jump}}
 
 % ---------------------------------------------------------------------
 %  Diapositiva separadora de bloque
@@ -266,7 +312,7 @@ _PREAMBULO = r"""% =============================================================
     at ([xshift=0.8cm,yshift=-2.2cm]current page.north west) {BLOQUE};
   \node[anchor=north west, text=white, font=\bfseries\fontsize{72}{72}\selectfont]
     at ([xshift=0.65cm,yshift=-2.9cm]current page.north west) {#1};
-  \node[anchor=north west, text=iubnavy, font=\bfseries\LARGE,
+  \node[anchor=north west, text=iubnavy, font=\fuentetitulo\bfseries\LARGE,
         text width=9.4cm, align=left]
     at ([xshift=6.2cm,yshift=-2.8cm]current page.north west)
     {\hyphenpenalty=10000\exhyphenpenalty=10000 #2};
@@ -277,8 +323,10 @@ _PREAMBULO = r"""% =============================================================
         ([yshift=0.35cm]current page.south east);
   \fill[iubyellow] ([xshift=5.2cm,yshift=0.35cm]current page.south west)
         rectangle ([yshift=0.42cm]current page.south east);
-  \node[anchor=north east, text=iubnavy, font=\small\bfseries]
-    at ([xshift=-0.6cm,yshift=-0.5cm]current page.north east) {<<MARCA>> · <<CODIGO>>};
+  \node[anchor=north east, inner sep=0pt]
+    at ([xshift=-0.6cm,yshift=-0.5cm]current page.north east) {\logoIUBhorizontal{0.9cm}};
+  \node[anchor=north east, text=iubnavy, font=\scriptsize\bfseries]
+    at ([xshift=-0.6cm,yshift=-1.55cm]current page.north east) {<<CODIGO>>};
 \end{tikzpicture}
 \end{frame}}
 """
@@ -295,6 +343,7 @@ def preambulo(doc: Documento) -> str:
         "<<PIE_MODULO>>": c.escapar(_recorte(f"{doc.codigo} · {doc.asignatura}", 58)),
         "<<PIE_DOCENTE>>": c.escapar(_recorte(doc.docente, 34)),
         "<<SEMANA>>": str(doc.semana),
+        "<<LOGO_SIMBOLO>>": LOGOS["simbolo"], "<<LOGO_HORIZONTAL>>": LOGOS["horizontal"], "<<LOGO_AMARILLO>>": LOGOS["amarillo"],
     }
     texto = _PREAMBULO
     for marca, valor in reemplazos.items():
@@ -316,58 +365,58 @@ def _tam_titulo_portada(titulo: str) -> str:
 
 
 def portada(doc: Documento) -> str:
+    """La portada del Manual de Identidad (3.3.1, Presentaciones): a la izquierda un panel #121023 de esquina inferior redondeada con el
+    logo horizontal a una tinta en amarillo, el programa y el docente; a la derecha, sobre blanco, la etiqueta de la sesion, la
+    asignatura, el titulo (en la fuente de titulares), la plataforma de referencia y la duracion."""
     c = doc.conv
     etiqueta = [doc.codigo, f"Semana {doc.semana} de {doc.total_semanas}"] + ([f"Corte evaluativo {doc.corte}"] if doc.corte else [])
     sesion = ([f"Sesión {doc.tipo_sesion}"] if doc.tipo_sesion else []) + ([f"{doc.duracion_min} min"] if doc.duracion_min else [])
-    pie_docente = c.escapar(_recorte(doc.docente, 60)) + (rf"\\[1pt]\textcolor{{iubyellow}}{{\tiny {c.escapar(_recorte(doc.contacto, 60))}}}" if doc.contacto else "")
-    subtitulo = (rf"""  \node[anchor=north west, text=iubnavy, font=\normalsize, text width=9.0cm, align=left]
+    pie_docente = c.escapar(_recorte(doc.docente, 60)) + (rf"\\[1pt]\textcolor{{iubyellow}}{{{c.escapar(_recorte(doc.contacto, 60))}}}" if doc.contacto else "")
+    subtitulo = (rf"""  \node[anchor=north west, text=iubnavy, font=\normalsize, text width=8.6cm, align=left]
     at ([yshift=-0.3cm]t.south west)
     {{\hyphenpenalty=10000 {c.inline(_recorte(doc.subtitulo, 140))}}};
 """ if doc.subtitulo.strip() else "")
     return rf"""% ---------------------------------------------------------------------
-%  PORTADA
+%  PORTADA (Manual de Identidad IUB, 3.3.1: panel oscuro con el logo)
 % ---------------------------------------------------------------------
 \begin{{frame}}[plain]
 \begin{{tikzpicture}}[remember picture, overlay]
-  % Panel institucional
-  \fill[iubnavy] (current page.north west) rectangle
-        ([xshift=5.6cm]current page.south west);
-  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{{54}}{{54}}\selectfont]
-    at ([xshift=0.7cm,yshift=-1.0cm]current page.north west) {{{MARCA}}};
-  \node[anchor=north west, text=white, font=\footnotesize, text width=4.3cm, align=left]
-    at ([xshift=0.75cm,yshift=-3.0cm]current page.north west)
-    {{{c.escapar(INSTITUCION)}}};
+  % Panel institucional: la esquina inferior derecha redondeada (las demás quedan fuera de la página)
+  \fill[iubnavy, rounded corners=1.6cm] ([xshift=-2cm,yshift=2cm]current page.north west) rectangle
+        ([xshift=6.0cm]current page.south west);
+  \node[anchor=north west, inner sep=0pt]
+    at ([xshift=0.7cm,yshift=-1.3cm]current page.north west) {{\logoIUBamarillo{{1.15cm}}}};
   \draw[iubyellow, line width=1.2pt]
-    ([xshift=0.75cm,yshift=-4.25cm]current page.north west) --
-    ([xshift=2.6cm,yshift=-4.25cm]current page.north west);
+    ([xshift=0.75cm,yshift=-3.1cm]current page.north west) --
+    ([xshift=2.6cm,yshift=-3.1cm]current page.north west);
   \node[anchor=north west, text=iubyellow, font=\scriptsize\bfseries,
-        text width=4.3cm, align=left]
-    at ([xshift=0.75cm,yshift=-4.5cm]current page.north west)
+        text width=4.6cm, align=left]
+    at ([xshift=0.75cm,yshift=-3.35cm]current page.north west)
     {{{c.escapar(_recorte(doc.programa, 90))}}};
-  \node[anchor=south west, text=white, font=\scriptsize, text width=4.3cm, align=left]
+  \node[anchor=south west, text=white, font=\scriptsize, text width=4.6cm, align=left]
     at ([xshift=0.75cm,yshift=0.9cm]current page.south west)
     {{{pie_docente}}};
   % Bloque de título
   \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
         font=\scriptsize\bfseries, inner sep=2mm]
-    at ([xshift=6.4cm,yshift=-1.0cm]current page.north west)
+    at ([xshift=6.8cm,yshift=-1.0cm]current page.north west)
     {{{c.escapar(' · '.join(etiqueta))}}};
-  \node[anchor=north west, text=iubnavy, font=\small, text width=9.0cm, align=left] (a)
-    at ([xshift=6.4cm,yshift=-1.9cm]current page.north west)
+  \node[anchor=north west, text=iubnavy, font=\small, text width=8.6cm, align=left] (a)
+    at ([xshift=6.8cm,yshift=-1.9cm]current page.north west)
     {{{c.escapar(_recorte(doc.asignatura, 110))}}};
-  \node[anchor=north west, text=iubnavy, font=\bfseries{_tam_titulo_portada(doc.titulo)},
-        text width=9.0cm, align=left] (t)
+  \node[anchor=north west, text=iubnavy, font=\fuentetitulo\bfseries{_tam_titulo_portada(doc.titulo)},
+        text width=8.6cm, align=left] (t)
     at ([yshift=-0.35cm]a.south west)
     {{\hyphenpenalty=10000 {c.inline(_recorte(doc.titulo, 160))}}};
-{subtitulo}  % Franjas de la paleta complementaria
-  \fill[iubblue]   ([xshift=6.4cm,yshift=1.1cm]current page.south west)
+{subtitulo}  % Franjas de la paleta complementaria (manual, 1.4)
+  \fill[iubblue]   ([xshift=6.8cm,yshift=1.1cm]current page.south west)
     rectangle ++(1.6cm,0.18cm);
-  \fill[iuborange] ([xshift=8.1cm,yshift=1.1cm]current page.south west)
+  \fill[iuborange] ([xshift=8.5cm,yshift=1.1cm]current page.south west)
     rectangle ++(1.6cm,0.18cm);
-  \fill[iubgreen]  ([xshift=9.8cm,yshift=1.1cm]current page.south west)
+  \fill[iubgreen]  ([xshift=10.2cm,yshift=1.1cm]current page.south west)
     rectangle ++(1.6cm,0.18cm);
   \node[anchor=north west, text=iubnavy, font=\scriptsize]
-    at ([xshift=6.4cm,yshift=0.95cm]current page.south west)
+    at ([xshift=6.8cm,yshift=0.95cm]current page.south west)
     {{{c.escapar(' · '.join(sesion))}}};
 \end{{tikzpicture}}
 \end{{frame}}
@@ -460,8 +509,10 @@ def cierre(doc: Documento) -> str:
 \begin{{frame}}[plain]
 \begin{{tikzpicture}}[remember picture, overlay]
   \fill[iubnavy] (current page.north west) rectangle (current page.south east);
-  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{{40}}{{44}}\selectfont]
+  \node[anchor=north west, text=iubyellow, font=\fuentetitulo\bfseries\fontsize{{40}}{{44}}\selectfont]
     at ([xshift=1.2cm,yshift=-1.6cm]current page.north west) {{{c.escapar('¡Gracias!')}}};
+  \node[anchor=south east, inner sep=0pt]
+    at ([xshift=-0.9cm,yshift=0.75cm]current page.south east) {{\logoIUBamarillo{{0.95cm}}}};
   \node[anchor=north west, text=white, font=\normalsize, text width=14cm, align=left]
     at ([xshift=1.2cm,yshift=-3.4cm]current page.north west)
     {{{c.escapar(_recorte(f'{doc.codigo} · {doc.asignatura}', 120))}}};

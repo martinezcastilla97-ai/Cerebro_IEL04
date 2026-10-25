@@ -26,6 +26,7 @@ from pathlib import Path
 
 import _fixtures
 import diseno_iub
+import elementos_tex
 import figuras
 import latex_seguro as ls
 import lint
@@ -60,6 +61,8 @@ def doc_de_prueba(**extra) -> diseno_iub.Documento:
 def cuerpo(clave: str) -> str:
     normalizado, problemas = ls.verificar_cuerpo(_fixtures.CUERPOS_FALSOS[clave])
     assert not problemas, (clave, problemas)
+    # la normalizacion es idempotente: un cuerpo ya normalizado (el de un plan guardado) no cambia al releerlo
+    assert ls.verificar_cuerpo(normalizado) == (normalizado, []), clave
     return normalizado
 
 
@@ -115,8 +118,6 @@ def probar_latex_seguro() -> None:
     assert c.escapar("50 % de $x_1$ & #3 {a} ~ \\ ^") == r"50 \% de \$x\_1\$ \& \#3 \{a\} \textasciitilde{} \textbackslash{} \^{}"
     assert c.inline("texto \\input{/etc/passwd}") == r"texto \textbackslash{}input\{/etc/passwd\}", "en los datos, una barra invertida es texto"
     assert c.matematicas(r"\input{x} + a^^5c").count(r"\text{\textbackslash{}") == 1 and "^^" not in c.matematicas("a^^5c")
-    simbolos = c.escapar("W = CV² · 2.ª ed. · 5 m³ · ¼ · ‰ · ¬ · nº 1")
-    assert not ls.comandos_no_admitidos(simbolos), "lo que escribe el Conversor pasa la lista de permitidos"
     print("A1. los datos del temario y del wiki (títulos, docente, referencias) se escapan, y sus fórmulas solo admiten comandos matemáticos -- OK")
 
     for clave in _fixtures.CUERPOS_FALSOS:
@@ -172,6 +173,17 @@ def probar_latex_seguro() -> None:
     print(f"A2b. las OPCIONES también van con lista de permitidos: {len(claves_hostiles)} claves desconocidas o manejadores (/.code, /.style, /.append style, "
           "/.store in, /.cd...) en \\tikzset, nodos, ejes, cajas, adjustbox, circuitos y colores de un \\foreach se rechazan -- OK")
 
+    # A2c. lo que el Conversor emite al escapar un dato (titulo, docente, programa, referencias) pasa la lista de permitidos: antes de
+    # SCHEMA 1.27, `ª º ‰ ² ³ ¹ ¼ ¾ ¬` salian como \textordfeminine, \texttwosuperior... que no estaban en COMANDOS_CUERPO, y
+    # verificar_latex lo marcaba grave: una presentacion con «2.º semestre» o «m²» en un dato no se escribia.
+    simbolos = "".join([*ls._TEXTO_COMO_COMANDO, *ls._SIMBOLOS])
+    escapado = ls.Conversor().escapar(f"Datos: 2.ª y 3.º; 5 ‰; m² y m³; x¹; ¼ y ¾; ¬p; {simbolos}")
+    assert ls.verificar_cuerpo(escapado)[1] == [], ls.verificar_cuerpo(escapado)[1]
+    documento = "\\documentclass{beamer}\n\\begin{document}\n\\begin{frame}\n" + escapado + "\n\\end{frame}\n\\end{document}\n"
+    assert not [p for p in ls.verificar_latex(documento) if "no admitidos" in p] and not ls.graves(ls.verificar_latex(documento))
+    print(f"A2c. todo lo que el Conversor emite al escapar un dato ({len(simbolos)} símbolos: ª º ‰ ² ³ ¹ ¼ ¾ ¬, griegas, flechas...) está en la lista de "
+          "permitidos: un título o una referencia con «2.º» o «m²» no deja la presentación sin escribir -- OK")
+
     for texto, esperado in HOSTILES.items():
         _, problemas = ls.verificar_cuerpo(texto)
         assert any(esperado in p for p in problemas), (texto, esperado, problemas)
@@ -225,6 +237,7 @@ def probar_latex_seguro() -> None:
         if problemas:
             continue
         admitidas += 1
+        assert ls.verificar_cuerpo(normalizado) == (normalizado, []), texto                # releerlo no lo cambia ni lo rechaza
         sin_codigo = re.sub(r"\\begin\{codebox\}.*?\\end\{codebox\}", "", normalizado, flags=re.S)
         assert not ({m for m in re.findall(r"\\([A-Za-z]+)", sin_codigo.replace("\\\\", "")) } & prohibidos) and "^^" not in sin_codigo, texto
         assert "/." not in sin_codigo and not ls.opciones_no_admitidas(sin_codigo), texto     # fuera de TikZ, un [..] es texto
@@ -265,14 +278,22 @@ def probar_diseno() -> None:
     assert ls.verificar_latex(tex) == [], ls.verificar_latex(tex)
     for color, hexa in (("iubnavy", "121023"), ("iubyellow", "FFDF2D"), ("iubwhite", "FFFFFF"), ("iubblue", "00ADE7"), ("iuborange", "E39037"), ("iubgreen", "3B9C6D")):
         assert f"\\definecolor{{{color}}}{{HTML}}{{{hexa}}}" in tex
-    for requisito in (r"\usepackage{avant}", r"\renewcommand{\familydefault}{\sfdefault}", r"\documentclass[aspectratio=169", r"\usepackage{tikz}",
+    for requisito in (r"\usepackage[scaled=0.95]{helvet}", r"\fontfamily{pag}", r"\renewcommand{\familydefault}{\sfdefault}", r"\documentclass[aspectratio=169", r"\usepackage{tikz}",
                       r"\usepackage{pgfplots}", r"\usepackage[most]{tcolorbox}", r"circuitikz}", r"\newtcolorbox{caja}", r"\newtcolorbox{cardN}",
-                      r"\newtcblisting{codebox}", r"\newcommand{\bloque}[4]", r"\setbeamertemplate{headline}", r"{IUB}", r"flecha/.style",
+                      r"\newtcblisting{codebox}", r"\newcommand{\bloque}[4]", r"\setbeamertemplate{headline}", r"\logoIUBsimbolo{0.72cm}", r"flecha/.style",
+                      r"dcaja/.style", r"iubejes/.style", r"\definecolor{iubfondogris}", r"\newcommand{\elementoTemario}[2]",
                       "Semana 3 \\quad \\insertframenumber", "Docente de prueba", "es-noshorthands"):
         assert requisito in tex, requisito
-    assert "includegraphics" not in tex and "logo" not in tex.lower() and ".png" not in tex, "sin imágenes: la marca va como texto y las figuras en TikZ"
-    print("C1. el preámbulo es el de las presentaciones de ejemplo: paleta IUB, avant sans serif, franja con el título y «IUB», pie con módulo, docente y semana, "
-          "cajas, codebox, estilos TikZ y el separador \\bloque; sin ninguna imagen -- OK")
+    preambulo, _, documento = tex.partition("\\begin{document}")
+    # los logos del Manual de Identidad: solo los pone el preambulo (macros con \IfFileExists: sin el archivo, la marca en texto)
+    assert "\\includegraphics" not in documento and preambulo.count("\\includegraphics") == 3 and preambulo.count("\\IfFileExists{logos/") == 3
+    for nombre in diseno_iub.LOGOS.values():
+        assert f"logos/{nombre}" in preambulo
+    assert "\\logoIUBamarillo{1.15cm}" in documento and "rounded corners=1.6cm" in documento                  # la portada del manual (3.3.1)
+    assert documento.count("\\logoIUBamarillo{") == 2                                                      # portada y cierre
+    print("C1. el preámbulo sigue el Manual de Identidad IUB 2025: paleta, Helvetica (helvet) y URW Gothic en los títulos, franja con el título y el "
+          "símbolo, pie con módulo, docente y semana, cajas, codebox, estilos TikZ (también los del temario) y el separador \\bloque; los logos, "
+          "solo con las macros del preámbulo -- OK")
 
     documento = tex.partition("\\begin{document}")[2]
     assert documento.count("\\begin{frame}") + documento.count("\\bloque{") == total == 1 + 2 + 1 + 3 + 5 + 1 + 1, total
@@ -360,6 +381,7 @@ Síntesis.
 
 LLAMADAS: list[str] = []
 RESPUESTAS: list = []           # respuestas que devolvera el LLM falso antes de las de _fixtures
+USAR_ELEMENTOS = [False]        # el LLM falso pone, al principio de la parte, la primera orden \elementoTemario que se le ofrece
 
 
 def llm_falso(sistema, usuario, formato):
@@ -368,7 +390,11 @@ def llm_falso(sistema, usuario, formato):
         if RESPUESTAS:
             respuesta = RESPUESTAS.pop(0)
             return respuesta(usuario) if callable(respuesta) else respuesta
-        return _fixtures.diapositivas_falsas(usuario)
+        salida = _fixtures.diapositivas_falsas(usuario)
+        ordenes = re.findall(r"\\elementoTemario\{\w+\}\{\d+\}", usuario.partition("Elementos del temario de esta parte")[2])
+        if USAR_ELEMENTOS[0] and ordenes:
+            return DiapositivasParte(diapositivas=[DiapositivaLatex(titulo="Del temario", cuerpo=ordenes[0]), *salida.diapositivas][:6])
+        return salida
     if formato is TemasSemana:
         n = int(re.search(r"Semanas de clase de este RA: (\d+)", usuario).group(1))
         return TemasSemana(temas=[f"Tema {i}" for i in range(1, n + 1)])
@@ -413,7 +439,8 @@ def probar_flujo(raiz: Path) -> None:
     assert len(LLAMADAS) == n1 + n2 and "Diseña exactamente 2 diapositivas para abrir la sesión" in LLAMADAS[0]
     assert "para el bloque 1" in LLAMADAS[1] and "figuras/TPR01" not in "".join(LLAMADAS), "las figuras PNG no se ofrecen como imagen"
     archivos = {p.relative_to(carpeta).as_posix() for p in carpeta.rglob("*") if p.is_file()}
-    assert archivos == {"TPR01-semana01.tex", "TPR01-semana01.plan.json", "TPR01-semana02.tex", "TPR01-semana02.plan.json"}, "sin logos ni figuras: todo es TikZ"
+    logos = {f"logos/{n}" for n in diseno_iub.LOGOS.values()}
+    assert archivos == {"TPR01-semana01.tex", "TPR01-semana01.plan.json", "TPR01-semana02.tex", "TPR01-semana02.plan.json"} | logos, archivos   # sin PNG del temario
     plan = json.loads((carpeta / "TPR01-semana01.plan.json").read_text(encoding="utf-8"))
     assert plan["formato"] == presentaciones.FORMATO_PLAN and len(plan["partes"]) == n1
     fm = fm_temario(1)
@@ -422,8 +449,103 @@ def probar_flujo(raiz: Path) -> None:
     tex = (carpeta / "TPR01-semana01.tex").read_text(encoding="utf-8")
     assert ls.verificar_latex(tex) == [] and "Docente Uno" in tex and "\\bloque{01}" in tex and "\\begin{frame}[fragile]" in tex and "\\end {frame}" in tex
     assert "/presentaciones TPR01" in Path("wiki/log.md").read_text(encoding="utf-8")
-    print(f"D1. una llamada por parte ({n1} y {n2}: la apertura y cada bloque), sin ofrecer las figuras como imagen: .tex y plan por partes, sin logos ni PNG, "
-          "y los campos presentacion_* en el temario -- OK")
+    # los elementos del .tex del temario: todos en la presentacion (el modelo falso no usa ninguno: van en diapositivas propias)
+    elementos = elementos_tex.leer(Path(fm["latex_archivo"]))
+    assert elementos and fm["presentacion_elementos"] == len(elementos)
+    documento = tex.partition("\\begin{document}")[2]
+    for e in elementos:
+        if e.clase == "figura":
+            assert f"\\textbf{{Figura {e.numero}.}}" in documento, e.clave
+        elif e.clase == "tabla":
+            assert f"\\textbf{{Tabla {e.numero}.}}" in documento, e.clave
+    assert documento.count("\\begin{equation*}") == sum(e.clase == "ecuacion" for e in elementos) and "\\elementoTemario" not in documento
+    assert documento.count("\\begin{axis}") >= sum(e.tipo == "gráfica" for e in elementos)                 # las graficas del temario, en pgfplots
+    print(f"D1. una llamada por parte ({n1} y {n2}: la apertura y cada bloque), sin ofrecer las figuras como imagen: .tex y plan por partes, los logos del "
+          f"manual al lado, los {len(elementos)} elementos del .tex del temario (figuras, tablas y ecuaciones) en la presentación y los campos presentacion_* -- OK")
+
+    # D1b. el modelo ve cada elemento marcado y lo pone con \elementoTemario; uno de otra parte se le devuelve; los que no usa, el codigo
+    fm_md, cuerpo_md = vault.leer_pagina(vault.TEMARIOS / "TPR01-semana01.md")
+    partes = presentaciones.partes_del_temario(cuerpo_md)
+    presentaciones.repartir_elementos(partes, elementos)
+    con_figura = next(p for p in partes if any(e.clase == "figura" for e in p.elementos))
+    figura = next(e for e in con_figura.elementos if e.clase == "figura")
+    ajena = next(e for e in elementos if e not in con_figura.elementos)
+    assert f"\\elementoTemario{{figura}}{{{figura.numero}}}" in con_figura.texto_modelo and "figuras/" not in con_figura.texto_modelo
+    assert sum(len(p.elementos) for p in partes) == len(elementos)                                     # cada elemento, en una sola parte
+    buena = DiapositivasParte(diapositivas=[DiapositivaLatex(titulo="Con la figura", cuerpo=f"\\elementoTemario{{figura}}{{{figura.numero}}}\n\\small Una lectura."),
+                                            DiapositivaLatex(titulo="Otra", cuerpo=cuerpo("cajas"))])
+    assert presentaciones.validar_parte(buena, con_figura) == []
+    mala = DiapositivasParte(diapositivas=[DiapositivaLatex(titulo="Ajena", cuerpo=f"\\elementoTemario{{{ajena.clase}}}{{{ajena.numero}}}")])
+    assert any("no son de esta parte" in p for p in presentaciones.validar_parte(mala, con_figura))
+    normalizadas, _ = presentaciones.normalizar_parte(buena)
+    compuestas = presentaciones.componer_parte(normalizadas, con_figura)
+    assert "\\begin{tikzpicture}" in compuestas[0].cuerpo and "\\elementoTemario" not in "".join(d.cuerpo for d in compuestas)
+    assert "max totalheight=4.4cm" in compuestas[0].cuerpo                                             # con texto al lado, la figura mas baja
+    textos = "".join(d.cuerpo for d in compuestas)
+    assert textos.count(f"\\textbf{{Figura {figura.numero}.}}") == 1                                   # usada por el modelo: no se repite al final
+    assert all(f"\\textbf{{Figura {e.numero}.}}" in textos for e in con_figura.elementos if e.clase == "figura")   # las demas, en diapositivas propias
+    tabla = elementos_tex.Elemento("tabla", 9, None, leyenda="Larga", columnas="ll", encabezado="\\rowcolor{iubnavy} a & b \\\\",
+                                   filas=[f"{k} & {k} \\\\" for k in range(20)])
+    assert len(tabla.trozos()) == 3 and "(3/3)" in tabla.latex(trozo=2)                                # una tabla larga se parte repitiendo el encabezado
+    # un .md editado a mano despues de su .tex: los elementos no se toman de ahi (y se avisa)
+    vault.escribir_pagina(vault.TEMARIOS / "TPR01-semana01.md", fm_md, cuerpo_md + "\nEditado a mano.\n")
+    fm_editado, cuerpo_editado = vault.leer_pagina(vault.TEMARIOS / "TPR01-semana01.md")
+    sin, avisos = presentaciones.elementos_del_temario(fm_editado, cuerpo_editado, "TPR01", 1)
+    assert sin == [] and len(avisos) == 1 and "se editó después" in avisos[0]
+    vault.escribir_pagina(vault.TEMARIOS / "TPR01-semana01.md", fm_md, cuerpo_md)
+    print("D1b. el modelo ve cada elemento del temario marcado y lo pone con \\elementoTemario (uno de otra parte se le devuelve); el código pone su "
+          "LaTeX, parte las tablas largas y agrega los que no usó; con el .md editado después del .tex, no se usan y se avisa -- OK")
+
+    # D1c. `latex_archivo` solo se lee si es, resuelto, el .tex de ESE temario (lo que se lee viaja al proveedor de IA)
+    otro_tex = (vault.TEMARIOS / "TPR01-semana02.tex").as_posix()
+    for ajeno in (otro_tex, str((vault.TEMARIOS / "TPR01-semana01.tex").resolve().parent.parent / "secreto.tex"),
+                  "generacion/temarios/../temarios/../../wiki/log.md"):
+        sin, avisos = presentaciones.elementos_del_temario({**fm_md, "latex_archivo": ajeno}, cuerpo_md, "TPR01", 1)
+        assert sin == [] and len(avisos) == 1 and "no es su .tex" in avisos[0] and "no se lee" in avisos[0], (ajeno, avisos)
+    leidas: list[Path] = []
+    leer = elementos_tex.leer
+    elementos_tex.leer = lambda ruta: leidas.append(ruta) or leer(ruta)
+    try:
+        presentaciones.elementos_del_temario({**fm_md, "latex_archivo": otro_tex}, cuerpo_md, "TPR01", 1)
+        assert not leidas, "un .tex ajeno ni se abre"
+        presentaciones.elementos_del_temario({**fm_md, "latex_archivo": "generacion/temarios/./TPR01-semana01.tex"}, cuerpo_md, "TPR01", 1)
+        assert len(leidas) == 1, "la misma ruta escrita de otra forma sí es su .tex"
+    finally:
+        elementos_tex.leer = leer
+    print("D1c. `latex_archivo` se lee solo si, resuelto, es generacion/temarios/{codigo}-semanaNN.tex de ese temario: el de otro temario, una ruta "
+          "absoluta o con `..` que sale de ahí no se abre y queda un aviso -- OK")
+
+    # D1d. un .tex del temario editado a mano con \input en una figura, \csname en una tabla y ^^ en una ecuacion: esos elementos se
+    # descartan (el modelo trabaja con el texto), la presentacion se escribe en `revisar`, el plan se conserva y no se llama al modelo
+    ruta_tex_t = vault.TEMARIOS / "TPR01-semana01.tex"
+    original_tex = ruta_tex_t.read_text(encoding="utf-8")
+    hostil = re.sub(r"(% --- Figura 1:.*?\\begin\{tikzpicture\}[^\n]*\n)", lambda m: m.group(1) + "\\input{secreto.txt}\n", original_tex, count=1, flags=re.S)
+    hostil = re.sub(r"(% --- Tabla 1:.*?\\endlastfoot\n)", lambda m: m.group(1) + "\\csname x\\endcsname & y \\\\\n", hostil, count=1, flags=re.S)
+    hostil = hostil.replace("\\begin{equation}\n", "\\begin{equation}\n  a^^5cinput{secreto.txt} +", 1)
+    assert hostil.count("secreto.txt") == 2 and "\\csname x" in hostil
+    ruta_tex_t.write_text(hostil, encoding="utf-8")
+    plan_s1 = carpeta / "TPR01-semana01.plan.json"
+    plan_antes = json.loads(plan_s1.read_text(encoding="utf-8"))["partes"]
+    total = len(elementos)
+    try:
+        LLAMADAS.clear()
+        (destino_s1, estado, pedidas), = presentaciones.generar_presentaciones("TPR01", semanas=[1])
+        fm_s1 = fm_temario(1)
+        documento = destino_s1.read_text(encoding="utf-8").partition("\\begin{document}")[2]
+        descartes = [a for a in fm_s1["presentacion_avisos"] if "no pasa la verificación" in a]
+        assert estado == "revisar" and pedidas == 0 and not LLAMADAS and destino_s1.exists(), (estado, pedidas, fm_s1["presentacion_avisos"])
+        assert len(descartes) == 3 and all("rehaz el temario con `temario.py TPR01 --semana 1 --forzar`" in a for a in descartes), descartes
+        assert {a.split(" del .tex")[0] for a in descartes} == {"la figura 1", "la tabla 1", "la ecuación 1"}, descartes
+        assert "secreto" not in documento and "csname" not in documento and "^^" not in documento and fm_s1["presentacion_elementos"] == total - 3
+        assert plan_s1.exists() and json.loads(plan_s1.read_text(encoding="utf-8"))["partes"] == plan_antes, "el plan que pagó el modelo se conserva, igual"
+        LLAMADAS.clear()
+        assert [e for _, e, _ in presentaciones.generar_presentaciones("TPR01", semanas=[1])] == ["omitida"] and not LLAMADAS
+    finally:
+        ruta_tex_t.write_text(original_tex, encoding="utf-8")
+    presentaciones.generar_presentaciones("TPR01", semanas=[1])                  # vuelve a tomar los elementos buenos (sin LLM)
+    assert fm_temario(1)["presentacion_elementos"] == total and not LLAMADAS
+    print("D1d. un .tex del temario editado a mano (\\input en una figura, \\csname en una tabla, ^^ en una ecuación): esos elementos no se usan, con un "
+          "aviso que dice cuál y qué hacer; la presentación se escribe en `revisar`, el plan se conserva y la siguiente corrida no llama al modelo -- OK")
 
     LLAMADAS.clear()
     assert {e for _, e, _ in presentaciones.generar_presentaciones("TPR01", "Docente Uno", "Programa Uno")} == {"omitida"} and not LLAMADAS
@@ -445,11 +567,12 @@ def probar_flujo(raiz: Path) -> None:
     hallazgos = [h for h in lint.revisar() if h.regla == "L14"]
     assert len(hallazgos) == 1 and "desactualizada" in hallazgos[0].mensaje and "pidiendo al modelo 1 parte(s)" in hallazgos[0].mensaje, hallazgos
     (_, estado, pedidas), = presentaciones.generar_presentaciones("TPR01", semanas=[1])
-    assert (estado, pedidas) == ("generada", 1) and len(LLAMADAS) == 1 and "Una línea editada a mano" in LLAMADAS[0], "solo el bloque que cambió"
+    assert (estado, pedidas) == ("revisar", 1) and len(LLAMADAS) == 1 and "Una línea editada a mano" in LLAMADAS[0], "solo el bloque que cambió"
+    assert any("se editó después de escribir su .tex" in a for a in fm_temario(1)["presentacion_avisos"])   # el .md ya no es el de su .tex: sin elementos, y lo dice
     LLAMADAS.clear()
     fm, cuerpo_md = vault.leer_pagina(vault.TEMARIOS / "TPR01-semana01.md")
     vault.escribir_pagina(vault.TEMARIOS / "TPR01-semana01.md", fm, cuerpo_md.rstrip() + "\n\n[9] Una referencia agregada a mano.\n")
-    assert [(e, n) for _, e, n in presentaciones.generar_presentaciones("TPR01", semanas=[1])] == [("generada", 0)], "la bibliografía no es una parte: 0 llamadas"
+    assert [(e, n) for _, e, n in presentaciones.generar_presentaciones("TPR01", semanas=[1])] == [("revisar", 0)], "la bibliografía no es una parte: 0 llamadas"
     assert "Una referencia agregada a mano" in (carpeta / "TPR01-semana01.tex").read_text(encoding="utf-8")
     presentaciones.generar_presentaciones("TPR01", semanas=[2], replanificar=True)
     assert len(LLAMADAS) == n2
@@ -459,7 +582,7 @@ def probar_flujo(raiz: Path) -> None:
     ruta_plan = carpeta / "TPR01-semana02.plan.json"
     for corrupto in ("{}", "{no es json", json.dumps({"temario_hash": "x", "plan": {"secciones": []}})):
         ruta_plan.write_text(corrupto, encoding="utf-8")
-        assert len(presentaciones.partes_pendientes(carpeta / "TPR01-semana02.tex", vault.leer_pagina(vault.TEMARIOS / "TPR01-semana02.md")[1])) == n2
+        assert len(presentaciones.partes_pendientes(carpeta / "TPR01-semana02.tex", *vault.leer_pagina(vault.TEMARIOS / "TPR01-semana02.md"), "TPR01", 2)) == n2
     LLAMADAS.clear()
     presentaciones.generar_presentaciones("TPR01", semanas=[2], forzar=True)
     assert len(LLAMADAS) == n2, "un plan ilegible o del formato del diseño 4 no se reutiliza"
@@ -488,10 +611,12 @@ def probar_flujo(raiz: Path) -> None:
     tex = destino.read_text(encoding="utf-8")
     assert estado == "revisar" and "secreto" not in tex and "no se generaron: el modelo no cumplió las reglas de LaTeX" in tex
     assert any("tras 3 intentos" in a for a in fm_temario(1)["presentacion_avisos"])
-    assert len(presentaciones.partes_pendientes(destino, vault.leer_pagina(vault.TEMARIOS / "TPR01-semana01.md")[1])) == 1
+    assert len(presentaciones.partes_pendientes(destino, *vault.leer_pagina(vault.TEMARIOS / "TPR01-semana01.md"), "TPR01", 1)) == 1
     LLAMADAS.clear()
     (_, estado, pedidas), = presentaciones.generar_presentaciones("TPR01", semanas=[1])
-    assert (estado, pedidas) == ("generada", 1) and len(LLAMADAS) == 1, "la próxima corrida pide solo la parte que quedó provisional"
+    assert pedidas == 1 and len(LLAMADAS) == 1, "la próxima corrida pide solo la parte que quedó provisional"
+    avisos = fm_temario(1)["presentacion_avisos"]                        # (la semana 1 tiene el .md editado en D3: queda solo ese aviso)
+    assert estado == "revisar" and len(avisos) == 1 and "se editó después de escribir su .tex" in avisos[0], avisos
     print("D6. si el modelo nunca cumple en una parte, queda una diapositiva provisional (estado `revisar`) y la presentación se escribe; la próxima corrida "
           "pide solo esa parte -- OK")
 
@@ -502,9 +627,19 @@ def probar_flujo(raiz: Path) -> None:
     finally:
         diseno_iub.construir_tex = construir
     fm = fm_temario(2)
-    assert estado == "revisar" and not destino.exists() and not ruta_plan.exists(), "ni el .tex inseguro ni el de antes, ni el plan que lo produjo"
-    assert any("no se escribió el .tex" in a for a in fm["presentacion_avisos"]) and any("primitivas" in a for a in fm["presentacion_avisos"])
-    assert any("ya no existe" in h.mensaje and f"pidiendo al modelo {n2} parte(s)" in h.mensaje for h in lint.revisar() if h.regla == "L14")
+    # el problema viene del diseño (no de lo que escribió el modelo): ni el .tex inseguro ni el de antes, pero el plan pagado se conserva
+    assert estado == "revisar" and not destino.exists() and ruta_plan.exists(), "ni el .tex inseguro ni el de antes; el plan, sí"
+    avisos = fm["presentacion_avisos"]
+    assert any("no se escribió el .tex" in a and "no viene de lo que escribió el modelo" in a and "--replanificar no lo arregla" in a for a in avisos), avisos
+    assert any("primitivas" in a for a in avisos)
+    assert any("ya no existe" in h.mensaje and "sin LLM" in h.mensaje for h in lint.revisar() if h.regla == "L14")
+
+    # el problema viene de una parte del modelo (un plan que escapara a verificar_cuerpo): solo esa parte sale del plan
+    buena = diseno_iub.Diapositiva("Buena", cuerpo("cajas"))
+    obtenidas = {"bloque-01": {"huella": "a", "diapositivas": [buena]},
+                 "bloque-02": {"huella": "b", "diapositivas": [diseno_iub.Diapositiva("Mala", "\\input{secreto.txt}")]},
+                 "bloque-03": {"huella": "c", "diapositivas": [diseno_iub.Diapositiva("Con elemento", "\\elementoTemario{figura}{1}")]}}
+    assert presentaciones.partes_con_graves(obtenidas) == ["bloque-02"]
 
     peligroso = carpeta / "peligroso.tex"
     peligroso.write_text("\\documentclass{beamer}\n\\begin{document}\n\\input{secreto.txt}\n\\end{document}\n", encoding="utf-8")
@@ -522,7 +657,7 @@ def probar_flujo(raiz: Path) -> None:
         peligroso.unlink()
     assert len(llamadas_pdflatex) == 2 and all("-no-shell-escape" in a for a in llamadas_pdflatex), llamadas_pdflatex
     assert all(e.get("openin_any") == "p" and e.get("openout_any") == "p" and "PATH" in {k.upper() for k in e} for e in entornos), entornos
-    print("D7. un .tex con algo que puede ejecutarse no se escribe (se borran el anterior y su plan; L14 dice cuántas partes costaría rehacerlo), compilar() "
+    print("D7. un .tex con algo que puede ejecutarse no se escribe (se borra el anterior; el plan solo pierde las partes del modelo que causan el problema, y si viene del diseño se conserva entero y L14 lo rehace sin LLM), compilar() "
           "se niega a compilarlo y pdflatex corre siempre con -no-shell-escape y openin_any=p, openout_any=p (sin leer ni escribir fuera de su carpeta) -- OK")
 
     (carpeta / "TPR01-semana02.tex").unlink()
@@ -547,11 +682,125 @@ def probar_flujo(raiz: Path) -> None:
     print("D8. lint L14 avisa de una presentación borrada o huérfana; como comando, rehacer con otro docente no cuesta llamadas, un temario cambiado sin "
           "proveedor de IA da un error claro y --help y los errores de uso funcionan -- OK")
 
+    # D9. un plan con ordenes \elementoTemario (un modelo que SI las usa): si esos elementos ya no estan (el .md editado a mano en un
+    # bloque, o el .tex del temario borrado), las partes que las tenian se vuelven a pedir (con el texto) y ninguna orden queda sin
+    # sustituir; L14 cuenta las mismas partes que se piden
+    ruta_md2, ruta_tex2 = vault.TEMARIOS / "TPR01-semana02.md", vault.TEMARIOS / "TPR01-semana02.tex"
+    fm2, cuerpo2 = vault.leer_pagina(ruta_md2)
+    tex_temario2 = ruta_tex2.read_text(encoding="utf-8")
+    plan2 = carpeta / "TPR01-semana02.plan.json"
+
+    def con_ordenes() -> set[str]:
+        guardadas = json.loads(plan2.read_text(encoding="utf-8"))["partes"]
+        return {k for k, v in guardadas.items() if any(elementos_tex.referencias(d["cuerpo"]) for d in v["diapositivas"])}
+
+    def planificar_con_elementos() -> set[str]:
+        USAR_ELEMENTOS[0] = True
+        try:
+            presentaciones.generar_presentaciones("TPR01", semanas=[2], replanificar=True)
+        finally:
+            USAR_ELEMENTOS[0] = False
+        documento = (carpeta / "TPR01-semana02.tex").read_text(encoding="utf-8").partition("\\begin{document}")[2]
+        assert "\\elementoTemario" not in documento and fm_temario(2)["presentacion_elementos"] > 0
+        return con_ordenes()
+
+    def l14_semana2() -> list[str]:
+        return [h.mensaje for h in lint.revisar() if h.regla == "L14" and h.ruta.endswith("TPR01-semana02.md")]
+
+    sintesis = partes_de(2)[-1].clave
+    for caso in ("md editado", ".tex borrado"):
+        usan = planificar_con_elementos()
+        assert len(usan) >= 2, usan
+        if caso == "md editado":
+            editar_sintesis(2, "Una línea editada a mano en el último bloque.")
+            esperado, sin_elementos = usan | {sintesis}, usan - {sintesis}
+        else:
+            ruta_tex2.unlink()
+            esperado, sin_elementos = usan, usan
+        pendientes = presentaciones.partes_pendientes(carpeta / "TPR01-semana02.tex", *vault.leer_pagina(ruta_md2), "TPR01", 2)
+        assert set(pendientes) == esperado, (caso, pendientes, esperado)
+        l14 = l14_semana2()
+        assert len(l14) == 1 and f"pidiendo al modelo {len(esperado)} parte(s)" in l14[0], (caso, l14)
+        LLAMADAS.clear()
+        (destino2, estado, pedidas), = presentaciones.generar_presentaciones("TPR01", semanas=[2])
+        documento = destino2.read_text(encoding="utf-8").partition("\\begin{document}")[2]
+        assert pedidas == len(LLAMADAS) == len(esperado) and estado == "revisar", (caso, pedidas, esperado)
+        assert "\\elementoTemario" not in documento and not con_ordenes(), caso                    # ninguna orden sin sustituir
+        avisos = fm_temario(2)["presentacion_avisos"]
+        assert any(f"{len(sin_elementos)} parte(s) del plan guardado usaban" in a and "se vuelven a pedir" in a for a in avisos), (caso, avisos)
+        assert not l14_semana2(), caso
+        vault.escribir_pagina(ruta_md2, fm2, cuerpo2)                                                     # vuelve el temario de antes
+        ruta_tex2.write_text(tex_temario2, encoding="utf-8")
+    print("D9. un plan con \\elementoTemario cuyos elementos ya no están (el .md editado a mano en un bloque, o el .tex del temario borrado): se "
+          "vuelven a pedir solo las partes que tenían órdenes (y la editada), ninguna queda sin sustituir, el aviso dice cuántas y L14 cuenta las mismas -- OK")
+
+    # D10. --compilar con pdflatex simulado: timeout=600 y sin stdin; un PDF que falla (agota el tiempo) no corta los demás, se borran los
+    # auxiliares también si falla, el resultado queda en el temario y las omitidas sin PDF (o con uno más viejo que su .tex) se compilan
+    viejo = carpeta / "TPR01-semana01.pdf"
+    viejo.write_bytes(b"%PDF de otra version")
+    resultados = presentaciones.generar_presentaciones("TPR01", forzar=True)
+    assert not viejo.exists(), "un .tex reescrito no deja al lado el PDF de antes"
+    compiladas: list[str] = []
+    falla = ["semana01"]
+
+    def pdflatex_falso(args, **kw):
+        assert kw.get("timeout") == 600 and kw.get("stdin") is subprocess.DEVNULL and "-no-shell-escape" in args, kw
+        tex = Path(kw["cwd"]) / args[-1]
+        compiladas.append(tex.name)
+        tex.with_suffix(".aux").write_text("x", encoding="utf-8")
+        if any(f in tex.name for f in falla):
+            raise subprocess.TimeoutExpired(args, 600)
+        tex.with_suffix(".pdf").write_bytes(b"%PDF")
+        return subprocess.CompletedProcess(args, 0, "", "")
+
+    which, run = presentaciones.shutil.which, presentaciones.subprocess.run
+    presentaciones.shutil.which, presentaciones.subprocess.run = (lambda _: "pdflatex"), pdflatex_falso
+    try:
+        viejo.write_bytes(b"%PDF de otra version")
+        lineas = presentaciones.compilar_presentaciones(resultados)
+        assert len(lineas) == 2 and "tardó más de 10 minutos" in lineas[0] and lineas[1].startswith("  PDF: "), lineas
+        assert not viejo.exists() and (carpeta / "TPR01-semana02.pdf").exists() and not list(carpeta.glob("*.aux")), "sin auxiliares, también si falla"
+        assert fm_temario(1)["presentacion_compilada"] is None and fm_temario(2)["presentacion_compilada"] == vault.hoy()
+        assert fm_temario(1)["presentacion_estado"] == "revisar" and any(a.startswith(presentaciones.AVISO_COMPILACION) for a in fm_temario(1)["presentacion_avisos"])
+        omitidas = presentaciones.generar_presentaciones("TPR01")
+        assert [e for _, e, _ in omitidas] == ["omitida", "omitida"], omitidas
+        compiladas.clear()
+        falla.clear()
+        assert len(presentaciones.compilar_presentaciones(omitidas)) == 1 and compiladas == ["TPR01-semana01.tex"] * 2, compiladas   # la que no tenía PDF
+        assert fm_temario(1)["presentacion_compilada"] == vault.hoy() and not any(
+            a.startswith(presentaciones.AVISO_COMPILACION) for a in fm_temario(1)["presentacion_avisos"]), "una compilación buena quita el error de antes"
+        compiladas.clear()
+        tex2 = carpeta / "TPR01-semana02.tex"
+        momento = tex2.stat().st_mtime - 10
+        os.utime(carpeta / "TPR01-semana02.pdf", (momento, momento))                                       # el PDF, más viejo que su .tex
+        assert any("es más viejo que su .tex" in m for m in l14_semana2()), "L14 avisa de un PDF de otra versión"
+        presentaciones.compilar_presentaciones(omitidas)
+        assert compiladas == ["TPR01-semana02.tex"] * 2 and not l14_semana2(), compiladas
+    finally:
+        presentaciones.shutil.which, presentaciones.subprocess.run = which, run
+    print("D10. --compilar (pdflatex simulado): timeout=600 y sin stdin; uno que agota el tiempo no corta los demás, se borran sus auxiliares y su PDF "
+          "viejo, el resultado queda en el temario (presentacion_compilada); compila también las omitidas sin PDF o con uno más viejo que su .tex, "
+          "un .tex reescrito borra el PDF de antes y L14 avisa de uno desactualizado -- OK")
+
+
+def probar_apertura() -> None:
+    # la apertura va de `## 1.` hasta el siguiente `##` que no sea de la seccion 1 o 2, o hasta el primer bloque: un temario editado a
+    # mano puede no tener `## 3.`
+    for resto, sin in (("## 4. Desarrollo Teórico\n### 4.1 Introducción (Bloque 1)\nb1\n", "## 4."),
+                       ("### 4.1 Introducción (Bloque 1)\nb1\n", "Bloque 1"),
+                       ("## 3. Índice Temporizado (120 minutos)\n| 1 | Intro | 20 min |\n### 4.1 Introducción (Bloque 1)\nb1\n", "## 3.")):
+        cuerpo_md = "# Título\n> cabecera\n## 1. Metadatos de la Sesión\n### 1.1 Continuidad\nuno\n## 2. Resultados de Aprendizaje\nel RA\n" + resto
+        apertura = presentaciones.partes_del_temario(cuerpo_md)[0]
+        assert apertura.clave == presentaciones.APERTURA and "uno" in apertura.texto and "## 2. Resultados" in apertura.texto and "el RA" in apertura.texto, apertura.texto
+        assert sin not in apertura.texto and "b1" not in apertura.texto, (sin, apertura.texto)
+    print("A7. la apertura toma las secciones 1 y 2 aunque el temario no tenga `## 3.` (hasta el siguiente `##` o el primer bloque) -- OK")
+
 
 def main() -> None:
     probar_latex_seguro()
     probar_esquema()
     probar_diseno()
+    probar_apertura()
     original = Path.cwd()
     with tempfile.TemporaryDirectory() as tmp:
         _fixtures.armar_vault_muestra(Path(tmp))

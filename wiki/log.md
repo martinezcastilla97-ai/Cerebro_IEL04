@@ -254,3 +254,11 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - sección 2 (wiki/ contra generacion/): IEL04 al día: el cronograma y la duración del planeador, los RA, las horas y la alineación de los 11 temarios y la correlación de los 4 RA coinciden con el wiki
 - plan mínimo: nada que actualizar (0 llamadas al modelo)
 - línea base fijada con `--confirmar` en `memory_store/estado-cambios.json` (4 archivos de raw/): la próxima corrida dirá qué cambió desde hoy
+
+## [2026-10-25] /actualizar-estructura 1.24 → 1.37
+- paquete: Cerebro_Docente; 16 archivos nuevos, 19 actualizados, 3 para revisar a mano, 0 páginas migradas
+- respaldo en /home/user/Cerebro_IEL04/memory_store/respaldos/estructura-20261025-184108
+- origen: la carpeta `G:\Mi unidad\Cerebro_Docente` del docente (Google Drive), entregada como ZIP; antes de aplicar se comprobó que los 67 archivos de la plantilla coinciden con el `config/manifiesto.json` leído directamente de Drive (versión 1.37) y que el paquete no trae rutas fuera de la plantilla. La carpeta original no se modificó
+- conflictos resueltos a mano: `src/latex_seguro.py` y `src/test_presentaciones.py` de la 1.37 ya traen la corrección de los símbolos ² ª º ¼ ‰ ¬ (prueba A2c), así que se tomaron completos; `src/diseno_iub.py` se tomó de la 1.37 (diseño 6, con logos). Se conservan como edición local `src/correlate.py` y `src/test_correlate_fuentes.py` (CORRELATE sin manuales de banco: la 1.37 no los cambió)
+- `config/framework_iub/ORIGEN.md` actualizado al de la 1.37 (los logos son idénticos); vista nueva enlazada en `wiki/index.md`
+- pruebas: todas pasan salvo las de plantilla limpia (`test_compatibilidad`, `test_replica`: esta copia tiene contenido) y la del manifiesto, que señala las 2 ediciones locales de CORRELATE

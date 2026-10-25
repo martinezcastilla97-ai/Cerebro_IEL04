@@ -521,6 +521,71 @@ def probar_correlate_ra() -> None:
     print("H1. `correlate.py --ra` correlaciona solo esos RA, un codigo que no existe es un error y no se combina con --indexar -- OK")
 
 
+# --- G8. guias de laboratorio ------------------------------------------------------------------------------------------------
+
+
+def probar_guias() -> None:
+    import guia_laboratorio as gl
+    from schema_guia_laboratorio import GuiaLaboratorio
+
+    fm_plan, _ = vault.leer_pagina(Path("generacion/planeador/TPR01-planeador.md"))
+    semanas = [f["semana"] for f in fm_plan["semanas"] if f["tipo"] == "clase" and f["ra"] == "TPR01-RA1"
+               and Path(f"generacion/temarios/TPR01-semana{f['semana']:02d}.md").exists()]
+    s = semanas[0]
+    ra1 = "wiki/resultados-aprendizaje/TPR01-RA1.md"
+    ra1_antes = Path(ra1).read_bytes()
+    editar(ra1, requiere_practica="[[banco-uno]]", practica_experimentos=["Exp1"], correlacion_estado="aceptado")
+    plan = plan_de("TPR01")
+    assert plan.sin_guia == semanas and not plan.guias, plan.sin_guia
+    paso = next(p for p in ac._comandos([], [plan])[0] if "guia_laboratorio.py" in p["comando"])
+    assert paso["comando"] == f"python src/guia_laboratorio.py TPR01 --semana {' '.join(map(str, semanas))}" and paso["llm"] == len(semanas) * ac.LLAMADAS_GUIA == len(semanas)
+
+    original = vault.pedir_estructurado
+    vault.pedir_estructurado = lambda sistema, usuario, formato: _fixtures.guia_falsa(usuario) if formato is GuiaLaboratorio else None
+    try:
+        gl.generar_guia("TPR01", s, "Docente de ejemplo", "Facultad de ejemplo")
+    finally:
+        vault.pedir_estructurado = original
+    plan = plan_de("TPR01")
+    assert s not in plan.sin_guia and not plan.guias, (plan.sin_guia, plan.guias)
+
+    ruta_temario = Path(f"generacion/temarios/TPR01-semana{s:02d}.md")
+    respaldo = ruta_temario.read_bytes()
+    fm_t, cuerpo_t = vault.leer_pagina(ruta_temario)
+    vault.escribir_pagina(ruta_temario, fm_t, cuerpo_t + "\nUna línea agregada a mano.\n")
+    plan = plan_de("TPR01")
+    assert plan.guias == {s: "el temario cambió después de escribir la guía"}, plan.guias
+    pasos, llamadas, _ = ac._comandos([], [plan])
+    paso = next(p for p in pasos if p["comando"] == f"python src/guia_laboratorio.py TPR01 --semana {s}")
+    assert paso["llm"] == 1 and "rehacer la guía" in paso["paso"]
+    ruta_temario.write_bytes(respaldo)
+
+    editar(ra1, practica_experimentos=["Exp2"])
+    assert plan_de("TPR01").guias[s] == "la práctica es ahora banco-uno — Exp2 (la guía es de banco-uno — Exp1)"
+    editar(ra1, practica_experimentos=["Exp1"])
+    fm_b, cuerpo_b = vault.leer_pagina(Path("wiki/fuentes/banco-uno.md"))
+    resumen = fm_b["practicas"][0]["principio_resumen"]
+    fm_b["practicas"][0]["principio_resumen"] = "Un principio reescrito en el manual."
+    vault.escribir_pagina(Path("wiki/fuentes/banco-uno.md"), fm_b, cuerpo_b)
+    assert "el experimento del manual" in plan_de("TPR01").guias[s]
+    fm_b["practicas"][0]["principio_resumen"] = resumen
+    vault.escribir_pagina(Path("wiki/fuentes/banco-uno.md"), fm_b, cuerpo_b)
+    assert not plan_de("TPR01").guias
+
+    # el docente revisa la correlación del RA y no le asigna práctica: sus semanas no se cuentan «sin guía» (ni desde la bibliografía)
+    editar(ra1, requiere_practica=None, practica_experimentos=[], correlacion_revisado_por_docente=True)
+    plan = plan_de("TPR01")
+    assert not (set(plan.sin_guia) & set(semanas)), plan.sin_guia
+    assert any(f"la semana {s} tiene guía de laboratorio pero ya no lleva" in a for a in plan.avisos), plan.avisos
+    editar(ra1, requiere_practica=None, practica_experimentos=[], correlacion_revisado_por_docente=False)
+    assert set(semanas) - {s} <= set(plan_de("TPR01").sin_guia), "sin la revisión del docente, se propondrían desde la bibliografía"
+    for archivo in sorted(Path("generacion/guias-laboratorio").rglob("*"), reverse=True):
+        archivo.unlink() if archivo.is_file() else archivo.rmdir()
+    Path(ra1).write_bytes(ra1_antes)
+    print("G8. guías de laboratorio: una semana con práctica y temario sin guía, y una guía desactualizada porque cambió su temario, la "
+          "práctica asignada o el experimento del manual (misma huella que guia_laboratorio), van al plan mínimo con 1 llamada cada una -- OK")
+
+
 # --- I. informe, JSON, CLI y solo lectura ---------------------------------------------------------------------------------
 
 
@@ -530,6 +595,9 @@ def cli(*args: str) -> subprocess.CompletedProcess:
 
 
 def probar_informe() -> None:
+    # el RA1 de prueba tiene un criterio practico y bibliografia cargada: sin ella, ninguna semana lleva guia de laboratorio (el vault
+    # de prueba no tiene guias) y el informe puede decir `Todo al día`
+    editar("wiki/resultados-aprendizaje/TPR01-RA1.md", bibliografia=[])
     ac.confirmar()
     r = cli()
     assert r.returncode == 0 and "Todo al día" in r.stdout and "Sin cambios en raw/" in r.stdout, r.stdout
@@ -578,6 +646,7 @@ def main() -> None:
             probar_libro()
             probar_desfases()
             probar_correlate_ra()
+            probar_guias()
             probar_informe()
         finally:
             os.chdir(original)

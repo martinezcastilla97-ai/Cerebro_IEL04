@@ -41,9 +41,11 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 import correlate
+import guia_laboratorio
 import ingest_manual
 import pasajes
 import temario
+import temario_latex
 import vault
 from schema_extraccion import TipoAbordaje
 from schema_planeador import construir_cronograma, horas_hti_semana
@@ -58,6 +60,7 @@ NIVEL_MAXIMO = 7                        # un rotulo suelto o en negrita cuenta c
 LLAMADAS_TEMARIO = 10                   # plan + unidades + cierre (de 8 a 12, mas reintentos)
 LLAMADAS_JUEZ = 3                       # CORRELATE: un juicio por cada practica candidata (k=3)
 LLAMADAS_PRESENTACION = 9               # PRESENTACIONES: una por parte de un temario nuevo o cambiado (la apertura y cada bloque: de 6 a 12, mas reintentos); sin cambios, 0
+LLAMADAS_GUIA = 1                       # GUIA-LABORATORIO: una por guia nueva o cuyas entradas cambiaron (mas reintentos); sin cambios, 0
 FRACCION_CONCEPTO = 0.7                 # un concepto "aparece" si un pasaje trae esa fraccion de sus palabras
 MIN_FRACCION_RA = 0.25                  # un RA le sirve a una fuente si esta cubre al menos esa fraccion de sus conceptos...
 MIN_CONCEPTOS_RA = 2                    # ...y al menos estos (o todos, si el RA tiene menos)
@@ -564,6 +567,8 @@ class PlanAsignatura:
     leves: dict[int, list[str]] = field(default_factory=dict)          # semana -> desfase solo de cabecera o alineacion: el resto sigue vigente
     a_considerar: dict[int, list[str]] = field(default_factory=dict)   # semana -> por que podria ganar con una fuente nueva (opcional)
     sin_temario: list[int] = field(default_factory=list)
+    guias: dict[int, str] = field(default_factory=dict)                # semana -> por que su guia de laboratorio quedo desactualizada
+    sin_guia: list[int] = field(default_factory=list)                  # semanas con practica asignada y temario, pero sin guia
     clases: int = 0
     ras: list[str] = field(default_factory=list)                       # codigos de sus RA
     ras_gate: list[str] = field(default_factory=list)                  # los de gate abierto (los que gastan llamadas en CORRELATE)
@@ -680,7 +685,45 @@ def analizar_asignatura(pagina: str, asignatura, fm_asignatura: dict, senales_ra
     tienen = {int(re.search(r"semana(\d+)", r.stem).group(1)) for r in vault.TEMARIOS.glob(f"{asignatura.codigo}-semana*.md") if re.search(r"semana(\d+)", r.stem)}
     if tienen:
         plan.sin_temario = [n for n, s in esperada.items() if s.tipo.value == "clase" and n not in tienen]
+    if asignatura.tipo_abordaje == TipoAbordaje.teorico_practica:
+        _guias_desfasadas(plan, asignatura.codigo, sorted(n for n in tienen if n in filas and filas[n].get("tipo") == "clase"))
     return plan
+
+
+def _guias_desfasadas(plan: PlanAsignatura, codigo: str, semanas: list[int]) -> None:
+    """Las guias de laboratorio que quedaron desactualizadas (su `huella` de entradas ya no es la que tendrian hoy: cambio el temario,
+    el RA, la practica asignada o el experimento del manual, las fuentes o la duracion) y las semanas que ahora llevan guia y no la
+    tienen. Usa la misma huella que guia_laboratorio.generar_guia (huella_actual)."""
+    for semana in semanas:
+        actual = guia_laboratorio.huella_actual(codigo, semana)
+        ruta = guia_laboratorio.ruta_guia(codigo, semana)
+        if not ruta.exists():
+            if actual:
+                plan.sin_guia.append(semana)
+            continue
+        try:
+            fm, _ = vault.leer_pagina(ruta)
+        except Exception:
+            continue
+        if actual is None:
+            plan.avisos.append(f"la semana {semana} tiene guía de laboratorio pero ya no lleva (el RA no tiene práctica asignada): revísala o bórrala")
+            continue
+        if fm.get("huella") == actual:
+            continue
+        ruta_temario = vault.TEMARIOS / f"{codigo}-semana{semana:02d}.md"
+        _, cuerpo_temario = vault.leer_pagina(ruta_temario)
+        filas = {s["semana"]: s for s in (vault.leer_pagina(vault.PLANEADOR / f"{codigo}-planeador.md")[0].get("semanas") or [])}
+        fm_ra = vault.leer_pagina(vault.RESULTADOS / f"{filas[semana]['ra']}.md")[0]
+        fuente, experimento = guia_laboratorio._practica_del_ra(fm_ra)
+        def practica(f, e):
+            return f"{f} — {e}" if f else "la bibliografía (sin práctica de un manual)"
+        if fm.get("temario_hash") != temario_latex.hash_cuerpo(cuerpo_temario):
+            plan.guias[semana] = "el temario cambió después de escribir la guía"
+        elif (vault.enlace(fm.get("practica")), fm.get("practica_experimento")) != (fuente, experimento):
+            plan.guias[semana] = (f"la práctica es ahora {practica(fuente, experimento)} (la guía es de "
+                                  f"{practica(vault.enlace(fm.get('practica')), fm.get('practica_experimento'))})")
+        else:
+            plan.guias[semana] = "cambió el RA, el experimento del manual, las fuentes de la sesión o la duración"
 
 
 def analizar_generacion(codigo: str | None, cambios: list[Cambio]) -> list[PlanAsignatura]:
@@ -757,6 +800,18 @@ def _comandos(cambios: list[Cambio], planes: list[PlanAsignatura]) -> tuple[list
         if p.temarios or p.a_considerar:
             pasos.append({"paso": f"{p.codigo}: auditar la bibliografía de sus temarios", "comando": f"python src/correlate_bibliografia.py {p.codigo}",
                           "llm": 1, "nota": "una llamada por temario sin marcador; con marcadores no gasta"})
+    for p in planes:
+        for semana in sorted(p.guias):
+            pasos.append({"paso": f"{p.codigo} semana {semana}: rehacer la guía de laboratorio ({p.guias[semana]})",
+                          "comando": f"python src/guia_laboratorio.py {p.codigo} --semana {semana}", "llm": LLAMADAS_GUIA,
+                          "nota": "si también se rehace el temario de esa semana, corre esto después"})
+            llamadas += LLAMADAS_GUIA
+        if p.sin_guia:
+            pasos.append({"paso": f"{p.codigo}: escribir las guías de laboratorio que faltan (semanas {', '.join(str(n) for n in p.sin_guia)})",
+                          "comando": f"python src/guia_laboratorio.py {p.codigo} --semana {' '.join(str(n) for n in p.sin_guia)}",
+                          "llm": len(p.sin_guia) * LLAMADAS_GUIA, "opcional": True,
+                          "nota": "trabajo nuevo, no un desfase: una llamada por guía; pregunta antes la facultad (--facultad)"})
+        todo += (len(p.guias) + sum(1 for n in range(1, 15) if guia_laboratorio.ruta_guia(p.codigo, n).exists() and n not in p.guias)) * LLAMADAS_GUIA
     if any(p.temarios or p.a_considerar or p.leves or p.semanas_distintas for p in planes):
         rehechos = sum(len(p.temarios) for p in planes)
         pasos.append({"paso": "rehacer las presentaciones de los temarios que cambiaron (las demás siguen al día)",
@@ -795,7 +850,7 @@ def _pendiente(c: Cambio | dict) -> bool:
 
 def _desfasada(p: PlanAsignatura | dict) -> bool:
     d = p if isinstance(p, dict) else asdict(p)
-    return bool(d["avisos"] or d["duracion"] or d["semanas_distintas"] or d["correlacionar"] or d["temarios"])
+    return bool(d["avisos"] or d["duracion"] or d["semanas_distintas"] or d["correlacionar"] or d["temarios"] or d["guias"])
 
 
 def _lista(items: list[str], prefijo: str = "      · ", maximo: int = MAX_LISTA) -> list[str]:
@@ -880,7 +935,7 @@ def imprimir(informe: dict, detalle: bool = False) -> None:
 
     print("\n== 2. wiki/ contra generacion/ (lo que quedó desactualizado) ==")
     for p in informe["asignaturas"]:
-        if not (_desfasada(p) or p["leves"] or p["a_considerar"] or p["sin_temario"]):
+        if not (_desfasada(p) or p["leves"] or p["a_considerar"] or p["sin_temario"] or p["sin_guia"]):
             print(f"   {p['codigo']}: al día" + (" (sin planeador todavía)" if p["sin_planeador"] else ""))
             continue
         print(f"   {p['codigo']}")
@@ -905,6 +960,11 @@ def imprimir(informe: dict, detalle: bool = False) -> None:
             print("\n".join(_lista(_agrupar(p["a_considerar"]), "          ")))
         if p["sin_temario"]:
             print(f"      · sin temario todavía: semanas {', '.join(str(n) for n in p['sin_temario'])} (`temario.py {p['codigo']} --todas`)")
+        if p["guias"]:
+            print(f"      · guías de laboratorio desactualizadas: {len(p['guias'])}")
+            print("\n".join(_lista([f"S{n}: {m}" for n, m in sorted(p["guias"].items())], "          ")))
+        if p["sin_guia"]:
+            print(f"      · semanas con temario y práctica (de un manual o de la bibliografía), sin guía de laboratorio: {', '.join(str(n) for n in p['sin_guia'])}")
 
     print("\n== 3. Plan mínimo ==")
     if informe["al_dia"] and not any(p.get("opcional") for p in informe["pasos"]):

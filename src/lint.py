@@ -24,9 +24,17 @@ Sale con codigo 1 si hay ERRORES; los AVISOS no hacen fallar. Reglas:
     L14 presentaciones (aviso): un temario cuya presentacion .tex ya no existe, quedo desactualizada (el temario
         cambio despues de generarla) o se hizo con otra version del diseno (`presentacion_diseno` distinto de
         diseno_iub.VERSION), o un .tex en generacion/presentaciones/ que ningun temario registra. Dice cuanto cuesta
-        rehacerla: sin LLM si el plan guardado tiene todas sus partes; si no, una llamada por parte que falta o cambio
+        rehacerla: sin LLM si el plan guardado tiene todas sus partes (con los elementos del .tex del temario que usan);
+        si no, una llamada por parte que falta o cambio. Tambien avisa de un PDF mas viejo que su .tex
     L15 figuras del temario (aviso): un temario que incluye una figura (`![...](figuras/x.png)`) que ya no existe
         en generacion/temarios/figuras/, o una figura que ningun temario incluye
+    L16 la version LaTeX del temario (aviso): un temario sin su .tex (hecho antes de que TEMARIO lo escribiera), con
+        el .tex borrado o con el .md editado despues de escribirlo (`latex_temario_hash`), o un .tex de
+        generacion/temarios/ sin su .md, o un PDF mas viejo que su .tex
+    L17 guias de laboratorio (aviso): una semana de clase con temario y con practica asignada al RA (o sin ella, pero con criterios
+        practicos y bibliografia cargada, de la que se propondria), pero sin guia; una guia cuyo temario ya
+        no existe o cambio despues de escribirla, cuyo .tex falta o cuyo PDF es mas viejo que su .tex; o un .tex de
+        generacion/guias-laboratorio/ sin su .md
 """
 
 from __future__ import annotations
@@ -49,7 +57,8 @@ CARPETA_TIPO = {
     "wiki/programas": "programa", "wiki/asignaturas": "asignatura", "wiki/resultados-aprendizaje": "resultado_aprendizaje",
     "wiki/competencias": "competencia", "wiki/recursos-web": "recurso_web", "wiki/fuentes": "fuente",
     "wiki/entidades": "entidad", "wiki/conceptos": "concepto", "wiki/consultas": "consulta",
-    "generacion/planeador": "planeador", "generacion/temarios": "temario", "correlaciones": "vista_dataview",
+    "generacion/planeador": "planeador", "generacion/temarios": "temario", "generacion/guias-laboratorio": "guia_laboratorio",
+    "correlaciones": "vista_dataview",
 }
 PAGINA_TIPO = {"wiki/index.md": "index", "wiki/marco-pedagogico.md": "marco_pedagogico"}
 
@@ -232,7 +241,11 @@ def revisar() -> list[Hallazgo]:
         # rehacerla es gratis solo si el plan guardado tiene, verificadas, las diapositivas de todas las partes del temario (la apertura
         # y cada bloque) con la misma huella. Las de un diseño anterior al 5 no lo tienen (su plan era de otro formato); uno corrupto o
         # de otra versión del temario tampoco vale: cada parte que falta cuesta una llamada.
-        pendientes = presentaciones.partes_pendientes(archivo, p.cuerpo)
+        try:
+            n_semana = int(semana)
+        except (TypeError, ValueError):
+            n_semana = 0
+        pendientes = presentaciones.partes_pendientes(archivo, p.fm, p.cuerpo, codigo_de(p), n_semana)
         costo = ("desde el plan guardado, sin LLM" if not pendientes
                  else f"pidiendo al modelo {len(pendientes)} parte(s) sin plan guardado válido (.plan.json): cuesta una llamada al modelo por parte")
         if not archivo.exists():
@@ -244,6 +257,13 @@ def revisar() -> list[Hallazgo]:
         elif p.fm.get("presentacion_diseno") != presentaciones.DISENO:
             agregar(AVISO, p, "L14", "presentación hecha con otra versión del diseño (`python src/presentaciones.py "
                                      f"{codigo_de(p)} --semana {semana}` la rehace {costo})")
+        elif pendientes:
+            agregar(AVISO, p, "L14", "presentación con partes por rehacer: le faltan al plan, quedaron provisionales o usan figuras, tablas o "
+                                     "ecuaciones del .tex del temario que ya no están (`python src/presentaciones.py "
+                                     f"{codigo_de(p)} --semana {semana}` la rehace {costo})")
+        if archivo.with_suffix(".pdf").exists() and presentaciones.pdf_desactualizado(archivo):
+            agregar(AVISO, p, "L14", f"el PDF de `{archivo.as_posix()}` es más viejo que su .tex (es de otra versión): "
+                                     f"`python src/presentaciones.py {codigo_de(p)} --semana {semana} --compilar` lo vuelve a compilar, o bórralo")
     for tex in sorted(vault.PRESENTACIONES.rglob("*.tex")):
         if tex.as_posix() not in registradas:
             hallazgos.append(Hallazgo(AVISO, tex.as_posix(), "L14", "presentación que ningún temario registra (¿el temario se regeneró o se borró?)"))
@@ -260,6 +280,80 @@ def revisar() -> list[Hallazgo]:
         for png in sorted((vault.TEMARIOS / "figuras").glob("*.png")):
             if f"figuras/{png.name}" not in incluidas:
                 hallazgos.append(Hallazgo(AVISO, png.as_posix(), "L15", "figura que ningún temario incluye (¿el temario se regeneró o se borró?)"))
+
+    # el .tex en paralelo de cada temario (L16)
+    import temario_latex  # hash_cuerpo (sin dependencias)
+
+    con_md: set[str] = set()
+    for p in (p for p in paginas if p.fm.get("tipo") == "temario"):
+        archivo = Path(p.fm.get("latex_archivo") or p.ruta.with_suffix(".tex"))
+        con_md.add(archivo.as_posix())
+        rehacer = f"`python src/temario.py {codigo_de(p)} --semana {p.fm.get('semana')} --forzar` lo vuelve a redactar con los dos archivos (~10 llamadas al modelo)"
+        if not p.fm.get("latex_archivo"):
+            agregar(AVISO, p, "L16", f"temario sin su versión LaTeX (se generó antes de que TEMARIO la escribiera): {rehacer}")
+        elif not archivo.is_file():
+            agregar(AVISO, p, "L16", f"su versión LaTeX `{archivo.as_posix()}` ya no existe: {rehacer}")
+        elif p.fm.get("latex_temario_hash") != temario_latex.hash_cuerpo(p.cuerpo):
+            agregar(AVISO, p, "L16", f"el .md se editó después de escribir `{archivo.as_posix()}`: el .tex no tiene ese cambio "
+                                     f"(cópialo a mano en el .tex, o {rehacer})")
+        pdf = archivo.with_suffix(".pdf")
+        if archivo.is_file() and pdf.exists() and pdf.stat().st_mtime < archivo.stat().st_mtime:
+            agregar(AVISO, p, "L16", f"el PDF `{pdf.as_posix()}` es más viejo que su .tex (es de otra versión): bórralo o vuelve a compilar el .tex "
+                                     "(Overleaf, o pdflatex en su carpeta)")
+    if vault.TEMARIOS.is_dir():
+        for tex in sorted(vault.TEMARIOS.glob("*.tex")):
+            if tex.as_posix() not in con_md:
+                hallazgos.append(Hallazgo(AVISO, tex.as_posix(), "L16", "versión LaTeX de un temario que ya no existe (¿el .md se borró o se renombró?)"))
+
+    # las guias de laboratorio (L17)
+    import json
+
+    import guia_laboratorio  # FORMATO y ruta_contenido (matplotlib solo se importa al dibujar)
+
+    guias = {p.ruta.stem: p for p in paginas if p.fm.get("tipo") == "guia_laboratorio"}
+    for p in guias.values():
+        semana = p.fm.get("semana")
+        rehacer = f"`python src/guia_laboratorio.py {codigo_de(p)} --semana {semana}`"
+        ruta_temario = vault.TEMARIOS / f"{p.ruta.stem}.md"
+        archivo = Path(str(p.fm.get("archivo_tex") or p.ruta.with_suffix(".tex")))
+        if not ruta_temario.exists():
+            agregar(AVISO, p, "L17", f"su temario `{ruta_temario.as_posix()}` ya no existe (¿se borró o se renombró?)")
+        elif p.fm.get("temario_hash") != temario_latex.hash_cuerpo(vault.leer_pagina(ruta_temario)[1]):
+            agregar(AVISO, p, "L17", f"guía desactualizada: el temario cambió después de escribirla ({rehacer} la vuelve a pedir: 1 llamada al modelo)")
+        if p.fm.get("formato") != guia_laboratorio.FORMATO:
+            try:
+                guardado = json.loads(guia_laboratorio.ruta_contenido(p.ruta).read_text(encoding="utf-8")).get("formato")
+            except (OSError, ValueError, AttributeError):
+                guardado = None
+            costo = ("sin LLM: lo guardado (.guia.json) es del formato actual" if guardado == guia_laboratorio.FORMATO else
+                     "1 llamada al modelo: lo guardado (.guia.json) es de otro formato y no pasa la validación del actual"
+                     + (" (del 1 al 2: no tenía diagramas de flujo)" if guardado in (1, None) and guia_laboratorio.FORMATO == 2 else ""))
+            agregar(AVISO, p, "L17", f"guía de otro formato ({p.fm.get('formato')}; el actual es {guia_laboratorio.FORMATO}): {rehacer} la rehace — {costo}")
+        if not archivo.is_file():
+            agregar(AVISO, p, "L17", f"su .tex `{archivo.as_posix()}` no existe ({rehacer} --forzar lo vuelve a escribir, sin LLM si nada cambió)")
+        elif archivo.with_suffix(".pdf").exists() and archivo.with_suffix(".pdf").stat().st_mtime < archivo.stat().st_mtime:
+            agregar(AVISO, p, "L17", f"el PDF de `{archivo.as_posix()}` es más viejo que su .tex (es de otra versión): {rehacer} --compilar, o bórralo")
+    asignaturas = {p.ruta.stem: p for p in paginas if p.fm.get("tipo") == "asignatura"}
+    ras = {p.ruta.stem: p for p in paginas if p.fm.get("tipo") == "resultado_aprendizaje"}
+    for p in (p for p in paginas if p.fm.get("tipo") == "temario"):
+        ra = ras.get(vault.enlace(p.fm.get("resultado_aprendizaje")) or "")
+        asignatura = asignaturas.get(vault.enlace(p.fm.get("asignatura")) or "")
+        if not (ra and asignatura and (asignatura.fm.get("hp_totales") or 0) > 0) or p.ruta.stem in guias:
+            continue
+        comando = f"`python src/guia_laboratorio.py {codigo_de(p)} --semana {p.fm.get('semana')}` (1 llamada al modelo)"
+        if vault.enlace(ra.fm.get("requiere_practica")) and ra.fm.get("practica_experimentos"):
+            agregar(AVISO, p, "L17", f"semana con práctica asignada ({vault.enlace(ra.fm.get('requiere_practica'))} — {ra.fm['practica_experimentos'][0]}) "
+                                     f"y sin guía de laboratorio: {comando}")
+        elif (not ra.fm.get("correlacion_revisado_por_docente")          # el docente decidio no asignar practica: no se propone desde la bibliografia
+              and any((ce or {}).get("categoria_accion") in ("manipulacion_fisica", "cognitiva_experimental") for ce in ra.fm.get("criterios_evaluacion") or [])
+              and any((vault.FUENTES / f"{f}.md").exists() for f in vault.enlaces(ra.fm.get("bibliografia")))):
+            agregar(AVISO, p, "L17", "semana sin práctica de un manual, pero con criterios de carácter práctico y bibliografía cargada, y sin guía de "
+                                     f"laboratorio (se propondría a partir de la bibliografía): {comando}")
+    carpeta_guias = Path("generacion") / "guias-laboratorio"
+    if carpeta_guias.is_dir():
+        for tex in sorted(carpeta_guias.rglob("*.tex")):
+            if tex.stem not in guias:
+                hallazgos.append(Hallazgo(AVISO, tex.as_posix(), "L17", "guía de laboratorio (.tex) sin su .md (¿se borró o se renombró?)"))
 
     return sorted(hallazgos, key=lambda h: (h.severidad != ERROR, h.ruta, h.regla))
 

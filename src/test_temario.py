@@ -443,6 +443,20 @@ def probar_originales_fuera_de_raw() -> None:
 # ---------------------------------------------------------------------------
 
 
+def probar_registro() -> None:
+    # la redaccion sigue la skill docente-universitario en los tres pasos, sin romper la regla de citas: los autores y teorias se
+    # nombran, pero lo que se atribuye a una obra se cita solo desde sus pasajes o lleva el marcador
+    for nombre in ("prompt-temario-plan.md", "prompt-temario-seccion.md", "prompt-temario-cierre.md"):
+        sistema, _ = vault.cargar_prompt(nombre)
+        assert "docente-universitario" in sistema and "conectores lógicos formales" in sistema, nombre
+        assert "«tú»" in sistema and "inventar autores" in sistema.replace("inventes autores", "inventar autores"), nombre
+    sistema, _ = vault.cargar_prompt("prompt-temario-seccion.md")
+    for regla in ("Rigor terminológico", "Nivel de explicación", "Tono analítico", "Fundamentación teórica", "Estructura:", "[FUENTE NO CARGADA EN raw/]"):
+        assert regla in sistema, regla
+    print("C0. prompts: los tres pasos del temario redactan con el registro de la skill docente-universitario (terminologia, tono analitico, "
+          "fundamentacion teorica sin inventar autores ni atribuir a una fuente lo que no esta en sus pasajes) -- OK")
+
+
 def probar_esquemas() -> None:
     assert celdas_de_tabla("| a | b |\n|---|---|\n| 1 | 2 |\n| 3 \\| 4 | 5 |") == (["a", "b"], [["1", "2"], ["3 | 4", "5"]])
     assert celdas_de_tabla("| a | b |\n| 1 | 2 |")[1] == [["1", "2"]]                                                           # la linea separadora es opcional
@@ -547,7 +561,7 @@ def reiniciar() -> None:
     LLAMADAS.clear()
     REGLAS.clear()
     _fixtures.CONFIG_TEMARIO.update({"conceptos": 3, "analisis": True, "implementacion": True, "usa_graficas": True, "usa_ecuaciones": True, "externas": False})
-    for f in Path("generacion/temarios").glob("*.md"):
+    for f in [*Path("generacion/temarios").glob("*.md"), *Path("generacion/temarios").glob("*.tex")]:
         f.unlink()
     for f in Path("generacion/temarios/figuras").glob("*.png"):
         f.unlink()
@@ -715,6 +729,142 @@ def probar_flujo() -> None:
     assert r.returncode == 0 and "--semana" in r.stdout and "--todas" in r.stdout
     print("D9. temario.py --help funciona (matplotlib se importa solo al dibujar) -- OK")
 
+    # --- D10: el .tex en paralelo: el mismo contenido que el .md (secciones, tablas, figuras, listados, ecuaciones), las graficas
+    # en pgfplots con los puntos de la especificacion y los diagramas en TikZ; sin primitivas peligrosas; y LINT L16 ---
+    import lint
+    import temario_latex
+
+    reiniciar()
+    destino = temario.generar_temario("TPR01", 1)
+    fm, cuerpo = vault.leer_pagina(destino)
+    tex = destino.with_suffix(".tex").read_text(encoding="utf-8")
+    assert fm["latex_archivo"] == "generacion/temarios/TPR01-semana01.tex" and fm["latex_estado"] == "generado" and fm["latex_avisos"] == []
+    assert fm["latex_temario_hash"] == temario_latex.hash_cuerpo(cuerpo) and fm["latex_formato"] == temario_latex.VERSION
+    assert r"\documentclass" in tex and tex.rstrip().endswith(r"\end{document}")
+    documento = tex.split(r"\begin{document}", 1)[1]
+    secciones_md = re.findall(r"^## \d+\. (.+)$", cuerpo, flags=re.M)
+    secciones_tex = re.findall(r"^\\section\{(.+)\}$", documento, flags=re.M)
+    assert len(secciones_md) == len(secciones_tex) == 9 and secciones_tex[0] == "Metadatos de la Sesión" and secciones_tex[-1] == "Bibliografía (Formato IEEE)"
+    assert documento.count(r"\caption{") == cuerpo.count("**Tabla ") + cuerpo.count("![Figura ")            # tablas y figuras, una leyenda cada una
+    assert documento.count(r"\begin{figure}") == cuerpo.count("![Figura ") == 3 and documento.count(r"\begin{axis}") == 1   # 1 grafica (pgfplots), 2 diagramas (TikZ)
+    assert documento.count(r"\begin{lstlisting}") == cuerpo.count("```cpp") == 1
+    assert documento.count(r"\begin{equation}") == cuerpo.count("$$\n") // 2
+    assert r"\includegraphics" not in tex and ".png" not in tex                                                # autocontenido: sin imagenes
+    assert re.search(r"\\addplot\[color=iubblue, line width=1\.4pt, no markers\] coordinates \{\n\s+\(0,0\) ", documento)   # los puntos salen de la especificacion
+    assert "% --- Figura 1: " in documento and "% --- Tabla 1: " in documento and "% serie 1: " in documento          # el LaTeX va comentado
+    assert re.search(r"\\node\[dterminal, minimum width=[\d.]+in, minimum height=[\d.]+in\] \(n\d+\) at \(", documento)
+    assert ls.primitivas_peligrosas(re.sub(r"\\begin\{lstlisting\}.*?\\end\{lstlisting\}", "", documento, flags=re.S)) == []
+    assert not [h for h in lint.revisar() if h.regla == "L16"]                                                    # recien escrito: al dia
+    vault.escribir_pagina(destino, fm, cuerpo + "\nUna línea agregada a mano.\n")
+    assert any("se editó después" in h.mensaje for h in lint.revisar() if h.regla == "L16")
+    Path("generacion/temarios/TPR01-semana09.tex").write_text("%", encoding="utf-8")
+    destino.with_suffix(".tex").unlink()
+    l16 = [h for h in lint.revisar() if h.regla == "L16"]
+    assert any("ya no existe" in h.mensaje and h.ruta.endswith("TPR01-semana01.md") for h in l16)
+    assert any(h.ruta.endswith("TPR01-semana09.tex") for h in l16)                                               # un .tex sin su .md
+    Path("generacion/temarios/TPR01-semana09.tex").unlink()
+    fm.pop("latex_archivo")
+    vault.escribir_pagina(destino, fm, cuerpo)
+    assert any("sin su versión LaTeX" in h.mensaje for h in lint.revisar() if h.regla == "L16")
+
+    # texto con especiales y una formula con un comando que no es matematico: se escapa / se neutraliza, con aviso
+    sesion = temario_latex.Sesion("ABC01", "Prueba & ensayo", "Título con 100 % y #3", 2, 14, [("Duración", "120 minutos")], [
+        temario_latex.Seccion(1, "Sección"), temario_latex.Texto(r"50 % de A & B_c, {x} ~ y $x \input{secreto}$"),
+        temario_latex.Bloques([Bloque(tipo="ecuacion", contenido=r"a = b \\ c = d"),
+                               Bloque(tipo="codigo", lenguaje="python", leyenda="L", contenido=r"x = 1  # \end{lstlisting} \input{x}")])])
+    tex, avisos = temario_latex.documento(sesion)
+    assert r"50 \% de A \& B\_c, \{x\}" in tex and r"\text{\textbackslash{}input}" in tex and avisos
+    assert r"\begin{gathered}" in tex and r"\end {lstlisting}" in tex and r"Título con 100 \% y \#3" in tex
+
+    # tipografia de las formulas (skill experto-en-latex): subindices descriptivos en redonda, funciones con su comando, palabras en
+    # \text{}; lo que ya es un comando, \text{}, \mathrm{}, \SI{}{} o un nombre de entorno no se toca, ni los indices de una letra o dos
+    pulir = temario_latex.pulir_formula
+    assert pulir(r"\eta = \frac{P_{out}}{P_{in}}") == r"\eta = \frac{P_{\mathrm{out}}}{P_{\mathrm{in}}}"
+    assert pulir(r"x_{ij} + V_{max}") == r"x_{ij} + V_{\mathrm{max}}" and pulir(r"y = A sin(\omega t) + ln(x)") == r"y = A \sin(\omega t) + \ln(x)"
+    assert pulir("Potencia de salida = V I") == r"\text{Potencia de salida} = V I" and pulir(r"\text{Potencia} = \max(0, x)") == r"\text{Potencia} = \max(0, x)"
+    for intacta in (r"\begin{aligned} i &= C\frac{dv}{dt} \\ &= 0 \end{aligned}", r"\SI{5}{\volt} + \alpha\beta \sinh(x) \operatorname{sign}(x)", r"\left( \frac{a}{b} \right)"):
+        assert pulir(intacta) == intacta, intacta
+    e = temario_latex._Escritor()
+    assert "\\begin{aligned}\n    a &= b \\\\\n     c &= d\n  \\end{aligned}" in e.ecuacion(r"a &= b \\ c &= d")               # varias lineas con `&`: aligned
+    assert "\\begin{gathered}" in e.ecuacion(r"P = V I \\ Q = S") and "aligned" not in e.ecuacion("E = mc^2")
+    columnas = temario_latex._columnas(["Magnitud", "Valor", "Unidad"], [["Resistencia de carga", "10", "kΩ"], ["Capacitancia", "100.5", "μF"]])
+    anchos = [float(a) for a in re.findall(r"\\hsize=([\d.]+)\\hsize", columnas)]
+    assert abs(sum(anchos) - 3) < 1e-6 and anchos[0] > anchos[1] and columnas.count(r"\raggedleft") == 1                      # anchos segun el contenido; numeros a la derecha
+    assert temario_latex.revisar_balance("\\begin{itemize}\n\\end{enumerate}") and not temario_latex.revisar_balance("% \\end{x}\n\\begin{a}{b}\\end{a}")
+
+    # los comentarios `%` que llevan texto del modelo (tabla, listado, figura, serie, nodo) no dejan `^^` ni barras: solo texto
+    hostil = r"x ^^5c y \input{z} 50%"
+    sesion = temario_latex.Sesion("ABC01", "Prueba", "Título de prueba", 1, 14, [], [temario_latex.Bloques([
+        Bloque(tipo="tabla", leyenda=hostil, contenido="| a | b |\n|---|---|\n| 1 | 2 |"),
+        Bloque(tipo="codigo", lenguaje="python", leyenda=hostil, contenido="x = 1"),
+        Bloque(tipo="grafica", leyenda=hostil, grafica=grafica(series=[figuras.Serie(nombre=hostil, expresion="V0*(1-exp(-t/tau))")])),
+        Bloque(tipo="diagrama", leyenda=hostil, diagrama=figuras.DiagramaSpec(
+            nodos=[figuras.Nodo(id="a^^5cb", texto="Uno"), figuras.Nodo(id="c", texto="Dos")], aristas=[figuras.Arista(origen="a^^5cb", destino="c")]))])])
+    tex, _ = temario_latex.documento(sesion)
+    comentarios = [l.split("%", 1)[1] for l in tex.split(r"\begin{document}", 1)[1].splitlines() if "%" in l and not l.lstrip().startswith("\\")]
+    assert len([c for c in comentarios if "x 5c y" in c]) >= 5, comentarios                                          # tabla, listado, figuras y serie
+    assert "^^" not in tex and not [c for c in comentarios if "\\" in c or "^" in c], [c for c in comentarios if "\\" in c or "^" in c]
+
+    # --compilar: con pdflatex instalado, el .tex de la sesion compila limpio (sin errores ni lineas que se salgan) y deja el PDF
+    import shutil
+    if shutil.which("pdflatex"):
+        destino = temario.generar_temario("TPR01", 1, forzar=True, compilar=True)
+        fm = vault.leer_pagina(destino)[0]
+        assert fm["latex_estado"] == "generado" and fm["latex_avisos"] == [] and fm["latex_compilado"] and destino.with_suffix(".pdf").exists(), fm["latex_avisos"]
+        assert not destino.with_suffix(".log").exists() and not destino.with_suffix(".aux").exists()
+        roto = destino.with_name("roto.tex")
+        roto.write_text("\\documentclass{article}\\begin{document}\\comandoinexistente\\end{document}\n", encoding="utf-8")
+        assert any("error de LaTeX" in p for p in temario_latex.compilar(roto))
+        for f in destino.parent.glob("roto.*"):
+            f.unlink()
+        destino.with_suffix(".pdf").unlink()
+        print("    (compilado con pdflatex: sin errores ni desbordes)")
+    else:
+        print("    (sin pdflatex: no se compila; el resto de D10 no lo necesita)")
+    print("D10. temario: escribe en paralelo el .tex con todo lo del .md (secciones, tablas, figuras en pgfplots/TikZ con los datos de la "
+          "especificacion, codigo, ecuaciones), autocontenido y sin primitivas peligrosas; LINT L16 avisa si falta, si el .md se edito despues o si sobra -- OK")
+
+    # D11. --compilar no hace perder el temario: un timeout en la primera pasada es un aviso (no UnboundLocalError), una excepcion al
+    # compilar deja el .md escrito (con el aviso en latex_avisos) y un PDF de antes no queda junto a un .tex nuevo (L16 lo avisa)
+    which_tl, run_tl, which_t, compilar_t = temario_latex.shutil.which, temario_latex.subprocess.run, temario.shutil.which, temario.tl.compilar
+
+    def pdflatex_lento(args, **kw):
+        (Path(kw["cwd"]) / args[-1]).with_suffix(".log").write_text("This is pdfTeX, Version 3\n(./x.tex\nLaTeX2e <2024>\n", encoding="utf-8")
+        raise subprocess.TimeoutExpired(args, 600)
+
+    try:
+        reiniciar()
+        destino = temario.generar_temario("TPR01", 1, forzar=True)
+        pdf = destino.with_suffix(".pdf")
+        temario_latex.shutil.which, temario_latex.subprocess.run = (lambda _: "pdflatex"), pdflatex_lento
+        pdf.write_bytes(b"%PDF de otra version")
+        problemas = temario_latex.compilar(destino.with_suffix(".tex"))
+        assert any("tardó más de 10 minutos" in p for p in problemas) and not pdf.exists() and not destino.with_suffix(".log").exists(), problemas
+
+        def compilar_roto(ruta):
+            raise OSError("disco lleno")
+
+        temario.shutil.which, temario.tl.compilar = (lambda _: "pdflatex"), compilar_roto
+        reiniciar()
+        pdf.write_bytes(b"%PDF de otra version")
+        destino = temario.generar_temario("TPR01", 1, forzar=True, compilar=True)
+        fm = vault.leer_pagina(destino)[0]
+        assert fm["latex_estado"] == "revisar" and fm["latex_compilado"] is None and not pdf.exists(), fm
+        assert any(a.startswith("no se pudo compilar: OSError: disco lleno") for a in fm["latex_avisos"]) and fm["estadisticas"]["palabras"] > 0
+    finally:
+        temario_latex.shutil.which, temario_latex.subprocess.run, temario.shutil.which, temario.tl.compilar = which_tl, run_tl, which_t, compilar_t
+    pdf.write_bytes(b"%PDF de otra version")
+    reiniciar()
+    destino = temario.generar_temario("TPR01", 1, forzar=True)
+    assert not pdf.exists(), "--forzar sin compilar no deja el PDF de antes junto al .tex nuevo"
+    pdf.write_bytes(b"%PDF")
+    momento = pdf.stat().st_mtime + 10
+    os.utime(destino.with_suffix(".tex"), (momento, momento))
+    assert any("es más viejo que su .tex" in h.mensaje for h in lint.revisar() if h.regla == "L16")
+    pdf.unlink()
+    print("D11. temario --compilar: un timeout en la primera pasada da el aviso «tardó más de 10 minutos»; una excepción al compilar deja el .md "
+          "escrito (latex_estado: revisar, con el aviso); un .tex reescrito borra el PDF de antes y L16 avisa de un PDF más viejo que su .tex -- OK")
+
 
 DIBUJAR_REAL = (figuras.dibujar_grafica, figuras.dibujar_diagrama)
 
@@ -724,6 +874,7 @@ def main() -> None:
     probar_diagramas()
     probar_pasajes()
     probar_originales_fuera_de_raw()
+    probar_registro()
     probar_esquemas()
     original = Path.cwd()
     with tempfile.TemporaryDirectory() as tmp:

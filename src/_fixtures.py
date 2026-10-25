@@ -1,5 +1,5 @@
 """Vault de muestra con datos INVENTADOS para las pruebas de src/ (no representa ningun
-curriculo ni manual real). Lo usan test_generacion.py, test_lint.py, test_flujo_completo.py, test_presentaciones.py y test_analizar_cambios.py.
+curriculo ni manual real). Lo usan test_generacion.py, test_lint.py, test_flujo_completo.py, test_presentaciones.py, test_analizar_cambios.py y test_guia_laboratorio.py.
 
 Contenido: un programa; TEO01 (teorica, HP=0, 1 RA); TPR01 (teorico-practica, HP=26, 3 RA);
 un libro (`libro-a`) y un manual de banco (`banco-uno`, con 3 practicas) en wiki/fuentes/.
@@ -7,7 +7,7 @@ un libro (`libro-a`) y un manual de banco (`banco-uno`, con 3 practicas) en wiki
 Tambien trae `responder_temario`, un LLM FALSO para los tres pasos de TEMARIO (plan, cada unidad y cierre): construye respuestas
 validas a partir de lo que el prompt realmente pide (los criterios de evaluacion, los elementos de cada unidad, el minimo de
 palabras...), igual que un LLM real tendria que hacerlo; `diapositivas_falsas`, las diapositivas en LaTeX de una parte de una
-presentacion (cajas, TikZ, pgfplots, tablas, circuitikz, codigo); y `png_falso`, un PNG minimo para las pruebas que no necesitan dibujar.
+presentacion (cajas, TikZ, pgfplots, tablas, circuitikz, codigo); `guia_falsa`, la guia de laboratorio de una semana; y `png_falso`, un PNG minimo para las pruebas que no necesitan dibujar.
 """
 
 from __future__ import annotations
@@ -20,6 +20,7 @@ from pathlib import Path
 import vault
 from figuras import Arista, DiagramaSpec, GraficaSpec, Nodo, Parametro, Serie
 from schema_presentacion import DiapositivaLatex, DiapositivasParte
+from schema_guia_laboratorio import Etapa, GuiaLaboratorio, Material, Objetivo, Paso, Referencia, TablaRegistro
 from schema_temario import Bloque, CierreSesion, PlanSesion, ResultadoSesion, SeccionRedactada, UnidadPlan
 
 PROGRAMA = "Programa de prueba"
@@ -103,6 +104,20 @@ def armar_vault_muestra(raiz: Path) -> None:
 
     pagina("wiki/index.md", {"tipo": "index", "fecha_actualizacion": "YYYY-MM-DD"}, "\n\n# Índice\n\nVer [[log]].\n")
     (raiz / "wiki" / "log.md").write_text("# Log\n", encoding="utf-8")
+
+    # los logos del Manual de Identidad (config/framework_iub/logos/), como en cualquier copia de la plantilla: las presentaciones
+    # los copian junto al .tex
+    logos = Path(__file__).resolve().parent.parent / "config" / "framework_iub" / "logos"
+    if logos.is_dir():
+        (raiz / "config" / "framework_iub" / "logos").mkdir(parents=True, exist_ok=True)
+        for png in logos.glob("*.png"):
+            (raiz / "config" / "framework_iub" / "logos" / png.name).write_bytes(png.read_bytes())
+    # la plantilla de las guias de laboratorio (config/framework_iub/guia-laboratorio/): GUIA-LABORATORIO copia su estilo e imagenes
+    plantilla_guia = logos.parent / "guia-laboratorio"
+    for archivo in (p for p in plantilla_guia.rglob("*") if p.is_file()):
+        destino = raiz / "config" / "framework_iub" / "guia-laboratorio" / archivo.relative_to(plantilla_guia)
+        destino.parent.mkdir(parents=True, exist_ok=True)
+        destino.write_bytes(archivo.read_bytes())
 
 
 # ---------------------------------------------------------------------------
@@ -336,3 +351,61 @@ def png_falso(destino: Path, ancho: int = 640, alto: int = 360) -> None:
              + trozo(b"IDAT", zlib.compress(fila * alto)) + trozo(b"IEND", b""))
     destino.parent.mkdir(parents=True, exist_ok=True)
     destino.write_bytes(datos)
+
+
+# ---------------------------------------------------------------------------
+# LLM falso de GUIA-LABORATORIO
+# ---------------------------------------------------------------------------
+
+
+def _flujo(accion: str) -> DiagramaSpec:
+    """El diagrama de flujo de una etapa: inicio, la accion, una comprobacion con su retorno y el fin."""
+    return DiagramaSpec(nodos=[Nodo(id="i", texto="Inicio", forma="terminal"), Nodo(id="a", texto=accion), Nodo(id="d", texto="¿Lectura en rango?", forma="decision"),
+                               Nodo(id="f", texto="Fin de la etapa", forma="terminal")],
+                        aristas=[Arista(origen="i", destino="a"), Arista(origen="a", destino="d"), Arista(origen="d", destino="f", etiqueta="sí"),
+                                 Arista(origen="d", destino="a", etiqueta="no")])
+
+
+def guia_falsa(usuario: str) -> GuiaLaboratorio:
+    """La guia de laboratorio que devolveria un LLM para lo que pide el prompt: cubre los criterios de caracter practico, lista los
+    equipos de la practica con su mismo nombre, cita la fuente [1] si hay alguna y da una referencia por fuente cargada."""
+    practicos = re.search(r"^Criterios de carácter práctico[^:]*: (.+)$", usuario, re.M).group(1)
+    criterios = re.findall(r"\bCE\d+\b", practicos) or re.findall(r"\bCE\d+\b", re.search(r"^Criterios de evaluación: (.+)$", usuario, re.M).group(1))
+    sin_manual = bool(re.search(r"^Origen de la práctica: bibliografía", usuario, re.M))
+    codigo = "propuesta" if sin_manual else re.search(r"^Práctica de referencia: (\S+)", usuario, re.M).group(1)
+    equipos = re.search(r"^Equipos de la práctica[^:]*: (.+)$", usuario, re.M).group(1)
+    lista = [] if equipos.startswith("(") else [re.match(r"(.*?)(?: \((.*)\))?(?: ×(\d+))?$", e).groups() for e in equipos.split("; ")]
+    fuentes = re.search(r"Fuentes cargadas \(cita con el número entre corchetes\):\n(.*?)\n\nPasajes", usuario, re.S).group(1)
+    n_fuentes = len(re.findall(r"^\[\d+\] ", fuentes, re.M))
+    cita = " según la fuente [1]" if n_fuentes else ""
+    minutos = int(re.search(r"duración de la sesión: (\d+) minutos", usuario).group(1))
+    paso = max(1, minutos // 12)
+    return GuiaLaboratorio(
+        titulo="Práctica propuesta a partir de la bibliografía: medición y verificación" if sin_manual else f"Práctica {codigo}: medición y verificación experimental",
+        introduccion=(("Esta práctica se propone a partir de la bibliografía cargada [1] y del caso de estudio de la sesión teórica. " if sin_manual else
+                       f"Esta práctica retoma el experimento {codigo} del manual del banco y lo conecta con el caso de estudio de la sesión teórica. ") * 3),
+        base_bibliografica=[1] if sin_manual else [],
+        objetivo_general="Verificar experimentalmente el modelo estudiado en la sesión mediante mediciones en el banco.",
+        objetivos_especificos=[Objetivo(enunciado="Montar el circuito de la práctica siguiendo el esquema del manual", criterios=criterios),
+                               Objetivo(enunciado="Comparar los valores medidos con los calculados en la sesión", criterios=[])],
+        materiales=[*(Material(nombre=n, especificacion=e or "", cantidad=int(c or 1)) for n, e, c in lista), Material(nombre="Cables de conexión", cantidad=6),
+                    Material(nombre="Gafas de seguridad")],
+        procedimiento_introduccion=f"Organizar el trabajo en grupos de tres estudiantes y verificar el banco antes de energizarlo{cita}.",
+        etapas=[Etapa(titulo="Preparación y montaje", pasos=[Paso(texto="Verificar que el banco esté desenergizado.", duracion_min=paso, seguridad="Desenergizar antes de conectar.",
+                                                                 verificacion="El indicador de energía del banco está apagado."),
+                                                            Paso(texto="Conectar el circuito según el esquema de la práctica.", duracion_min=paso)],
+                      diagrama=_flujo("Montaje")),
+                Etapa(titulo="Medición", pasos=[Paso(texto="Energizar el banco y medir la tensión $V$ en la carga.", duracion_min=paso,
+                                                     verificacion="La lectura está entre 4,5 V y 5,5 V; si no, desenergizar y revisar la conexión del paso 2."),
+                                                Paso(texto="Registrar los valores en la Tabla 1 para cada punto de operación.", duracion_min=paso)],
+                      diagrama=_flujo("Medición"))],
+        cuestiones=["¿Qué diferencia hay entre el valor medido y el calculado?", "¿Qué fuentes de error explican la desviación?",
+                    "¿Cómo cambia la medición si se duplica la carga?"],
+        analisis=["Calcular el error relativo $e = |V_m - V_c| / V_c$ de cada medición y graficar el valor medido contra el calculado."],
+        tablas_registro=[TablaRegistro(leyenda="Registro de las mediciones", columnas=["Punto", "Tensión medida (V)", "Tensión calculada (V)"], filas=5)],
+        conclusiones="Contrastar lo medido con lo esperado por el modelo de la sesión y explicar las desviaciones encontradas.",
+        preguntas_conclusion=["¿Qué aprendieron sobre el modelo?", "¿Hubo algún resultado inesperado?"],
+        seguridad=["Usar gafas de seguridad durante toda la práctica.", "No superar la corriente nominal del banco.",
+                   "Desenergizar el banco antes de modificar cualquier conexión."],
+        referencias_cargadas=[Referencia(tipo="book", autores=[f"Autor, {i}"], titulo=f"Título de la fuente {i}", editorial="Editorial", anio="2020")
+                              for i in range(1, n_fuentes + 1)])
