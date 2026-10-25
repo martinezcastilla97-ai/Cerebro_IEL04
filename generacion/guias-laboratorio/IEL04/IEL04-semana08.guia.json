@@ -1,0 +1,482 @@
+{
+ "formato": 2,
+ "huella": "4ec300fdabe61126",
+ "modelo": "gpt-4o",
+ "fecha": "2026-10-25",
+ "guia": {
+  "titulo": "Circuitos RL en serie y en paralelo con la bobina real: tensiones, corrientes y ángulos a 10 kHz",
+  "introduccion": "La práctica corresponde a la sesión teórica de la semana 8, «Circuitos RL en serie y en paralelo: reactancia inductiva, impedancia y leyes de Kirchhoff con la bobina real», y reproduce su caso de estudio: con la bobina L3 del kit y un resistor de 680 Ω se miden, a 10 kHz y 5,00 V eficaces, las tensiones y el ángulo del circuito en serie y las corrientes y el ángulo del circuito en paralelo, y se comparan con el cálculo que incluye la resistencia de devanado y con el cálculo ideal. No hay un manual de laboratorio asignado al RA IEL04-RA3, por lo que la práctica se propone a partir de la bibliografía cargada: Floyd trata la reactancia inductiva y el análisis de circuitos RL en serie y en paralelo [1], Boylestad los circuitos de ca R-L [2] y Deorsola el circuito RL y las leyes de Kirchhoff con fasores [3].",
+  "objetivo_general": "Verificar experimentalmente las leyes de Kirchhoff en circuitos RL en serie y en paralelo con una bobina real.",
+  "objetivos_especificos": [
+   {
+    "enunciado": "Identificar y verificar con instrumentos la bobina y el resistor del circuito, incluida la resistencia de devanado.",
+    "criterios": [
+     "CE1"
+    ]
+   },
+   {
+    "enunciado": "Medir las tensiones en el resistor y en la bobina, y las corrientes de rama, con el multímetro de verdadero valor eficaz.",
+    "criterios": [
+     "CE2"
+    ]
+   },
+   {
+    "enunciado": "Medir el ángulo de fase de los circuitos RL en serie y en paralelo, y compararlo con el cálculo con resistencia de devanado y con el cálculo ideal.",
+    "criterios": [
+     "CE3"
+    ]
+   }
+  ],
+  "materiales": [
+   {
+    "nombre": "Bobina L3 del kit",
+    "especificacion": "103K, 10,4 mH y 24,6 Ω medidos",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Resistor",
+    "especificacion": "680 Ω",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Resistor sensor de corriente",
+    "especificacion": "10 Ω",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Generador de funciones",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Osciloscopio de dos canales con puntas ×10",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Multímetro digital de verdadero valor eficaz",
+    "especificacion": "",
+    "cantidad": 2
+   },
+   {
+    "nombre": "Medidor LCR",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Protoboard",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Cables de conexión",
+    "especificacion": "",
+    "cantidad": 12
+   }
+  ],
+  "procedimiento_introduccion": "La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en grupos de tres estudiantes, con tres roles que rotan entre etapas: quien monta y opera el circuito, quien mide y quien registra y verifica los cálculos. Antes de energizar cualquier montaje, el docente o el monitor revisa la conexión. Cada etapa abre con su diagrama de flujo, que muestra la secuencia y las comprobaciones de un vistazo, y sigue con sus pasos numerados; cada paso indica cuánto dura, qué debe observarse para saber que salió bien y qué hacer si no. Los valores numéricos de la sesión teórica sirven de referencia: las lecturas propias del grupo se registran en las tablas de la sección de análisis.",
+  "etapas": [
+   {
+    "titulo": "Preparación y cálculo previo",
+    "pasos": [
+     {
+      "texto": "Verificar la bobina L3 con el medidor LCR (inductancia) y el ohmímetro (resistencia de devanado), y el resistor de 680 Ω con el ohmímetro.",
+      "duracion_min": 6,
+      "seguridad": "",
+      "verificacion": "L3 debe leer cerca de 10,4 mH y 24,6 Ω, y el resistor cerca de 676 Ω; si no, anotar los valores nuevos para los cálculos."
+     },
+     {
+      "texto": "Calcular a 10 kHz la reactancia $X_L = 2\\pi f L$, la impedancia del circuito en serie con y sin la resistencia de devanado, y las corrientes del circuito en paralelo.",
+      "duracion_min": 12,
+      "seguridad": "",
+      "verificacion": "Debe obtenerse $X_L$ cerca de 653 Ω y una corriente en serie cerca de 5,2 mA."
+     }
+    ],
+    "diagrama": null
+   },
+   {
+    "titulo": "Circuito RL en serie",
+    "pasos": [
+     {
+      "texto": "Montar el resistor en serie con L3, con la bobina del lado de tierra.",
+      "duracion_min": 5,
+      "seguridad": "Montar con el generador apagado.",
+      "verificacion": "El docente revisa el montaje antes de energizar."
+     },
+     {
+      "texto": "Ajustar el generador a una onda sinusoidal de 10 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 5,00 V eficaces.",
+      "duracion_min": 6,
+      "seguridad": "",
+      "verificacion": "El multímetro debe indicar 5,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado."
+     },
+     {
+      "texto": "Medir con el multímetro de verdadero valor eficaz la tensión en el resistor y la tensión entre los terminales de la bobina.",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "Las lecturas deben estar cerca de 3,53 V y 3,41 V; su suma aritmética supera 5 V."
+     },
+     {
+      "texto": "Medir con el osciloscopio el desfase entre la tensión de la fuente y la del resistor y calcular el ángulo.",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "La corriente debe atrasar a la tensión unos 43°; si el ángulo se acerca a 44°, comprobar si se omitió la resistencia de devanado en el cálculo."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Montar R en serie con L3",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Ajustar 10 kHz y 5 V",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Medir VR y Vbob",
+       "forma": "caja"
+      },
+      {
+       "id": "a3",
+       "texto": "Medir desfase",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Coincide con el cálculo?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "a3",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a3",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a2",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Circuito RL en paralelo",
+    "pasos": [
+     {
+      "texto": "Desenergizar y montar el resistor y L3 en paralelo, con el resistor sensor en serie con la fuente del lado de tierra.",
+      "duracion_min": 6,
+      "seguridad": "Desenergizar antes de modificar el montaje.",
+      "verificacion": "El docente revisa el montaje."
+     },
+     {
+      "texto": "Con el circuito desenergizado, insertar el amperímetro en cada rama y en serie con la fuente, energizando para cada lectura, y anotar $I_R$, $I_{bob}$ e $I_T$.",
+      "duracion_min": 15,
+      "seguridad": "",
+      "verificacion": "Las lecturas deben estar cerca de 7,40 mA, 7,65 mA y 10,8 mA; $I_T$ debe ser menor que la suma aritmética."
+     },
+     {
+      "texto": "Medir con el osciloscopio el desfase entre la tensión de la fuente y la del resistor sensor.",
+      "duracion_min": 7,
+      "seguridad": "",
+      "verificacion": "La corriente total debe atrasar a la tensión unos 45°."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Montar paralelo con sensor",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Medir corrientes de rama",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Medir IT",
+       "forma": "caja"
+      },
+      {
+       "id": "a3",
+       "texto": "Medir desfase",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿IT menor que la suma?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "a3",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a3",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a1",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Desmontaje y cierre",
+    "pasos": [
+     {
+      "texto": "Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard.",
+      "duracion_min": 3,
+      "seguridad": "Desenergizar siempre antes de retirar componentes.",
+      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente."
+     },
+     {
+      "texto": "Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo.",
+      "duracion_min": 4,
+      "seguridad": "",
+      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado."
+     },
+     {
+      "texto": "Revisar con el docente las tablas de registro antes de abandonar el banco.",
+      "duracion_min": 3,
+      "seguridad": "",
+      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Desenergizar el montaje",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Descargar y retirar componentes",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Revisar tablas con el docente",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Tablas completas?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la práctica",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a2",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   }
+  ],
+  "cuestiones": [
+   "¿En qué circuito, serie o paralelo, pesa más la resistencia de devanado de la bobina, y por qué?",
+   "¿Cuánto se apartan las mediciones del cálculo ideal y cuánto del cálculo con resistencia de devanado?",
+   "¿Por qué la tensión medida en la bobina no está adelantada exactamente 90° respecto de la corriente?",
+   "¿Cómo cambiaría el efecto de la resistencia de devanado si la práctica se hiciera a 1 kHz en lugar de 10 kHz?"
+  ],
+  "analisis": [
+   "Presentar en la tabla de registro, para cada magnitud de los dos circuitos, el cálculo con resistencia de devanado, el cálculo ideal, la medición y la diferencia porcentual con el primero.",
+   "Dibujar el diagrama fasorial de tensiones del circuito en serie, con la tensión de la bobina real formada por su caída resistiva y su caída reactiva, y el de corrientes del circuito en paralelo; comprobar ambas sumas con las lecturas."
+  ],
+  "tablas_registro": [
+   {
+    "leyenda": "Circuito RL en serie a 10 kHz",
+    "columnas": [
+     "Magnitud",
+     "Cálculo con RW",
+     "Cálculo ideal",
+     "Medido",
+     "Unidad",
+     "Diferencia (%)"
+    ],
+    "filas": 4
+   },
+   {
+    "leyenda": "Circuito RL en paralelo a 10 kHz",
+    "columnas": [
+     "Magnitud",
+     "Cálculo con RW",
+     "Cálculo ideal",
+     "Medido",
+     "Unidad",
+     "Diferencia (%)"
+    ],
+    "filas": 4
+   }
+  ],
+  "conclusiones": "Concluir si las leyes de Kirchhoff se cumplen en forma fasorial en los dos circuitos y cuál de los dos modelos de la bobina (real o ideal) reproduce mejor las mediciones, explicando el papel de la resistencia de devanado; relacionar la práctica con los criterios de medición en circuitos resistivos, inductivos y RL del RA.",
+  "preguntas_conclusion": [
+   "¿Qué modelo de la bobina explicó mejor los ángulos medidos?",
+   "¿Qué diferencia hubo entre el comportamiento en serie y en paralelo?",
+   "¿Qué precaución del montaje fue determinante?"
+  ],
+  "seguridad": [
+   "Conectar las tierras de las dos puntas del osciloscopio a un mismo nodo de referencia: unirlas a nodos distintos cortocircuita el elemento que queda entre ellas.",
+   "Insertar el amperímetro en serie con la rama solo con el circuito desenergizado y con el instrumento en la función y la escala de corriente; nunca conectarlo en paralelo con la fuente.",
+   "Desenergizar antes de cambiar del montaje en serie al montaje en paralelo.",
+   "No interrumpir bruscamente la corriente de la bobina con el circuito energizado."
+  ],
+  "referencias_cargadas": [
+   {
+    "tipo": "book",
+    "autores": [
+     "Floyd, Thomas L."
+    ],
+    "titulo": "Principios de circuitos eléctricos",
+    "editorial": "Pearson Educación",
+    "anio": "2007",
+    "edicion": "8.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Boylestad, Robert L."
+    ],
+    "titulo": "Introducción al análisis de circuitos",
+    "editorial": "Pearson Educación",
+    "anio": "2004",
+    "edicion": "10.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Deorsola, M. F. P.",
+     "Morcelle del Valle, P."
+    ],
+    "titulo": "Circuitos eléctricos. Parte 1",
+    "editorial": "Editorial de la Universidad de La Plata",
+    "anio": "2017",
+    "edicion": "1.ª",
+    "url": ""
+   }
+  ],
+  "referencias_externas": [],
+  "base_bibliografica": [
+   1,
+   2,
+   3
+  ]
+ }
+}

@@ -1,0 +1,311 @@
+% =====================================================================
+%  Guía de laboratorio — IEL04 — Circuitos Eléctricos I, semana 3
+%  Escrita por src/guia_laboratorio.py con la plantilla institucional
+%  (config/framework_iub/guia-laboratorio/: guialabiub.sty e img/, copiados a esta carpeta).
+%
+%  Compilar con:  pdflatex -> biber -> pdflatex -> pdflatex
+%  (En Overleaf: compilador pdfLaTeX; biber se ejecuta solo.)
+% =====================================================================
+\documentclass[12pt]{article}
+
+% Opciones: [sinmarca] quita la marca de agua; [borrador] muestra márgenes
+%           [ieee] referencias IEEE (por defecto); [apa] referencias APA 7
+\usepackage{guialabiub}
+
+% --------------------- Diagramas de flujo del procedimiento ----------------
+% (TikZ, con los mismos estilos del .tex del temario; la plantilla no los trae)
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\usepackage{adjustbox}
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\definecolor{iubpurple}{HTML}{8E6BBF}
+\definecolor{iubgris}{HTML}{D5DAE3}
+\definecolor{iubgrisoscuro}{HTML}{7C8598}
+\definecolor{iubfondoazul}{HTML}{EBF7FD}
+\definecolor{iubfondonaranja}{HTML}{FDF4EA}
+\definecolor{iubfondoverde}{HTML}{EDF8F2}
+\definecolor{iubfondogris}{HTML}{F4F6F9}
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+
+% --------------------------- Bibliografía ----------------------------
+\addbibresource{IEL04-semana03.bib}
+
+% --------------------------- Datos de la guía -------------------------
+\facultad{Facultad de Ingenierías}
+\modulo{IEL04 --- Circuitos Eléctricos I}
+\docente{Ing. Sergio Martinez Castilla}
+
+\begin{document}
+
+% Orden de la bibliografía: el mismo del .md (biblatex numera por orden de primera cita)
+\nocite{ref1,ref2}
+
+\datosguia
+\lineablanco
+
+% Título de la práctica y ficha de la sesión
+{\centering\bfseries Guía de laboratorio: Asociaciones de condensadores y bobinas, y medición de la frecuencia de resonancia de un circuito LC\par}
+\lineablanco
+\textbf{Semana:} 3 de 14 \quad \textbf{Resultado de aprendizaje:} IEL04-RA1 \quad \textbf{Práctica:} propuesta a partir de la bibliografía \cite{ref1}, \cite{ref2} \quad \textbf{Duración:} \SI{240}{\minute}
+\lineablanco
+La práctica cierra el RA IEL04-RA1 y corresponde a la sesión teórica de la semana 3, \guillemotleft{}Asociaciones de condensadores y bobinas en serie, en paralelo y mixtas: cálculo y medición en circuitos L, C y LC\guillemotright{}. Reproduce su caso de estudio con los componentes aceptados en las semanas 1 y 2: se miden con el medidor LCR cinco asociaciones (dos de condensadores y tres de bobinas) y se compara cada lectura con el valor calculado con los valores medidos de los componentes; después se forma un circuito tanque con L3 y C2 y se busca con el osciloscopio su frecuencia de resonancia. Sin un manual de laboratorio asignado, la práctica se propone a partir de la bibliografía: las reglas de asociación de inductores en serie y en paralelo son análogas a las de los resistores y los condensadores \cite{ref1}, y en un circuito resonante en paralelo la impedancia es máxima a la frecuencia de resonancia \cite{ref1}; Boylestad trata la combinación de capacitores e inductores \cite{ref2}.
+
+% ---------------------------------------------------------------------
+\section{Objetivos}\label{sec:objetivos}
+\textbf{Objetivo general:} Comprobar experimentalmente las reglas de asociación de condensadores y bobinas y la frecuencia de resonancia de un circuito LC.
+\lineablanco
+\textbf{Objetivos específicos:}
+\begin{itemize}
+  \item Identificar los componentes de cada montaje con su valor medido en las semanas 1 y 2. \emph{(CE1)}
+  \item Medir con el medidor LCR la capacitancia y la inductancia equivalentes de cinco asociaciones en serie, en paralelo y mixtas, y compararlas con el cálculo. \emph{(CE2)}
+  \item Medir con el osciloscopio la frecuencia de resonancia de un circuito tanque formado por L3 y C2 y compararla con la calculada. \emph{(CE3)}
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Materiales y Equipos}\label{sec:materiales}
+\begin{itemize}
+  \item \textbf{Condensadores verificados}: C1 (223J), C2 (104K), C3 (472K)
+  \item \textbf{Bobinas verificadas}: L1 (102J), L2 (472K), L3 (103K)
+  \item \textbf{Resistor}: 10 k\ensuremath{\Omega}
+  \item \textbf{Medidor LCR}
+  \item \textbf{Generador de funciones}
+  \item \textbf{Osciloscopio de dos canales con puntas \texttimes{}10}
+  \item \textbf{Protoboard}
+  \item \textbf{Cables de conexión} (10)
+  \item \textbf{Resistencia de descarga}: 1 k\ensuremath{\Omega}
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Procedimiento}\label{sec:procedimiento}
+La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en grupos de tres estudiantes, con tres roles que rotan entre etapas: quien monta y opera el circuito, quien mide y quien registra y verifica los cálculos. Antes de energizar cualquier montaje, el docente o el monitor revisa la conexión. Cada etapa abre con su diagrama de flujo, que muestra la secuencia y las comprobaciones de un vistazo, y sigue con sus pasos numerados; cada paso indica cuánto dura, qué debe observarse para saber que salió bien y qué hacer si no. Los valores numéricos de la sesión teórica sirven de referencia: las lecturas propias del grupo se registran en las tablas de la sección de análisis.
+\lineablanco
+% --- Etapa 1: Preparación y cálculo previo (3 pasos) ---
+\subsection{Preparación y cálculo previo (\SI{23}{\minute})}\label{sec:etapa-1}
+% --- Figura 1: diagrama de flujo de la etapa 1 (TikZ; misma disposición que el PNG del .md) ---
+\begin{figure}[H]
+  \centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.445) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=1.363in, minimum height=0.890in] (n1) at (2.950,-0.445) {Verificar \\ valores con \\ LCR};  % a0
+  \node[dcaja, minimum width=1.549in, minimum height=0.680in] (n2) at (5.296,-0.445) {Descargar \\ condensadores};  % a1
+  \node[dcaja, minimum width=1.456in, minimum height=0.680in] (n3) at (5.296,-2.018) {Calcular \\ equivalentes};  % a2
+  \node[ddecision, minimum width=1.905in, minimum height=1.156in] (n4) at (2.950,-2.018) {\textquestiondown{}Cálculos \\ completos?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n5) at (0.689,-2.018) {Fin de la \\ etapa};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) to[bend right=24] (n4);
+  \draw[dflecha] (n4) -- (n5);
+  \draw[dflecha] (n4) to[bend right=31] (n3);
+  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  \node[drotulo] at (1.593,-2.018) {sí};
+  \node[drotulo] at (4.123,-2.370) {no};
+\end{tikzpicture}
+\end{adjustbox}
+  \caption{Diagrama de flujo de la etapa 1: Preparación y cálculo previo}
+  \label{fig:flujo-1}
+\end{figure}
+\begin{pasos}
+  \item \textbf{Paso~1:} Verificar con el medidor LCR que los valores de C1, C2, C3, L1, L2 y L3 coincidan con los registrados en las semanas 1 y 2. \emph{(aprox.~\SI{8}{\minute})} \textbf{Comprobación:} Las lecturas deben coincidir con las anotadas dentro del 1 \%; si no, usar el valor nuevo en los cálculos.
+  \item \textbf{Paso~2:} Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 k\ensuremath{\Omega} sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales. \emph{(aprox.~\SI{3}{\minute})} \textbf{Comprobación:} La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente. \textbf{Seguridad:} No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.
+  \item \textbf{Paso~3:} Calcular con los valores medidos el equivalente de cada montaje: A (C1 en serie con C3), B (C1 en paralelo con C2), C (L1 en serie con L2), D (L2 en paralelo con L3) y E ((L1 + L2) en paralelo con L3). \emph{(aprox.~\SI{12}{\minute})} \textbf{Comprobación:} Para el montaje B debe obtenerse unos 120 nF; para el C, unos 5,65 mH.
+\end{pasos}
+% --- Etapa 2: Medición de las asociaciones (5 pasos) ---
+\subsection{Medición de las asociaciones (\SI{33}{\minute})}\label{sec:etapa-2}
+% --- Figura 2: diagrama de flujo de la etapa 2 (TikZ; misma disposición que el PNG del .md) ---
+\begin{figure}[H]
+  \centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.340) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=1.270in, minimum height=0.680in] (n1) at (3.019,-0.340) {Montar \\ asociación};  % a0
+  \node[dcaja, minimum width=1.177in, minimum height=0.680in] (n2) at (5.250,-0.340) {Medir con \\ LCR};  % a1
+  \node[dcaja, minimum width=0.991in, minimum height=0.680in] (n3) at (5.250,-1.986) {Anotar \\ lectura};  % a2
+  \node[ddecision, minimum width=2.045in, minimum height=1.513in] (n4) at (3.019,-1.986) {\textquestiondown{}Diferencia \\ menor al 3 \\ \%?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n5) at (0.689,-1.986) {Siguiente \\ montaje};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) -- (n4);
+  \draw[dflecha] (n4) -- (n5);
+  \draw[dflecha] (n4) to[bend right=31] (n1);
+  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  \node[drotulo] at (1.621,-1.986) {sí};
+  \node[drotulo] at (3.256,-0.999) {no};
+\end{tikzpicture}
+\end{adjustbox}
+  \caption{Diagrama de flujo de la etapa 2: Medición de las asociaciones}
+  \label{fig:flujo-2}
+\end{figure}
+\begin{pasos}
+  \item \textbf{Paso~4:} Montar en el protoboard el montaje A, medir su capacitancia equivalente con el LCR y anotarla. \emph{(aprox.~\SI{7}{\minute})} \textbf{Comprobación:} La lectura debe ser menor que la del menor condensador (C3); si es mayor, revisar que estén en serie.
+  \item \textbf{Paso~5:} Montar el montaje B y medir su capacitancia equivalente. \emph{(aprox.~\SI{6}{\minute})} \textbf{Comprobación:} La lectura debe ser cercana a la suma de C1 y C2.
+  \item \textbf{Paso~6:} Montar el montaje C y medir su inductancia equivalente. \emph{(aprox.~\SI{6}{\minute})} \textbf{Comprobación:} La lectura debe ser cercana a la suma de L1 y L2.
+  \item \textbf{Paso~7:} Montar el montaje D con las bobinas separadas y sus ejes perpendiculares, y medir su inductancia equivalente. \emph{(aprox.~\SI{7}{\minute})} \textbf{Comprobación:} La lectura debe ser menor que la de L2; si difiere mucho del cálculo, alejar más las bobinas para reducir el acoplamiento.
+  \item \textbf{Paso~8:} Montar el montaje E y medir su inductancia equivalente. \emph{(aprox.~\SI{7}{\minute})} \textbf{Comprobación:} La lectura debe estar a menos del 3 \% del cálculo con valores medidos.
+\end{pasos}
+% --- Etapa 3: Resonancia del circuito LC (3 pasos) ---
+\subsection{Resonancia del circuito LC (\SI{26}{\minute})}\label{sec:etapa-3}
+% --- Figura 3: diagrama de flujo de la etapa 3 (TikZ; misma disposición que el PNG del .md) ---
+\begin{figure}[H]
+  \centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.445) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=1.363in, minimum height=0.890in] (n1) at (2.685,-0.445) {Montar \\ tanque L3 y \\ C2};  % a0
+  \node[dcaja, minimum width=1.456in, minimum height=0.890in] (n2) at (4.946,-0.445) {Conectar \\ generador y \\ osciloscopio};  % a1
+  \node[dcaja, minimum width=1.270in, minimum height=0.680in] (n3) at (7.154,-0.445) {Barrer la \\ frecuencia};  % a2
+  \node[dcaja, minimum width=1.177in, minimum height=0.680in] (n4) at (7.154,-2.196) {Afinar el \\ máximo};  % a3
+  \node[ddecision, minimum width=1.905in, minimum height=1.513in] (n5) at (4.946,-2.196) {\textquestiondown{}Máximo \\ cerca de 5 \\ kHz?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n6) at (2.685,-2.196) {Fin de la \\ etapa};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) -- (n4);
+  \draw[dflecha] (n4) -- (n5);
+  \draw[dflecha] (n5) -- (n6);
+  \draw[dflecha] (n5) to[bend right=31] (n1);
+  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  \node[drotulo] at (3.590,-2.196) {sí};
+  \node[drotulo] at (4.294,-1.170) {no};
+\end{tikzpicture}
+\end{adjustbox}
+  \caption{Diagrama de flujo de la etapa 3: Resonancia del circuito LC}
+  \label{fig:flujo-3}
+\end{figure}
+\begin{pasos}
+  \item \textbf{Paso~9:} Montar L3 en paralelo con C2 y alimentar el conjunto desde el generador de funciones a través del resistor de 10 k\ensuremath{\Omega}; conectar el canal 1 del osciloscopio a la salida del generador y el canal 2 sobre el tanque, con las puntas \texttimes{}10 compensadas \cite{ref1}. \emph{(aprox.~\SI{8}{\minute})} \textbf{Comprobación:} Antes de energizar, el docente revisa el montaje; las dos tierras de las puntas van al mismo nodo de referencia. \textbf{Seguridad:} Energizar solo después de la revisión del docente.
+  \item \textbf{Paso~10:} Ajustar el generador a una onda sinusoidal de amplitud moderada y barrer la frecuencia entre 2 kHz y 10 kHz observando la amplitud en el tanque. \emph{(aprox.~\SI{10}{\minute})} \textbf{Comprobación:} La tensión en el tanque debe pasar por un máximo cerca de 5 kHz; si no aparece, revisar las conexiones del tanque.
+  \item \textbf{Paso~11:} Afinar la frecuencia del máximo de tensión en el tanque, leerla en el generador y con los cursores del osciloscopio, y anotarla. \emph{(aprox.~\SI{8}{\minute})} \textbf{Comprobación:} El valor debe estar a pocos por ciento de la $f_r = 1/(2\pi\sqrt{LC})$ calculada con L3 y C2 medidos (unos 4,99 kHz).
+\end{pasos}
+% --- Etapa 4: Desmontaje y cierre (3 pasos) ---
+\subsection{Desmontaje y cierre (\SI{10}{\minute})}\label{sec:etapa-4}
+% --- Figura 4: diagrama de flujo de la etapa 4 (TikZ; misma disposición que el PNG del .md) ---
+\begin{figure}[H]
+  \centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.445) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=1.456in, minimum height=0.680in] (n1) at (2.950,-0.445) {Desenergizar \\ el montaje};  % a0
+  \node[dcaja, minimum width=1.363in, minimum height=0.890in] (n2) at (5.204,-0.445) {Descargar y \\ retirar \\ componentes};  % a1
+  \node[dcaja, minimum width=1.270in, minimum height=0.890in] (n3) at (5.204,-2.018) {Revisar \\ tablas con \\ el docente};  % a2
+  \node[ddecision, minimum width=1.905in, minimum height=1.156in] (n4) at (2.950,-2.018) {\textquestiondown{}Tablas \\ completas?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n5) at (0.689,-2.018) {Fin de la \\ práctica};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) to[bend right=24] (n4);
+  \draw[dflecha] (n4) -- (n5);
+  \draw[dflecha] (n4) to[bend right=31] (n3);
+  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  \node[drotulo] at (1.593,-2.018) {sí};
+  \node[drotulo] at (4.302,-2.343) {no};
+\end{tikzpicture}
+\end{adjustbox}
+  \caption{Diagrama de flujo de la etapa 4: Desmontaje y cierre}
+  \label{fig:flujo-4}
+\end{figure}
+\begin{pasos}
+  \item \textbf{Paso~12:} Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard. \emph{(aprox.~\SI{3}{\minute})} \textbf{Comprobación:} Ningún indicador de salida debe quedar encendido en el generador ni en la fuente. \textbf{Seguridad:} Desenergizar siempre antes de retirar componentes.
+  \item \textbf{Paso~13:} Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo. \emph{(aprox.~\SI{4}{\minute})} \textbf{Comprobación:} El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado.
+  \item \textbf{Paso~14:} Revisar con el docente las tablas de registro antes de abandonar el banco. \emph{(aprox.~\SI{3}{\minute})} \textbf{Comprobación:} Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento.
+\end{pasos}
+
+% ---------------------------------------------------------------------
+\section{Cuestiones a Resolver}\label{sec:cuestiones}
+\begin{enumerate}
+  \item \textquestiondown{}Por qué la capacitancia equivalente de dos condensadores en serie es menor que la del menor de ellos?
+  \item \textquestiondown{}Cuánto se apartaron las lecturas del cálculo con valores nominales y cuánto del cálculo con valores medidos? \textquestiondown{}Qué indica la diferencia?
+  \item \textquestiondown{}Qué efecto tendría acercar las bobinas del montaje D con sus ejes alineados?
+  \item \textquestiondown{}Por qué la tensión en el tanque es máxima en la resonancia? Relacionarlo con la impedancia del circuito resonante en paralelo.
+  \item \textquestiondown{}Qué componentes del montaje, además de L3 y C2, pueden desplazar la frecuencia de resonancia medida?
+\end{enumerate}
+
+% ---------------------------------------------------------------------
+\section{Análisis de Resultados}\label{sec:analisis}
+Para cada montaje, calcular la diferencia porcentual $e_{\text{\%}} = (X_{\mathrm{med}} - X_{\mathrm{calc}})/X_{\mathrm{calc}} \times 100$ entre la lectura del LCR y el valor calculado con los valores medidos de los componentes, y presentar ambos cálculos (nominal y con medidos) junto a la lectura.
+\lineablanco
+Calcular la frecuencia de resonancia con los valores medidos de L3 y C2, compararla con la medida y expresar la diferencia porcentual; discutir el efecto de la capacitancia de las puntas y del cableado.
+% --- Tabla 1: Valores equivalentes calculados y medidos (5 filas vacías para registrar en el banco) ---
+\begin{table}[H]
+  \centering
+  \caption{Valores equivalentes calculados y medidos}
+  \label{tab:registro-1}
+  \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+    \toprule
+    \textbf{Montaje} & \textbf{Asociación} & \textbf{Calc. nominal (nF o mH)} & \textbf{Calc. con medidos (nF o mH)} & \textbf{Medido LCR (nF o mH)} & \textbf{e (\%)} \\
+    \midrule
+    \rule{0pt}{0.8cm} & & & & & \\
+    \cmidrule(lr){1-6}
+    \rule{0pt}{0.8cm} & & & & & \\
+    \cmidrule(lr){1-6}
+    \rule{0pt}{0.8cm} & & & & & \\
+    \cmidrule(lr){1-6}
+    \rule{0pt}{0.8cm} & & & & & \\
+    \cmidrule(lr){1-6}
+    \rule{0pt}{0.8cm} & & & & & \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+% --- Tabla 2: Frecuencia de resonancia del tanque L3 ∥ C2 (2 filas vacías para registrar en el banco) ---
+\begin{table}[H]
+  \centering
+  \caption{Frecuencia de resonancia del tanque L3 \ensuremath{\parallel} C2}
+  \label{tab:registro-2}
+  \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+    \toprule
+    \textbf{L3 medida (mH)} & \textbf{C2 medida (nF)} & \textbf{fr calculada (kHz)} & \textbf{fr medida (kHz)} & \textbf{Diferencia (\%)} \\
+    \midrule
+    \rule{0pt}{0.8cm} & & & & \\
+    \cmidrule(lr){1-5}
+    \rule{0pt}{0.8cm} & & & & \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+% ---------------------------------------------------------------------
+\section{Conclusiones}\label{sec:conclusiones}
+Concluir si las reglas de asociación se cumplen dentro de la exactitud de los instrumentos, comparando el ajuste del cálculo con valores nominales y con valores medidos; explicar la diferencia entre la resonancia calculada y la medida y relacionar la práctica con los criterios de medición en circuitos capacitivos, inductivos y LC del RA.
+\lineablanco
+\begin{itemize}
+  \item \textquestiondown{}Qué cálculo predijo mejor las lecturas y por qué?
+  \item \textquestiondown{}Qué tan cerca estuvo la resonancia medida de la calculada?
+  \item \textquestiondown{}Qué cuidado del montaje resultó más importante para obtener buenas mediciones?
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Recomendaciones de Seguridad}\label{sec:seguridad}
+\begin{itemize}
+  \item Trabajar con el circuito desenergizado mientras se conecta o modifica el montaje; energizar solo después de la revisión del docente.
+  \item Descargar los condensadores con una resistencia antes de manipularlos o medirlos, y respetar la polaridad de los electrolíticos: conectado con la polaridad invertida, un electrolítico puede explotar y provocar lesiones \cite{ref1}.
+  \item Conectar las tierras de las dos puntas del osciloscopio al mismo nodo de referencia para no cortocircuitar parte del circuito.
+  \item Mantener la amplitud del generador en valores moderados durante el barrido: en la resonancia la tensión en el tanque aumenta.
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Bibliografía}\label{sec:bibliografia}
+% Las fuentes cargadas se citan en el texto con \cite{refN}; el \nocite del principio fija su orden y \nocite{*} incluye las demás del .bib.
+\nocite{*}
+\bibliografia
+
+\end{document}

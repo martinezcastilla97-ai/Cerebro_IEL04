@@ -1,0 +1,316 @@
+% =====================================================================
+%  Guía de laboratorio — IEL04 — Circuitos Eléctricos I, semana 4
+%  Escrita por src/guia_laboratorio.py con la plantilla institucional
+%  (config/framework_iub/guia-laboratorio/: guialabiub.sty e img/, copiados a esta carpeta).
+%
+%  Compilar con:  pdflatex -> biber -> pdflatex -> pdflatex
+%  (En Overleaf: compilador pdfLaTeX; biber se ejecuta solo.)
+% =====================================================================
+\documentclass[12pt]{article}
+
+% Opciones: [sinmarca] quita la marca de agua; [borrador] muestra márgenes
+%           [ieee] referencias IEEE (por defecto); [apa] referencias APA 7
+\usepackage{guialabiub}
+
+% --------------------- Diagramas de flujo del procedimiento ----------------
+% (TikZ, con los mismos estilos del .tex del temario; la plantilla no los trae)
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\usepackage{adjustbox}
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\definecolor{iubpurple}{HTML}{8E6BBF}
+\definecolor{iubgris}{HTML}{D5DAE3}
+\definecolor{iubgrisoscuro}{HTML}{7C8598}
+\definecolor{iubfondoazul}{HTML}{EBF7FD}
+\definecolor{iubfondonaranja}{HTML}{FDF4EA}
+\definecolor{iubfondoverde}{HTML}{EDF8F2}
+\definecolor{iubfondogris}{HTML}{F4F6F9}
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+
+% --------------------------- Bibliografía ----------------------------
+\addbibresource{IEL04-semana04.bib}
+
+% --------------------------- Datos de la guía -------------------------
+\facultad{Facultad de Ingenierías}
+\modulo{IEL04 --- Circuitos Eléctricos I}
+\docente{Ing. Sergio Martinez Castilla}
+
+\begin{document}
+
+% Orden de la bibliografía: el mismo del .md (biblatex numera por orden de primera cita)
+\nocite{ref1,ref2,ref3}
+
+\datosguia
+\lineablanco
+
+% Título de la práctica y ficha de la sesión
+{\centering\bfseries Guía de laboratorio: Circuito RC en serie: constante de tiempo con onda cuadrada y ley de voltajes de Kirchhoff en régimen sinusoidal\par}
+\lineablanco
+\textbf{Semana:} 4 de 14 \quad \textbf{Resultado de aprendizaje:} IEL04-RA2 \quad \textbf{Práctica:} propuesta a partir de la bibliografía \cite{ref1}, \cite{ref2}, \cite{ref3} \quad \textbf{Duración:} \SI{240}{\minute}
+\lineablanco
+La práctica corresponde a la sesión teórica de la semana 4, \guillemotleft{}El circuito RC en serie: carga del condensador, reactancia capacitiva, impedancia y ley de voltajes de Kirchhoff\guillemotright{}, y reproduce su caso de estudio: con el resistor de 1,5 k\ensuremath{\Omega} y el condensador C2 del kit se mide la constante de tiempo del circuito con una onda cuadrada y, con una señal sinusoidal de 1 kHz, las tensiones en el resistor y en el condensador, para verificar que su suma es fasorial y no aritmética. No hay un manual de laboratorio asignado al RA IEL04-RA2, por lo que la práctica se propone a partir de la bibliografía cargada: Floyd indica que para observar la carga y la descarga completas el semiperiodo de la onda cuadrada debe durar más de cinco constantes de tiempo y trata la ley de voltajes de Kirchhoff en circuitos RC \cite{ref1}; Boylestad desarrolla los transitorios de carga y descarga \cite{ref2} y Deorsola el régimen transitorio y la respuesta senoidal con fasores \cite{ref3}.
+
+% ---------------------------------------------------------------------
+\section{Objetivos}\label{sec:objetivos}
+\textbf{Objetivo general:} Verificar experimentalmente la constante de tiempo y la ley de voltajes de Kirchhoff en un circuito RC en serie.
+\lineablanco
+\textbf{Objetivos específicos:}
+\begin{itemize}
+  \item Identificar por su marcado y verificar con instrumentos el resistor y el condensador del circuito. \emph{(CE1)}
+  \item Medir las tensiones del resistor y del condensador con el multímetro de verdadero valor eficaz en régimen sinusoidal. \emph{(CE2)}
+  \item Determinar experimentalmente la constante de tiempo y el ángulo de fase del circuito RC en serie con el osciloscopio, y comprobar la suma fasorial de tensiones. \emph{(CE3)}
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Materiales y Equipos}\label{sec:materiales}
+\begin{itemize}
+  \item \textbf{Resistor de película}: 1,5 k\ensuremath{\Omega} \textpm{}5 \% (marrón-verde-rojo-oro)
+  \item \textbf{Condensador C2 del kit}: 104K, 97,8 nF medidos
+  \item \textbf{Generador de funciones}
+  \item \textbf{Osciloscopio de dos canales con puntas \texttimes{}10}
+  \item \textbf{Multímetro digital de verdadero valor eficaz} (2)
+  \item \textbf{Medidor LCR}
+  \item \textbf{Protoboard}
+  \item \textbf{Cables de conexión} (12)
+  \item \textbf{Resistencia de descarga}: 1 k\ensuremath{\Omega}
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Procedimiento}\label{sec:procedimiento}
+La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en grupos de tres estudiantes, con tres roles que rotan entre etapas: quien monta y opera el circuito, quien mide y quien registra y verifica los cálculos. Antes de energizar cualquier montaje, el docente o el monitor revisa la conexión. Cada etapa abre con su diagrama de flujo, que muestra la secuencia y las comprobaciones de un vistazo, y sigue con sus pasos numerados; cada paso indica cuánto dura, qué debe observarse para saber que salió bien y qué hacer si no. Los valores numéricos de la sesión teórica sirven de referencia: las lecturas propias del grupo se registran en las tablas de la sección de análisis.
+\lineablanco
+% --- Etapa 1: Preparación y montaje (4 pasos) ---
+\subsection{Preparación y montaje (\SI{19}{\minute})}\label{sec:etapa-1}
+% --- Figura 1: diagrama de flujo de la etapa 1 (TikZ; misma disposición que el PNG del .md) ---
+\begin{figure}[H]
+  \centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=2.214in, minimum height=0.470in] (n0) at (1.510,-0.235) {Inicio de la etapa};  % ini
+  \node[dcaja, minimum width=1.921in, minimum height=0.470in] (n1) at (4.601,-0.235) {Identificar R y C};  % a0
+  \node[dcaja, minimum width=1.456in, minimum height=0.470in] (n2) at (6.957,-0.235) {Descargar C2};  % a1
+  \node[dcaja, minimum width=1.549in, minimum height=0.680in] (n3) at (6.957,-1.419) {Verificar con \\ instrumentos};  % a2
+  \node[dcaja, minimum width=1.921in, minimum height=0.680in] (n4) at (4.601,-1.419) {Montar R en serie \\ con C};  % a3
+  \node[ddecision, minimum width=3.021in, minimum height=0.799in] (n5) at (1.510,-1.419) {\textquestiondown{}Montaje revisado?};  % dec
+  \node[dterminal, minimum width=1.935in, minimum height=0.470in] (n6) at (1.510,-2.604) {Fin de la etapa};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) -- (n4);
+  \draw[dflecha] (n4) to[bend right=24] (n5);
+  \draw[dflecha] (n5) -- (n6);
+  \draw[dflecha] (n5) to[bend right=31] (n4);
+  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  \node[drotulo] at (1.510,-2.012) {sí};
+  \node[drotulo] at (3.365,-1.865) {no};
+\end{tikzpicture}
+\end{adjustbox}
+  \caption{Diagrama de flujo de la etapa 1: Preparación y montaje}
+  \label{fig:flujo-1}
+\end{figure}
+\begin{pasos}
+  \item \textbf{Paso~1:} Identificar el resistor por su código de colores (marrón-verde-rojo-oro: 1,5 k\ensuremath{\Omega} \textpm{}5 \%) \cite{ref1} y el condensador por su marcado (104K). \emph{(aprox.~\SI{4}{\minute})} \textbf{Comprobación:} Si el código leído no da 1,5 k\ensuremath{\Omega}, revisar el sentido de lectura empezando por la banda más cercana a un extremo.
+  \item \textbf{Paso~2:} Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 k\ensuremath{\Omega} sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales. \emph{(aprox.~\SI{3}{\minute})} \textbf{Comprobación:} La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente. \textbf{Seguridad:} No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.
+  \item \textbf{Paso~3:} Verificar el resistor con el ohmímetro y el condensador C2 con el medidor LCR, y anotar sus valores medidos. \emph{(aprox.~\SI{6}{\minute})} \textbf{Comprobación:} El resistor debe leer cerca de 1492 \ensuremath{\Omega} y C2 cerca de 97,8 nF; si alguno sale de su tolerancia, reemplazarlo y anotar el nuevo valor.
+  \item \textbf{Paso~4:} Montar en el protoboard el resistor en serie con C2, con el condensador del lado de tierra. \emph{(aprox.~\SI{6}{\minute})} \textbf{Comprobación:} El docente revisa el montaje antes de energizar. \textbf{Seguridad:} Montar con el generador apagado.
+\end{pasos}
+% --- Etapa 2: Constante de tiempo con onda cuadrada (3 pasos) ---
+\subsection{Constante de tiempo con onda cuadrada (\SI{19}{\minute})}\label{sec:etapa-2}
+% --- Figura 2: diagrama de flujo de la etapa 2 (TikZ; misma disposición que el PNG del .md) ---
+\begin{figure}[H]
+  \centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.445) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=1.084in, minimum height=0.890in] (n1) at (3.019,-0.445) {Ajustar \\ onda \\ cuadrada};  % a0
+  \node[dcaja, minimum width=1.084in, minimum height=0.680in] (n2) at (5.343,-0.445) {Conectar \\ canales};  % a1
+  \node[dcaja, minimum width=1.363in, minimum height=0.680in] (n3) at (5.343,-2.018) {Medir \ensuremath{\tau} con \\ cursores};  % a2
+  \node[ddecision, minimum width=2.045in, minimum height=1.156in] (n4) at (3.019,-2.018) {\textquestiondown{}\ensuremath{\tau} cerca de \\ RC?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n5) at (0.689,-2.018) {Fin de la \\ etapa};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) -- (n4);
+  \draw[dflecha] (n4) -- (n5);
+  \draw[dflecha] (n4) to[bend right=31] (n2);
+  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  \node[drotulo] at (1.621,-2.018) {sí};
+  \node[drotulo] at (4.417,-1.580) {no};
+\end{tikzpicture}
+\end{adjustbox}
+  \caption{Diagrama de flujo de la etapa 2: Constante de tiempo con onda cuadrada}
+  \label{fig:flujo-2}
+\end{figure}
+\begin{pasos}
+  \item \textbf{Paso~5:} Ajustar el generador a una onda cuadrada de 0 V a 5 V y 500 Hz, de modo que el semiperiodo (1 ms) supere cinco constantes de tiempo (unos 750 \textmu{}s) \cite{ref1}. \emph{(aprox.~\SI{6}{\minute})} \textbf{Comprobación:} En el canal 1 debe verse la onda cuadrada de 5 V; si no, revisar la configuración del generador.
+  \item \textbf{Paso~6:} Conectar el canal 1 a la salida del generador y el canal 2 sobre el condensador, con las puntas \texttimes{}10 compensadas y las tierras en el mismo nodo. \emph{(aprox.~\SI{5}{\minute})} \textbf{Comprobación:} En el canal 2 debe verse la curva exponencial de carga y descarga que llega a la meseta antes del flanco siguiente.
+  \item \textbf{Paso~7:} Medir con los cursores de tiempo el intervalo entre el flanco de subida y el instante en que $v_C$ alcanza el 63,2 \% de su valor final; anotarlo como $\tau$ medida. \emph{(aprox.~\SI{8}{\minute})} \textbf{Comprobación:} El valor debe estar cerca de $\tau = RC$ calculada con los valores medidos (unos 146 \textmu{}s); si difiere más del 10 \%, revisar la escala de tiempo.
+\end{pasos}
+% --- Etapa 3: Tensiones en régimen sinusoidal (4 pasos) ---
+\subsection{Tensiones en régimen sinusoidal (\SI{29}{\minute})}\label{sec:etapa-3}
+% --- Figura 3: diagrama de flujo de la etapa 3 (TikZ; misma disposición que el PNG del .md) ---
+\begin{figure}[H]
+  \centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.340) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=1.177in, minimum height=0.680in] (n1) at (2.685,-0.340) {Ajustar 1 \\ kHz y 5 V};  % a0
+  \node[dcaja, minimum width=1.270in, minimum height=0.680in] (n2) at (5.016,-0.340) {Medir VR y \\ VC};  % a1
+  \node[dcaja, minimum width=1.270in, minimum height=0.680in] (n3) at (7.293,-0.340) {Medir \\ desfase \ensuremath{\Delta}t};  % a2
+  \node[dcaja, minimum width=1.084in, minimum height=0.890in] (n4) at (7.293,-1.808) {Calcular \\ suma \\ fasorial};  % a3
+  \node[ddecision, minimum width=2.045in, minimum height=1.156in] (n5) at (5.016,-1.808) {\textquestiondown{}Suma igual \\ a VS?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n6) at (2.685,-1.808) {Fin de la \\ etapa};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) -- (n4);
+  \draw[dflecha] (n4) -- (n5);
+  \draw[dflecha] (n5) -- (n6);
+  \draw[dflecha] (n5) to[bend right=31] (n2);
+  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  \node[drotulo] at (3.618,-1.808) {sí};
+  \node[drotulo] at (5.236,-1.074) {no};
+\end{tikzpicture}
+\end{adjustbox}
+  \caption{Diagrama de flujo de la etapa 3: Tensiones en régimen sinusoidal}
+  \label{fig:flujo-3}
+\end{figure}
+\begin{pasos}
+  \item \textbf{Paso~8:} Ajustar el generador a una onda sinusoidal de 1 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 5,00 V eficaces. \emph{(aprox.~\SI{6}{\minute})} \textbf{Comprobación:} El multímetro debe indicar 5,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado.
+  \item \textbf{Paso~9:} Medir con el multímetro de verdadero valor eficaz la tensión en el resistor y la tensión en el condensador, y anotarlas. \emph{(aprox.~\SI{8}{\minute})} \textbf{Comprobación:} La suma aritmética de las dos lecturas debe superar 5 V; si da 5 V, revisar que el instrumento esté en ca.
+  \item \textbf{Paso~10:} Con el canal 1 en la salida del generador y el canal 2 en el resistor, medir el desfase de tiempo $\Delta t$ entre los cruces por cero y calcular $\theta = 360^\circ \times f \times \Delta t$. \emph{(aprox.~\SI{10}{\minute})} \textbf{Comprobación:} El ángulo debe estar cerca de 47\textdegree{} de adelanto de la corriente; si sale mayor de 90\textdegree{}, revisar qué canal va adelantado.
+  \item \textbf{Paso~11:} Calcular $\sqrt{V_R^2 + V_C^2}$ con las lecturas y compararlo con la tensión de la fuente. \emph{(aprox.~\SI{5}{\minute})} \textbf{Comprobación:} El resultado debe coincidir con 5,00 V a menos del 2 \%; si no, repetir las lecturas de tensión.
+\end{pasos}
+% --- Etapa 4: Desmontaje y cierre (3 pasos) ---
+\subsection{Desmontaje y cierre (\SI{10}{\minute})}\label{sec:etapa-4}
+% --- Figura 4: diagrama de flujo de la etapa 4 (TikZ; misma disposición que el PNG del .md) ---
+\begin{figure}[H]
+  \centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.445) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=1.456in, minimum height=0.680in] (n1) at (2.950,-0.445) {Desenergizar \\ el montaje};  % a0
+  \node[dcaja, minimum width=1.363in, minimum height=0.890in] (n2) at (5.204,-0.445) {Descargar y \\ retirar \\ componentes};  % a1
+  \node[dcaja, minimum width=1.270in, minimum height=0.890in] (n3) at (5.204,-2.018) {Revisar \\ tablas con \\ el docente};  % a2
+  \node[ddecision, minimum width=1.905in, minimum height=1.156in] (n4) at (2.950,-2.018) {\textquestiondown{}Tablas \\ completas?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n5) at (0.689,-2.018) {Fin de la \\ práctica};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) to[bend right=24] (n4);
+  \draw[dflecha] (n4) -- (n5);
+  \draw[dflecha] (n4) to[bend right=31] (n3);
+  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  \node[drotulo] at (1.593,-2.018) {sí};
+  \node[drotulo] at (4.302,-2.343) {no};
+\end{tikzpicture}
+\end{adjustbox}
+  \caption{Diagrama de flujo de la etapa 4: Desmontaje y cierre}
+  \label{fig:flujo-4}
+\end{figure}
+\begin{pasos}
+  \item \textbf{Paso~12:} Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard. \emph{(aprox.~\SI{3}{\minute})} \textbf{Comprobación:} Ningún indicador de salida debe quedar encendido en el generador ni en la fuente. \textbf{Seguridad:} Desenergizar siempre antes de retirar componentes.
+  \item \textbf{Paso~13:} Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo. \emph{(aprox.~\SI{4}{\minute})} \textbf{Comprobación:} El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado.
+  \item \textbf{Paso~14:} Revisar con el docente las tablas de registro antes de abandonar el banco. \emph{(aprox.~\SI{3}{\minute})} \textbf{Comprobación:} Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento.
+\end{pasos}
+
+% ---------------------------------------------------------------------
+\section{Cuestiones a Resolver}\label{sec:cuestiones}
+\begin{enumerate}
+  \item \textquestiondown{}Por qué el semiperiodo de la onda cuadrada debe superar cinco constantes de tiempo para medir \ensuremath{\tau}?
+  \item \textquestiondown{}Qué diferencia porcentual hubo entre la \ensuremath{\tau} medida y la calculada, y qué elementos del montaje la explican?
+  \item \textquestiondown{}Por qué la suma aritmética de VR y VC es mayor que la tensión de la fuente sin que se viole la ley de voltajes de Kirchhoff?
+  \item \textquestiondown{}Qué ángulo de fase se obtuvo y cómo se compara con $\arctan(X_C/R)$ calculado con los valores medidos?
+\end{enumerate}
+
+% ---------------------------------------------------------------------
+\section{Análisis de Resultados}\label{sec:analisis}
+Calcular con los valores medidos de R y C la constante de tiempo, la reactancia $X_C = 1/(2\pi f C)$, la impedancia $Z = \sqrt{R^2 + X_C^2}$, la corriente y las tensiones esperadas, y compararlas con las mediciones en la tabla de registro, con su diferencia porcentual.
+\lineablanco
+Dibujar el diagrama fasorial de tensiones con las lecturas de VR y VC y el ángulo medido, y comprobar gráficamente que su suma vectorial reproduce la tensión de la fuente.
+% --- Tabla 1: Constante de tiempo del circuito RC en serie (3 filas vacías para registrar en el banco) ---
+\begin{table}[H]
+  \centering
+  \caption{Constante de tiempo del circuito RC en serie}
+  \label{tab:registro-1}
+  \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+    \toprule
+    \textbf{R medida (\ensuremath{\Omega})} & \textbf{C medida (nF)} & \textbf{\ensuremath{\tau} calculada (\textmu{}s)} & \textbf{\ensuremath{\tau} medida (\textmu{}s)} & \textbf{Diferencia (\%)} \\
+    \midrule
+    \rule{0pt}{0.8cm} & & & & \\
+    \cmidrule(lr){1-5}
+    \rule{0pt}{0.8cm} & & & & \\
+    \cmidrule(lr){1-5}
+    \rule{0pt}{0.8cm} & & & & \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+% --- Tabla 2: Tensiones y ángulo a 1 kHz (6 filas vacías para registrar en el banco) ---
+\begin{table}[H]
+  \centering
+  \caption{Tensiones y ángulo a 1 kHz}
+  \label{tab:registro-2}
+  \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+    \toprule
+    \textbf{Magnitud} & \textbf{Calculado} & \textbf{Medido} & \textbf{Unidad} & \textbf{Diferencia (\%)} \\
+    \midrule
+    \rule{0pt}{0.8cm} & & & & \\
+    \cmidrule(lr){1-5}
+    \rule{0pt}{0.8cm} & & & & \\
+    \cmidrule(lr){1-5}
+    \rule{0pt}{0.8cm} & & & & \\
+    \cmidrule(lr){1-5}
+    \rule{0pt}{0.8cm} & & & & \\
+    \cmidrule(lr){1-5}
+    \rule{0pt}{0.8cm} & & & & \\
+    \cmidrule(lr){1-5}
+    \rule{0pt}{0.8cm} & & & & \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+% ---------------------------------------------------------------------
+\section{Conclusiones}\label{sec:conclusiones}
+Concluir si la constante de tiempo y las tensiones medidas concuerdan con el modelo del circuito RC en serie, explicando las diferencias con la resolución de los instrumentos y la resistencia interna del generador; relacionar la suma fasorial de tensiones con la ley de voltajes de Kirchhoff y con los criterios de medición del RA.
+\lineablanco
+\begin{itemize}
+  \item \textquestiondown{}Qué tan bien coincidió \ensuremath{\tau} medida con el producto RC?
+  \item \textquestiondown{}Qué demuestra la diferencia entre la suma aritmética y la fasorial de las tensiones?
+  \item \textquestiondown{}Qué paso del procedimiento fue más sensible a errores de lectura?
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Recomendaciones de Seguridad}\label{sec:seguridad}
+\begin{itemize}
+  \item Trabajar con el circuito desenergizado mientras se conecta o modifica el montaje; energizar solo después de la revisión del docente.
+  \item Descargar los condensadores con una resistencia antes de manipularlos o medirlos, y respetar la polaridad de los electrolíticos: conectado con la polaridad invertida, un electrolítico puede explotar y provocar lesiones \cite{ref1}.
+  \item Conectar las tierras de las dos puntas del osciloscopio a un mismo nodo de referencia: unirlas a nodos distintos cortocircuita el elemento que queda entre ellas.
+  \item No superar la tensión de trabajo de C2 (100 V) ni la potencia del resistor; con 5 V de alimentación ambos trabajan holgados.
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Bibliografía}\label{sec:bibliografia}
+% Las fuentes cargadas se citan en el texto con \cite{refN}; el \nocite del principio fija su orden y \nocite{*} incluye las demás del .bib.
+\nocite{*}
+\bibliografia
+
+\end{document}

@@ -1,0 +1,557 @@
+{
+ "formato": 2,
+ "huella": "e9399f83be443f70",
+ "modelo": "gpt-4o",
+ "fecha": "2026-10-25",
+ "guia": {
+  "titulo": "Circuito RC en serie: constante de tiempo con onda cuadrada y ley de voltajes de Kirchhoff en régimen sinusoidal",
+  "introduccion": "La práctica corresponde a la sesión teórica de la semana 4, «El circuito RC en serie: carga del condensador, reactancia capacitiva, impedancia y ley de voltajes de Kirchhoff», y reproduce su caso de estudio: con el resistor de 1,5 kΩ y el condensador C2 del kit se mide la constante de tiempo del circuito con una onda cuadrada y, con una señal sinusoidal de 1 kHz, las tensiones en el resistor y en el condensador, para verificar que su suma es fasorial y no aritmética. No hay un manual de laboratorio asignado al RA IEL04-RA2, por lo que la práctica se propone a partir de la bibliografía cargada: Floyd indica que para observar la carga y la descarga completas el semiperiodo de la onda cuadrada debe durar más de cinco constantes de tiempo y trata la ley de voltajes de Kirchhoff en circuitos RC [1]; Boylestad desarrolla los transitorios de carga y descarga [2] y Deorsola el régimen transitorio y la respuesta senoidal con fasores [3].",
+  "objetivo_general": "Verificar experimentalmente la constante de tiempo y la ley de voltajes de Kirchhoff en un circuito RC en serie.",
+  "objetivos_especificos": [
+   {
+    "enunciado": "Identificar por su marcado y verificar con instrumentos el resistor y el condensador del circuito.",
+    "criterios": [
+     "CE1"
+    ]
+   },
+   {
+    "enunciado": "Medir las tensiones del resistor y del condensador con el multímetro de verdadero valor eficaz en régimen sinusoidal.",
+    "criterios": [
+     "CE2"
+    ]
+   },
+   {
+    "enunciado": "Determinar experimentalmente la constante de tiempo y el ángulo de fase del circuito RC en serie con el osciloscopio, y comprobar la suma fasorial de tensiones.",
+    "criterios": [
+     "CE3"
+    ]
+   }
+  ],
+  "materiales": [
+   {
+    "nombre": "Resistor de película",
+    "especificacion": "1,5 kΩ ±5 % (marrón-verde-rojo-oro)",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Condensador C2 del kit",
+    "especificacion": "104K, 97,8 nF medidos",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Generador de funciones",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Osciloscopio de dos canales con puntas ×10",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Multímetro digital de verdadero valor eficaz",
+    "especificacion": "",
+    "cantidad": 2
+   },
+   {
+    "nombre": "Medidor LCR",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Protoboard",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Cables de conexión",
+    "especificacion": "",
+    "cantidad": 12
+   },
+   {
+    "nombre": "Resistencia de descarga",
+    "especificacion": "1 kΩ",
+    "cantidad": 1
+   }
+  ],
+  "procedimiento_introduccion": "La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en grupos de tres estudiantes, con tres roles que rotan entre etapas: quien monta y opera el circuito, quien mide y quien registra y verifica los cálculos. Antes de energizar cualquier montaje, el docente o el monitor revisa la conexión. Cada etapa abre con su diagrama de flujo, que muestra la secuencia y las comprobaciones de un vistazo, y sigue con sus pasos numerados; cada paso indica cuánto dura, qué debe observarse para saber que salió bien y qué hacer si no. Los valores numéricos de la sesión teórica sirven de referencia: las lecturas propias del grupo se registran en las tablas de la sección de análisis.",
+  "etapas": [
+   {
+    "titulo": "Preparación y montaje",
+    "pasos": [
+     {
+      "texto": "Identificar el resistor por su código de colores (marrón-verde-rojo-oro: 1,5 kΩ ±5 %) [1] y el condensador por su marcado (104K).",
+      "duracion_min": 4,
+      "seguridad": "",
+      "verificacion": "Si el código leído no da 1,5 kΩ, revisar el sentido de lectura empezando por la banda más cercana a un extremo."
+     },
+     {
+      "texto": "Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 kΩ sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales.",
+      "duracion_min": 3,
+      "seguridad": "No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.",
+      "verificacion": "La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente."
+     },
+     {
+      "texto": "Verificar el resistor con el ohmímetro y el condensador C2 con el medidor LCR, y anotar sus valores medidos.",
+      "duracion_min": 6,
+      "seguridad": "",
+      "verificacion": "El resistor debe leer cerca de 1492 Ω y C2 cerca de 97,8 nF; si alguno sale de su tolerancia, reemplazarlo y anotar el nuevo valor."
+     },
+     {
+      "texto": "Montar en el protoboard el resistor en serie con C2, con el condensador del lado de tierra.",
+      "duracion_min": 6,
+      "seguridad": "Montar con el generador apagado.",
+      "verificacion": "El docente revisa el montaje antes de energizar."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Identificar R y C",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Descargar C2",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Verificar con instrumentos",
+       "forma": "caja"
+      },
+      {
+       "id": "a3",
+       "texto": "Montar R en serie con C",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Montaje revisado?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "a3",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a3",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a3",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Constante de tiempo con onda cuadrada",
+    "pasos": [
+     {
+      "texto": "Ajustar el generador a una onda cuadrada de 0 V a 5 V y 500 Hz, de modo que el semiperiodo (1 ms) supere cinco constantes de tiempo (unos 750 µs) [1].",
+      "duracion_min": 6,
+      "seguridad": "",
+      "verificacion": "En el canal 1 debe verse la onda cuadrada de 5 V; si no, revisar la configuración del generador."
+     },
+     {
+      "texto": "Conectar el canal 1 a la salida del generador y el canal 2 sobre el condensador, con las puntas ×10 compensadas y las tierras en el mismo nodo.",
+      "duracion_min": 5,
+      "seguridad": "",
+      "verificacion": "En el canal 2 debe verse la curva exponencial de carga y descarga que llega a la meseta antes del flanco siguiente."
+     },
+     {
+      "texto": "Medir con los cursores de tiempo el intervalo entre el flanco de subida y el instante en que $v_C$ alcanza el 63,2 % de su valor final; anotarlo como $\\tau$ medida.",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "El valor debe estar cerca de $\\tau = RC$ calculada con los valores medidos (unos 146 µs); si difiere más del 10 %, revisar la escala de tiempo."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Ajustar onda cuadrada",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Conectar canales",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Medir τ con cursores",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿τ cerca de RC?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a1",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Tensiones en régimen sinusoidal",
+    "pasos": [
+     {
+      "texto": "Ajustar el generador a una onda sinusoidal de 1 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 5,00 V eficaces.",
+      "duracion_min": 6,
+      "seguridad": "",
+      "verificacion": "El multímetro debe indicar 5,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado."
+     },
+     {
+      "texto": "Medir con el multímetro de verdadero valor eficaz la tensión en el resistor y la tensión en el condensador, y anotarlas.",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "La suma aritmética de las dos lecturas debe superar 5 V; si da 5 V, revisar que el instrumento esté en ca."
+     },
+     {
+      "texto": "Con el canal 1 en la salida del generador y el canal 2 en el resistor, medir el desfase de tiempo $\\Delta t$ entre los cruces por cero y calcular $\\theta = 360^\\circ \\times f \\times \\Delta t$.",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "El ángulo debe estar cerca de 47° de adelanto de la corriente; si sale mayor de 90°, revisar qué canal va adelantado."
+     },
+     {
+      "texto": "Calcular $\\sqrt{V_R^2 + V_C^2}$ con las lecturas y compararlo con la tensión de la fuente.",
+      "duracion_min": 5,
+      "seguridad": "",
+      "verificacion": "El resultado debe coincidir con 5,00 V a menos del 2 %; si no, repetir las lecturas de tensión."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Ajustar 1 kHz y 5 V",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Medir VR y VC",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Medir desfase Δt",
+       "forma": "caja"
+      },
+      {
+       "id": "a3",
+       "texto": "Calcular suma fasorial",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Suma igual a VS?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "a3",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a3",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a1",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Desmontaje y cierre",
+    "pasos": [
+     {
+      "texto": "Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard.",
+      "duracion_min": 3,
+      "seguridad": "Desenergizar siempre antes de retirar componentes.",
+      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente."
+     },
+     {
+      "texto": "Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo.",
+      "duracion_min": 4,
+      "seguridad": "",
+      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado."
+     },
+     {
+      "texto": "Revisar con el docente las tablas de registro antes de abandonar el banco.",
+      "duracion_min": 3,
+      "seguridad": "",
+      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Desenergizar el montaje",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Descargar y retirar componentes",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Revisar tablas con el docente",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Tablas completas?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la práctica",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a2",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   }
+  ],
+  "cuestiones": [
+   "¿Por qué el semiperiodo de la onda cuadrada debe superar cinco constantes de tiempo para medir τ?",
+   "¿Qué diferencia porcentual hubo entre la τ medida y la calculada, y qué elementos del montaje la explican?",
+   "¿Por qué la suma aritmética de VR y VC es mayor que la tensión de la fuente sin que se viole la ley de voltajes de Kirchhoff?",
+   "¿Qué ángulo de fase se obtuvo y cómo se compara con $\\arctan(X_C/R)$ calculado con los valores medidos?"
+  ],
+  "analisis": [
+   "Calcular con los valores medidos de R y C la constante de tiempo, la reactancia $X_C = 1/(2\\pi f C)$, la impedancia $Z = \\sqrt{R^2 + X_C^2}$, la corriente y las tensiones esperadas, y compararlas con las mediciones en la tabla de registro, con su diferencia porcentual.",
+   "Dibujar el diagrama fasorial de tensiones con las lecturas de VR y VC y el ángulo medido, y comprobar gráficamente que su suma vectorial reproduce la tensión de la fuente."
+  ],
+  "tablas_registro": [
+   {
+    "leyenda": "Constante de tiempo del circuito RC en serie",
+    "columnas": [
+     "R medida (Ω)",
+     "C medida (nF)",
+     "τ calculada (µs)",
+     "τ medida (µs)",
+     "Diferencia (%)"
+    ],
+    "filas": 3
+   },
+   {
+    "leyenda": "Tensiones y ángulo a 1 kHz",
+    "columnas": [
+     "Magnitud",
+     "Calculado",
+     "Medido",
+     "Unidad",
+     "Diferencia (%)"
+    ],
+    "filas": 6
+   }
+  ],
+  "conclusiones": "Concluir si la constante de tiempo y las tensiones medidas concuerdan con el modelo del circuito RC en serie, explicando las diferencias con la resolución de los instrumentos y la resistencia interna del generador; relacionar la suma fasorial de tensiones con la ley de voltajes de Kirchhoff y con los criterios de medición del RA.",
+  "preguntas_conclusion": [
+   "¿Qué tan bien coincidió τ medida con el producto RC?",
+   "¿Qué demuestra la diferencia entre la suma aritmética y la fasorial de las tensiones?",
+   "¿Qué paso del procedimiento fue más sensible a errores de lectura?"
+  ],
+  "seguridad": [
+   "Trabajar con el circuito desenergizado mientras se conecta o modifica el montaje; energizar solo después de la revisión del docente.",
+   "Descargar los condensadores con una resistencia antes de manipularlos o medirlos, y respetar la polaridad de los electrolíticos: conectado con la polaridad invertida, un electrolítico puede explotar y provocar lesiones [1].",
+   "Conectar las tierras de las dos puntas del osciloscopio a un mismo nodo de referencia: unirlas a nodos distintos cortocircuita el elemento que queda entre ellas.",
+   "No superar la tensión de trabajo de C2 (100 V) ni la potencia del resistor; con 5 V de alimentación ambos trabajan holgados."
+  ],
+  "referencias_cargadas": [
+   {
+    "tipo": "book",
+    "autores": [
+     "Floyd, Thomas L."
+    ],
+    "titulo": "Principios de circuitos eléctricos",
+    "editorial": "Pearson Educación",
+    "anio": "2007",
+    "edicion": "8.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Boylestad, Robert L."
+    ],
+    "titulo": "Introducción al análisis de circuitos",
+    "editorial": "Pearson Educación",
+    "anio": "2004",
+    "edicion": "10.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Deorsola, M. F. P.",
+     "Morcelle del Valle, P."
+    ],
+    "titulo": "Circuitos eléctricos. Parte 1",
+    "editorial": "Editorial de la Universidad de La Plata",
+    "anio": "2017",
+    "edicion": "1.ª",
+    "url": ""
+   }
+  ],
+  "referencias_externas": [],
+  "base_bibliografica": [
+   1,
+   2,
+   3
+  ]
+ }
+}

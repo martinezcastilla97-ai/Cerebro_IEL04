@@ -1,0 +1,562 @@
+{
+ "formato": 2,
+ "huella": "c924d604cf87cfb7",
+ "modelo": "gpt-4o",
+ "fecha": "2026-10-25",
+ "guia": {
+  "titulo": "Caracterización de un filtro pasabanda RLC en serie: frecuencia de resonancia, frecuencias de corte, ancho de banda y factor de calidad",
+  "introduccion": "La práctica cierra el RA IEL04-RA4 y corresponde a la sesión teórica de la semana 13, «Cálculo y medición de parámetros en circuitos RLC en serie, en paralelo y mixtos: filtros resonantes, frecuencia de resonancia, ancho de banda y nomenclatura». Reproduce su caso de estudio: un filtro pasabanda formado por el resistor de 100 Ω, la bobina L3 y el condensador C2 en serie, con la salida en el resistor, del que se miden la frecuencia de resonancia, las frecuencias de corte, el ancho de banda y el factor de calidad. No hay un manual de laboratorio asignado, por lo que la práctica se propone a partir de la bibliografía cargada: Floyd define el ancho de banda de los circuitos resonantes entre las frecuencias en que la respuesta cae al 70,7 % y trata los filtros pasabanda [1], Boylestad el factor de calidad y la selectividad [2] y Deorsola la nomenclatura y la simbología de los circuitos [3].",
+  "objetivo_general": "Caracterizar experimentalmente un filtro pasabanda RLC en serie y contrastar sus parámetros con el cálculo.",
+  "objetivos_especificos": [
+   {
+    "enunciado": "Identificar y verificar con instrumentos los componentes del filtro, con su simbología y sus unidades.",
+    "criterios": [
+     "CE1"
+    ]
+   },
+   {
+    "enunciado": "Medir la tensión de salida del filtro en función de la frecuencia con el multímetro y el osciloscopio.",
+    "criterios": [
+     "CE2"
+    ]
+   },
+   {
+    "enunciado": "Determinar experimentalmente la frecuencia de resonancia, las frecuencias de corte, el ancho de banda y el factor de calidad del circuito RLC en serie.",
+    "criterios": [
+     "CE3"
+    ]
+   }
+  ],
+  "materiales": [
+   {
+    "nombre": "Resistor",
+    "especificacion": "100 Ω (medido 99,5 Ω en la sesión)",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Bobina L3 del kit",
+    "especificacion": "103K, 10,4 mH y 24,6 Ω medidos",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Condensador C2 del kit",
+    "especificacion": "104K, 97,8 nF medidos",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Generador de funciones",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Osciloscopio de dos canales con puntas ×10",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Multímetro digital de verdadero valor eficaz",
+    "especificacion": "",
+    "cantidad": 2
+   },
+   {
+    "nombre": "Medidor LCR",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Protoboard",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Cables de conexión",
+    "especificacion": "",
+    "cantidad": 12
+   },
+   {
+    "nombre": "Resistencia de descarga",
+    "especificacion": "1 kΩ",
+    "cantidad": 1
+   }
+  ],
+  "procedimiento_introduccion": "La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en grupos de tres estudiantes, con tres roles que rotan entre etapas: quien monta y opera el circuito, quien mide y quien registra y verifica los cálculos. Antes de energizar cualquier montaje, el docente o el monitor revisa la conexión. Cada etapa abre con su diagrama de flujo, que muestra la secuencia y las comprobaciones de un vistazo, y sigue con sus pasos numerados; cada paso indica cuánto dura, qué debe observarse para saber que salió bien y qué hacer si no. Los valores numéricos de la sesión teórica sirven de referencia: las lecturas propias del grupo se registran en las tablas de la sección de análisis.",
+  "etapas": [
+   {
+    "titulo": "Preparación y predicción",
+    "pasos": [
+     {
+      "texto": "Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 kΩ sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales.",
+      "duracion_min": 3,
+      "seguridad": "No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.",
+      "verificacion": "La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente."
+     },
+     {
+      "texto": "Verificar el resistor con el ohmímetro, la bobina L3 con el medidor LCR y el ohmímetro (10,4 mH y 24,6 Ω esperados) y el condensador C2 con el medidor LCR (97,8 nF esperados).",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "Si algún valor difiere más que su tolerancia del registrado, anotar el nuevo valor y rehacer el cálculo previo con él."
+     },
+     {
+      "texto": "Calcular con los valores medidos la frecuencia de resonancia, el factor de calidad con la resistencia total del lazo $R + R_W$, las frecuencias de corte y el ancho de banda $AB = f_r/Q$.",
+      "duracion_min": 12,
+      "seguridad": "",
+      "verificacion": "Deben obtenerse $f_r$ cerca de 4990 Hz, Q cerca de 2,6 y un ancho de banda cercano a 1900 Hz."
+     },
+     {
+      "texto": "Montar en serie el resistor, L3 y C2, con el resistor del lado de tierra para medir en él la salida.",
+      "duracion_min": 6,
+      "seguridad": "Montar con el generador apagado.",
+      "verificacion": "El docente revisa el montaje antes de energizar."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Descargar C2",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Verificar componentes",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Calcular fr, Q y AB",
+       "forma": "caja"
+      },
+      {
+       "id": "a3",
+       "texto": "Montar el filtro",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Montaje revisado?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "a3",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a3",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a3",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Resonancia del filtro",
+    "pasos": [
+     {
+      "texto": "Ajustar el generador a una onda sinusoidal de 5 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 2,00 V eficaces.",
+      "duracion_min": 6,
+      "seguridad": "",
+      "verificacion": "El multímetro debe indicar 2,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado."
+     },
+     {
+      "texto": "Barrer la frecuencia buscando el máximo de la tensión en el resistor, reajustando la entrada a 2,00 V eficaces a cada frecuencia.",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "El máximo debe estar cerca de 5 kHz y por debajo de 2,00 V por la resistencia de devanado."
+     },
+     {
+      "texto": "Afinar la resonancia por fase con el osciloscopio (tensión del resistor en fase con la de la fuente) y anotar $f_r$ y la tensión de salida máxima.",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "La tensión de salida máxima esperada es cercana a 1,60 V."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Ajustar 5 kHz y 2 V",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Barrer buscando el máximo",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Afinar por fase",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Máximo localizado?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a1",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Frecuencias de corte y ancho de banda",
+    "pasos": [
+     {
+      "texto": "Calcular el 70,7 % de la tensión de salida máxima [1].",
+      "duracion_min": 2,
+      "seguridad": "",
+      "verificacion": "Con 1,60 V de máximo, el nivel de corte es de unos 1,13 V."
+     },
+     {
+      "texto": "Bajar la frecuencia desde $f_r$ hasta que la salida caiga a ese nivel, reajustando la entrada, y anotar $f_1$.",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "$f_1$ debe estar cerca de 4,1 kHz."
+     },
+     {
+      "texto": "Subir la frecuencia desde $f_r$ hasta el mismo nivel y anotar $f_2$.",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "$f_2$ debe estar cerca de 6,0 kHz."
+     },
+     {
+      "texto": "Calcular $AB = f_2 - f_1$, $Q = f_r/AB$ y la comprobación $\\sqrt{f_1 f_2}$, que debe coincidir con $f_r$.",
+      "duracion_min": 6,
+      "seguridad": "",
+      "verificacion": "Si $\\sqrt{f_1 f_2}$ se aparta más del 2 % de $f_r$, repetir la medición de la frecuencia de corte más dudosa."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Calcular nivel del 70,7 %",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Medir f1",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Medir f2",
+       "forma": "caja"
+      },
+      {
+       "id": "a3",
+       "texto": "Calcular AB y Q",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿√(f1·f2) ≈ fr?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "a3",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a3",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a1",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Desmontaje y cierre",
+    "pasos": [
+     {
+      "texto": "Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard.",
+      "duracion_min": 3,
+      "seguridad": "Desenergizar siempre antes de retirar componentes.",
+      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente."
+     },
+     {
+      "texto": "Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo.",
+      "duracion_min": 4,
+      "seguridad": "",
+      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado."
+     },
+     {
+      "texto": "Revisar con el docente las tablas de registro antes de abandonar el banco.",
+      "duracion_min": 3,
+      "seguridad": "",
+      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Desenergizar el montaje",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Descargar y retirar componentes",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Revisar tablas con el docente",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Tablas completas?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la práctica",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a2",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   }
+  ],
+  "cuestiones": [
+   "¿Por qué la tensión de salida en la resonancia no alcanza la tensión de la fuente?",
+   "¿Qué diferencia hay entre el factor de calidad medido y el que predice el cálculo ideal con valores nominales, y a qué se debe?",
+   "¿Qué ocurriría con el ancho de banda si la tensión se fijara en el dial del generador y no en los bornes del circuito?",
+   "¿Qué componente habría que cambiar para hacer el filtro más selectivo, y en qué sentido?",
+   "¿Por qué $\\sqrt{f_1 f_2}$ sirve para comprobar la coherencia de las tres frecuencias medidas?"
+  ],
+  "analisis": [
+   "Presentar en la tabla de registro los parámetros del filtro calculados de forma ideal con valores nominales, calculados con valores medidos y resistencia de devanado, y medidos, con la diferencia porcentual respecto del cálculo con valores medidos.",
+   "Registrar la tensión de salida a unas diez frecuencias entre 2 kHz y 10 kHz y graficarla contra la frecuencia en escala logarítmica, marcando $f_r$, $f_1$, $f_2$ y el nivel del 70,7 %."
+  ],
+  "tablas_registro": [
+   {
+    "leyenda": "Parámetros del filtro pasabanda RLC en serie",
+    "columnas": [
+     "Parámetro",
+     "Ideal nominal",
+     "Cálculo con medidos",
+     "Medido",
+     "Unidad",
+     "Diferencia (%)"
+    ],
+    "filas": 6
+   },
+   {
+    "leyenda": "Respuesta en frecuencia del filtro",
+    "columnas": [
+     "Frecuencia (kHz)",
+     "Vent (V)",
+     "Vsal (V)",
+     "Vsal/Vent"
+    ],
+    "filas": 10
+   }
+  ],
+  "conclusiones": "Concluir si los parámetros medidos del filtro coinciden con el cálculo que usa los valores medidos y la resistencia de devanado, y por qué el cálculo ideal se aparta; relacionar la práctica con los criterios de medición en circuitos RLC del RA y con la selección de componentes de un filtro.",
+  "preguntas_conclusion": [
+   "¿Qué parámetro del filtro fue más sensible a la resistencia de devanado?",
+   "¿Qué tan coherentes resultaron las tres frecuencias medidas?",
+   "¿Qué cambio de componentes propondrían para estrechar el ancho de banda?"
+  ],
+  "seguridad": [
+   "Trabajar con el circuito desenergizado mientras se conecta o modifica el montaje; energizar solo después de la revisión del docente.",
+   "Mantener la tensión de la fuente en 2,00 V eficaces: en la resonancia en serie la tensión en la bobina y en el condensador supera varias veces la de la fuente [1].",
+   "Conectar las tierras de las dos puntas del osciloscopio a un mismo nodo de referencia: unirlas a nodos distintos cortocircuita el elemento que queda entre ellas."
+  ],
+  "referencias_cargadas": [
+   {
+    "tipo": "book",
+    "autores": [
+     "Floyd, Thomas L."
+    ],
+    "titulo": "Principios de circuitos eléctricos",
+    "editorial": "Pearson Educación",
+    "anio": "2007",
+    "edicion": "8.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Boylestad, Robert L."
+    ],
+    "titulo": "Introducción al análisis de circuitos",
+    "editorial": "Pearson Educación",
+    "anio": "2004",
+    "edicion": "10.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Deorsola, M. F. P.",
+     "Morcelle del Valle, P."
+    ],
+    "titulo": "Circuitos eléctricos. Parte 1",
+    "editorial": "Editorial de la Universidad de La Plata",
+    "anio": "2017",
+    "edicion": "1.ª",
+    "url": ""
+   }
+  ],
+  "referencias_externas": [],
+  "base_bibliografica": [
+   1,
+   2,
+   3
+  ]
+ }
+}

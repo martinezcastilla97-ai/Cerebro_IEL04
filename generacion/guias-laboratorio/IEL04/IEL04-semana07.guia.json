@@ -1,0 +1,545 @@
+{
+ "formato": 2,
+ "huella": "b4493373c7e8f8f7",
+ "modelo": "gpt-4o",
+ "fecha": "2026-10-25",
+ "guia": {
+  "titulo": "Circuito RC mixto: predicción con el método general y medición de corrientes, tensiones y ángulo",
+  "introduccion": "La práctica cierra el RA IEL04-RA2 y corresponde a la sesión teórica de la semana 7, «Cálculo y medición de parámetros en circuitos RC en serie, en paralelo y mixtos». Reproduce su caso de estudio: un resistor $R_1$ en serie con el paralelo de $R_2$ y C2, alimentado con 5,00 V eficaces a 1 kHz; primero se predicen con el método general de impedancias y admitancias la corriente, las tensiones y el ángulo, y después se miden y se explica cada diferencia. Sin un manual de laboratorio asignado, la práctica se propone a partir de la bibliografía cargada: Floyd trata el análisis de circuitos RC en serie-paralelo y el uso de las puntas ×1 y ×10 del osciloscopio y su efecto de carga [1], Boylestad las redes de ca en serie-paralelo [2] y Deorsola los instrumentos y mediciones [3].",
+  "objetivo_general": "Comprobar experimentalmente la predicción del método general en un circuito RC mixto.",
+  "objetivos_especificos": [
+   {
+    "enunciado": "Identificar y verificar con instrumentos los dos resistores y el condensador del circuito.",
+    "criterios": [
+     "CE1"
+    ]
+   },
+   {
+    "enunciado": "Medir las tensiones y las corrientes de rama del circuito con el multímetro de verdadero valor eficaz.",
+    "criterios": [
+     "CE2"
+    ]
+   },
+   {
+    "enunciado": "Medir la corriente total y su ángulo en el circuito RC mixto y compararlos con la predicción del método general.",
+    "criterios": [
+     "CE3"
+    ]
+   }
+  ],
+  "materiales": [
+   {
+    "nombre": "Resistor R1",
+    "especificacion": "1 kΩ (medido 996 Ω en la sesión)",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Resistor R2",
+    "especificacion": "1,5 kΩ ±5 %",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Condensador C2 del kit",
+    "especificacion": "104K, 97,8 nF medidos",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Resistor sensor de corriente",
+    "especificacion": "10 Ω",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Generador de funciones",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Osciloscopio de dos canales con puntas ×10",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Multímetro digital de verdadero valor eficaz",
+    "especificacion": "",
+    "cantidad": 2
+   },
+   {
+    "nombre": "Medidor LCR",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Protoboard",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Cables de conexión",
+    "especificacion": "",
+    "cantidad": 12
+   },
+   {
+    "nombre": "Resistencia de descarga",
+    "especificacion": "1 kΩ",
+    "cantidad": 1
+   }
+  ],
+  "procedimiento_introduccion": "La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en grupos de tres estudiantes, con tres roles que rotan entre etapas: quien monta y opera el circuito, quien mide y quien registra y verifica los cálculos. Antes de energizar cualquier montaje, el docente o el monitor revisa la conexión. Cada etapa abre con su diagrama de flujo, que muestra la secuencia y las comprobaciones de un vistazo, y sigue con sus pasos numerados; cada paso indica cuánto dura, qué debe observarse para saber que salió bien y qué hacer si no. Los valores numéricos de la sesión teórica sirven de referencia: las lecturas propias del grupo se registran en las tablas de la sección de análisis.",
+  "etapas": [
+   {
+    "titulo": "Preparación, predicción y montaje",
+    "pasos": [
+     {
+      "texto": "Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 kΩ sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales.",
+      "duracion_min": 3,
+      "seguridad": "No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.",
+      "verificacion": "La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente."
+     },
+     {
+      "texto": "Medir R1 y R2 con el ohmímetro y C2 con el medidor LCR, y anotar los valores.",
+      "duracion_min": 6,
+      "seguridad": "",
+      "verificacion": "R2 debe leer cerca de 1492 Ω y C2 cerca de 97,8 nF."
+     },
+     {
+      "texto": "Calcular con los valores medidos la admitancia del paralelo, la impedancia total, la corriente, las tensiones $V_{R1}$ y $V_p$, las corrientes de rama y el ángulo.",
+      "duracion_min": 15,
+      "seguridad": "",
+      "verificacion": "La corriente total esperada es de unos 2,56 mA, adelantada unos 22° a la tensión; si el cálculo difiere mucho, revisar la conversión de admitancia a impedancia."
+     },
+     {
+      "texto": "Montar R1 en serie con el paralelo de R2 y C2, con el resistor sensor en serie del lado de tierra.",
+      "duracion_min": 7,
+      "seguridad": "Montar con el generador apagado.",
+      "verificacion": "El docente revisa el montaje antes de energizar."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Descargar C2",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Medir componentes",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Predecir con método general",
+       "forma": "caja"
+      },
+      {
+       "id": "a3",
+       "texto": "Montar el circuito mixto",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Montaje revisado?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "a3",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a3",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a3",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Medición de tensiones y corrientes",
+    "pasos": [
+     {
+      "texto": "Ajustar el generador a una onda sinusoidal de 1 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 5,00 V eficaces.",
+      "duracion_min": 6,
+      "seguridad": "",
+      "verificacion": "El multímetro debe indicar 5,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado."
+     },
+     {
+      "texto": "Medir $V_{R1}$ y la tensión del paralelo $V_p$ con el multímetro de verdadero valor eficaz.",
+      "duracion_min": 6,
+      "seguridad": "",
+      "verificacion": "La suma aritmética debe superar 5 V; las lecturas deben estar a menos del 2 % de la predicción."
+     },
+     {
+      "texto": "Con el circuito desenergizado, insertar el amperímetro en serie con la fuente, energizar y medir la corriente total; repetir en la rama de R2 y en la del condensador.",
+      "duracion_min": 15,
+      "seguridad": "Insertar el amperímetro solo con el circuito desenergizado.",
+      "verificacion": "Las tres lecturas deben estar a menos del 2 % de la predicción; si una se aparta más, revisar el contacto del amperímetro."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Ajustar 1 kHz y 5 V",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Medir VR1 y Vp",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Medir corrientes",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Diferencias menores al 2 %?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a1",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Ángulo y comparación",
+    "pasos": [
+     {
+      "texto": "Medir con el osciloscopio el desfase entre la tensión de la fuente y la tensión en el resistor sensor, usando puntas ×10 [1].",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "La corriente debe adelantar a la tensión unos 22°; si se ve atrasada, revisar la polaridad de las puntas."
+     },
+     {
+      "texto": "Completar la tabla comparativa y anotar para cada diferencia su causa probable: resistencia del amperímetro, resolución del multímetro o de los cursores, o resistencia interna del generador [FUENTE NO CARGADA EN raw/].",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "Cada diferencia mayor del 1 % debe tener una causa identificada; si no, repetir esa medición."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Medir desfase",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Comparar con la predicción",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Asignar causas",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Causas identificadas?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a0",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Desmontaje y cierre",
+    "pasos": [
+     {
+      "texto": "Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard.",
+      "duracion_min": 3,
+      "seguridad": "Desenergizar siempre antes de retirar componentes.",
+      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente."
+     },
+     {
+      "texto": "Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo.",
+      "duracion_min": 4,
+      "seguridad": "",
+      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado."
+     },
+     {
+      "texto": "Revisar con el docente las tablas de registro antes de abandonar el banco.",
+      "duracion_min": 3,
+      "seguridad": "",
+      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento."
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Desenergizar el montaje",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Descargar y retirar componentes",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Revisar tablas con el docente",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Tablas completas?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la práctica",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a2",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   }
+  ],
+  "cuestiones": [
+   "¿Por qué en la parte serie del circuito la suma aritmética de $V_{R1}$ y $V_p$ supera la tensión de la fuente?",
+   "¿Cómo cambiaría la corriente total si se hubiera usado el valor nominal de C2 en lugar del medido?",
+   "¿Qué efecto tiene la resistencia interna del amperímetro sobre la corriente de una rama de baja impedancia?",
+   "¿Por qué se ajusta la tensión de la fuente en los bornes del circuito, con el circuito conectado, y no en el dial del generador?"
+  ],
+  "analisis": [
+   "Presentar en la tabla de registro la predicción con valores medidos, la medición y la diferencia porcentual de cada magnitud, y agregar la predicción con valores nominales para comparar cuál ajusta mejor.",
+   "Dibujar el diagrama fasorial del circuito: las corrientes de rama sumadas en el paralelo y las tensiones $V_{R1}$ y $V_p$ sumadas en la parte serie, y verificar ambas sumas con las lecturas."
+  ],
+  "tablas_registro": [
+   {
+    "leyenda": "Circuito RC mixto a 1 kHz: predicción y medición",
+    "columnas": [
+     "Magnitud",
+     "Predicción",
+     "Medido",
+     "Unidad",
+     "Diferencia (%)",
+     "Causa probable"
+    ],
+    "filas": 7
+   }
+  ],
+  "conclusiones": "Concluir si el método general predice el comportamiento del circuito mixto dentro de la exactitud de los instrumentos, justificando cada diferencia con su causa física, y relacionar la práctica con los criterios de medición en circuitos resistivos, capacitivos y RC del RA.",
+  "preguntas_conclusion": [
+   "¿Qué magnitud mostró la mayor diferencia y qué la causó?",
+   "¿Qué ventaja tuvo calcular con los valores medidos?",
+   "¿Qué efecto de los instrumentos fue relevante en esta práctica y cuál fue despreciable?"
+  ],
+  "seguridad": [
+   "Trabajar con el circuito desenergizado mientras se conecta o modifica el montaje; energizar solo después de la revisión del docente.",
+   "Descargar los condensadores con una resistencia antes de manipularlos o medirlos, y respetar la polaridad de los electrolíticos: conectado con la polaridad invertida, un electrolítico puede explotar y provocar lesiones [1].",
+   "Conectar las tierras de las dos puntas del osciloscopio a un mismo nodo de referencia: unirlas a nodos distintos cortocircuita el elemento que queda entre ellas.",
+   "Insertar el amperímetro en serie con la rama solo con el circuito desenergizado y con el instrumento en la función y la escala de corriente; nunca conectarlo en paralelo con la fuente."
+  ],
+  "referencias_cargadas": [
+   {
+    "tipo": "book",
+    "autores": [
+     "Floyd, Thomas L."
+    ],
+    "titulo": "Principios de circuitos eléctricos",
+    "editorial": "Pearson Educación",
+    "anio": "2007",
+    "edicion": "8.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Boylestad, Robert L."
+    ],
+    "titulo": "Introducción al análisis de circuitos",
+    "editorial": "Pearson Educación",
+    "anio": "2004",
+    "edicion": "10.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Deorsola, M. F. P.",
+     "Morcelle del Valle, P."
+    ],
+    "titulo": "Circuitos eléctricos. Parte 1",
+    "editorial": "Editorial de la Universidad de La Plata",
+    "anio": "2017",
+    "edicion": "1.ª",
+    "url": ""
+   }
+  ],
+  "referencias_externas": [
+   {
+    "tipo": "manual",
+    "autores": [],
+    "titulo": "Manuales del generador de funciones, del multímetro digital y del osciloscopio del laboratorio",
+    "editorial": "",
+    "anio": "",
+    "edicion": "",
+    "url": ""
+   }
+  ],
+  "base_bibliografica": [
+   1,
+   2,
+   3
+  ]
+ }
+}

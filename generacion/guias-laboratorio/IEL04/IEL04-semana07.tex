@@ -1,0 +1,299 @@
+% =====================================================================
+%  Guía de laboratorio — IEL04 — Circuitos Eléctricos I, semana 7
+%  Escrita por src/guia_laboratorio.py con la plantilla institucional
+%  (config/framework_iub/guia-laboratorio/: guialabiub.sty e img/, copiados a esta carpeta).
+%
+%  Compilar con:  pdflatex -> biber -> pdflatex -> pdflatex
+%  (En Overleaf: compilador pdfLaTeX; biber se ejecuta solo.)
+% =====================================================================
+\documentclass[12pt]{article}
+
+% Opciones: [sinmarca] quita la marca de agua; [borrador] muestra márgenes
+%           [ieee] referencias IEEE (por defecto); [apa] referencias APA 7
+\usepackage{guialabiub}
+
+% --------------------- Diagramas de flujo del procedimiento ----------------
+% (TikZ, con los mismos estilos del .tex del temario; la plantilla no los trae)
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\usepackage{adjustbox}
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\definecolor{iubpurple}{HTML}{8E6BBF}
+\definecolor{iubgris}{HTML}{D5DAE3}
+\definecolor{iubgrisoscuro}{HTML}{7C8598}
+\definecolor{iubfondoazul}{HTML}{EBF7FD}
+\definecolor{iubfondonaranja}{HTML}{FDF4EA}
+\definecolor{iubfondoverde}{HTML}{EDF8F2}
+\definecolor{iubfondogris}{HTML}{F4F6F9}
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+
+% --------------------------- Bibliografía ----------------------------
+\addbibresource{IEL04-semana07.bib}
+
+% --------------------------- Datos de la guía -------------------------
+\facultad{Facultad de Ingenierías}
+\modulo{IEL04 --- Circuitos Eléctricos I}
+\docente{Ing. Sergio Martinez Castilla}
+
+\begin{document}
+
+% Orden de la bibliografía: el mismo del .md (biblatex numera por orden de primera cita)
+\nocite{ref1,ref2,ref3,ext1}
+
+\datosguia
+\lineablanco
+
+% Título de la práctica y ficha de la sesión
+{\centering\bfseries Guía de laboratorio: Circuito RC mixto: predicción con el método general y medición de corrientes, tensiones y ángulo\par}
+\lineablanco
+\textbf{Semana:} 7 de 14 \quad \textbf{Resultado de aprendizaje:} IEL04-RA2 \quad \textbf{Práctica:} propuesta a partir de la bibliografía \cite{ref1}, \cite{ref2}, \cite{ref3} \quad \textbf{Duración:} \SI{240}{\minute}
+\lineablanco
+La práctica cierra el RA IEL04-RA2 y corresponde a la sesión teórica de la semana 7, \guillemotleft{}Cálculo y medición de parámetros en circuitos RC en serie, en paralelo y mixtos\guillemotright{}. Reproduce su caso de estudio: un resistor $R_1$ en serie con el paralelo de $R_2$ y C2, alimentado con 5,00 V eficaces a 1 kHz; primero se predicen con el método general de impedancias y admitancias la corriente, las tensiones y el ángulo, y después se miden y se explica cada diferencia. Sin un manual de laboratorio asignado, la práctica se propone a partir de la bibliografía cargada: Floyd trata el análisis de circuitos RC en serie-paralelo y el uso de las puntas \texttimes{}1 y \texttimes{}10 del osciloscopio y su efecto de carga \cite{ref1}, Boylestad las redes de ca en serie-paralelo \cite{ref2} y Deorsola los instrumentos y mediciones \cite{ref3}.
+
+% ---------------------------------------------------------------------
+\section{Objetivos}\label{sec:objetivos}
+\textbf{Objetivo general:} Comprobar experimentalmente la predicción del método general en un circuito RC mixto.
+\lineablanco
+\textbf{Objetivos específicos:}
+\begin{itemize}
+  \item Identificar y verificar con instrumentos los dos resistores y el condensador del circuito. \emph{(CE1)}
+  \item Medir las tensiones y las corrientes de rama del circuito con el multímetro de verdadero valor eficaz. \emph{(CE2)}
+  \item Medir la corriente total y su ángulo en el circuito RC mixto y compararlos con la predicción del método general. \emph{(CE3)}
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Materiales y Equipos}\label{sec:materiales}
+\begin{itemize}
+  \item \textbf{Resistor R1}: 1 k\ensuremath{\Omega} (medido 996 \ensuremath{\Omega} en la sesión)
+  \item \textbf{Resistor R2}: 1,5 k\ensuremath{\Omega} \textpm{}5 \%
+  \item \textbf{Condensador C2 del kit}: 104K, 97,8 nF medidos
+  \item \textbf{Resistor sensor de corriente}: 10 \ensuremath{\Omega}
+  \item \textbf{Generador de funciones}
+  \item \textbf{Osciloscopio de dos canales con puntas \texttimes{}10}
+  \item \textbf{Multímetro digital de verdadero valor eficaz} (2)
+  \item \textbf{Medidor LCR}
+  \item \textbf{Protoboard}
+  \item \textbf{Cables de conexión} (12)
+  \item \textbf{Resistencia de descarga}: 1 k\ensuremath{\Omega}
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Procedimiento}\label{sec:procedimiento}
+La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en grupos de tres estudiantes, con tres roles que rotan entre etapas: quien monta y opera el circuito, quien mide y quien registra y verifica los cálculos. Antes de energizar cualquier montaje, el docente o el monitor revisa la conexión. Cada etapa abre con su diagrama de flujo, que muestra la secuencia y las comprobaciones de un vistazo, y sigue con sus pasos numerados; cada paso indica cuánto dura, qué debe observarse para saber que salió bien y qué hacer si no. Los valores numéricos de la sesión teórica sirven de referencia: las lecturas propias del grupo se registran en las tablas de la sección de análisis.
+\lineablanco
+% --- Etapa 1: Preparación, predicción y montaje (4 pasos) ---
+\subsection{Preparación, predicción y montaje (\SI{31}{\minute})}\label{sec:etapa-1}
+% --- Figura 1: diagrama de flujo de la etapa 1 (TikZ; misma disposición que el PNG del .md) ---
+\begin{figure}[H]
+  \centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.445) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=1.177in, minimum height=0.680in] (n1) at (2.685,-0.445) {Descargar \\ C2};  % a0
+  \node[dcaja, minimum width=1.363in, minimum height=0.680in] (n2) at (4.877,-0.445) {Medir \\ componentes};  % a1
+  \node[dcaja, minimum width=1.270in, minimum height=0.890in] (n3) at (7.014,-0.445) {Predecir \\ con método \\ general};  % a2
+  \node[dcaja, minimum width=1.177in, minimum height=0.890in] (n4) at (7.014,-2.018) {Montar el \\ circuito \\ mixto};  % a3
+  \node[ddecision, minimum width=1.766in, minimum height=1.156in] (n5) at (4.877,-2.018) {\textquestiondown{}Montaje \\ revisado?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n6) at (2.685,-2.018) {Fin de la \\ etapa};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) -- (n4);
+  \draw[dflecha] (n4) to[bend right=24] (n5);
+  \draw[dflecha] (n5) -- (n6);
+  \draw[dflecha] (n5) to[bend right=31] (n4);
+  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  \node[drotulo] at (3.781,-2.018) {sí};
+  \node[drotulo] at (6.159,-2.326) {no};
+\end{tikzpicture}
+\end{adjustbox}
+  \caption{Diagrama de flujo de la etapa 1: Preparación, predicción y montaje}
+  \label{fig:flujo-1}
+\end{figure}
+\begin{pasos}
+  \item \textbf{Paso~1:} Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 k\ensuremath{\Omega} sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales. \emph{(aprox.~\SI{3}{\minute})} \textbf{Comprobación:} La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente. \textbf{Seguridad:} No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.
+  \item \textbf{Paso~2:} Medir R1 y R2 con el ohmímetro y C2 con el medidor LCR, y anotar los valores. \emph{(aprox.~\SI{6}{\minute})} \textbf{Comprobación:} R2 debe leer cerca de 1492 \ensuremath{\Omega} y C2 cerca de 97,8 nF.
+  \item \textbf{Paso~3:} Calcular con los valores medidos la admitancia del paralelo, la impedancia total, la corriente, las tensiones $V_{R1}$ y $V_p$, las corrientes de rama y el ángulo. \emph{(aprox.~\SI{15}{\minute})} \textbf{Comprobación:} La corriente total esperada es de unos 2,56 mA, adelantada unos 22\textdegree{} a la tensión; si el cálculo difiere mucho, revisar la conversión de admitancia a impedancia.
+  \item \textbf{Paso~4:} Montar R1 en serie con el paralelo de R2 y C2, con el resistor sensor en serie del lado de tierra. \emph{(aprox.~\SI{7}{\minute})} \textbf{Comprobación:} El docente revisa el montaje antes de energizar. \textbf{Seguridad:} Montar con el generador apagado.
+\end{pasos}
+% --- Etapa 2: Medición de tensiones y corrientes (3 pasos) ---
+\subsection{Medición de tensiones y corrientes (\SI{27}{\minute})}\label{sec:etapa-2}
+% --- Figura 2: diagrama de flujo de la etapa 2 (TikZ; misma disposición que el PNG del .md) ---
+\begin{figure}[H]
+  \centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.340) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=1.177in, minimum height=0.680in] (n1) at (3.089,-0.340) {Ajustar 1 \\ kHz y 5 V};  % a0
+  \node[dcaja, minimum width=1.363in, minimum height=0.680in] (n2) at (5.482,-0.340) {Medir VR1 y \\ Vp};  % a1
+  \node[dcaja, minimum width=1.270in, minimum height=0.680in] (n3) at (5.482,-1.986) {Medir \\ corrientes};  % a2
+  \node[ddecision, minimum width=2.184in, minimum height=1.513in] (n4) at (3.089,-1.986) {\textquestiondown{}Diferencias \\ menores al \\ 2 \%?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n5) at (0.689,-1.986) {Fin de la \\ etapa};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) -- (n4);
+  \draw[dflecha] (n4) -- (n5);
+  \draw[dflecha] (n4) to[bend right=31] (n2);
+  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  \node[drotulo] at (1.649,-1.986) {sí};
+  \node[drotulo] at (4.533,-1.522) {no};
+\end{tikzpicture}
+\end{adjustbox}
+  \caption{Diagrama de flujo de la etapa 2: Medición de tensiones y corrientes}
+  \label{fig:flujo-2}
+\end{figure}
+\begin{pasos}
+  \item \textbf{Paso~5:} Ajustar el generador a una onda sinusoidal de 1 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 5,00 V eficaces. \emph{(aprox.~\SI{6}{\minute})} \textbf{Comprobación:} El multímetro debe indicar 5,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado.
+  \item \textbf{Paso~6:} Medir $V_{R1}$ y la tensión del paralelo $V_p$ con el multímetro de verdadero valor eficaz. \emph{(aprox.~\SI{6}{\minute})} \textbf{Comprobación:} La suma aritmética debe superar 5 V; las lecturas deben estar a menos del 2 \% de la predicción.
+  \item \textbf{Paso~7:} Con el circuito desenergizado, insertar el amperímetro en serie con la fuente, energizar y medir la corriente total; repetir en la rama de R2 y en la del condensador. \emph{(aprox.~\SI{15}{\minute})} \textbf{Comprobación:} Las tres lecturas deben estar a menos del 2 \% de la predicción; si una se aparta más, revisar el contacto del amperímetro. \textbf{Seguridad:} Insertar el amperímetro solo con el circuito desenergizado.
+\end{pasos}
+% --- Etapa 3: Ángulo y comparación (2 pasos) ---
+\subsection{Ángulo y comparación (\SI{18}{\minute})}\label{sec:etapa-3}
+% --- Figura 3: diagrama de flujo de la etapa 3 (TikZ; misma disposición que el PNG del .md) ---
+\begin{figure}[H]
+  \centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.445) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=0.991in, minimum height=0.680in] (n1) at (3.228,-0.445) {Medir \\ desfase};  % a0
+  \node[dcaja, minimum width=1.270in, minimum height=0.890in] (n2) at (5.715,-0.445) {Comparar \\ con la \\ predicción};  % a1
+  \node[dcaja, minimum width=0.991in, minimum height=0.680in] (n3) at (5.715,-2.018) {Asignar \\ causas};  % a2
+  \node[ddecision, minimum width=2.463in, minimum height=1.156in] (n4) at (3.228,-2.018) {\textquestiondown{}Causas \\ identificadas?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n5) at (0.689,-2.018) {Fin de la \\ etapa};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) -- (n4);
+  \draw[dflecha] (n4) -- (n5);
+  \draw[dflecha] (n4) to[bend right=31] (n1);
+  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  \node[drotulo] at (1.705,-2.018) {sí};
+  \node[drotulo] at (3.464,-1.232) {no};
+\end{tikzpicture}
+\end{adjustbox}
+  \caption{Diagrama de flujo de la etapa 3: Ángulo y comparación}
+  \label{fig:flujo-3}
+\end{figure}
+\begin{pasos}
+  \item \textbf{Paso~8:} Medir con el osciloscopio el desfase entre la tensión de la fuente y la tensión en el resistor sensor, usando puntas \texttimes{}10 \cite{ref1}. \emph{(aprox.~\SI{8}{\minute})} \textbf{Comprobación:} La corriente debe adelantar a la tensión unos 22\textdegree{}; si se ve atrasada, revisar la polaridad de las puntas.
+  \item \textbf{Paso~9:} Completar la tabla comparativa y anotar para cada diferencia su causa probable: resistencia del amperímetro, resolución del multímetro o de los cursores, o resistencia interna del generador \textbf{[FUENTE NO CARGADA EN raw/]}. \emph{(aprox.~\SI{10}{\minute})} \textbf{Comprobación:} Cada diferencia mayor del 1 \% debe tener una causa identificada; si no, repetir esa medición.
+\end{pasos}
+% --- Etapa 4: Desmontaje y cierre (3 pasos) ---
+\subsection{Desmontaje y cierre (\SI{10}{\minute})}\label{sec:etapa-4}
+% --- Figura 4: diagrama de flujo de la etapa 4 (TikZ; misma disposición que el PNG del .md) ---
+\begin{figure}[H]
+  \centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.445) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=1.456in, minimum height=0.680in] (n1) at (2.950,-0.445) {Desenergizar \\ el montaje};  % a0
+  \node[dcaja, minimum width=1.363in, minimum height=0.890in] (n2) at (5.204,-0.445) {Descargar y \\ retirar \\ componentes};  % a1
+  \node[dcaja, minimum width=1.270in, minimum height=0.890in] (n3) at (5.204,-2.018) {Revisar \\ tablas con \\ el docente};  % a2
+  \node[ddecision, minimum width=1.905in, minimum height=1.156in] (n4) at (2.950,-2.018) {\textquestiondown{}Tablas \\ completas?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n5) at (0.689,-2.018) {Fin de la \\ práctica};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) to[bend right=24] (n4);
+  \draw[dflecha] (n4) -- (n5);
+  \draw[dflecha] (n4) to[bend right=31] (n3);
+  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  \node[drotulo] at (1.593,-2.018) {sí};
+  \node[drotulo] at (4.302,-2.343) {no};
+\end{tikzpicture}
+\end{adjustbox}
+  \caption{Diagrama de flujo de la etapa 4: Desmontaje y cierre}
+  \label{fig:flujo-4}
+\end{figure}
+\begin{pasos}
+  \item \textbf{Paso~10:} Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard. \emph{(aprox.~\SI{3}{\minute})} \textbf{Comprobación:} Ningún indicador de salida debe quedar encendido en el generador ni en la fuente. \textbf{Seguridad:} Desenergizar siempre antes de retirar componentes.
+  \item \textbf{Paso~11:} Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo. \emph{(aprox.~\SI{4}{\minute})} \textbf{Comprobación:} El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado.
+  \item \textbf{Paso~12:} Revisar con el docente las tablas de registro antes de abandonar el banco. \emph{(aprox.~\SI{3}{\minute})} \textbf{Comprobación:} Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento.
+\end{pasos}
+
+% ---------------------------------------------------------------------
+\section{Cuestiones a Resolver}\label{sec:cuestiones}
+\begin{enumerate}
+  \item \textquestiondown{}Por qué en la parte serie del circuito la suma aritmética de $V_{R1}$ y $V_p$ supera la tensión de la fuente?
+  \item \textquestiondown{}Cómo cambiaría la corriente total si se hubiera usado el valor nominal de C2 en lugar del medido?
+  \item \textquestiondown{}Qué efecto tiene la resistencia interna del amperímetro sobre la corriente de una rama de baja impedancia?
+  \item \textquestiondown{}Por qué se ajusta la tensión de la fuente en los bornes del circuito, con el circuito conectado, y no en el dial del generador?
+\end{enumerate}
+
+% ---------------------------------------------------------------------
+\section{Análisis de Resultados}\label{sec:analisis}
+Presentar en la tabla de registro la predicción con valores medidos, la medición y la diferencia porcentual de cada magnitud, y agregar la predicción con valores nominales para comparar cuál ajusta mejor.
+\lineablanco
+Dibujar el diagrama fasorial del circuito: las corrientes de rama sumadas en el paralelo y las tensiones $V_{R1}$ y $V_p$ sumadas en la parte serie, y verificar ambas sumas con las lecturas.
+% --- Tabla 1: Circuito RC mixto a 1 kHz: predicción y medición (7 filas vacías para registrar en el banco) ---
+\begin{table}[H]
+  \centering
+  \caption{Circuito RC mixto a 1 kHz: predicción y medición}
+  \label{tab:registro-1}
+  \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+    \toprule
+    \textbf{Magnitud} & \textbf{Predicción} & \textbf{Medido} & \textbf{Unidad} & \textbf{Diferencia (\%)} & \textbf{Causa probable} \\
+    \midrule
+    \rule{0pt}{0.8cm} & & & & & \\
+    \cmidrule(lr){1-6}
+    \rule{0pt}{0.8cm} & & & & & \\
+    \cmidrule(lr){1-6}
+    \rule{0pt}{0.8cm} & & & & & \\
+    \cmidrule(lr){1-6}
+    \rule{0pt}{0.8cm} & & & & & \\
+    \cmidrule(lr){1-6}
+    \rule{0pt}{0.8cm} & & & & & \\
+    \cmidrule(lr){1-6}
+    \rule{0pt}{0.8cm} & & & & & \\
+    \cmidrule(lr){1-6}
+    \rule{0pt}{0.8cm} & & & & & \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+% ---------------------------------------------------------------------
+\section{Conclusiones}\label{sec:conclusiones}
+Concluir si el método general predice el comportamiento del circuito mixto dentro de la exactitud de los instrumentos, justificando cada diferencia con su causa física, y relacionar la práctica con los criterios de medición en circuitos resistivos, capacitivos y RC del RA.
+\lineablanco
+\begin{itemize}
+  \item \textquestiondown{}Qué magnitud mostró la mayor diferencia y qué la causó?
+  \item \textquestiondown{}Qué ventaja tuvo calcular con los valores medidos?
+  \item \textquestiondown{}Qué efecto de los instrumentos fue relevante en esta práctica y cuál fue despreciable?
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Recomendaciones de Seguridad}\label{sec:seguridad}
+\begin{itemize}
+  \item Trabajar con el circuito desenergizado mientras se conecta o modifica el montaje; energizar solo después de la revisión del docente.
+  \item Descargar los condensadores con una resistencia antes de manipularlos o medirlos, y respetar la polaridad de los electrolíticos: conectado con la polaridad invertida, un electrolítico puede explotar y provocar lesiones \cite{ref1}.
+  \item Conectar las tierras de las dos puntas del osciloscopio a un mismo nodo de referencia: unirlas a nodos distintos cortocircuita el elemento que queda entre ellas.
+  \item Insertar el amperímetro en serie con la rama solo con el circuito desenergizado y con el instrumento en la función y la escala de corriente; nunca conectarlo en paralelo con la fuente.
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Bibliografía}\label{sec:bibliografia}
+% Las fuentes cargadas se citan en el texto con \cite{refN}; el \nocite del principio fija su orden y \nocite{*} incluye las demás del .bib.
+\nocite{*}
+\bibliografia
+
+\end{document}
