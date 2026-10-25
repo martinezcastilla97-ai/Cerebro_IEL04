@@ -1,0 +1,687 @@
+% =====================================================================
+%  Temario generado por TEMARIO (src/temario.py + src/temario_latex.py), sin LLM,
+%  a partir de los mismos datos que el .md. Compilar con pdfLaTeX (dos pasadas).
+% =====================================================================
+\documentclass[11pt,letterpaper]{article}
+
+% ---------------------------------------------------------------------
+%  Codificacion, idioma y tipografia
+% ---------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot,es-noshorthands,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage[margin=2.3cm,headheight=14pt]{geometry}
+
+% ---------------------------------------------------------------------
+%  Matematicas y unidades del SI
+% ---------------------------------------------------------------------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={.}, per-mode=symbol}
+
+% ---------------------------------------------------------------------
+%  Tablas profesionales (sin lineas verticales) y flotantes
+% ---------------------------------------------------------------------
+\usepackage[table]{xcolor}
+\usepackage{booktabs,array,multirow,tabularx,xltabular}
+\usepackage{graphicx,float}
+\usepackage[font=small,labelfont={bf,color=iubnavy},labelsep=period]{caption}
+
+% ---------------------------------------------------------------------
+%  Listas, cajas, graficas, diagramas y codigo
+% ---------------------------------------------------------------------
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+% ---------------------------------------------------------------------
+%  Encabezados de pagina y enlaces (hyperref, siempre el ultimo)
+% ---------------------------------------------------------------------
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+% ---------------------------------------------------------------------
+%  Paleta institucional IUB (Manual de Identidad Visual 2025)
+% ---------------------------------------------------------------------
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\definecolor{iubpurple}{HTML}{8E6BBF}
+\definecolor{iubgris}{HTML}{D5DAE3}
+\definecolor{iubgrisoscuro}{HTML}{7C8598}
+\definecolor{iubfondoazul}{HTML}{EBF7FD}
+\definecolor{iubfondonaranja}{HTML}{FDF4EA}
+\definecolor{iubfondoverde}{HTML}{EDF8F2}
+\definecolor{iubfondogris}{HTML}{F4F6F9}
+
+% ---------------------------------------------------------------------
+%  Formato general
+% ---------------------------------------------------------------------
+\setcounter{secnumdepth}{3}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.25}
+\setlist{itemsep=0.15em,topsep=0.3em}
+\setlist[itemize]{label=\textcolor{iubblue}{\small$\blacktriangleright$}}
+
+% ---------------------------------------------------------------------
+%  Encabezado y pie de pagina
+% ---------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{iubnavy}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\textcolor{iubnavy}{\textbf{IUB}\quad IEL04 --- Circuitos Eléctricos I}}
+\fancyhead[R]{\small\textcolor{iubnavy}{Semana 12 de 14}}
+\fancyfoot[C]{\small\textcolor{iubnavy}{\thepage}}
+
+% ---------------------------------------------------------------------
+%  Codigo (listings: el codigo va transliterado a ASCII)
+% ---------------------------------------------------------------------
+\lstset{basicstyle=\ttfamily\small, breaklines=true, columns=fullflexible, keepspaces=true, frame=single,
+  rulecolor=\color{iubgris}, backgroundcolor=\color{iubfondogris}, numbers=left, numberstyle=\tiny\color{iubgrisoscuro},
+  keywordstyle=\color{iubblue}\bfseries, commentstyle=\color{iubgreen}\itshape, stringstyle=\color{iuborange},
+  showstringspaces=false, captionpos=t, aboveskip=0.8em, belowskip=0.8em}
+\renewcommand{\lstlistingname}{Listado}
+
+% ---------------------------------------------------------------------
+%  Cajas: cabecera, notas, alineacion con el RA y cita actitudinal
+% ---------------------------------------------------------------------
+\newtcolorbox{cabecera}{enhanced, colback=iubnavy, colframe=iubnavy, coltext=white, arc=2pt, boxrule=0pt,
+  left=12pt, right=12pt, top=10pt, bottom=10pt, borderline north={3pt}{0pt}{iubyellow}}
+\newtcolorbox{nota}[1]{enhanced, colback=iubfondonaranja, colframe=iuborange, arc=2pt, boxrule=0.6pt, leftrule=3pt,
+  fonttitle=\bfseries\small, coltitle=iuborange, colbacktitle=iubfondonaranja, title={#1}, attach title to upper={\ }}
+\newtcolorbox{alineacion}{enhanced, colback=iubfondoazul, colframe=iubblue, arc=2pt, boxrule=0.6pt, leftrule=3pt}
+\newtcolorbox{cita}{enhanced, colback=iubnavy, colframe=iubnavy, coltext=white, arc=2pt, boxrule=0pt, leftrule=4pt,
+  borderline west={4pt}{0pt}{iubyellow}, fontupper=\itshape}
+
+% ---------------------------------------------------------------------
+%  Estilos de los diagramas (TikZ) y de las graficas (pgfplots)
+% ---------------------------------------------------------------------
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+\pgfplotsset{iubejes/.style={width=0.95\linewidth, height=6.2cm, grid=major, grid style={iubgris}, axis lines*=left,
+  axis line style={iubnavy}, tick label style={font=\small}, label style={font=\small}, title style={font=\bfseries\small},
+  legend cell align=left, legend style={draw=none, fill=none, font=\small, anchor=north, legend columns=-1,
+  /tikz/every even column/.append style={column sep=8pt}}, unbounded coords=jump}}
+
+\hypersetup{pdftitle={El circuito RLC en paralelo: susceptancias opuestas, ley de corrientes de Kirchhoff, circuito tanque y corrección del factor de potencia}, pdfauthor={Institución Universitaria de Barranquilla}}
+
+\begin{document}
+
+\begin{cabecera}
+{\color{iubyellow}\Large\bfseries El circuito RLC en paralelo: susceptancias opuestas, ley de corrientes de Kirchhoff, circuito tanque y corrección del factor de potencia\par}
+\vspace{0.6em}
+\small
+\textbf{\color{iubyellow}Módulos:} IEL04 --- Circuitos Eléctricos I\par
+\textbf{\color{iubyellow}Duración:} 240 minutos (sesión teórico-práctica)\par
+\textbf{\color{iubyellow}Nivel:} Pregrado\par
+\textbf{\color{iubyellow}Semana:} 12 de 14 (corte evaluativo 3)\par
+\textbf{\color{iubyellow}Resultado de aprendizaje del módulo:} IEL04-RA4\par
+\textbf{\color{iubyellow}Trabajo independiente:} 5 h/semana\par
+\end{cabecera}
+
+\section{Metadatos de la Sesión}
+
+\subsection{Continuidad curricular}
+
+La semana 11 abrió el RA4 con el circuito RLC en serie: reactancias que se restan, tensiones reactivas mayores que la de la fuente y una resonancia con impedancia mínima. Esta sesión estudia la configuración dual, los tres elementos en paralelo: las susceptancias capacitiva e inductiva se oponen, las corrientes de la bobina y del condensador se restan en la ley de corrientes de Kirchhoff y pueden superar la corriente de la fuente, y la resonancia en paralelo presenta una impedancia máxima. Se retoma el circuito tanque de la semana 3, ahora con la bobina real, y se aplica todo a la corrección del factor de potencia. La semana 13 cierra el curso con el cálculo y la medición de parámetros de circuitos RLC en serie y en paralelo.
+
+\begin{enumerate}
+  \item Semana 11: Circuito RLC en serie: tipos e identificación de resistores, inductores y condensadores, análisis y Ley de Voltajes de Kirchhoff
+  \item \textbf{Presente sesión (semana 12):} Circuito RLC en paralelo: análisis y Ley de Corrientes de Kirchhoff
+  \item Semana 13: Cálculo y medición de parámetros en circuitos RLC serie y paralelo: unidades, simbología y nomenclatura
+\end{enumerate}
+
+\subsection{Prerrequisitos}
+
+\begin{itemize}
+  \item Calcular admitancias y aplicar la ley de corrientes de Kirchhoff en circuitos RC y RL en paralelo (semanas 6 y 8).
+  \item Analizar un circuito RLC en serie y su resonancia (semana 11).
+  \item Convertir una bobina real a su modelo en paralelo con R\_p = R\_W(1 + Q\texttwosuperior{}) (semana 9).
+  \item Calcular potencia activa, reactiva y aparente y factor de potencia (semanas 9 y 11).
+  \item Medir corrientes con resistores sensores y el osciloscopio.
+\end{itemize}
+
+\section{Resultados de Aprendizaje}
+
+\begin{alineacion}
+\textbf{RA IEL04-RA4:} Calcular un circuito resistivo, inductivo, capacitivo y RLC, sea en serie o paralelo.
+
+\textbf{Criterios de evaluación:}
+
+\begin{itemize}
+  \item \textbf{CE1} (cognitiva\_conceptual): Identificar los tipos de resistores, inductores y capacitores.
+  \item \textbf{CE2} (manipulacion\_fisica): Realizar mediciones en un circuito resistivo, inductivo y capacitivo.
+  \item \textbf{CE3} (manipulacion\_fisica): Realizar mediciones en un circuito RLC.
+\end{itemize}
+
+\textbf{Unidades de competencia de la asignatura:}
+
+\begin{itemize}
+  \item UC2: Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.
+\end{itemize}
+\end{alineacion}
+
+Al finalizar la sesión, el estudiante estará en capacidad de lograr los siguientes resultados, que desarrollan el RA del módulo:
+
+\begin{xltabular}{\linewidth}{>{\raggedright\arraybackslash}p{1.1cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.9cm}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Resultado de aprendizaje}} & \textcolor{white}{\textbf{Nivel (Taxonomía de Bloom)}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Resultado de aprendizaje}} & \textcolor{white}{\textbf{Nivel (Taxonomía de Bloom)}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  RA1 & \textbf{Identificar} y verificar el resistor, la bobina y el condensador de un circuito RLC en paralelo antes del montaje. (CE1) & Aplicar \\
+  \rowcolor{iubfondogris} RA2 & \textbf{Calcular} la admitancia, la impedancia y el carácter de un circuito RLC en paralelo a una frecuencia dada. (CE3) & Aplicar \\
+  RA3 & \textbf{Analizar} las corrientes de un circuito RLC en paralelo con la ley de corrientes de Kirchhoff y explicar la resonancia en paralelo y el circuito tanque real. (CE3) & Analizar \\
+  \rowcolor{iubfondogris} RA4 & \textbf{Medir} las corrientes de rama y la corriente total de un RLC en paralelo a varias frecuencias y verificar la resonancia. (CE2, CE3) & Evaluar \\
+\end{xltabular}
+
+\section{Índice Temporizado (240 minutos)}
+
+\begin{xltabular}{\linewidth}{>{\raggedright\arraybackslash}p{1.4cm}>{\raggedright\arraybackslash}X>{\raggedleft\arraybackslash}p{2.2cm}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bloque}} & \textcolor{white}{\textbf{Contenido}} & \textcolor{white}{\textbf{Duración}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bloque}} & \textcolor{white}{\textbf{Contenido}} & \textcolor{white}{\textbf{Duración}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  1 & Del RLC en serie al RLC en paralelo: tensión común y corrientes reactivas opuestas & 20 min \\
+  \rowcolor{iubfondogris} 2 & Y = G + j(BC \ensuremath{-} BL), carácter inductivo o capacitivo según la frecuencia & 30 min \\
+  3 & IT = IR + j(IC \ensuremath{-} IL): corrientes reactivas en oposición y mayores que la total & 35 min \\
+  \rowcolor{iubfondogris} 4 & fr, Z = R, Q = R/XL, ancho de banda y curva de impedancia & 35 min \\
+  5 & Equivalente RLC en paralelo, Rp(eq) = RW(Q\texttwosuperior{} + 1) y desplazamiento de la resonancia & 30 min \\
+  \rowcolor{iubfondogris} 6 & Compensar la corriente reactiva de una carga inductiva y dimensionar el condensador & 30 min \\
+  7 & Con el kit: 4.7 k\ensuremath{\Omega}, bobina de 10.4 mH y condensador de 97.8 nF a 3 kHz, fr y 8 kHz & 45 min \\
+  \rowcolor{iubfondogris} 8 & Síntesis, cierre actitudinal y bibliografía & 15 min \\
+  \midrule
+  \rowcolor{iubfondogris}  & \textbf{Total} & \textbf{240 min} \\
+\end{xltabular}
+
+\section{Desarrollo Teórico}
+
+\subsection{Introducción Conceptual (Bloque 1)}
+
+En la semana 11, el resistor, la bobina y el condensador compartían la corriente, y sus tensiones reactivas, opuestas, se restaban. Si los mismos tres elementos se conectan en paralelo, todo se invierte: la tensión es común a las tres ramas y lo que se reparte es la corriente. La corriente de la bobina se retrasa 90\textdegree{} respecto a la tensión y la del condensador se adelanta 90\textdegree{}, de modo que ambas quedan desfasadas 180\textdegree{} y se restan en el nodo. Es la versión en paralelo de la cancelación de reactancias, y su consecuencia más visible es sorprendente: las corrientes de rama pueden ser mucho mayores que la corriente que entrega la fuente.
+
+El circuito RLC en paralelo aparece en tres contextos que el técnico en sistemas eléctricos encuentra a menudo. Es el \textbf{circuito tanque} de los osciladores y de los sintonizadores, que guarda energía en el campo magnético de la bobina y en el campo eléctrico del condensador y la transfiere de uno a otro en cada semiciclo [1]. Es el modelo de una \textbf{carga industrial con condensadores de compensación}, en la que un condensador en paralelo con una carga inductiva aumenta su factor de potencia [1]. Y es el modelo de un \textbf{filtro de armónicos} sintonizado. En los tres casos lo que interesa es la resonancia en paralelo, en la que la impedancia del circuito es máxima.
+
+% --- Figura 1: Relaciones de fase en el circuito RLC en paralelo: de la tensión común a la corriente tot… (diagrama en TikZ con la disposición del PNG) ---
+\begin{figure}[H]
+  \centering
+  \begin{adjustbox}{max width=\linewidth}
+  \begin{tikzpicture}[x=1in, y=1in, font=\small]
+    % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+    \node[dterminal, minimum width=1.284in, minimum height=0.680in] (n0) at (0.642,-1.530) {Tensión \\ común VS};  % v
+    \node[dcaja, minimum width=1.270in, minimum height=0.680in] (n1) at (2.539,-1.530) {IR en fase \\ con VS};  % r
+    \node[dcaja, minimum width=1.177in, minimum height=0.890in] (n2) at (2.539,-2.615) {IL \\ retrasada \\ 90\textdegree{}};  % l
+    \node[dcaja, minimum width=1.270in, minimum height=0.890in] (n3) at (2.539,-0.445) {IC \\ adelantada \\ 90\textdegree{}};  % c
+    \node[destado, minimum width=1.363in, minimum height=0.890in] (n4) at (4.476,-1.530) {LCK: IT = \\ IR + j(IC \ensuremath{-} \\ IL)};  % k
+    \node[dterminal, minimum width=1.470in, minimum height=0.890in] (n5) at (6.512,-1.530) {IT mínima \\ en \\ resonancia};  % t
+    % flechas (las de retorno, curvas)
+    \draw[dflecha] (n0) -- (n1);
+    \draw[dflecha] (n0) -- (n2);
+    \draw[dflecha] (n0) -- (n3);
+    \draw[dflecha] (n1) -- (n4);
+    \draw[dflecha] (n2) -- (n4);
+    \draw[dflecha] (n3) -- (n4);
+    \draw[dflecha] (n4) -- (n5);
+  \end{tikzpicture}
+  \end{adjustbox}
+  \caption{Relaciones de fase en el circuito RLC en paralelo: de la tensión común a la corriente total}
+\end{figure}
+
+El diagrama resume el razonamiento de la sesión. La tensión común da lugar a tres corrientes de rama con fases distintas; la ley de corrientes de Kirchhoff las suma como fasores, y las corrientes de la bobina y del condensador se restan. Cuando son iguales, en la resonancia, se cancelan y la fuente solo entrega la corriente del resistor: la corriente total es mínima y la impedancia máxima. La sesión desarrolla la admitancia del circuito, la ley de corrientes de Kirchhoff, la resonancia en paralelo, el circuito tanque con la bobina real ---cuya resistencia de devanado cambia el resultado--- y la corrección del factor de potencia, y termina midiendo el circuito en el laboratorio con los componentes del kit.
+
+\begin{nota}{Nota pedagógica:}
+Conviene tener a la vista la tabla de la semana 11 al estudiar esta sesión: casi cada resultado del RLC en paralelo es el del RLC en serie con tensión y corriente, impedancia y admitancia, y mínimo y máximo intercambiados.
+\end{nota}
+
+\subsection{Conceptos Clave}
+
+\subsubsection{Admitancia e impedancia del circuito RLC en paralelo (Bloque 2)}
+
+En paralelo, como se vio en las semanas 6 y 8, conviene trabajar con admitancias: se suman directamente, igual que las impedancias en serie. Cada rama aporta la suya. El resistor, una conductancia $G = 1/R$ a 0\textdegree{}; el condensador, una susceptancia capacitiva $B_C = 2\pi f C$ a +90\textdegree{}; y la bobina, una susceptancia inductiva $B_L = 1/(2\pi f L)$ a \ensuremath{-}90\textdegree{}. Las dos susceptancias apuntan en sentidos opuestos del eje imaginario y se restan, igual que en serie se restaban las reactancias. La admitancia total y la impedancia, su recíproca, son:
+
+\begin{equation}
+  \mathbf{Y} = G + j(B_C - B_L) = \sqrt{G^{2} + (B_C - B_L)^{2}}\ \angle \tan^{-1}\!\left(\frac{B_C - B_L}{G}\right), \qquad \mathbf{Z} = \frac{1}{\mathbf{Y}}
+\end{equation}
+
+donde $\mathbf{Y}$ es la admitancia total en siemens (S), $G$ la conductancia del resistor en siemens, $B_C$ y $B_L$ las susceptancias capacitiva e inductiva en siemens, y $\mathbf{Z}$ la impedancia total en ohmios (\ensuremath{\Omega}). Floyd llega a la misma estructura a partir de las impedancias de cada rama, y señala que, como en serie, la inductancia y la capacitancia tienen efectos opuestos sobre el ángulo de fase [1]. El carácter del circuito se lee en el signo de $B_C - B_L$, pero con el criterio inverso al del serie: cuando $B_L > B_C$, la bobina conduce más corriente que el condensador y el circuito es \textbf{inductivo}; cuando $B_C > B_L$, es \textbf{capacitivo}.
+
+Como $B_L$ disminuye con la frecuencia y $B_C$ aumenta, el carácter se invierte respecto al RLC en serie: \textbf{por debajo de la resonancia el circuito en paralelo es inductivo y por encima es capacitivo}. La razón física es sencilla: a frecuencias bajas la bobina es casi un cortocircuito y domina, y a frecuencias altas el que se comporta casi como un cortocircuito es el condensador. La tabla lo muestra con $R = 1\ \text{k}\Omega$, $L = 10\ \text{mH}$ y $C = 0.1\ \mu\text{F}$.
+
+% --- Tabla 1: Admitancia e impedancia de un RLC en paralelo ideal (R = 1 kΩ, L = 10 mH, C = 0.1 µF) a v… (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=1.013\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.81\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.911\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.911\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.81\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.709\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.722\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.114\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Admitancia e impedancia de un RLC en paralelo ideal (R = 1 k\ensuremath{\Omega}, L = 10 mH, C = 0.1 \textmu{}F) a varias frecuencias} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{G (mS)}} & \textcolor{white}{\textbf{BC (mS)}} & \textcolor{white}{\textbf{BL (mS)}} & \textcolor{white}{\textbf{Y (mS)}} & \textcolor{white}{\textbf{Z (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Ángulo de Z (\textdegree{})}} & \textcolor{white}{\textbf{Carácter}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{G (mS)}} & \textcolor{white}{\textbf{BC (mS)}} & \textcolor{white}{\textbf{BL (mS)}} & \textcolor{white}{\textbf{Y (mS)}} & \textcolor{white}{\textbf{Z (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Ángulo de Z (\textdegree{})}} & \textcolor{white}{\textbf{Carácter}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  2000 & 1.00 & 1.26 & 7.96 & 6.78 & 147.6 & +81.5 & inductivo \\
+  \rowcolor{iubfondogris} 4000 & 1.00 & 2.51 & 3.98 & 1.78 & 563.5 & +55.7 & inductivo \\
+  5033 (fr) & 1.00 & 3.16 & 3.16 & 1.00 & 1000 & 0.0 & resistivo \\
+  \rowcolor{iubfondogris} 6000 & 1.00 & 3.77 & 2.65 & 1.50 & 666.9 & \ensuremath{-}48.2 & capacitivo \\
+  10 000 & 1.00 & 6.28 & 1.59 & 4.80 & 208.5 & \ensuremath{-}78.0 & capacitivo \\
+\end{xltabular}
+
+La tabla muestra que la impedancia del paralelo alcanza su \textbf{máximo} en la resonancia, donde las susceptancias se cancelan y la admitancia se reduce a $G$: la impedancia es simplemente $R$, 1 k\ensuremath{\Omega}. Lejos de la resonancia, una de las dos ramas reactivas deriva casi toda la corriente y la impedancia cae a unos cientos de ohmios. Es exactamente lo contrario del circuito en serie, cuya impedancia era mínima en la resonancia. Los ángulos de la tabla también son los opuestos a los del serie de la semana 11 a las mismas frecuencias, y sus magnitudes coinciden, porque con estos valores numéricos $R$ del paralelo y $1/R$ del serie juegan papeles equivalentes.
+
+Si el circuito lleva una bobina real, su resistencia de devanado no está en paralelo sino en serie con la inductancia, dentro de la misma rama. Para usar las fórmulas de esta unidad hay que convertirla a su modelo en paralelo, como se hizo en la semana 9; la unidad sobre el circuito tanque real desarrolla ese paso.
+
+\begin{nota}{Error frecuente:}
+Aplicar al paralelo el criterio del serie y concluir que por debajo de la resonancia el circuito es capacitivo. En paralelo manda la rama que más corriente conduce, y a frecuencias bajas esa rama es la bobina.
+\end{nota}
+
+\subsubsection{Ley de corrientes de Kirchhoff en el circuito RLC en paralelo (Bloque 3)}
+
+La ley de corrientes de Kirchhoff se aplica en el nodo donde la corriente de la fuente se divide entre las tres ramas. Con la tensión común como referencia, cada corriente de rama es la tensión multiplicada por la admitancia de su rama: $I_R = V_S G$, en fase con la tensión; $I_C = V_S B_C$, adelantada 90\textdegree{}; e $I_L = V_S B_L$, retrasada 90\textdegree{}. Las corrientes de la bobina y del condensador están desfasadas 180\textdegree{} entre sí y se restan, así que la corriente total es:
+
+\begin{equation}
+  \mathbf{I}_T = I_R + j(I_C - I_L), \qquad I_T = \sqrt{I_R^{2} + (I_C - I_L)^{2}}, \qquad \theta = \tan^{-1}\!\left(\frac{I_C - I_L}{I_R}\right)
+\end{equation}
+
+donde $\mathbf{I}_T$ es el fasor de la corriente total en amperios (A), $I_R$, $I_C$ e $I_L$ las corrientes eficaces del resistor, el condensador y la bobina en amperios, y $\theta$ el ángulo de la corriente total respecto a la tensión en grados (\textdegree{}): positivo si la corriente adelanta (circuito capacitivo) y negativo si se retrasa (inductivo). La corriente reactiva neta, $I_C - I_L$, forma el cateto vertical del triángulo de corrientes.
+
+La consecuencia es la dual de la del RLC en serie: \textbf{las corrientes de la bobina y del condensador pueden ser mayores que la corriente total que entrega la fuente}. Con $R = 1\ \text{k}\Omega$, $L = 10\ \text{mH}$, $C = 0.1\ \mu\text{F}$ y 2 V eficaces, a 4 kHz: $I_R = 2.00\ \text{mA}$, $I_C = 2 \times 2.513 = 5.03\ \text{mA}$ e $I_L = 2 \times 3.979 = 7.96\ \text{mA}$. La corriente total es $\sqrt{2.00^2 + (5.03 - 7.96)^2} \approx 3.55\ \text{mA}$, retrasada 55.7\textdegree{}: la bobina conduce más del doble de la corriente de la fuente. La suma aritmética de las tres corrientes daría 15.0 mA; la fasorial, los 3.55 mA reales.
+
+% --- Tabla 2: Corrientes de un RLC en paralelo ideal (R = 1 kΩ, L = 10 mH, C = 0.1 µF, VS = 2 V eficace… (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=1.094\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.984\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.984\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.984\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.984\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.766\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.204\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Corrientes de un RLC en paralelo ideal (R = 1 k\ensuremath{\Omega}, L = 10 mH, C = 0.1 \textmu{}F, VS = 2 V eficaces)} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{IR (mA)}} & \textcolor{white}{\textbf{IL (mA)}} & \textcolor{white}{\textbf{IC (mA)}} & \textcolor{white}{\textbf{IT (mA)}} & \textcolor{white}{\textbf{\ensuremath{\theta} (\textdegree{})}} & \textcolor{white}{\textbf{Carácter}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{IR (mA)}} & \textcolor{white}{\textbf{IL (mA)}} & \textcolor{white}{\textbf{IC (mA)}} & \textcolor{white}{\textbf{IT (mA)}} & \textcolor{white}{\textbf{\ensuremath{\theta} (\textdegree{})}} & \textcolor{white}{\textbf{Carácter}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  2000 & 2.00 & 15.92 & 2.51 & 13.56 & \ensuremath{-}81.5 & inductivo \\
+  \rowcolor{iubfondogris} 4000 & 2.00 & 7.96 & 5.03 & 3.55 & \ensuremath{-}55.7 & inductivo \\
+  5033 (fr) & 2.00 & 6.32 & 6.32 & 2.00 & 0.0 & resistivo \\
+  \rowcolor{iubfondogris} 10 000 & 2.00 & 3.18 & 12.57 & 9.59 & +78.0 & capacitivo \\
+\end{xltabular}
+
+En la resonancia, las corrientes de la bobina y del condensador son iguales, 6.32 mA cada una, y se cancelan por completo: la fuente solo entrega los 2.00 mA del resistor, que es la \textbf{corriente mínima} del circuito. Las corrientes reactivas son $Q$ veces la corriente total, con $Q = R/X_L = 1000/316.2 = 3.16$. Esa corriente de 6.32 mA no pasa por la fuente: circula entre la bobina y el condensador, que es la imagen en corriente del intercambio de energía del circuito tanque. En la semana 11 era la tensión de los elementos reactivos la que valía $Q$ veces la de la fuente; aquí es su corriente.
+
+Las columnas de la tabla también muestran por qué el carácter del circuito cambia con la frecuencia. La corriente del resistor es constante; la de la bobina cae a medida que sube la frecuencia; la del condensador crece. Por debajo de la resonancia gana la bobina, la corriente total se retrasa y el circuito es inductivo; por encima gana el condensador y la corriente total se adelanta. En ambos extremos la corriente total crece mucho, porque una de las ramas reactivas se acerca a un cortocircuito.
+
+\begin{nota}{Advertencia de seguridad:}
+En un circuito tanque de potencia, la corriente que circula entre la bobina y el condensador en la resonancia puede ser muchas veces la de la línea. Los conductores, las conexiones y los propios componentes deben dimensionarse para esa corriente interna, no para la que marca el amperímetro de la fuente.
+\end{nota}
+
+\subsubsection{Resonancia en paralelo: impedancia máxima y corriente mínima (Bloque 4)}
+
+La resonancia en paralelo ocurre cuando las susceptancias capacitiva e inductiva son iguales, $B_C = B_L$, lo que equivale a $X_L = X_C$. Para un circuito ideal, sin resistencia en la bobina, la frecuencia se determina con la misma fórmula del circuito resonante en serie [1]. Al circuito LC resonante en paralelo se le llama \textbf{circuito tanque}, porque guarda energía en el campo magnético de la bobina y en el campo eléctrico del condensador, y la transfiere de uno a otro en semiciclos alternos [1]. Idealmente, la impedancia de un circuito resonante en paralelo es infinita; en la práctica, es máxima en la frecuencia de resonancia y disminuye a frecuencias más bajas y más altas [1].
+
+\begin{equation}
+  f_r = \frac{1}{2\pi\sqrt{LC}}, \qquad Z_r = R, \qquad I_{T,\min} = \frac{V_S}{R}, \qquad Q = \frac{R}{X_L}, \qquad AB = \frac{f_r}{Q}
+\end{equation}
+
+donde $f_r$ es la frecuencia de resonancia en hercios (Hz), $L$ la inductancia en henrios (H), $C$ la capacitancia en faradios (F), $Z_r$ la impedancia en la resonancia en ohmios (\ensuremath{\Omega}), $R$ la resistencia en paralelo en ohmios, $I_{T,\min}$ la corriente total mínima en amperios (A), $V_S$ la tensión eficaz de la fuente en voltios (V), $Q$ el factor de calidad del circuito en paralelo (adimensional), con $X_L$ evaluada en $f_r$, y $AB$ el ancho de banda en hercios. Obsérvese que el factor de calidad del paralelo es $R/X_L$, el inverso del serie: en paralelo, una resistencia \textbf{grande} hace el circuito más selectivo, porque deriva poca corriente y deja que la bobina y el condensador dominen.
+
+Con $L = 10\ \text{mH}$ y $C = 0.1\ \mu\text{F}$, $f_r = 5.03\ \text{kHz}$ y $X_L = 316\ \Omega$. Con $R = 1\ \text{k}\Omega$, la impedancia máxima es 1 k\ensuremath{\Omega}, $Q = 3.16$ y el ancho de banda de 1.59 kHz; con $R = 3\ \text{k}\Omega$, la impedancia máxima sube a 3 k\ensuremath{\Omega}, $Q = 9.49$ y el ancho de banda se estrecha a unos 530 Hz. El ancho de banda se mide entre las dos frecuencias en las que la impedancia, y con ella la tensión en el tanque para una corriente constante, cae al 70.7 \% de su máximo. La gráfica compara ambas curvas.
+
+% --- Figura 2: Impedancia de un RLC en paralelo (L = 10 mH, C = 0.1 µF) en función de la frecuencia para… (gráfica en pgfplots con los puntos de su especificación) ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        iubejes,
+        xlabel={Frecuencia f (Hz)},
+        ylabel={Impedancia Z (\ensuremath{\Omega})},
+        title={Curvas de resonancia en paralelo},
+        legend style={at={(0.5,-0.30)}},
+        xmode=log,
+        xmin=1000,
+        xmax=25000]
+      % serie 1: R = 1 kΩ (Q = 3.16) («1/sqrt((1/R1) 2 + (2*pi*f*C - 1/(2*pi*f*L)) 2)» en 300 puntos)
+      \addplot[color=iubblue, line width=1.4pt, no markers] coordinates {
+        (1000,65.2748) (1010.82,66.0371) (1021.76,66.8095) (1032.82,67.5923) (1044,68.3856) (1055.3,69.1897)
+        (1066.72,70.0046) (1078.27,70.8307) (1089.94,71.6681) (1101.74,72.517) (1113.66,73.3777) (1125.72,74.2503)
+        (1137.9,75.1351) (1150.22,76.0323) (1162.67,76.9421) (1175.25,77.8649) (1187.97,78.8007) (1200.83,79.75)
+        (1213.83,80.713) (1226.97,81.6899) (1240.25,82.681) (1253.67,83.6866) (1267.24,84.7071) (1280.95,85.7426)
+        (1294.82,86.7936) (1308.83,87.8603) (1323,88.9431) (1337.32,90.0424) (1351.79,91.1584) (1366.43,92.2916)
+        (1381.22,93.4423) (1396.17,94.6109) (1411.28,95.7979) (1426.55,97.0035) (1441.99,98.2284) (1457.6,99.4729)
+        (1473.38,100.737) (1489.32,102.022) (1505.44,103.329) (1521.74,104.656) (1538.21,106.006) (1554.86,107.378)
+        (1571.69,108.774) (1588.7,110.193) (1605.89,111.636) (1623.28,113.105) (1640.85,114.599) (1658.61,116.119)
+        (1676.56,117.667) (1694.7,119.242) (1713.05,120.845) (1731.59,122.478) (1750.33,124.14) (1769.28,125.834)
+        (1788.43,127.559) (1807.78,129.317) (1827.35,131.108) (1847.13,132.934) (1867.12,134.795) (1887.33,136.693)
+        (1907.76,138.629) (1928.41,140.604) (1949.28,142.618) (1970.38,144.674) (1991.7,146.773) (2013.26,148.915)
+        (2035.05,151.103) (2057.08,153.337) (2079.34,155.62) (2101.85,157.953) (2124.6,160.338) (2147.59,162.776)
+        (2170.84,165.27) (2194.34,167.82) (2218.09,170.43) (2242.09,173.102) (2266.36,175.837) (2290.89,178.638)
+        (2315.69,181.507) (2340.75,184.448) (2366.09,187.462) (2391.7,190.553) (2417.58,193.723) (2443.75,196.977)
+        (2470.2,200.316) (2496.94,203.745) (2523.96,207.268) (2551.28,210.888) (2578.9,214.609) (2606.81,218.436)
+        (2635.02,222.373) (2663.54,226.426) (2692.37,230.599) (2721.52,234.898) (2750.97,239.329) (2780.75,243.898)
+        (2810.85,248.611) (2841.27,253.475) (2872.02,258.498) (2903.11,263.687) (2934.53,269.052) (2966.29,274.6)
+        (2998.4,280.341) (3030.85,286.285) (3063.66,292.443) (3096.82,298.826) (3130.33,305.447) (3164.22,312.318)
+        (3198.46,319.453) (3233.08,326.868) (3268.08,334.577) (3303.45,342.599) (3339.2,350.95) (3375.35,359.651)
+        (3411.88,368.722) (3448.81,378.184) (3486.14,388.063) (3523.87,398.381) (3562.01,409.167) (3600.57,420.448)
+        (3639.54,432.255) (3678.93,444.619) (3718.75,457.572) (3759,471.151) (3799.69,485.391) (3840.81,500.329)
+        (3882.38,516.004) (3924.41,532.452) (3966.88,549.711) (4009.82,567.815) (4053.22,586.798) (4097.09,606.684)
+        (4141.43,627.491) (4186.26,649.228) (4231.57,671.884) (4277.37,695.43) (4323.67,719.812) (4370.47,744.938)
+        (4417.77,770.676) (4465.59,796.844) (4513.92,823.199) (4562.78,849.431) (4612.16,875.157) (4662.08,899.922)
+        (4712.54,923.202) (4763.55,944.425) (4815.11,962.989) (4867.23,978.305) (4919.91,989.84) (4973.16,997.158)
+        (5026.99,999.972) (5081.4,998.167) (5136.4,991.817) (5191.99,981.174) (5248.19,966.644) (5304.99,948.742)
+        (5362.41,928.051) (5420.45,905.172) (5479.12,880.685) (5538.42,855.129) (5598.37,828.972) (5658.96,802.615)
+        (5720.21,776.383) (5782.13,750.533) (5844.71,725.26) (5907.97,700.706) (5971.92,676.971) (6036.56,654.116)
+        (6101.89,632.177) (6167.94,611.166) (6234.7,591.079) (6302.18,571.9) (6370.39,553.606) (6439.34,536.164)
+        (6509.04,519.542) (6579.49,503.701) (6650.71,488.605) (6722.69,474.215) (6795.45,460.494) (6869.01,447.407)
+        (6943.35,434.916) (7018.51,422.99) (7094.47,411.597) (7171.26,400.705) (7248.88,390.286) (7327.34,380.313)
+        (7406.65,370.762) (7486.81,361.607) (7567.85,352.827) (7649.76,344.401) (7732.56,336.308) (7816.25,328.532)
+        (7900.85,321.054) (7986.37,313.859) (8072.81,306.931) (8160.19,300.257) (8248.51,293.822) (8337.79,287.616)
+        (8428.03,281.626) (8519.25,275.841) (8611.46,270.252) (8704.67,264.848) (8798.89,259.621) (8894.12,254.562)
+        (8990.39,249.664) (9087.7,244.918) (9186.06,240.318) (9285.49,235.858) (9385.99,231.531) (9487.58,227.33)
+        (9590.27,223.252) (9694.07,219.289) (9799,215.439) (9905.06,211.695) (10012.3,208.053) (10120.6,204.509)
+        (10230.2,201.06) (10340.9,197.701) (10452.8,194.429) (10566,191.241) (10680.3,188.133) (10795.9,185.102)
+        (10912.8,182.146) (11030.9,179.261) (11150.3,176.445) (11271,173.696) (11393,171.01) (11516.3,168.387)
+        (11640.9,165.824) (11766.9,163.318) (11894.3,160.868) (12023,158.472) (12153.2,156.127) (12284.7,153.834)
+        (12417.7,151.589) (12552.1,149.391) (12687.9,147.238) (12825.3,145.13) (12964.1,143.065) (13104.4,141.042)
+        (13246.2,139.059) (13389.6,137.115) (13534.5,135.208) (13681,133.339) (13829.1,131.505) (13978.8,129.707)
+        (14130.1,127.942) (14283,126.209) (14437.6,124.509) (14593.9,122.84) (14751.8,121.2) (14911.5,119.591)
+        (15072.9,118.009) (15236,116.456) (15401,114.93) (15567.7,113.43) (15736.1,111.956) (15906.5,110.507)
+        (16078.6,109.083) (16252.7,107.682) (16428.6,106.305) (16606.4,104.95) (16786.1,103.618) (16967.8,102.307)
+        (17151.5,101.017) (17337.1,99.7483) (17524.8,98.4995) (17714.5,97.2704) (17906.2,96.0605) (18100,94.8695)
+        (18295.9,93.6969) (18493.9,92.5423) (18694.1,91.4053) (18896.4,90.2855) (19101,89.1827) (19307.7,88.0963)
+        (19516.7,87.026) (19727.9,85.9717) (19941.5,84.9328) (20157.3,83.909) (20375.5,82.9002) (20596,81.9059)
+        (20818.9,80.9259) (21044.3,79.9599) (21272,79.0077) (21502.3,78.0689) (21735,77.1433) (21970.3,76.2306)
+        (22208.1,75.3307) (22448.4,74.4432) (22691.4,73.5679) (22937,72.7047) (23185.3,71.8532) (23436.2,71.0133)
+        (23689.9,70.1848) (23946.3,69.3674) (24205.5,68.561) (24467.5,67.7653) (24732.3,66.9802) (25000,66.2055)
+      };
+      \addlegendentry{R = 1 k\ensuremath{\Omega} (Q = 3.16)}
+      % serie 2: R = 3 kΩ (Q = 9.49) («1/sqrt((1/R2) 2 + (2*pi*f*C - 1/(2*pi*f*L)) 2)» en 300 puntos)
+      \addplot[color=iuborange, line width=1.4pt, no markers] coordinates {
+        (1000,65.3988) (1010.82,66.1654) (1021.76,66.9424) (1032.82,67.73) (1044,68.5282) (1055.3,69.3374)
+        (1066.72,70.1576) (1078.27,70.9892) (1089.94,71.8323) (1101.74,72.6871) (1113.66,73.5539) (1125.72,74.4329)
+        (1137.9,75.3243) (1150.22,76.2284) (1162.67,77.1454) (1175.25,78.0755) (1187.97,79.0191) (1200.83,79.9764)
+        (1213.83,80.9477) (1226.97,81.9333) (1240.25,82.9334) (1253.67,83.9483) (1267.24,84.9785) (1280.95,86.0241)
+        (1294.82,87.0856) (1308.83,88.1633) (1323,89.2575) (1337.32,90.3686) (1351.79,91.4969) (1366.43,92.6429)
+        (1381.22,93.807) (1396.17,94.9896) (1411.28,96.191) (1426.55,97.4118) (1441.99,98.6524) (1457.6,99.9132)
+        (1473.38,101.195) (1489.32,102.498) (1505.44,103.822) (1521.74,105.169) (1538.21,106.539) (1554.86,107.933)
+        (1571.69,109.35) (1588.7,110.792) (1605.89,112.26) (1623.28,113.753) (1640.85,115.274) (1658.61,116.821)
+        (1676.56,118.397) (1694.7,120.002) (1713.05,121.637) (1731.59,123.303) (1750.33,124.999) (1769.28,126.729)
+        (1788.43,128.492) (1807.78,130.289) (1827.35,132.121) (1847.13,133.991) (1867.12,135.897) (1887.33,137.843)
+        (1907.76,139.829) (1928.41,141.856) (1949.28,143.925) (1970.38,146.039) (1991.7,148.198) (2013.26,150.405)
+        (2035.05,152.66) (2057.08,154.965) (2079.34,157.323) (2101.85,159.734) (2124.6,162.202) (2147.59,164.728)
+        (2170.84,167.313) (2194.34,169.961) (2218.09,172.674) (2242.09,175.454) (2266.36,178.304) (2290.89,181.226)
+        (2315.69,184.225) (2340.75,187.301) (2366.09,190.46) (2391.7,193.704) (2417.58,197.038) (2443.75,200.464)
+        (2470.2,203.987) (2496.94,207.612) (2523.96,211.342) (2551.28,215.184) (2578.9,219.142) (2606.81,223.221)
+        (2635.02,227.428) (2663.54,231.769) (2692.37,236.25) (2721.52,240.88) (2750.97,245.665) (2780.75,250.613)
+        (2810.85,255.735) (2841.27,261.038) (2872.02,266.535) (2903.11,272.234) (2934.53,278.149) (2966.29,284.292)
+        (2998.4,290.678) (3030.85,297.32) (3063.66,304.235) (3096.82,311.442) (3130.33,318.959) (3164.22,326.807)
+        (3198.46,335.009) (3233.08,343.59) (3268.08,352.578) (3303.45,362.003) (3339.2,371.898) (3375.35,382.3)
+        (3411.88,393.248) (3448.81,404.79) (3486.14,416.973) (3523.87,429.854) (3562.01,443.495) (3600.57,457.966)
+        (3639.54,473.346) (3678.93,489.723) (3718.75,507.197) (3759,525.883) (3799.69,545.91) (3840.81,567.427)
+        (3882.38,590.606) (3924.41,615.646) (3966.88,642.774) (4009.82,672.261) (4053.22,704.42) (4097.09,739.621)
+        (4141.43,778.305) (4186.26,820.994) (4231.57,868.317) (4277.37,921.029) (4323.67,980.047) (4370.47,1046.48)
+        (4417.77,1121.7) (4465.59,1207.35) (4513.92,1305.45) (4562.78,1418.41) (4612.16,1549.01) (4662.08,1700.31)
+        (4712.54,1875.14) (4763.55,2074.95) (4815.11,2297.45) (4867.23,2532.22) (4919.91,2755.06) (4973.16,2925.79)
+        (5026.99,2999.25) (5081.4,2951.58) (5136.4,2798.59) (5191.99,2583.25) (5248.19,2348.45) (5304.99,2121.98)
+        (5362.41,1916.8) (5420.45,1736.54) (5479.12,1580.3) (5538.42,1445.42) (5598.37,1328.85) (5658.96,1227.71)
+        (5720.21,1139.52) (5782.13,1062.17) (5844.71,993.932) (5907.97,933.391) (5971.92,879.382) (6036.56,830.947)
+        (6101.89,787.3) (6167.94,747.786) (6234.7,711.862) (6302.18,679.07) (6370.39,649.026) (6439.34,621.405)
+        (6509.04,595.929) (6579.49,572.36) (6650.71,550.493) (6722.69,530.153) (6795.45,511.185) (6869.01,493.456)
+        (6943.35,476.847) (7018.51,461.257) (7094.47,446.594) (7171.26,432.777) (7248.88,419.735) (7327.34,407.403)
+        (7406.65,395.726) (7486.81,384.651) (7567.85,374.133) (7649.76,364.131) (7732.56,354.606) (7816.25,345.525)
+        (7900.85,336.857) (7986.37,328.574) (8072.81,320.65) (8160.19,313.062) (8248.51,305.79) (8337.79,298.812)
+        (8428.03,292.111) (8519.25,285.671) (8611.46,279.476) (8704.67,273.512) (8798.89,267.766) (8894.12,262.226)
+        (8990.39,256.881) (9087.7,251.721) (9186.06,246.735) (9285.49,241.915) (9385.99,237.252) (9487.58,232.739)
+        (9590.27,228.368) (9694.07,224.132) (9799,220.025) (9905.06,216.041) (10012.3,212.175) (10120.6,208.42)
+        (10230.2,204.773) (10340.9,201.228) (10452.8,197.781) (10566,194.427) (10680.3,191.164) (10795.9,187.987)
+        (10912.8,184.892) (11030.9,181.877) (11150.3,178.938) (11271,176.073) (11393,173.277) (11516.3,170.55)
+        (11640.9,167.888) (11766.9,165.289) (11894.3,162.751) (12023,160.271) (12153.2,157.847) (12284.7,155.478)
+        (12417.7,153.161) (12552.1,150.895) (12687.9,148.678) (12825.3,146.508) (12964.1,144.385) (13104.4,142.306)
+        (13246.2,140.269) (13389.6,138.275) (13534.5,136.321) (13681,134.405) (13829.1,132.528) (13978.8,130.687)
+        (14130.1,128.883) (14283,127.112) (14437.6,125.376) (14593.9,123.672) (14751.8,122) (14911.5,120.358)
+        (15072.9,118.747) (15236,117.165) (15401,115.611) (15567.7,114.084) (15736.1,112.585) (15906.5,111.112)
+        (16078.6,109.664) (16252.7,108.241) (16428.6,106.843) (16606.4,105.468) (16786.1,104.116) (16967.8,102.786)
+        (17151.5,101.479) (17337.1,100.192) (17524.8,98.927) (17714.5,97.682) (17906.2,96.4569) (18100,95.2513)
+        (18295.9,94.0646) (18493.9,92.8965) (18694.1,91.7466) (18896.4,90.6144) (19101,89.4996) (19307.7,88.4017)
+        (19516.7,87.3205) (19727.9,86.2555) (19941.5,85.2064) (20157.3,84.1728) (20375.5,83.1546) (20596,82.1512)
+        (20818.9,81.1625) (21044.3,80.1881) (21272,79.2278) (21502.3,78.2812) (21735,77.3481) (21970.3,76.4283)
+        (22208.1,75.5214) (22448.4,74.6272) (22691.4,73.7455) (22937,72.8761) (23185.3,72.0186) (23436.2,71.173)
+        (23689.9,70.3389) (23946.3,69.5162) (24205.5,68.7046) (24467.5,67.904) (24732.3,67.1142) (25000,66.3349)
+      };
+      \addlegendentry{R = 3 k\ensuremath{\Omega} (Q = 9.49)}
+      % línea de referencia en x = 5033
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({axis cs:5033,0}|-{rel axis cs:0,0}) -- ({axis cs:5033,0}|-{rel axis cs:0,1}) node[drotulo, pos=1, anchor=north west] {fr = 5.03 kHz};
+      % línea de referencia en y = 707
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({rel axis cs:0,0}|-{axis cs:1,707}) -- ({rel axis cs:1,0}|-{axis cs:1,707}) node[drotulo, pos=1, anchor=south east] {0.707 \textperiodcentered{} Zmax (R = 1 k\ensuremath{\Omega})};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Impedancia de un RLC en paralelo (L = 10 mH, C = 0.1 \textmu{}F) en función de la frecuencia para R = 1 k\ensuremath{\Omega} y R = 3 k\ensuremath{\Omega}}
+\end{figure}
+
+La gráfica es la imagen invertida de las curvas de corriente de la semana 11: allí la corriente tenía un pico en la resonancia; aquí es la impedancia la que lo tiene, y la corriente total presenta un valle. Por eso un circuito tanque conectado entre la salida de un amplificador y tierra deja pasar a su frecuencia de resonancia y cortocircuita las demás: es un \textbf{filtro que rechaza} todas las frecuencias menos una. Y, a la inversa, un tanque en serie con una línea bloquea precisamente su frecuencia de resonancia, que es el principio de los filtros de rechazo de banda.
+
+Hay que tener en cuenta que la resistencia $R$ de estas fórmulas es toda la resistencia en paralelo con el tanque, incluida la resistencia de entrada de cualquier instrumento o carga que se le conecte. Un osciloscopio de 1 M\ensuremath{\Omega} apenas influye, pero una carga de unos pocos kilohmios reduce el factor de calidad y ensancha la resonancia, del mismo modo que lo hace la resistencia de devanado de la bobina real, que se trata en la siguiente unidad.
+
+\begin{nota}{Error frecuente:}
+Usar para el paralelo el factor de calidad del serie, $Q = X_L/R$. Con $R = 1\ \text{k}\Omega$ daría 0.32 en lugar de 3.16. La comprobación rápida es física: en paralelo, un resistor muy grande casi no interviene y el circuito se acerca al tanque ideal, de $Q$ muy alto.
+\end{nota}
+
+\subsubsection{El circuito tanque con bobina real (Bloque 5)}
+
+El circuito tanque ideal supone una bobina sin resistencia. Un tratamiento práctico de los circuitos resonantes en paralelo debe incluir la resistencia de la bobina [1], y el resultado cambia de forma apreciable: la resistencia de devanado está \textbf{en serie} con la inductancia, dentro de la rama de la bobina, así que el circuito ya no es un RLC en paralelo puro. La solución es la que se usó en la semana 9: convertir la bobina real a su equivalente en paralelo. El factor de calidad del circuito tanque en resonancia es simplemente el factor $Q$ de la bobina, y la inductancia y la resistencia equivalentes en paralelo son [1]:
+
+\begin{equation}
+  Q = \frac{X_L}{R_W}, \qquad L_{\mathrm{eq}} = L\left(\frac{Q^{2} + 1}{Q^{2}}\right), \qquad R_{p(eq)} = R_W\,(Q^{2} + 1)
+\end{equation}
+
+donde $Q$ es el factor de calidad de la bobina (adimensional), $X_L$ su reactancia a la frecuencia de resonancia en ohmios (\ensuremath{\Omega}), $R_W$ su resistencia de devanado en ohmios, $L_{\mathrm{eq}}$ la inductancia equivalente en paralelo en henrios (H), $L$ la inductancia real en henrios, y $R_{p(eq)}$ la resistencia equivalente en paralelo en ohmios. Para $Q \geq 10$, $L_{\mathrm{eq}} \approx L$ [1]. En el equivalente, $R_{p(eq)}$ queda en paralelo con una bobina ideal y un condensador, que en la resonancia actúan como un tanque ideal de impedancia infinita; por consiguiente, la impedancia total del tanque no ideal en la resonancia es simplemente la resistencia equivalente en paralelo [1].
+
+La resistencia de devanado tiene además un efecto sobre la propia frecuencia de resonancia. Si se define la resonancia como la frecuencia en la que la corriente total queda en fase con la tensión, la condición exacta es $f_r = \sqrt{1 - R_W^2 C/L}\,/\,(2\pi\sqrt{LC})$, un poco por debajo del valor ideal. Con $Q \geq 10$ la diferencia es despreciable y se puede usar la fórmula aproximada $f_r \approx 1/(2\pi\sqrt{LC})$ [1]; con $Q$ bajo, el desplazamiento es apreciable. La tabla lo cuantifica para la bobina L3 del kit (10.4 mH) con el condensador C2 (97.8 nF), cuya resonancia ideal es de 4990 Hz, y para dos bobinas hipotéticas de la misma inductancia con más resistencia de devanado.
+
+% --- Tabla 3: Efecto de la resistencia de devanado en un tanque con L = 10.4 mH y C = 97.8 nF (resonanc… (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=0.891\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.545\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.238\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.535\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.791\hsize\linewidth=\hsize\raggedleft\arraybackslash}X}
+\caption{Efecto de la resistencia de devanado en un tanque con L = 10.4 mH y C = 97.8 nF (resonancia ideal: 4990 Hz, XL = 326.1 \ensuremath{\Omega})} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{RW (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Q = XL/RW}} & \textcolor{white}{\textbf{Rp(eq) = RW(Q\texttwosuperior{} + 1) (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{fr con corriente en fase (Hz)}} & \textcolor{white}{\textbf{Desplazamiento}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{RW (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Q = XL/RW}} & \textcolor{white}{\textbf{Rp(eq) = RW(Q\texttwosuperior{} + 1) (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{fr con corriente en fase (Hz)}} & \textcolor{white}{\textbf{Desplazamiento}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  24.6 (L3 del kit) & 13.3 & 4349 & 4976 & \ensuremath{-}0.3 \% \\
+  \rowcolor{iubfondogris} 50 & 6.52 & 2176 & 4931 & \ensuremath{-}1.2 \% \\
+  100 & 3.26 & 1163 & 4750 & \ensuremath{-}4.8 \% \\
+\end{xltabular}
+
+La tabla muestra dos efectos. El primero es que una resistencia de devanado pequeña equivale a una resistencia en paralelo grande: los 24.6 \ensuremath{\Omega} de L3 se comportan, en la resonancia, como 4.35 k\ensuremath{\Omega} en paralelo con el tanque, y esa resistencia fija la impedancia máxima y la corriente mínima. El segundo es que el desplazamiento de la frecuencia de resonancia solo importa con factores de calidad bajos; con L3, un 0.3 \%, menor que la tolerancia de los componentes.
+
+Si además se conecta un resistor $R$ en paralelo con el tanque, como en el caso de estudio, la resistencia total en paralelo es la combinación de $R$ con $R_{p(eq)}$, tal como Floyd hace al analizar un tanque con un resistor de carga [1]. Con $R = 4.7\ \text{k}\Omega$: $R_{p,tot} = (4349)(4700)/(4349 + 4700) \approx 2259\ \Omega$. El factor de calidad del conjunto baja a $2259/326.1 \approx 6.9$ y el ancho de banda es de unos $4990/6.9 \approx 720\ \text{Hz}$: la carga y la bobina real, juntas, ensanchan la resonancia.
+
+\begin{nota}{Error frecuente:}
+Suponer que la impedancia máxima de un tanque real es infinita, o igual a la resistencia del resistor externo. Es la combinación en paralelo de ese resistor con $R_W(Q^2 + 1)$, y con bobinas de $Q$ bajo puede ser mucho menor que el resistor externo.
+\end{nota}
+
+\subsubsection{Corrección del factor de potencia con un condensador en paralelo (Bloque 6)}
+
+La aplicación más importante del RLC en paralelo en los sistemas eléctricos es la \textbf{corrección del factor de potencia}. Una carga industrial típica ---motores, transformadores, balastos--- es predominantemente inductiva: toma de la red una corriente con una componente resistiva, que produce trabajo, y una componente inductiva retrasada 90\textdegree{}, que solo magnetiza. El factor de potencia de una carga inductiva aumenta al agregar un condensador en paralelo: el condensador compensa el retraso de fase de la corriente total creando una componente capacitiva de corriente desfasada 180\textdegree{} respecto a la inductiva, y ese efecto de cancelación reduce tanto el ángulo de fase como la corriente total [1].
+
+El condensador no cambia la potencia real de la carga, porque no disipa energía; solo reduce la potencia reactiva que la red debe suministrar. Si la carga toma una potencia real $P$ con un ángulo $\theta_1$ y se quiere llevar el ángulo a $\theta_2$, la potencia reactiva que debe aportar el condensador es la diferencia entre la potencia reactiva inicial y la final, y de ella se obtiene la capacitancia necesaria:
+
+\begin{equation}
+  Q_C = P\,(\tan\theta_1 - \tan\theta_2), \qquad C = \frac{Q_C}{2\pi f V^{2}}
+\end{equation}
+
+donde $Q_C$ es la potencia reactiva del condensador en voltamperios reactivos (VAR), $P$ la potencia real de la carga en vatios (W), $\theta_1$ y $\theta_2$ los ángulos de fase antes y después de la corrección, con $\cos\theta$ igual al factor de potencia, $C$ la capacitancia en faradios (F), $f$ la frecuencia de la red en hercios (Hz) y $V$ la tensión eficaz de la red en voltios (V). La segunda expresión sale de $Q_C = V^2/X_C = V^2 \, 2\pi f C$.
+
+Un ejemplo con números de una instalación pequeña: una carga de 1.2 kW alimentada a 120 V y 60 Hz, con factor de potencia 0.70 en atraso, se quiere llevar a 0.95. El ángulo inicial es $\cos^{-1}0.70 = 45.6^\circ$, con $\tan\theta_1 = 1.020$; el final, $\cos^{-1}0.95 = 18.2^\circ$, con $\tan\theta_2 = 0.329$. Entonces $Q_C = 1200(1.020 - 0.329) \approx 830\ \text{VAR}$ y $C = 830/(2\pi \times 60 \times 120^2) \approx 153\ \mu\text{F}$. La tabla compara la situación antes y después.
+
+% --- Tabla 4: Corrección del factor de potencia de una carga de 1.2 kW a 120 V y 60 Hz (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=1.333\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.872\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.231\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.564\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Corrección del factor de potencia de una carga de 1.2 kW a 120 V y 60 Hz} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{Sin condensador}} & \textcolor{white}{\textbf{Con 153 \textmu{}F en paralelo}} & \textcolor{white}{\textbf{Cambio}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{Sin condensador}} & \textcolor{white}{\textbf{Con 153 \textmu{}F en paralelo}} & \textcolor{white}{\textbf{Cambio}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  Potencia real P & 1200 W & 1200 W & sin cambio \\
+  \rowcolor{iubfondogris} Potencia reactiva Q & 1224 VAR & 394 VAR & \ensuremath{-}68 \% \\
+  Potencia aparente S & 1714 VA & 1263 VA & \ensuremath{-}26 \% \\
+  \rowcolor{iubfondogris} Factor de potencia & 0.70 en atraso & 0.95 en atraso & mejora \\
+  Corriente de línea & 14.3 A & 10.5 A & \ensuremath{-}26 \% \\
+  \rowcolor{iubfondogris} Corriente del condensador & --- & 6.9 A & --- \\
+\end{xltabular}
+
+La tabla muestra el beneficio concreto: la carga sigue recibiendo sus 1.2 kW, pero la corriente de línea baja de 14.3 A a 10.5 A. Con menos corriente, los conductores, los interruptores y el transformador que alimenta la instalación trabajan más descargados, las pérdidas por efecto Joule en los conductores bajan en proporción al cuadrado de la corriente ---un 46 \% en este caso--- y la empresa de energía deja de facturar el exceso de energía reactiva. Obsérvese que el condensador conduce 6.9 A, una corriente considerable que circula entre él y la carga sin pasar por la red: es el mismo intercambio de energía del circuito tanque.
+
+No se corrige hasta un factor de potencia exactamente 1, por dos razones. La primera es económica: los últimos puntos de mejora requieren mucha capacitancia para un beneficio pequeño. La segunda es técnica: si la carga disminuye, un banco dimensionado para el factor 1 dejaría la instalación capacitiva, y el conjunto de la inductancia de la red y los condensadores podría acercarse a una resonancia en paralelo con alguna armónica de la corriente, con sobretensiones peligrosas.
+
+\begin{nota}{Advertencia de seguridad:}
+Los bancos de condensadores de corrección conservan su carga tras desconectarlos. Se instalan siempre con resistencias de descarga y se verifica la ausencia de tensión antes de intervenirlos, como se vio en la semana 6.
+\end{nota}
+
+\section{Caso de Estudio Aplicado: Medición de un circuito RLC en paralelo antes, en y después de la resonancia (Bloque 7)}
+
+\subsection{Montaje y predicción}
+
+Se conectan en paralelo tres ramas: un resistor marcado amarillo-violeta-rojo-oro, es decir, 4.7 k\ensuremath{\Omega} \textpm{}5 \%, que el ohmímetro mide en 4.70 k\ensuremath{\Omega}; la bobina L3 del kit, con 10.4 mH y 24.6 \ensuremath{\Omega} de resistencia de devanado; y el condensador C2, de 97.8 nF. Los tres se verifican antes del montaje con el ohmímetro y el medidor LCR, lo que cubre el criterio CE1. El generador aplica 2.00 V eficaces medidos en los bornes del circuito. La corriente total se mide con un resistor sensor de 10 \ensuremath{\Omega} en el retorno de la fuente, y las corrientes de rama con un sensor de 1 \ensuremath{\Omega} que se intercala en cada rama por turno. Las lecturas que se usan más abajo son valores de ejemplo para ilustrar el procedimiento.
+
+Con la bobina real, la corriente total se calcula sumando las admitancias de las tres ramas en forma rectangular. La de la bobina es $1/(R_W + jX_L) = (R_W - jX_L)/(R_W^2 + X_L^2)$, así que la corriente total a cada frecuencia es:
+
+\begin{equation}
+  I_T = V_S\sqrt{\left(\frac{1}{R} + \frac{R_W}{R_W^{2} + X_L^{2}}\right)^{2} + \left(2\pi f C - \frac{X_L}{R_W^{2} + X_L^{2}}\right)^{2}}
+\end{equation}
+
+donde $I_T$ es la corriente total eficaz en amperios (A), $V_S$ la tensión eficaz aplicada en voltios (V), $R$ la resistencia del resistor en ohmios (\ensuremath{\Omega}), $R_W$ la resistencia de devanado en ohmios, $X_L = 2\pi f L$ la reactancia de la bobina en ohmios, $f$ la frecuencia en hercios (Hz) y $C$ la capacitancia en faradios (F). En la resonancia, la unidad sobre el tanque real predice una impedancia de 2259 \ensuremath{\Omega} y una corriente mínima de $2.00/2259 \approx 0.885\ \text{mA}$, a unos 4976 Hz. La gráfica muestra la corriente total prevista entre 2 kHz y 15 kHz.
+
+% --- Figura 3: Corriente total prevista del RLC en paralelo con la bobina real (R = 4.7 kΩ, L = 10.4 mH,… (gráfica en pgfplots con los puntos de su especificación) ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        iubejes,
+        xlabel={Frecuencia f (Hz)},
+        ylabel={Corriente total IT (mA)},
+        title={Corriente total del RLC en paralelo del kit},
+        legend style={at={(0.5,-0.30)}},
+        xmode=log,
+        xmin=2000,
+        xmax=15000]
+      % serie 1: IT prevista («1000*V*sqrt((1/R + RW/(RW 2+(2*pi*f*L) 2)) 2 + (2*pi*f*C - 2*pi*f*L/(RW 2+(2*pi*f*L) 2))…)
+      \addplot[color=iubblue, line width=1.4pt, no markers] coordinates {
+        (2000,12.7324) (2013.52,12.6177) (2027.14,12.5035) (2040.84,12.3897) (2054.64,12.2765) (2068.54,12.1637)
+        (2082.52,12.0514) (2096.6,11.9396) (2110.78,11.8282) (2125.05,11.7173) (2139.42,11.6068) (2153.89,11.4968)
+        (2168.45,11.3873) (2183.11,11.2782) (2197.87,11.1695) (2212.73,11.0613) (2227.7,10.9535) (2242.76,10.8462)
+        (2257.92,10.7393) (2273.19,10.6328) (2288.56,10.5267) (2304.04,10.4211) (2319.61,10.3159) (2335.3,10.211)
+        (2351.09,10.1066) (2366.99,10.0026) (2382.99,9.89905) (2399.1,9.79586) (2415.32,9.69306) (2431.66,9.59065)
+        (2448.1,9.48863) (2464.65,9.387) (2481.32,9.28575) (2498.09,9.18488) (2514.98,9.08438) (2531.99,8.98426)
+        (2549.11,8.8845) (2566.35,8.78511) (2583.7,8.68608) (2601.17,8.58741) (2618.76,8.4891) (2636.46,8.39113)
+        (2654.29,8.29352) (2672.24,8.19625) (2690.31,8.09932) (2708.5,8.00273) (2726.81,7.90647) (2745.25,7.81055)
+        (2763.81,7.71496) (2782.5,7.61969) (2801.31,7.52474) (2820.25,7.43012) (2839.32,7.33581) (2858.52,7.24181)
+        (2877.85,7.14812) (2897.31,7.05474) (2916.9,6.96166) (2936.62,6.86889) (2956.48,6.77641) (2976.47,6.68423)
+        (2996.59,6.59234) (3016.85,6.50073) (3037.25,6.40942) (3057.79,6.31838) (3078.46,6.22763) (3099.28,6.13716)
+        (3120.24,6.04696) (3141.33,5.95704) (3162.57,5.86738) (3183.96,5.778) (3205.49,5.68888) (3227.16,5.60002)
+        (3248.98,5.51143) (3270.95,5.42309) (3293.07,5.33501) (3315.33,5.24719) (3337.75,5.15962) (3360.32,5.0723)
+        (3383.04,4.98523) (3405.91,4.89842) (3428.94,4.81185) (3452.13,4.72552) (3475.47,4.63944) (3498.97,4.55361)
+        (3522.63,4.46802) (3546.45,4.38268) (3570.42,4.29758) (3594.57,4.21273) (3618.87,4.12812) (3643.34,4.04375)
+        (3667.97,3.95964) (3692.78,3.87577) (3717.75,3.79216) (3742.88,3.7088) (3768.19,3.62569) (3793.67,3.54285)
+        (3819.32,3.46028) (3845.15,3.37797) (3871.14,3.29595) (3897.32,3.2142) (3923.67,3.13275) (3950.2,3.0516)
+        (3976.91,2.97077) (4003.8,2.89026) (4030.87,2.81009) (4058.13,2.73027) (4085.57,2.65083) (4113.19,2.57178)
+        (4141,2.49314) (4169,2.41496) (4197.19,2.33725) (4225.57,2.26005) (4254.14,2.18341) (4282.91,2.10736)
+        (4311.87,2.03197) (4341.02,1.9573) (4370.37,1.88341) (4399.92,1.8104) (4429.68,1.73836) (4459.63,1.6674)
+        (4489.78,1.59766) (4520.14,1.52929) (4550.7,1.46247) (4581.47,1.39742) (4612.45,1.33437) (4643.64,1.27362)
+        (4675.04,1.2155) (4706.65,1.1604) (4738.47,1.10875) (4770.51,1.06106) (4802.77,1.01788) (4835.24,0.979786)
+        (4867.93,0.947396) (4900.85,0.921305) (4933.99,0.902058) (4967.35,0.890097) (5000.93,0.885716) (5034.75,0.889029)
+        (5068.79,0.899952) (5103.06,0.918219) (5137.57,0.943407) (5172.31,0.974985) (5207.28,1.01236) (5242.49,1.05493)
+        (5277.94,1.1021) (5313.62,1.15331) (5349.55,1.20806) (5385.72,1.2659) (5422.14,1.32643) (5458.8,1.38932)
+        (5495.71,1.45428) (5532.87,1.52104) (5570.28,1.58939) (5607.95,1.65915) (5645.86,1.73017) (5684.04,1.80229)
+        (5722.47,1.87542) (5761.17,1.94945) (5800.12,2.02429) (5839.34,2.09987) (5878.82,2.17613) (5918.57,2.25301)
+        (5958.59,2.33047) (5998.88,2.40845) (6039.44,2.48694) (6080.28,2.56588) (6121.39,2.64527) (6162.78,2.72506)
+        (6204.45,2.80525) (6246.4,2.88581) (6288.64,2.96673) (6331.16,3.04799) (6373.97,3.12958) (6417.06,3.21149)
+        (6460.45,3.29371) (6504.14,3.37623) (6548.11,3.45905) (6592.39,3.54216) (6636.96,3.62555) (6681.84,3.70922)
+        (6727.02,3.79317) (6772.51,3.87739) (6818.3,3.96188) (6864.4,4.04664) (6910.81,4.13166) (6957.54,4.21695)
+        (7004.59,4.30251) (7051.95,4.38833) (7099.63,4.47442) (7147.63,4.56077) (7195.96,4.64739) (7244.62,4.73427)
+        (7293.61,4.82142) (7342.92,4.90884) (7392.57,4.99653) (7442.56,5.0845) (7492.88,5.17273) (7543.54,5.26124)
+        (7594.55,5.35003) (7645.9,5.4391) (7697.6,5.52845) (7749.65,5.61809) (7802.05,5.70801) (7854.8,5.79822)
+        (7907.91,5.88872) (7961.38,5.97952) (8015.21,6.07062) (8069.41,6.16202) (8123.97,6.25372) (8178.9,6.34573)
+        (8234.2,6.43806) (8289.88,6.53069) (8345.93,6.62364) (8402.36,6.71692) (8459.18,6.81051) (8516.37,6.90444)
+        (8573.96,6.99869) (8631.93,7.09328) (8690.3,7.18821) (8749.06,7.28348) (8808.21,7.3791) (8867.77,7.47506)
+        (8927.73,7.57138) (8988.1,7.66806) (9048.87,7.7651) (9110.05,7.8625) (9171.65,7.96027) (9233.67,8.05842)
+        (9296.1,8.15694) (9358.96,8.25585) (9422.24,8.35513) (9485.95,8.45481) (9550.09,8.55489) (9614.66,8.65536)
+        (9679.67,8.75623) (9745.12,8.85751) (9811.01,8.9592) (9877.35,9.0613) (9944.14,9.16383) (10011.4,9.26678)
+        (10079.1,9.37015) (10147.2,9.47396) (10215.8,9.57821) (10284.9,9.6829) (10354.4,9.78804) (10424.5,9.89362)
+        (10494.9,9.99966) (10565.9,10.1062) (10637.3,10.2131) (10709.3,10.3206) (10781.7,10.4285) (10854.6,10.5369)
+        (10928,10.6457) (11001.9,10.7551) (11076.3,10.865) (11151.2,10.9753) (11226.6,11.0862) (11302.5,11.1975)
+        (11378.9,11.3094) (11455.8,11.4218) (11533.3,11.5347) (11611.3,11.6482) (11689.8,11.7621) (11768.8,11.8767)
+        (11848.4,11.9917) (11928.5,12.1073) (12009.2,12.2235) (12090.4,12.3402) (12172.1,12.4575) (12254.4,12.5753)
+        (12337.3,12.6938) (12420.7,12.8128) (12504.7,12.9324) (12589.2,13.0525) (12674.3,13.1733) (12760,13.2947)
+        (12846.3,13.4167) (12933.2,13.5393) (13020.6,13.6625) (13108.7,13.7863) (13197.3,13.9108) (13286.5,14.0359)
+        (13376.4,14.1616) (13466.8,14.288) (13557.9,14.415) (13649.6,14.5427) (13741.8,14.6711) (13834.8,14.8001)
+        (13928.3,14.9298) (14022.5,15.0602) (14117.3,15.1912) (14212.8,15.323) (14308.9,15.4554) (14405.6,15.5886)
+        (14503,15.7225) (14601.1,15.857) (14699.8,15.9923) (14799.2,16.1284) (14899.3,16.2651) (15000,16.4026)
+      };
+      \addlegendentry{IT prevista}
+      % línea de referencia en x = 4976
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({axis cs:4976,0}|-{rel axis cs:0,0}) -- ({axis cs:4976,0}|-{rel axis cs:0,1}) node[drotulo, pos=1, anchor=north west] {fr \ensuremath{\approx} 4.98 kHz};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Corriente total prevista del RLC en paralelo con la bobina real (R = 4.7 k\ensuremath{\Omega}, L = 10.4 mH, RW = 24.6 \ensuremath{\Omega}, C = 97.8 nF, VS = 2 V)}
+\end{figure}
+
+\subsection{Resultados}
+
+% --- Tabla 5: RLC en paralelo del kit con VS = 2.00 V eficaces: cálculo con la bobina real y medición (… (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=1.102\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.843\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.778\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.361\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.296\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.843\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.777\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{RLC en paralelo del kit con VS = 2.00 V eficaces: cálculo con la bobina real y medición (lecturas de ejemplo)} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{3 kHz calc.}} & \textcolor{white}{\textbf{3 kHz med.}} & \textcolor{white}{\textbf{fr calc. (4.98 kHz)}} & \textcolor{white}{\textbf{fr med. (4.96 kHz)}} & \textcolor{white}{\textbf{8 kHz calc.}} & \textcolor{white}{\textbf{8 kHz med.}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{3 kHz calc.}} & \textcolor{white}{\textbf{3 kHz med.}} & \textcolor{white}{\textbf{fr calc. (4.98 kHz)}} & \textcolor{white}{\textbf{fr med. (4.96 kHz)}} & \textcolor{white}{\textbf{8 kHz calc.}} & \textcolor{white}{\textbf{8 kHz med.}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  IR (mA) & 0.43 & 0.43 & 0.43 & 0.43 & 0.43 & 0.43 \\
+  \rowcolor{iubfondogris} Ibob (mA) & 10.12 & 10.1 & 6.13 & 6.10 & 3.82 & 3.81 \\
+  IC (mA) & 3.69 & 3.70 & 6.12 & 6.08 & 9.83 & 9.82 \\
+  \rowcolor{iubfondogris} IT (mA) & 6.58 & 6.57 & 0.885 & 0.89 & 6.05 & 6.04 \\
+  Ángulo de IT (\textdegree{}) & \ensuremath{-}75.2 & --- & \ensuremath{\approx} 0 & --- & +84.3 & --- \\
+  \rowcolor{iubfondogris} Carácter & inductivo & --- & resistivo & --- & capacitivo & --- \\
+\end{xltabular}
+
+La corriente mínima se encuentra a 4.96 kHz, a menos del 0.5 \% de la prevista, y vale 0.89 mA: la fuente entrega apenas una séptima parte de la corriente que circula por la bobina o por el condensador, unos 6.1 mA cada una. Es la corriente de circulación del tanque, que no pasa por la fuente. La suma aritmética de las tres corrientes de rama en la resonancia sería 12.6 mA; la suma fasorial, con el ángulo real de la bobina, reproduce los 0.89 mA medidos. A 3 kHz domina la bobina y el circuito es inductivo; a 8 kHz domina el condensador y es capacitivo, justo al revés que el RLC en serie de la semana 11 con los mismos componentes.
+
+La comparación con el modelo ideal es instructiva. Sin la resistencia de devanado, la impedancia en la resonancia sería la del resistor, 4.7 k\ensuremath{\Omega}, y la corriente mínima 0.43 mA, la mitad de la medida. La bobina real, con su resistencia equivalente en paralelo de 4.35 k\ensuremath{\Omega}, duplica la corriente mínima y reduce a la mitad el factor de calidad. Con esta práctica se completan las mediciones del RA4 en ambas conexiones.
+
+\begin{nota}{Nota pedagógica:}
+En un RLC en paralelo, la resonancia se localiza buscando el mínimo de la corriente de la fuente, o el instante en que la tensión del resistor sensor queda en fase con la tensión aplicada. Buscar que las corrientes de la bobina y del condensador sean iguales es menos preciso con una bobina real.
+\end{nota}
+
+\section{Síntesis (Bloque 8)}
+
+El circuito RLC en paralelo es el dual del circuito en serie. La tensión es común, las susceptancias capacitiva e inductiva se oponen y la admitancia es $\mathbf{Y} = G + j(B_C - B_L)$: por debajo de la resonancia domina la bobina y el circuito es inductivo; por encima, el condensador y el circuito es capacitivo. La ley de corrientes de Kirchhoff se cumple con fasores, y las corrientes de la bobina y del condensador, desfasadas 180\textdegree{}, se restan, de modo que cada una puede superar a la corriente total. En la resonancia se cancelan: \textbf{la impedancia es máxima, la corriente de la fuente es mínima} y entre la bobina y el condensador circula una corriente $Q$ veces mayor, con $Q = R/X_L$. Con una bobina real, su resistencia de devanado equivale a $R_W(Q^2 + 1)$ en paralelo, fija la impedancia máxima y desplaza ligeramente la resonancia. El mismo principio de compensación explica la corrección del factor de potencia: un condensador en paralelo con una carga inductiva aporta la corriente reactiva que antes daba la red, y la corriente de línea baja sin que cambie la potencia útil. El caso con los componentes del kit confirmó la resonancia en 4.96 kHz, con una corriente total siete veces menor que la de cada rama reactiva, y mostró que solo el modelo con la bobina real predice la corriente mínima medida. La semana 13 integra los circuitos RLC en serie y en paralelo.
+
+\subsection*{Componente Actitudinal}
+
+\begin{cita}
+Instalar un banco de condensadores sin calcular antes la corriente que circulará por él, o sin sus resistencias de descarga, pone en riesgo a quien lo intervenga después: el trabajo técnico responsable piensa también en el compañero del siguiente turno.
+\end{cita}
+
+\section{Bibliografía (Formato IEEE)}
+
+{\sloppy
+\begin{itemize}[leftmargin=2.6em, labelwidth=2.2em, labelsep=0.4em, align=left]
+  \item[{[1]}] T. L. Floyd, Principios de circuitos eléctricos, 8.\textordfeminine{} ed. México: Pearson Educación, 2007.
+  \item[{[2]}] R. L. Boylestad, Introducción al análisis de circuitos, 10.\textordfeminine{} ed. México: Pearson Educación, 2004.
+  \item[{[3]}] M. F. P. Deorsola y P. Morcelle del Valle, Circuitos eléctricos. Parte 1, 1.\textordfeminine{} ed. La Plata: Editorial de la Universidad de La Plata, 2017.
+\end{itemize}
+}
+
+\end{document}

@@ -15,21 +15,35 @@ estadisticas:
   pasajes: 35
 bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
-fecha_actualizacion: '2026-09-28'
+fecha_actualizacion: '2026-10-25'
+latex_estado: revisar
+latex_archivo: generacion/temarios/IEL04-semana11.tex
+latex_avisos:
+- una línea se sale del margen 41.1 pt (in paragraph at lines 274--274)
+- una línea se sale del margen 10.1 pt (in paragraph at lines 274--274)
+- una línea se sale del margen 12.6 pt (in paragraph at lines 274--274)
+- una línea se sale del margen 33.6 pt (in paragraph at lines 274--274)
+- una línea se sale del margen 14.2 pt (in paragraph at lines 740--740)
+- una línea se sale del margen 1.9 pt (in paragraph at lines 740--740)
+latex_temario_hash: 61d3a91769c32fb1
+latex_formato: 2
+latex_compilado: null
+bibliografia_via: juez
+bibliografia_justificacion: Impedancia del RLC en serie, LVK, resonancia en serie con factor de calidad y ancho de banda (Floyd §17–1 a §17–3 y §17–8, Boylestad cap. 20) y potencia (Boylestad cap. 19) están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
+bibliografia_faltantes: []
+bibliografia_fecha: '2026-10-25'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana11.tex
 presentacion_avisos: []
 presentacion_temario_hash: 61d3a91769c32fb1
-presentacion_fecha: '2026-09-28'
-presentacion_diseno: 5
-presentacion_diapositivas: 30
+presentacion_fecha: '2026-10-25'
+presentacion_diseno: 6
+presentacion_diapositivas: 35
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
-bibliografia_via: juez
-bibliografia_justificacion: Impedancia del RLC en serie, LVK, resonancia en serie con factor de calidad y ancho de banda (Floyd §17–1 a §17–3 y §17–8, Boylestad cap. 20) y potencia (Boylestad cap. 19) están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
-bibliografia_faltantes: []
-bibliografia_fecha: '2026-09-28'
+presentacion_elementos: 12
+presentacion_compilada: '2026-10-25'
 ---
 
 # El circuito RLC en serie: reactancias opuestas, ley de voltajes de Kirchhoff y resonancia en serie

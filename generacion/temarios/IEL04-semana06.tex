@@ -1,0 +1,623 @@
+% =====================================================================
+%  Temario generado por TEMARIO (src/temario.py + src/temario_latex.py), sin LLM,
+%  a partir de los mismos datos que el .md. Compilar con pdfLaTeX (dos pasadas).
+% =====================================================================
+\documentclass[11pt,letterpaper]{article}
+
+% ---------------------------------------------------------------------
+%  Codificacion, idioma y tipografia
+% ---------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot,es-noshorthands,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage[margin=2.3cm,headheight=14pt]{geometry}
+
+% ---------------------------------------------------------------------
+%  Matematicas y unidades del SI
+% ---------------------------------------------------------------------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={.}, per-mode=symbol}
+
+% ---------------------------------------------------------------------
+%  Tablas profesionales (sin lineas verticales) y flotantes
+% ---------------------------------------------------------------------
+\usepackage[table]{xcolor}
+\usepackage{booktabs,array,multirow,tabularx,xltabular}
+\usepackage{graphicx,float}
+\usepackage[font=small,labelfont={bf,color=iubnavy},labelsep=period]{caption}
+
+% ---------------------------------------------------------------------
+%  Listas, cajas, graficas, diagramas y codigo
+% ---------------------------------------------------------------------
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+% ---------------------------------------------------------------------
+%  Encabezados de pagina y enlaces (hyperref, siempre el ultimo)
+% ---------------------------------------------------------------------
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+% ---------------------------------------------------------------------
+%  Paleta institucional IUB (Manual de Identidad Visual 2025)
+% ---------------------------------------------------------------------
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\definecolor{iubpurple}{HTML}{8E6BBF}
+\definecolor{iubgris}{HTML}{D5DAE3}
+\definecolor{iubgrisoscuro}{HTML}{7C8598}
+\definecolor{iubfondoazul}{HTML}{EBF7FD}
+\definecolor{iubfondonaranja}{HTML}{FDF4EA}
+\definecolor{iubfondoverde}{HTML}{EDF8F2}
+\definecolor{iubfondogris}{HTML}{F4F6F9}
+
+% ---------------------------------------------------------------------
+%  Formato general
+% ---------------------------------------------------------------------
+\setcounter{secnumdepth}{3}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.25}
+\setlist{itemsep=0.15em,topsep=0.3em}
+\setlist[itemize]{label=\textcolor{iubblue}{\small$\blacktriangleright$}}
+
+% ---------------------------------------------------------------------
+%  Encabezado y pie de pagina
+% ---------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{iubnavy}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\textcolor{iubnavy}{\textbf{IUB}\quad IEL04 --- Circuitos Eléctricos I}}
+\fancyhead[R]{\small\textcolor{iubnavy}{Semana 6 de 14}}
+\fancyfoot[C]{\small\textcolor{iubnavy}{\thepage}}
+
+% ---------------------------------------------------------------------
+%  Codigo (listings: el codigo va transliterado a ASCII)
+% ---------------------------------------------------------------------
+\lstset{basicstyle=\ttfamily\small, breaklines=true, columns=fullflexible, keepspaces=true, frame=single,
+  rulecolor=\color{iubgris}, backgroundcolor=\color{iubfondogris}, numbers=left, numberstyle=\tiny\color{iubgrisoscuro},
+  keywordstyle=\color{iubblue}\bfseries, commentstyle=\color{iubgreen}\itshape, stringstyle=\color{iuborange},
+  showstringspaces=false, captionpos=t, aboveskip=0.8em, belowskip=0.8em}
+\renewcommand{\lstlistingname}{Listado}
+
+% ---------------------------------------------------------------------
+%  Cajas: cabecera, notas, alineacion con el RA y cita actitudinal
+% ---------------------------------------------------------------------
+\newtcolorbox{cabecera}{enhanced, colback=iubnavy, colframe=iubnavy, coltext=white, arc=2pt, boxrule=0pt,
+  left=12pt, right=12pt, top=10pt, bottom=10pt, borderline north={3pt}{0pt}{iubyellow}}
+\newtcolorbox{nota}[1]{enhanced, colback=iubfondonaranja, colframe=iuborange, arc=2pt, boxrule=0.6pt, leftrule=3pt,
+  fonttitle=\bfseries\small, coltitle=iuborange, colbacktitle=iubfondonaranja, title={#1}, attach title to upper={\ }}
+\newtcolorbox{alineacion}{enhanced, colback=iubfondoazul, colframe=iubblue, arc=2pt, boxrule=0.6pt, leftrule=3pt}
+\newtcolorbox{cita}{enhanced, colback=iubnavy, colframe=iubnavy, coltext=white, arc=2pt, boxrule=0pt, leftrule=4pt,
+  borderline west={4pt}{0pt}{iubyellow}, fontupper=\itshape}
+
+% ---------------------------------------------------------------------
+%  Estilos de los diagramas (TikZ) y de las graficas (pgfplots)
+% ---------------------------------------------------------------------
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+\pgfplotsset{iubejes/.style={width=0.95\linewidth, height=6.2cm, grid=major, grid style={iubgris}, axis lines*=left,
+  axis line style={iubnavy}, tick label style={font=\small}, label style={font=\small}, title style={font=\bfseries\small},
+  legend cell align=left, legend style={draw=none, fill=none, font=\small, anchor=north, legend columns=-1,
+  /tikz/every even column/.append style={column sep=8pt}}, unbounded coords=jump}}
+
+\hypersetup{pdftitle={El circuito RC en paralelo: admitancia, reparto de corrientes y ley de corrientes de Kirchhoff}, pdfauthor={Institución Universitaria de Barranquilla}}
+
+\begin{document}
+
+\begin{cabecera}
+{\color{iubyellow}\Large\bfseries El circuito RC en paralelo: admitancia, reparto de corrientes y ley de corrientes de Kirchhoff\par}
+\vspace{0.6em}
+\small
+\textbf{\color{iubyellow}Módulos:} IEL04 --- Circuitos Eléctricos I\par
+\textbf{\color{iubyellow}Duración:} 240 minutos (sesión teórico-práctica)\par
+\textbf{\color{iubyellow}Nivel:} Pregrado\par
+\textbf{\color{iubyellow}Semana:} 6 de 14 (corte evaluativo 2)\par
+\textbf{\color{iubyellow}Resultado de aprendizaje del módulo:} IEL04-RA2\par
+\textbf{\color{iubyellow}Trabajo independiente:} 5 h/semana\par
+\end{cabecera}
+
+\section{Metadatos de la Sesión}
+
+\subsection{Continuidad curricular}
+
+La semana 4 analizó el circuito RC en serie, donde el resistor y el condensador comparten la corriente y la ley de voltajes de Kirchhoff suma fasorialmente sus tensiones. Tras el examen de la semana 5, esta sesión estudia la configuración dual: el resistor y el condensador en paralelo, que comparten la tensión y se reparten la corriente. Aparecen la conductancia, la susceptancia y la admitancia, que simplifican el cálculo en paralelo, y la ley de corrientes de Kirchhoff aplicada a fasores. Se usan los mismos componentes del caso de la semana 4 para comparar directamente ambos circuitos. La semana 7 cierra el RA2 con el cálculo y la medición de parámetros en circuitos RC en serie y en paralelo.
+
+\begin{enumerate}
+  \item Semana 5: evaluación (semana de examen)
+  \item \textbf{Presente sesión (semana 6):} Circuito RC en paralelo: análisis y Ley de Corrientes de Kirchhoff
+  \item Semana 7: Cálculo y medición de parámetros en circuitos RC serie y paralelo: unidades, simbología y nomenclatura
+\end{enumerate}
+
+\subsection{Prerrequisitos}
+
+\begin{itemize}
+  \item Calcular la reactancia capacitiva, la impedancia y el ángulo de fase de un RC en serie (semana 4).
+  \item Aplicar la ley de corrientes de Kirchhoff y el divisor de corriente en circuitos resistivos en paralelo.
+  \item Sumar fasores en forma rectangular y convertirlos a forma polar.
+  \item Identificar resistores por su código de colores y condensadores por su marcado (semanas 1 y 4).
+  \item Medir corriente alterna con un multímetro de verdadero valor eficaz.
+\end{itemize}
+
+\section{Resultados de Aprendizaje}
+
+\begin{alineacion}
+\textbf{RA IEL04-RA2:} Calcular un circuito resistivo, capacitivo y RC, sea en serie o paralelo.
+
+\textbf{Criterios de evaluación:}
+
+\begin{itemize}
+  \item \textbf{CE1} (cognitiva\_conceptual): Identificar los tipos de resistores y capacitores.
+  \item \textbf{CE2} (manipulacion\_fisica): Realizar mediciones en un circuito resistivo y capacitivo.
+  \item \textbf{CE3} (manipulacion\_fisica): Realizar mediciones en un circuito RC.
+\end{itemize}
+
+\textbf{Unidades de competencia de la asignatura:}
+
+\begin{itemize}
+  \item UC2: Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.
+\end{itemize}
+\end{alineacion}
+
+Al finalizar la sesión, el estudiante estará en capacidad de lograr los siguientes resultados, que desarrollan el RA del módulo:
+
+\begin{xltabular}{\linewidth}{>{\raggedright\arraybackslash}p{1.1cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.9cm}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Resultado de aprendizaje}} & \textcolor{white}{\textbf{Nivel (Taxonomía de Bloom)}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Resultado de aprendizaje}} & \textcolor{white}{\textbf{Nivel (Taxonomía de Bloom)}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  RA1 & \textbf{Identificar} el resistor y el condensador de un RC en paralelo y verificar sus valores antes del montaje. (CE1) & Aplicar \\
+  \rowcolor{iubfondogris} RA2 & \textbf{Calcular} la impedancia, la admitancia y el ángulo de fase de un circuito RC en paralelo a una frecuencia dada. (CE3) & Aplicar \\
+  RA3 & \textbf{Analizar} el reparto de corrientes de un circuito RC en paralelo aplicando la ley de corrientes de Kirchhoff con fasores. (CE3) & Analizar \\
+  \rowcolor{iubfondogris} RA4 & \textbf{Medir} las corrientes de rama y la corriente total de un RC en paralelo y verificar la ley de corrientes de Kirchhoff. (CE2, CE3) & Evaluar \\
+\end{xltabular}
+
+\section{Índice Temporizado (240 minutos)}
+
+\begin{xltabular}{\linewidth}{>{\raggedright\arraybackslash}p{1.4cm}>{\raggedright\arraybackslash}X>{\raggedleft\arraybackslash}p{2.2cm}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bloque}} & \textcolor{white}{\textbf{Contenido}} & \textcolor{white}{\textbf{Duración}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bloque}} & \textcolor{white}{\textbf{Contenido}} & \textcolor{white}{\textbf{Duración}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  1 & Qué cambia al conectar R y C en paralelo: tensión común y corrientes que se reparten & 20 min \\
+  \rowcolor{iubfondogris} 2 & Z = R\textperiodcentered{}XC/\ensuremath{\surd}(R\texttwosuperior{} + XC\texttwosuperior{}), ángulo de fase y variación con la frecuencia & 35 min \\
+  3 & G = 1/R, BC = 1/XC, Y = G + jBC y conversión a impedancia & 35 min \\
+  \rowcolor{iubfondogris} 4 & IT = IR + jIC, suma fasorial de corrientes y adelanto de la corriente total & 35 min \\
+  5 & Resistencias de descarga, constante de tiempo y seguridad en fuentes y bancos & 25 min \\
+  \rowcolor{iubfondogris} 6 & Magnitud común, ley de Kirchhoff, fórmulas y comportamiento en frecuencia & 25 min \\
+  7 & Medir IR, IC e IT a 1 kHz con los componentes de la semana 4 y comparar con el cálculo & 45 min \\
+  \rowcolor{iubfondogris} 8 & Síntesis, cierre actitudinal y bibliografía & 20 min \\
+  \midrule
+  \rowcolor{iubfondogris}  & \textbf{Total} & \textbf{240 min} \\
+\end{xltabular}
+
+\section{Desarrollo Teórico}
+
+\subsection{Introducción Conceptual (Bloque 1)}
+
+En la semana 4, el resistor y el condensador estaban en serie: compartían la corriente y se repartían la tensión de la fuente. Basta cambiar la conexión para que la situación se invierta. En un circuito RC en \textbf{paralelo}, la tensión aplicada aparece a la vez en la rama resistiva y en la capacitiva, de modo que la tensión de la fuente, la del resistor y la del condensador están en fase y tienen la misma magnitud [1]. Lo que se reparte ahora es la corriente: en el nodo de unión, la corriente total se divide en dos corrientes de rama, una por el resistor y otra por el condensador [1].
+
+Esta configuración es tan frecuente como la serie. Un condensador en paralelo con una carga resistiva es el filtro básico de una fuente de alimentación; los bancos de condensadores que corrigen el factor de potencia se conectan en paralelo con los motores de una planta; y todo condensador real se comporta como una capacitancia ideal en paralelo con la resistencia de fuga de su dieléctrico. Entender cómo se reparte la corriente entre una rama resistiva y una capacitiva es, por tanto, entender una buena parte de los circuitos que el técnico encontrará en su trabajo.
+
+% --- Figura 1: Relaciones de fase en el circuito RC en paralelo: la tensión común da lugar a dos corrien… (diagrama en TikZ con la disposición del PNG) ---
+\begin{figure}[H]
+  \centering
+  \begin{adjustbox}{max width=\linewidth}
+  \begin{tikzpicture}[x=1in, y=1in, font=\small]
+    % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+    \node[dterminal, minimum width=2.028in, minimum height=0.470in] (n0) at (2.071,-0.235) {Tensión común VS};  % v
+    \node[dcaja, minimum width=1.921in, minimum height=0.470in] (n1) at (0.961,-1.360) {IR en fase con VS};  % ir
+    \node[dcaja, minimum width=1.921in, minimum height=0.680in] (n2) at (3.182,-1.360) {IC adelanta 90\textdegree{} a \\ VS};  % ic
+    \node[destado, minimum width=2.014in, minimum height=0.680in] (n3) at (2.071,-2.590) {LCK fasorial: IT = \\ IR + IC};  % k
+    \node[dterminal, minimum width=1.842in, minimum height=0.680in] (n4) at (5.813,-2.590) {IT adelanta un \\ ángulo \ensuremath{\theta}};  % t
+    % flechas (las de retorno, curvas)
+    \draw[dflecha] (n0) -- (n1);
+    \draw[dflecha] (n0) -- (n2);
+    \draw[dflecha] (n1) -- (n3);
+    \draw[dflecha] (n2) -- (n3);
+    \draw[dflecha] (n3) -- (n4);
+    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    \node[drotulo] at (1.516,-0.797) {rama R};
+    \node[drotulo] at (2.626,-0.797) {rama C};
+  \end{tikzpicture}
+  \end{adjustbox}
+  \caption{Relaciones de fase en el circuito RC en paralelo: la tensión común da lugar a dos corrientes desfasadas que se suman fasorialmente}
+\end{figure}
+
+El diagrama resume el razonamiento de la sesión. La corriente por el resistor está en fase con la tensión; la corriente por el condensador adelanta 90\textdegree{} a la tensión, y por tanto a la corriente resistiva [1]. Según la ley de corrientes de Kirchhoff, la corriente total es la suma fasorial de las dos corrientes de rama [1], y queda adelantada a la tensión un ángulo intermedio entre 0\textdegree{} y 90\textdegree{}. Es la misma idea de la semana 4 con los papeles cambiados: allí se sumaban fasorialmente tensiones, aquí corrientes.
+
+Para calcular circuitos en paralelo con comodidad se introducen tres magnitudes nuevas ---conductancia, susceptancia y admitancia---, que son las recíprocas de la resistencia, la reactancia y la impedancia. Con ellas, las fórmulas del paralelo se escriben con la misma estructura que las del serie. La sesión desarrolla primero la impedancia del paralelo, luego la admitancia, la ley de corrientes de Kirchhoff y la descarga de un condensador a través de un resistor en paralelo, compara ambos circuitos y termina con la medición de las corrientes en el laboratorio, con el mismo resistor y el mismo condensador de la semana 4.
+
+\begin{nota}{Nota pedagógica:}
+Al usar los mismos componentes de la semana 4 (1.5 k\ensuremath{\Omega} y el condensador de 97.8 nF), cualquier diferencia entre los resultados de ambas sesiones se debe solo a la forma de conexión, lo que hace la comparación mucho más instructiva.
+\end{nota}
+
+\subsection{Conceptos Clave}
+
+\subsubsection{Impedancia y ángulo de fase del circuito RC en paralelo (Bloque 2)}
+
+La impedancia total de un resistor y un condensador en paralelo se obtiene con la misma regla que dos resistencias en paralelo, el producto dividido entre la suma, pero con fasores. Si $\mathbf{Z}_R = R \angle 0^\circ$ y $\mathbf{Z}_C = X_C \angle -90^\circ$, entonces $\mathbf{Z} = (R \angle 0^\circ)(X_C \angle -90^\circ) / (R - jX_C)$. El numerador vale $R X_C \angle -90^\circ$ y el denominador, en forma polar, $\sqrt{R^2 + X_C^2} \angle -\tan^{-1}(X_C/R)$. Al dividir magnitudes y restar ángulos se llega a la expresión de la impedancia del RC en paralelo [1]:
+
+\begin{equation}
+  Z = \frac{R\,X_C}{\sqrt{R^{2} + X_C^{2}}}, \qquad \theta = -\tan^{-1}\!\left(\frac{R}{X_C}\right)
+\end{equation}
+
+donde $Z$ es la magnitud de la impedancia en ohmios (\ensuremath{\Omega}), $R$ la resistencia en ohmios (\ensuremath{\Omega}), $X_C$ la reactancia capacitiva en ohmios (\ensuremath{\Omega}) y $\theta$ el ángulo de fase de la impedancia en grados (\textdegree{}). Obsérvese la diferencia con el circuito en serie: allí el ángulo era $-\tan^{-1}(X_C/R)$; en paralelo, el cociente se invierte y queda $R/X_C$. La razón es que en paralelo domina la rama que menos se opone: si $X_C$ es mucho menor que $R$, casi toda la corriente pasa por el condensador y el circuito se comporta como capacitivo.
+
+Dos ejemplos de Floyd fijan los órdenes de magnitud. Con $R = 100\ \Omega$ y $X_C = 50\ \Omega$ en paralelo, $Z = (100)(50)/\sqrt{100^2 + 50^2} \approx 44.7\ \Omega$ y $\theta \approx -63.4^\circ$; con $R = 1\ \text{k}\Omega$ y $X_C = 2\ \text{k}\Omega$, $Z \approx 894\ \Omega$ y $\theta \approx -26.6^\circ$ [1]. En ambos casos la impedancia es menor que la menor de las dos oposiciones, igual que la resistencia equivalente de dos resistores en paralelo es menor que el menor de ellos.
+
+La dependencia con la frecuencia es la contraria a la del circuito en serie. A frecuencias bajas, la reactancia es muy grande, la rama capacitiva casi no conduce y la impedancia se acerca a $R$, con un ángulo cercano a 0\textdegree{}: el circuito es casi resistivo. A frecuencias altas, la reactancia se hace pequeña, el condensador \guillemotleft{}cortocircuita\guillemotright{} al resistor y la impedancia tiende a $X_C$, con un ángulo que se acerca a \ensuremath{-}90\textdegree{}. En la frecuencia en la que $X_C = R$, el ángulo vale \ensuremath{-}45\textdegree{} y $Z = R/\sqrt{2}$. La tabla lo muestra con los componentes del caso de la semana 4, $R = 1.5\ \text{k}\Omega$ y $C = 0.1\ \mu\text{F}$.
+
+% --- Tabla 1: Impedancia y ángulo de fase de un RC en paralelo (R = 1.5 kΩ, C = 0.1 µF) en función de l… (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=0.87\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.87\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.761\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.761\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.738\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Impedancia y ángulo de fase de un RC en paralelo (R = 1.5 k\ensuremath{\Omega}, C = 0.1 \textmu{}F) en función de la frecuencia} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{XC (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Z (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{\ensuremath{\theta} (\textdegree{})}} & \textcolor{white}{\textbf{Comportamiento}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{XC (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Z (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{\ensuremath{\theta} (\textdegree{})}} & \textcolor{white}{\textbf{Comportamiento}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  200 & 7958 & 1474 & \ensuremath{-}10.7 & casi resistivo \\
+  \rowcolor{iubfondogris} 500 & 3183 & 1357 & \ensuremath{-}25.2 & predomina R \\
+  1000 & 1592 & 1092 & \ensuremath{-}43.3 & equilibrado \\
+  \rowcolor{iubfondogris} 1061 & 1500 & 1061 & \ensuremath{-}45.0 & XC = R \\
+  2000 & 796 & 703 & \ensuremath{-}62.1 & predomina C \\
+  \rowcolor{iubfondogris} 10 000 & 159 & 158 & \ensuremath{-}83.9 & casi capacitivo \\
+\end{xltabular}
+
+Si se compara esta tabla con la de la semana 4, a cada frecuencia los ángulos del serie y del paralelo son complementarios: a 1 kHz, \ensuremath{-}46.7\textdegree{} en serie y \ensuremath{-}43.3\textdegree{} en paralelo, que suman \ensuremath{-}90\textdegree{}. Y la magnitud se comporta al revés: en serie la impedancia nunca baja de $R$, mientras que en paralelo nunca la supera. Esa diferencia decide qué conexión conviene en cada aplicación: un filtro que debe dejar pasar la cd y derivar a tierra las frecuencias altas usa el condensador en paralelo con la carga. En cambio, un circuito que debe bloquear la cd y dejar pasar la señal coloca el condensador en serie.
+
+\begin{nota}{Error frecuente:}
+Aplicar a la impedancia en paralelo la fórmula del producto sobre la suma con números reales, $R X_C / (R + X_C)$. Con los valores del caso a 1 kHz daría 772 \ensuremath{\Omega} en lugar de 1092 \ensuremath{\Omega}: la suma del denominador debe ser fasorial, $\sqrt{R^2 + X_C^2}$.
+\end{nota}
+
+\subsubsection{Conductancia, susceptancia capacitiva y admitancia (Bloque 3)}
+
+En los circuitos en paralelo, las oposiciones se combinan con recíprocos, y las fórmulas se vuelven engorrosas. La solución es trabajar directamente con los recíprocos. La \textbf{conductancia} $G$ es el recíproco de la resistencia; la \textbf{susceptancia capacitiva} $B_C$ es el recíproco de la reactancia capacitiva; y la \textbf{admitancia} $Y$ es el recíproco de la impedancia [1]. Las tres se miden en siemens (S), el recíproco del ohmio [1]. Como fasores, la conductancia está a 0\textdegree{} y la susceptancia capacitiva a +90\textdegree{}, porque invertir un fasor a \ensuremath{-}90\textdegree{} da uno a +90\textdegree{}: $\mathbf{B}_C = 1/(X_C \angle -90^\circ) = B_C \angle 90^\circ = +jB_C$ [1].
+
+\begin{equation}
+  G = \frac{1}{R}, \qquad B_C = \frac{1}{X_C} = 2\pi f C, \qquad \mathbf{Y} = G + jB_C = \sqrt{G^{2} + B_C^{2}}\ \angle \tan^{-1}\!\left(\frac{B_C}{G}\right)
+\end{equation}
+
+donde $G$ es la conductancia en siemens (S), $R$ la resistencia en ohmios (\ensuremath{\Omega}), $B_C$ la susceptancia capacitiva en siemens (S), $X_C$ la reactancia capacitiva en ohmios (\ensuremath{\Omega}), $f$ la frecuencia en hercios (Hz), $C$ la capacitancia en faradios (F) e $\mathbf{Y}$ la admitancia total en siemens (S). En un circuito RC en paralelo, la admitancia total es simplemente la suma fasorial de la conductancia y la susceptancia capacitiva [1]: la misma estructura que la impedancia de un circuito en serie, $\mathbf{Z} = R - jX_C$. Esa es la ventaja de las magnitudes recíprocas: \textbf{en paralelo se suman admitancias, igual que en serie se suman impedancias}.
+
+Una vez obtenida la admitancia, la impedancia es su recíproca, $\mathbf{Z} = 1/\mathbf{Y}$, y la ley de Ohm puede escribirse directamente con admitancias: $\mathbf{I} = \mathbf{V}\mathbf{Y}$, $\mathbf{V} = \mathbf{I}/\mathbf{Y}$ e $\mathbf{Y} = \mathbf{I}/\mathbf{V}$ [1]. El diagrama muestra el procedimiento de cálculo completo.
+
+% --- Figura 2: Procedimiento de cálculo de un circuito RC en paralelo con admitancias (diagrama en TikZ con la disposición del PNG) ---
+\begin{figure}[H]
+  \centering
+  \begin{adjustbox}{max width=\linewidth}
+  \begin{tikzpicture}[x=1in, y=1in, font=\small]
+    % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+    \node[dterminal, minimum width=1.749in, minimum height=0.470in] (n0) at (1.014,-0.235) {Resistencia R};  % r
+    \node[dterminal, minimum width=2.028in, minimum height=0.680in] (n1) at (1.014,-1.110) {Capacitancia C y \\ frecuencia f};  % c
+    \node[dcaja, minimum width=0.991in, minimum height=0.470in] (n2) at (3.237,-0.340) {G = 1/R};  % g
+    \node[dcaja, minimum width=1.177in, minimum height=0.470in] (n3) at (3.237,-1.110) {BC = 2\ensuremath{\pi}fC};  % b
+    \node[destado, minimum width=1.363in, minimum height=0.470in] (n4) at (5.413,-0.725) {Y = G + jBC};  % y
+    \node[dterminal, minimum width=1.935in, minimum height=0.470in] (n5) at (5.413,-2.235) {Z = 1/Y, I = VY};  % z
+    % flechas (las de retorno, curvas)
+    \draw[dflecha] (n0) -- (n2);
+    \draw[dflecha] (n1) -- (n3);
+    \draw[dflecha] (n2) -- (n4);
+    \draw[dflecha] (n3) -- (n4);
+    \draw[dflecha] (n4) -- (n5);
+    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    \node[drotulo] at (4.325,-0.532) {0\textdegree{}};
+    \node[drotulo] at (4.325,-0.917) {+90\textdegree{}};
+  \end{tikzpicture}
+  \end{adjustbox}
+  \caption{Procedimiento de cálculo de un circuito RC en paralelo con admitancias}
+\end{figure}
+
+Un ejemplo de Floyd aplica el procedimiento: con $R = 330\ \Omega$, $G = 3.03\ \text{mS}$; con la reactancia del condensador a la frecuencia dada, $B_C = 1.38\ \text{mS}$; la admitancia total es $\mathbf{Y} = 3.33 \angle 24.5^\circ\ \text{mS}$ y la impedancia, $\mathbf{Z} = 1/\mathbf{Y} = 300 \angle -24.5^\circ\ \Omega$ [1]. Con los componentes del caso a 1 kHz: $G = 1/1500 = 0.667\ \text{mS}$, $B_C = 2\pi(1000)(0.1 \times 10^{-6}) = 0.628\ \text{mS}$, $Y = \sqrt{0.667^2 + 0.628^2} \approx 0.916\ \text{mS}$ con un ángulo de $\tan^{-1}(0.628/0.667) \approx 43.3^\circ$, y $Z = 1/(0.916 \times 10^{-3}) \approx 1092\ \Omega \angle -43.3^\circ$, el mismo resultado que dio la fórmula de la impedancia en paralelo.
+
+La susceptancia capacitiva tiene una ventaja práctica: $B_C = 2\pi f C$ es \textbf{directamente proporcional} a la frecuencia y a la capacitancia, sin fracciones. Duplicar la frecuencia duplica la susceptancia y, con ella, la corriente de la rama capacitiva. El signo del ángulo de la admitancia es positivo, lo que indica que la corriente total adelanta a la tensión; el de la impedancia, negativo, dice lo mismo desde el punto de vista de la tensión. Ambos describen el mismo circuito capacitivo.
+
+Las admitancias también simplifican los circuitos con más de dos ramas. Si en paralelo con el resistor y el condensador se conecta un segundo condensador, su susceptancia se suma a la del primero; si se conecta un segundo resistor, su conductancia se suma a la del primero. Por ejemplo, con dos resistores de 1.5 k\ensuremath{\Omega} y el mismo condensador a 1 kHz, $G = 1.333\ \text{mS}$, $B_C = 0.628\ \text{mS}$ y $Y = \sqrt{1.333^2 + 0.628^2} \approx 1.474\ \text{mS}$: la impedancia baja a unos 678 \ensuremath{\Omega} y el ángulo a 25.2\textdegree{}, porque la parte resistiva pesa ahora el doble. Con impedancias habría que encadenar varias divisiones de producto sobre suma.
+
+\begin{nota}{Error frecuente:}
+Olvidar invertir el resultado final: la admitancia de 0.916 mS no es la impedancia. Un resultado de \guillemotleft{}0.916 \ensuremath{\Omega}\guillemotright{} para un circuito con un resistor de 1.5 k\ensuremath{\Omega} es una señal clara de que falta el paso $Z = 1/Y$.
+\end{nota}
+
+\subsubsection{Ley de corrientes de Kirchhoff en el circuito RC en paralelo (Bloque 4)}
+
+La ley de corrientes de Kirchhoff establece que la suma de las corrientes que entran en un nodo es igual a la suma de las que salen. En el circuito RC en paralelo, la corriente total que entrega la fuente se divide en el nodo en la corriente del resistor y la del condensador. Como la tensión es común, cada corriente de rama se obtiene con la ley de Ohm aplicada a su rama: $I_R = V_S/R = V_S G$ e $I_C = V_S/X_C = V_S B_C$. La corriente del resistor está en fase con la tensión, y la del condensador adelanta 90\textdegree{} a la tensión y, por tanto, a la corriente resistiva [1]. Por la ley de corrientes de Kirchhoff, la corriente total es la \textbf{suma fasorial} de las dos corrientes de rama [1]:
+
+\begin{equation}
+  \mathbf{I}_T = \mathbf{I}_R + \mathbf{I}_C = I_R + jI_C, \qquad I_T = \sqrt{I_R^{2} + I_C^{2}}, \qquad \theta = \tan^{-1}\!\left(\frac{I_C}{I_R}\right)
+\end{equation}
+
+donde $\mathbf{I}_T$, $\mathbf{I}_R$ e $\mathbf{I}_C$ son los fasores de la corriente total, la del resistor y la del condensador en amperios (A), $I_T$, $I_R$ e $I_C$ sus magnitudes eficaces en amperios (A), y $\theta$ el ángulo en grados (\textdegree{}) con que la corriente total adelanta a la tensión aplicada. El triángulo de corrientes es semejante al de admitancias, porque cada corriente es la tensión común multiplicada por la admitancia correspondiente.
+
+En un ejemplo de Floyd, una fuente de 10 V a 1.5 kHz alimenta un resistor de 2.2 k\ensuremath{\Omega} en paralelo con un condensador cuya reactancia es de 4.82 k\ensuremath{\Omega}; la admitancia total resulta $500 \angle 24.5^\circ\ \mu\text{S}$ y la corriente total $\mathbf{I}_T = (10 \angle 0^\circ\ \text{V})(500 \angle 24.5^\circ\ \mu\text{S}) = 5.00 \angle 24.5^\circ\ \text{mA}$, que adelanta 24.5\textdegree{} a la tensión aplicada [1]. Con los componentes del caso ($R = 1.5\ \text{k}\Omega$, $C = 0.1\ \mu\text{F}$) y 5 V eficaces a 1 kHz: $I_R = 5/1500 \approx 3.33\ \text{mA}$, $I_C = 5 \times 0.628 \times 10^{-3} \approx 3.14\ \text{mA}$, $I_T = \sqrt{3.33^2 + 3.14^2} \approx 4.58\ \text{mA}$ y $\theta = \tan^{-1}(3.14/3.33) \approx 43.3^\circ$. La suma aritmética de las corrientes de rama daría 6.47 mA, un 41 \% más que la corriente real, por la misma razón que en la semana 4 no sumaban las tensiones: las dos corrientes alcanzan su máximo en instantes distintos.
+
+La corriente del resistor no depende de la frecuencia; la del condensador crece en proporción a ella, porque $B_C = 2\pi f C$. Por eso, al subir la frecuencia, la corriente total aumenta y el ángulo se acerca a 90\textdegree{}. La gráfica muestra la corriente del condensador y la total para una tensión de 5 V; la del resistor, constante, aparece como línea horizontal.
+
+% --- Figura 3: Corrientes de rama y corriente total de un RC en paralelo (R = 1.5 kΩ, C = 0.1 µF, VS = 5… (gráfica en pgfplots con los puntos de su especificación) ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        iubejes,
+        xlabel={Frecuencia f (Hz)},
+        ylabel={Corriente eficaz (mA)},
+        title={Corrientes en un RC en paralelo},
+        legend style={at={(0.5,-0.30)}},
+        xmode=log,
+        xmin=100,
+        xmax=5000]
+      % serie 1: IC («1000*V*2*pi*f*C» en 300 puntos)
+      \addplot[color=iubblue, line width=1.4pt, no markers] coordinates {
+        (100,0.314159) (101.317,0.318297) (102.651,0.322488) (104.003,0.326736) (105.373,0.331039) (106.761,0.335398)
+        (108.167,0.339815) (109.591,0.344291) (111.034,0.348825) (112.497,0.353419) (113.978,0.358073) (115.479,0.362789)
+        (117,0.367567) (118.541,0.372407) (120.102,0.377312) (121.684,0.382281) (123.286,0.387315) (124.91,0.392416)
+        (126.555,0.397584) (128.222,0.40282) (129.91,0.408125) (131.621,0.4135) (133.355,0.418946) (135.111,0.424463)
+        (136.89,0.430053) (138.693,0.435717) (140.519,0.441455) (142.37,0.447269) (144.245,0.453159) (146.145,0.459127)
+        (148.069,0.465174) (150.019,0.4713) (151.995,0.477507) (153.997,0.483795) (156.025,0.490167) (158.08,0.496622)
+        (160.162,0.503162) (162.271,0.509789) (164.408,0.516503) (166.573,0.523305) (168.767,0.530196) (170.989,0.537179)
+        (173.241,0.544253) (175.523,0.551421) (177.834,0.558683) (180.176,0.566041) (182.549,0.573495) (184.953,0.581048)
+        (187.389,0.5887) (189.857,0.596453) (192.357,0.604308) (194.891,0.612267) (197.457,0.62033) (200.058,0.6285)
+        (202.692,0.636777) (205.362,0.645163) (208.066,0.65366) (210.806,0.662268) (213.583,0.67099) (216.396,0.679827)
+        (219.245,0.68878) (222.133,0.697851) (225.058,0.707041) (228.022,0.716353) (231.025,0.725787) (234.068,0.735345)
+        (237.15,0.745029) (240.273,0.754841) (243.438,0.764782) (246.644,0.774854) (249.892,0.785059) (253.183,0.795397)
+        (256.517,0.805873) (259.895,0.816486) (263.318,0.827239) (266.786,0.838133) (270.299,0.849171) (273.859,0.860354)
+        (277.466,0.871685) (281.12,0.883165) (284.822,0.894795) (288.573,0.90658) (292.374,0.918519) (296.224,0.930616)
+        (300.125,0.942871) (304.078,0.955289) (308.082,0.96787) (312.14,0.980616) (316.251,0.99353) (320.415,1.00661)
+        (324.635,1.01987) (328.911,1.0333) (333.242,1.04691) (337.631,1.0607) (342.077,1.07467) (346.582,1.08882)
+        (351.147,1.10316) (355.771,1.11769) (360.457,1.13241) (365.204,1.14732) (370.013,1.16243) (374.886,1.17774)
+        (379.823,1.19325) (384.826,1.20897) (389.894,1.22489) (395.028,1.24102) (400.231,1.25736) (405.502,1.27392)
+        (410.842,1.2907) (416.253,1.3077) (421.735,1.32492) (427.289,1.34237) (432.916,1.36005) (438.617,1.37796)
+        (444.394,1.3961) (450.246,1.41449) (456.176,1.43312) (462.183,1.45199) (468.27,1.47111) (474.437,1.49049)
+        (480.685,1.51012) (487.016,1.53001) (493.43,1.55015) (499.928,1.57057) (506.512,1.59125) (513.182,1.61221)
+        (519.941,1.63344) (526.788,1.65495) (533.726,1.67675) (540.755,1.69883) (547.876,1.7212) (555.092,1.74387)
+        (562.402,1.76684) (569.809,1.79011) (577.313,1.81368) (584.916,1.83757) (592.619,1.86177) (600.424,1.88629)
+        (608.331,1.91113) (616.343,1.9363) (624.46,1.9618) (632.684,1.98763) (641.016,2.01381) (649.458,2.04033)
+        (658.011,2.0672) (666.677,2.09443) (675.457,2.12201) (684.352,2.14996) (693.365,2.17827) (702.496,2.20696)
+        (711.748,2.23602) (721.121,2.26547) (730.618,2.2953) (740.24,2.32553) (749.989,2.35616) (759.866,2.38719)
+        (769.873,2.41863) (780.012,2.45048) (790.285,2.48275) (800.692,2.51545) (811.237,2.54858) (821.921,2.58214)
+        (832.745,2.61615) (843.712,2.6506) (854.824,2.68551) (866.081,2.72087) (877.487,2.75671) (889.044,2.79301)
+        (900.752,2.8298) (912.615,2.86706) (924.633,2.90482) (936.81,2.94308) (949.148,2.98184) (961.648,3.02111)
+        (974.312,3.06089) (987.144,3.1012) (1000.14,3.14205) (1013.32,3.18343) (1026.66,3.22535) (1040.18,3.26783)
+        (1053.88,3.31086) (1067.76,3.35447) (1081.82,3.39864) (1096.07,3.4434) (1110.5,3.48875) (1125.13,3.5347)
+        (1139.95,3.58125) (1154.96,3.62841) (1170.17,3.6762) (1185.58,3.72461) (1201.19,3.77366) (1217.01,3.82336)
+        (1233.04,3.87371) (1249.28,3.92473) (1265.73,3.97641) (1282.4,4.02878) (1299.29,4.08184) (1316.4,4.1356)
+        (1333.74,4.19006) (1351.3,4.24524) (1369.1,4.30115) (1387.13,4.3578) (1405.4,4.41519) (1423.91,4.47333)
+        (1442.66,4.53224) (1461.66,4.59193) (1480.91,4.65241) (1500.41,4.71368) (1520.17,4.77576) (1540.19,4.83865)
+        (1560.47,4.90237) (1581.02,4.96694) (1601.85,5.03235) (1622.94,5.09862) (1644.32,5.16577) (1665.97,5.2338)
+        (1687.91,5.30273) (1710.14,5.37256) (1732.66,5.44332) (1755.48,5.51501) (1778.6,5.58764) (1802.02,5.66122)
+        (1825.76,5.73578) (1849.8,5.81132) (1874.16,5.88785) (1898.84,5.96539) (1923.85,6.04395) (1949.19,6.12355)
+        (1974.86,6.2042) (2000.87,6.2859) (2027.22,6.36869) (2053.91,6.45256) (2080.96,6.53754) (2108.37,6.62364)
+        (2136.14,6.71087) (2164.27,6.79925) (2192.77,6.88879) (2221.65,6.97951) (2250.91,7.07143) (2280.55,7.16456)
+        (2310.58,7.25891) (2341.01,7.35451) (2371.84,7.45137) (2403.08,7.5495) (2434.73,7.64892) (2466.79,7.74966)
+        (2499.28,7.85172) (2532.19,7.95512) (2565.54,8.05989) (2599.33,8.16603) (2633.56,8.27358) (2668.24,8.38254)
+        (2703.38,8.49293) (2738.99,8.60478) (2775.06,8.7181) (2811.61,8.83292) (2848.63,8.94925) (2886.15,9.0671)
+        (2924.16,9.18651) (2962.67,9.3075) (3001.69,9.43007) (3041.22,9.55426) (3081.27,9.68009) (3121.85,9.80757)
+        (3162.96,9.93674) (3204.62,10.0676) (3246.82,10.2002) (3289.58,10.3345) (3332.9,10.4706) (3376.8,10.6085)
+        (3421.27,10.7482) (3466.32,10.8898) (3511.97,11.0332) (3558.23,11.1785) (3605.09,11.3257) (3652.56,11.4749)
+        (3700.67,11.626) (3749.4,11.7791) (3798.78,11.9342) (3848.81,12.0914) (3899.5,12.2506) (3950.85,12.412)
+        (4002.88,12.5754) (4055.6,12.741) (4109.01,12.9088) (4163.13,13.0788) (4217.95,13.2511) (4273.5,13.4256)
+        (4329.78,13.6024) (4386.8,13.7816) (4444.58,13.9631) (4503.11,14.1469) (4562.42,14.3332) (4622.5,14.522)
+        (4683.38,14.7133) (4745.06,14.907) (4807.55,15.1034) (4870.86,15.3023) (4935.01,15.5038) (5000,15.708)
+      };
+      \addlegendentry{IC}
+      % serie 2: IT («1000*V*sqrt((1/R) 2 + (2*pi*f*C) 2)» en 300 puntos)
+      \addplot[color=iuborange, line width=1.4pt, no markers] coordinates {
+        (100,3.34811) (101.317,3.3485) (102.651,3.3489) (104.003,3.34931) (105.373,3.34973) (106.761,3.35016)
+        (108.167,3.35061) (109.591,3.35107) (111.034,3.35154) (112.497,3.35202) (113.978,3.35251) (115.479,3.35302)
+        (117,3.35354) (118.541,3.35407) (120.102,3.35462) (121.684,3.35518) (123.286,3.35576) (124.91,3.35635)
+        (126.555,3.35696) (128.222,3.35758) (129.91,3.35823) (131.621,3.35888) (133.355,3.35956) (135.111,3.36025)
+        (136.89,3.36096) (138.693,3.36169) (140.519,3.36244) (142.37,3.36321) (144.245,3.364) (146.145,3.3648)
+        (148.069,3.36563) (150.019,3.36649) (151.995,3.36736) (153.997,3.36826) (156.025,3.36918) (158.08,3.37013)
+        (160.162,3.3711) (162.271,3.37209) (164.408,3.37311) (166.573,3.37416) (168.767,3.37524) (170.989,3.37634)
+        (173.241,3.37747) (175.523,3.37864) (177.834,3.37983) (180.176,3.38105) (182.549,3.38231) (184.953,3.3836)
+        (187.389,3.38492) (189.857,3.38628) (192.357,3.38767) (194.891,3.3891) (197.457,3.39056) (200.058,3.39207)
+        (202.692,3.39361) (205.362,3.39519) (208.066,3.39682) (210.806,3.39849) (213.583,3.4002) (216.396,3.40195)
+        (219.245,3.40375) (222.133,3.4056) (225.058,3.40749) (228.022,3.40944) (231.025,3.41143) (234.068,3.41348)
+        (237.15,3.41558) (240.273,3.41773) (243.438,3.41994) (246.644,3.42221) (249.892,3.42453) (253.183,3.42692)
+        (256.517,3.42936) (259.895,3.43187) (263.318,3.43445) (266.786,3.43709) (270.299,3.4398) (273.859,3.44257)
+        (277.466,3.44542) (281.12,3.44835) (284.822,3.45134) (288.573,3.45442) (292.374,3.45757) (296.224,3.4608)
+        (300.125,3.46412) (304.078,3.46752) (308.082,3.47101) (312.14,3.47458) (316.251,3.47825) (320.415,3.48201)
+        (324.635,3.48586) (328.911,3.48982) (333.242,3.49387) (337.631,3.49803) (342.077,3.50229) (346.582,3.50666)
+        (351.147,3.51114) (355.771,3.51573) (360.457,3.52043) (365.204,3.52526) (370.013,3.53021) (374.886,3.53528)
+        (379.823,3.54047) (384.826,3.5458) (389.894,3.55126) (395.028,3.55686) (400.231,3.56259) (405.502,3.56847)
+        (410.842,3.57449) (416.253,3.58067) (421.735,3.58699) (427.289,3.59347) (432.916,3.60012) (438.617,3.60692)
+        (444.394,3.61389) (450.246,3.62103) (456.176,3.62835) (462.183,3.63585) (468.27,3.64353) (474.437,3.65139)
+        (480.685,3.65945) (487.016,3.6677) (493.43,3.67615) (499.928,3.68481) (506.512,3.69367) (513.182,3.70275)
+        (519.941,3.71204) (526.788,3.72156) (533.726,3.7313) (540.755,3.74128) (547.876,3.75149) (555.092,3.76194)
+        (562.402,3.77264) (569.809,3.7836) (577.313,3.79481) (584.916,3.80628) (592.619,3.81802) (600.424,3.83004)
+        (608.331,3.84233) (616.343,3.85491) (624.46,3.86779) (632.684,3.88095) (641.016,3.89442) (649.458,3.9082)
+        (658.011,3.9223) (666.677,3.93672) (675.457,3.95146) (684.352,3.96654) (693.365,3.98196) (702.496,3.99772)
+        (711.748,4.01384) (721.121,4.03032) (730.618,4.04716) (740.24,4.06438) (749.989,4.08198) (759.866,4.09997)
+        (769.873,4.11836) (780.012,4.13714) (790.285,4.15634) (800.692,4.17595) (811.237,4.19599) (821.921,4.21646)
+        (832.745,4.23737) (843.712,4.25873) (854.824,4.28054) (866.081,4.30282) (877.487,4.32557) (889.044,4.3488)
+        (900.752,4.37251) (912.615,4.39672) (924.633,4.42144) (936.81,4.44666) (949.148,4.47241) (961.648,4.49869)
+        (974.312,4.5255) (987.144,4.55286) (1000.14,4.58078) (1013.32,4.60926) (1026.66,4.63832) (1040.18,4.66795)
+        (1053.88,4.69818) (1067.76,4.72901) (1081.82,4.76045) (1096.07,4.79251) (1110.5,4.82519) (1125.13,4.85852)
+        (1139.95,4.89249) (1154.96,4.92712) (1170.17,4.96241) (1185.58,4.99838) (1201.19,5.03504) (1217.01,5.07239)
+        (1233.04,5.11046) (1249.28,5.14923) (1265.73,5.18874) (1282.4,5.22898) (1299.29,5.26996) (1316.4,5.31171)
+        (1333.74,5.35422) (1351.3,5.39752) (1369.1,5.4416) (1387.13,5.48648) (1405.4,5.53218) (1423.91,5.57869)
+        (1442.66,5.62604) (1461.66,5.67424) (1480.91,5.72329) (1500.41,5.7732) (1520.17,5.824) (1540.19,5.87568)
+        (1560.47,5.92827) (1581.02,5.98177) (1601.85,6.03619) (1622.94,6.09156) (1644.32,6.14787) (1665.97,6.20514)
+        (1687.91,6.26339) (1710.14,6.32262) (1732.66,6.38285) (1755.48,6.4441) (1778.6,6.50637) (1802.02,6.56967)
+        (1825.76,6.63402) (1849.8,6.69944) (1874.16,6.76594) (1898.84,6.83352) (1923.85,6.90221) (1949.19,6.97201)
+        (1974.86,7.04295) (2000.87,7.11503) (2027.22,7.18827) (2053.91,7.26269) (2080.96,7.33829) (2108.37,7.4151)
+        (2136.14,7.49312) (2164.27,7.57237) (2192.77,7.65288) (2221.65,7.73464) (2250.91,7.81769) (2280.55,7.90203)
+        (2310.58,7.98767) (2341.01,8.07465) (2371.84,8.16296) (2403.08,8.25264) (2434.73,8.34369) (2466.79,8.43613)
+        (2499.28,8.52998) (2532.19,8.62526) (2565.54,8.72198) (2599.33,8.82016) (2633.56,8.91982) (2668.24,9.02098)
+        (2703.38,9.12365) (2738.99,9.22786) (2775.06,9.33362) (2811.61,9.44095) (2848.63,9.54987) (2886.15,9.66041)
+        (2924.16,9.77257) (2962.67,9.88639) (3001.69,10.0019) (3041.22,10.119) (3081.27,10.2379) (3121.85,10.3586)
+        (3162.96,10.4809) (3204.62,10.6051) (3246.82,10.731) (3289.58,10.8588) (3332.9,10.9884) (3376.8,11.1199)
+        (3421.27,11.2532) (3466.32,11.3885) (3511.97,11.5257) (3558.23,11.6649) (3605.09,11.8061) (3652.56,11.9492)
+        (3700.67,12.0944) (3749.4,12.2417) (3798.78,12.391) (3848.81,12.5424) (3899.5,12.696) (3950.85,12.8518)
+        (4002.88,13.0097) (4055.6,13.1699) (4109.01,13.3323) (4163.13,13.4969) (4217.95,13.6639) (4273.5,13.8332)
+        (4329.78,14.0049) (4386.8,14.1789) (4444.58,14.3554) (4503.11,14.5343) (4562.42,14.7157) (4622.5,14.8997)
+        (4683.38,15.0861) (4745.06,15.2752) (4807.55,15.4668) (4870.86,15.6611) (4935.01,15.8581) (5000,16.0577)
+      };
+      \addlegendentry{IT}
+      % línea de referencia en x = 1061
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({axis cs:1061,0}|-{rel axis cs:0,0}) -- ({axis cs:1061,0}|-{rel axis cs:0,1}) node[drotulo, pos=1, anchor=north west] {IC = IR (1.06 kHz)};
+      % línea de referencia en y = 3.33
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({rel axis cs:0,0}|-{axis cs:1,3.33}) -- ({rel axis cs:1,0}|-{axis cs:1,3.33}) node[drotulo, pos=1, anchor=south east] {IR = 3.33 mA};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Corrientes de rama y corriente total de un RC en paralelo (R = 1.5 k\ensuremath{\Omega}, C = 0.1 \textmu{}F, VS = 5 V eficaces) en función de la frecuencia}
+\end{figure}
+
+La gráfica muestra que por debajo de 1.06 kHz domina la corriente resistiva y la corriente total apenas supera los 3.33 mA de la rama del resistor; en 1.06 kHz ambas corrientes de rama son iguales y el ángulo vale 45\textdegree{}; por encima, la rama capacitiva toma el control y la corriente total crece casi en proporción a la frecuencia. A 5 kHz, la rama del condensador lleva unos 15.7 mA, casi cinco veces la del resistor. Esta es la razón por la que un condensador en paralelo con una carga \guillemotleft{}deriva\guillemotright{} las componentes de alta frecuencia: les ofrece un camino mucho más fácil que el de la carga.
+
+\begin{nota}{Error frecuente:}
+Medir las dos corrientes de rama con el multímetro, sumarlas y concluir que el amperímetro de la fuente \guillemotleft{}mide mal\guillemotright{}. En ca, la ley de corrientes de Kirchhoff se verifica con la suma fasorial: $\sqrt{I_R^2 + I_C^2}$.
+\end{nota}
+
+\subsubsection{Descarga de un condensador a través de un resistor en paralelo (Bloque 5)}
+
+El circuito RC en paralelo también tiene una respuesta en el tiempo, y es la que más importa para la seguridad. Si un condensador cargado a una tensión $V_0$ queda conectado solo a un resistor en paralelo ---porque la fuente se desconectó o dejó de suministrar energía---, el condensador se descarga a través de ese resistor. Como la tensión es común a ambos, la corriente de descarga es $v_C/R$, y la tensión decae exponencialmente con la misma constante de tiempo de la semana 4, $\tau = RC$. La única diferencia con el circuito en serie es que aquí no hay fuente en la trayectoria: el condensador es la fuente.
+
+\begin{equation}
+  v_C(t) = V_0\,e^{-t/(RC)}, \qquad t_{\mathrm{seg}} = R\,C\,\ln\!\left(\frac{V_0}{V_{\mathrm{seg}}}\right)
+\end{equation}
+
+donde $v_C(t)$ es la tensión en el condensador en voltios (V), $V_0$ la tensión inicial en voltios (V), $R$ la resistencia en paralelo en ohmios (\ensuremath{\Omega}), $C$ la capacitancia en faradios (F), $t$ el tiempo desde que se interrumpe la alimentación en segundos (s), y $t_{\mathrm{seg}}$ el tiempo necesario para que la tensión baje hasta un valor seguro $V_{\mathrm{seg}}$ en voltios (V). La segunda expresión se obtiene despejando $t$ de la primera cuando $v_C = V_{\mathrm{seg}}$.
+
+La aplicación más común es el \textbf{filtro de una fuente de alimentación}. El rectificador solo admite corriente en una dirección para cargar el condensador; este no puede descargarse de vuelta por el rectificador, sino solo una pequeña cantidad a través de la resistencia, relativamente alta, de la carga conectada en paralelo [1]. La pequeña oscilación de la tensión que produce esa carga y descarga se llama \textbf{tensión de fluctuación} (rizado), y una buena fuente de cd tiene muy poca [1]. La constante de tiempo de descarga del condensador del filtro depende de su capacitancia y de la resistencia de la carga [1]: cuanto mayor es $RC$ frente al intervalo entre picos de la tensión rectificada, menor es el rizado. Con 470 \textmu{}F y una carga de 1 k\ensuremath{\Omega}, $\tau = 0.47\ \text{s}$, unas 56 veces el semiperiodo de 8.33 ms de una red de 60 Hz, así que entre picos la tensión apenas cae.
+
+Esa misma propiedad es un peligro cuando se apaga el equipo: sin carga conectada, nada descarga al condensador, que puede conservar su tensión durante mucho tiempo. Por eso los fabricantes colocan una \textbf{resistencia de descarga} (\textit{bleeder}) en paralelo con los condensadores de filtro y de los bancos de potencia. Su valor es un compromiso: debe ser lo bastante baja para descargar el condensador en un tiempo razonable y lo bastante alta para no desperdiciar potencia durante la operación normal.
+
+Un ejemplo numérico lo cuantifica. Un condensador de 470 \textmu{}F cargado a 170 V, el pico de una red de 120 V eficaces, con una resistencia de descarga de 100 k\ensuremath{\Omega}, tiene $\tau = (100 \times 10^3)(470 \times 10^{-6}) = 47\ \text{s}$. Para bajar a 50 V hacen falta $t_{\mathrm{seg}} = 47 \ln(170/50) \approx 57.5\ \text{s}$, y para descargarse prácticamente por completo, unas cinco constantes de tiempo, casi cuatro minutos. Durante la operación, la resistencia disipa $P = V^2/R = 170^2/(100 \times 10^3) \approx 0.29\ \text{W}$, así que debe ser, como mínimo, de 1/2 W. Con 10 k\ensuremath{\Omega} la descarga sería diez veces más rápida, pero la potencia disipada sería de 2.9 W.
+
+La misma idea explica un fenómeno que se observa en el laboratorio: un condensador real, desconectado, pierde carga poco a poco a través de su propia resistencia de fuga, que actúa como una resistencia en paralelo de valor muy alto. En los de película esa descarga tarda horas; en los electrolíticos, bastante menos. Nunca debe confiarse en esa descarga natural antes de manipular un condensador de potencia.
+
+\begin{nota}{Advertencia de seguridad:}
+Antes de intervenir una fuente o un banco de condensadores, se mide la tensión en sus terminales aunque el equipo lleve varios minutos apagado: la resistencia de descarga puede estar abierta, y entonces el condensador conserva casi toda su carga.
+\end{nota}
+
+\subsubsection{Comparación entre los circuitos RC en serie y en paralelo (Bloque 6)}
+
+Con las semanas 4 y 6 completas, conviene reunir en un solo cuadro lo que distingue a los dos circuitos RC. La diferencia de fondo es la magnitud común. En serie, la corriente es la misma en ambos elementos, se toma como referencia a 0\textdegree{} y se reparten las tensiones; en paralelo, la tensión es la misma, se toma como referencia y se reparten las corrientes. A partir de ahí, todo lo demás se corresponde: la ley de voltajes de Kirchhoff en serie tiene su dual en la ley de corrientes en paralelo, la impedancia en serie tiene su dual en la admitancia en paralelo, y los triángulos de tensiones y de corrientes son semejantes a los de impedancia y de admitancia. La tabla lo resume con los componentes de ambos casos a 1 kHz.
+
+% --- Tabla 2: Comparación de los circuitos RC en serie y en paralelo (R = 1.5 kΩ, C = 0.1 µF, 5 V efica… (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=1.179\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.857\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.964\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Comparación de los circuitos RC en serie y en paralelo (R = 1.5 k\ensuremath{\Omega}, C = 0.1 \textmu{}F, 5 V eficaces a 1 kHz)} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Característica}} & \textcolor{white}{\textbf{RC en serie (semana 4)}} & \textcolor{white}{\textbf{RC en paralelo (semana 6)}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Característica}} & \textcolor{white}{\textbf{RC en serie (semana 4)}} & \textcolor{white}{\textbf{RC en paralelo (semana 6)}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  Magnitud común & corriente & tensión \\
+  \rowcolor{iubfondogris} Referencia del diagrama fasorial & I a 0\textdegree{} & V a 0\textdegree{} \\
+  Ley de Kirchhoff que se aplica & LVK: VS = VR \ensuremath{-} jVC & LCK: IT = IR + jIC \\
+  \rowcolor{iubfondogris} Suma natural & Z = R \ensuremath{-} jXC & Y = G + jBC \\
+  Magnitud & Z = \ensuremath{\surd}(R\texttwosuperior{} + XC\texttwosuperior{}) & Z = R\textperiodcentered{}XC/\ensuremath{\surd}(R\texttwosuperior{} + XC\texttwosuperior{}) \\
+  \rowcolor{iubfondogris} Ángulo de la impedancia & \ensuremath{-}tan\ensuremath{^{-}}\textonesuperior{}(XC/R) & \ensuremath{-}tan\ensuremath{^{-}}\textonesuperior{}(R/XC) \\
+  Z a 1 kHz & 2187 \ensuremath{\Omega} & 1092 \ensuremath{\Omega} \\
+  \rowcolor{iubfondogris} \ensuremath{\theta} a 1 kHz & \ensuremath{-}46.7\textdegree{} & \ensuremath{-}43.3\textdegree{} \\
+  Corriente de la fuente a 1 kHz & 2.29 mA & 4.58 mA \\
+  \rowcolor{iubfondogris} Z frente a R & siempre mayor que R & siempre menor que R \\
+  A frecuencias bajas & casi capacitivo & casi resistivo \\
+  \rowcolor{iubfondogris} A frecuencias altas & casi resistivo & casi capacitivo \\
+\end{xltabular}
+
+La tabla revela dos comportamientos opuestos. Con los mismos componentes, el circuito en paralelo toma el doble de corriente de la fuente que el circuito en serie, porque su impedancia es la mitad; y la evolución con la frecuencia es inversa: el serie pasa de capacitivo a resistivo al subir la frecuencia, y el paralelo, de resistivo a capacitivo. Los ángulos de ambos circuitos, a la misma frecuencia, son complementarios. Nada de esto es casual: es la consecuencia directa de que en serie se sumen oposiciones y en paralelo se sumen facilidades de paso.
+
+Todo circuito RC en paralelo puede sustituirse, a una frecuencia dada, por un \textbf{circuito equivalente en serie} que tome la misma corriente con el mismo ángulo [1]. Basta escribir la impedancia del paralelo en forma rectangular: la parte real es la resistencia equivalente en serie y la parte imaginaria, la reactancia equivalente. Con $\mathbf{Z} = 1092 \angle -43.3^\circ\ \Omega$, $R_{\mathrm{eq}} = 1092 \cos 43.3^\circ \approx 795\ \Omega$ y $X_{\mathrm{eq}} = 1092 \sin 43.3^\circ \approx 749\ \Omega$. El paralelo de 1.5 k\ensuremath{\Omega} y 1592 \ensuremath{\Omega} se comporta, a 1 kHz, como 795 \ensuremath{\Omega} en serie con 749 \ensuremath{\Omega} capacitivos. La equivalencia vale solo a esa frecuencia: a 2 kHz, los valores equivalentes serían otros.
+
+En cuanto a los parámetros, unidades y nomenclatura que pide el procedimental del RA, la sesión suma tres magnitudes nuevas a las de la semana 4. Resistencia, reactancia e impedancia se miden en ohmios (\ensuremath{\Omega}) y se escriben $R$, $X_C$ y $Z$; conductancia, susceptancia y admitancia se miden en siemens (S) y se escriben $G$, $B_C$ e $Y$. En circuitos de señal son habituales los kiloohmios y los milisiemens, que son recíprocos: 1.5 k\ensuremath{\Omega} equivalen a 0.667 mS. Las negritas o los fasores con ángulo ($\mathbf{Z}$, $\mathbf{Y}$, $\mathbf{I}$) indican magnitud y fase; las cursivas simples ($Z$, $Y$, $I$), solo la magnitud.
+
+\begin{nota}{Nota pedagógica:}
+Una forma rápida de elegir el método: si el circuito está en serie, se suman impedancias; si está en paralelo, se suman admitancias. En ambos casos, el último paso es volver a la magnitud que se pide con la ley de Ohm.
+\end{nota}
+
+\section{Caso de Estudio Aplicado: Medición de un circuito RC en paralelo y verificación de la ley de corrientes de Kirchhoff (Bloque 7)}
+
+\subsection{Descripción del montaje}
+
+Se reutilizan los componentes del caso de la semana 4: el resistor de 1.5 k\ensuremath{\Omega} \textpm{}5 \%, que el ohmímetro midió en 1492 \ensuremath{\Omega}, y el condensador de película C2, 104K, medido en 97.8 nF. Antes del montaje se verifican de nuevo con el ohmímetro y el medidor LCR, lo que cubre la identificación del criterio CE1. Ahora se conectan en paralelo y se alimentan con el generador de funciones a 1 kHz y 5.00 V eficaces, comprobados con el osciloscopio. Para medir las corrientes se abre cada rama y se intercala el multímetro de verdadero valor eficaz como amperímetro; para ver la fase de la corriente total se coloca en el retorno de la fuente un resistor sensor de 10 \ensuremath{\Omega}, cuya tensión, proporcional a la corriente, se observa en el canal 2 del osciloscopio mientras el canal 1 muestra la tensión aplicada. Las lecturas que se usan más abajo son valores de ejemplo para ilustrar el procedimiento.
+
+\subsection{Cálculo previo con los valores medidos}
+
+Con los componentes medidos, $X_C = 1/(2\pi \times 1000 \times 97.8 \times 10^{-9}) \approx 1627\ \Omega$. Por la ley de Ohm en cada rama, $I_R = 5.00/1492 \approx 3.35\ \text{mA}$ e $I_C = 5.00/1627 \approx 3.07\ \text{mA}$. La corriente total, por la ley de corrientes de Kirchhoff en forma fasorial [1], es:
+
+\begin{equation}
+  I_T = \sqrt{I_R^{2} + I_C^{2}} = \sqrt{(3.35)^2 + (3.07)^2}\ \text{mA} \approx 4.55\ \text{mA}, \qquad \theta = \tan^{-1}\!\left(\frac{3.07}{3.35}\right) \approx 42.5^\circ
+\end{equation}
+
+donde $I_T$ es la corriente total eficaz en miliamperios (mA), $I_R$ e $I_C$ las corrientes eficaces de la rama resistiva y de la capacitiva en miliamperios (mA), y $\theta$ el ángulo en grados (\textdegree{}) con que la corriente total adelanta a la tensión. La impedancia del conjunto es $Z = 5.00/4.55 \approx 1100\ \Omega$. En el osciloscopio, un adelanto de 42.5\textdegree{} a 1 kHz corresponde a $\Delta t = (42.5/360)(1000\ \mu\text{s}) \approx 118\ \mu\text{s}$. El resistor sensor de 10 \ensuremath{\Omega} añade menos del 1 \% a la impedancia total, un efecto despreciable.
+
+\subsection{Resultados}
+
+% --- Tabla 3: Valores calculados y medidos del circuito RC en paralelo a 1 kHz (lecturas de ejemplo) (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=1.029\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.52\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.392\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.471\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.588\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Valores calculados y medidos del circuito RC en paralelo a 1 kHz (lecturas de ejemplo)} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{Calculado con valores medidos}} & \textcolor{white}{\textbf{Medido}} & \textcolor{white}{\textbf{Instrumento}} & \textcolor{white}{\textbf{Diferencia}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{Calculado con valores medidos}} & \textcolor{white}{\textbf{Medido}} & \textcolor{white}{\textbf{Instrumento}} & \textcolor{white}{\textbf{Diferencia}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  VS & 5.00 V & 5.00 V & osciloscopio y multímetro & --- \\
+  \rowcolor{iubfondogris} IR & 3.35 mA & 3.34 mA & multímetro en la rama R & \ensuremath{-}0.3 \% \\
+  IC & 3.07 mA & 3.09 mA & multímetro en la rama C & +0.7 \% \\
+  \rowcolor{iubfondogris} IR + IC (aritmética) & 6.42 mA & 6.43 mA & --- & --- \\
+  \ensuremath{\surd}(IR\texttwosuperior{} + IC\texttwosuperior{}) & 4.55 mA & 4.55 mA & calculado de las lecturas & 0.0 \% \\
+  \rowcolor{iubfondogris} IT & 4.55 mA & 4.56 mA & multímetro en la fuente & +0.2 \% \\
+  \ensuremath{\Delta}t entre VS e IT & 118 \textmu{}s & 117 \textmu{}s & osciloscopio, resistor sensor & \ensuremath{-}0.8 \% \\
+  \rowcolor{iubfondogris} \ensuremath{\theta} & 42.5\textdegree{} & 42.1\textdegree{} & calculado de \ensuremath{\Delta}t & 0.4\textdegree{} \\
+\end{xltabular}
+
+La tabla reproduce, con corrientes, lo que la semana 4 mostró con tensiones. Las dos corrientes de rama suman aritméticamente 6.43 mA, pero el amperímetro de la fuente marca 4.56 mA; la suma fasorial de las lecturas de rama da 4.55 mA, a menos del 0.3 \% de la medición directa. El adelanto medido de la corriente total, 42.1\textdegree{}, coincide con el ángulo calculado dentro de la resolución del osciloscopio. La ley de corrientes de Kirchhoff se cumple en ca siempre que se aplique a fasores.
+
+\subsection{Comparación con el circuito en serie y conclusiones}
+
+Con los mismos componentes y la misma fuente, el circuito en serie de la semana 4 tomaba 2.26 mA con la corriente adelantada 47.5\textdegree{}; el paralelo toma 4.56 mA con 42.1\textdegree{} de adelanto. La corriente se duplicó porque la impedancia se redujo a la mitad, y los ángulos son prácticamente complementarios, como predice la teoría. Las pequeñas diferencias entre cálculo y medición tienen causas concretas: la resistencia interna del amperímetro, que se suma a cada rama mientras se mide; la tolerancia de lectura del multímetro a 1 kHz; y la resistencia interna del generador, que reduce ligeramente la tensión aplicada cuando la corriente aumenta.
+
+Con esta práctica se completan las mediciones del RA2 en ambas conexiones: se identificaron y verificaron el resistor y el condensador, se midieron circuitos resistivos y capacitivos, y se midió un circuito RC en serie y en paralelo. La semana 7 integra ambos en ejercicios de cálculo y medición de parámetros.
+
+\begin{nota}{Advertencia de seguridad:}
+El multímetro se conecta como amperímetro solo con la fuente apagada, abriendo la rama y con las puntas en los bornes de corriente. Si después se mide tensión sin regresar la punta al borne de voltios, el amperímetro cortocircuita la fuente y puede fundir su fusible.
+\end{nota}
+
+\section{Síntesis (Bloque 8)}
+
+El circuito RC en paralelo es el dual del circuito en serie: la tensión es común, las corrientes se reparten y la ley de corrientes de Kirchhoff exige sumarlas como fasores, $I_T = \sqrt{I_R^2 + I_C^2}$. Las magnitudes recíprocas ---conductancia, susceptancia y admitancia, en siemens--- permiten escribir el paralelo con la misma estructura que el serie: \textbf{en paralelo se suman admitancias, igual que en serie se suman impedancias}. De ahí salen sus rasgos opuestos al circuito en serie: la impedancia siempre es menor que $R$, el circuito pasa de resistivo a capacitivo al subir la frecuencia, y la rama capacitiva, cuya corriente crece con $B_C = 2\pi f C$, termina derivando las frecuencias altas. En el tiempo, el mismo paralelo describe la descarga de un condensador a través de su carga o de una resistencia de descarga, con constante $\tau = RC$. El caso de laboratorio cerró el ciclo iniciado en la semana 4: con los mismos componentes, el paralelo tomó el doble de corriente con un ángulo complementario, y la suma fasorial de las corrientes de rama reprodujo la corriente medida en la fuente con una diferencia menor del 0.3 \%. Con ambas conexiones analizadas y medidas, el RA2 ---calcular circuitos resistivos, capacitivos y RC en serie o en paralelo--- queda listo para integrarse en la semana 7.
+
+\subsection*{Componente Actitudinal}
+
+\begin{cita}
+Instalar y verificar la resistencia de descarga de una fuente, o medir la tensión de un banco antes de tocarlo, es un acto de responsabilidad con los compañeros: quien intervenga el equipo después confía en que ese condensador ya no guarda energía.
+\end{cita}
+
+\section{Bibliografía (Formato IEEE)}
+
+{\sloppy
+\begin{itemize}[leftmargin=2.6em, labelwidth=2.2em, labelsep=0.4em, align=left]
+  \item[{[1]}] T. L. Floyd, Principios de circuitos eléctricos, 8.\textordfeminine{} ed. México: Pearson Educación, 2007.
+  \item[{[2]}] R. L. Boylestad, Introducción al análisis de circuitos, 10.\textordfeminine{} ed. México: Pearson Educación, 2004.
+  \item[{[3]}] M. F. P. Deorsola y P. Morcelle del Valle, Circuitos eléctricos. Parte 1, 1.\textordfeminine{} ed. La Plata: Editorial de la Universidad de La Plata, 2017.
+\end{itemize}
+}
+
+\end{document}

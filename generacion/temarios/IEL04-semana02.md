@@ -15,24 +15,41 @@ estadisticas:
   pasajes: 35
 bibliografia_estado: vacio_detectado
 fecha_creacion: '2026-09-28'
-fecha_actualizacion: '2026-09-28'
+fecha_actualizacion: '2026-10-25'
+latex_estado: revisar
+latex_archivo: generacion/temarios/IEL04-semana02.tex
+latex_avisos:
+- una línea se sale del margen 4.8 pt (in paragraph at lines 578--578)
+- una línea se sale del margen 4.2 pt (in paragraph at lines 578--578)
+- una línea se sale del margen 1.0 pt (in paragraph at lines 650--650)
+- una línea se sale del margen 11.3 pt (in paragraph at lines 650--650)
+- una línea se sale del margen 20.1 pt (in paragraph at lines 650--650)
+- una línea se sale del margen 15.5 pt (in paragraph at lines 650--650)
+- una línea se sale del margen 2.6 pt (in paragraph at lines 650--650)
+- una línea se sale del margen 6.4 pt (in paragraph at lines 650--650)
+- una línea se sale del margen 8.6 pt (in paragraph at lines 650--650)
+latex_temario_hash: 314cbaf8d2a883a0
+latex_formato: 2
+latex_compilado: null
 bibliografia_via: marcador
 bibliografia_justificacion: 3 cita(s) marcada(s) como fuente no cargada
 bibliografia_faltantes:
 - 'Los inductores moldeados usan un **código de colores** con la misma estructura que el de los resistores: la primera banda es el primer dígito, la segunda el segundo dígito, la tercera el multiplicador'
 - '**Tabla 3.** Lectura de marcados frecuentes de inductores [FUENTE NO CARGADA EN raw/]'
 - '[3] Hoja de datos del fabricante de los inductores del kit de laboratorio (código de colores y código de tres dígitos de inductores); no está cargada en el wiki. [FUENTE NO CARGADA EN raw/]'
-bibliografia_fecha: '2026-09-28'
+bibliografia_fecha: '2026-10-25'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana02.tex
 presentacion_avisos: []
 presentacion_temario_hash: 314cbaf8d2a883a0
-presentacion_fecha: '2026-09-28'
-presentacion_diseno: 5
-presentacion_diapositivas: 34
+presentacion_fecha: '2026-10-25'
+presentacion_diseno: 6
+presentacion_diapositivas: 36
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
+presentacion_elementos: 15
+presentacion_compilada: '2026-10-25'
 ---
 
 # La bobina: inductancia, inducción electromagnética, tipos de núcleo e identificación de inductores

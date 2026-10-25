@@ -2,7 +2,7 @@
 %  IEL04 - Circuitos Eléctricos I
 %  Semana 8: Circuitos RL en serie y en paralelo: reactancia inductiva, impedancia y leyes de Kirchhoff con la bobina real
 %  Institución Universitaria de Barranquilla (IUB)
-%  Generada por src/presentaciones.py (diseño IUB 5). Compilador: pdfLaTeX (dos pasadas)
+%  Generada por src/presentaciones.py (diseño IUB 6). Compilador: pdfLaTeX (dos pasadas)
 % =====================================================================
 \documentclass[aspectratio=169,11pt,xcolor={table}]{beamer}
 
@@ -12,8 +12,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish,es-nodecimaldot,es-noshorthands]{babel}
-\usepackage{avant}                       % Sans geométrica (emula Avenir Next)
+\usepackage[scaled=0.95]{helvet}          % Helvetica (Nimbus Sans): la del manual para presentaciones
 \renewcommand{\familydefault}{\sfdefault}
+\newcommand{\fuentetitulo}{\fontfamily{pag}\selectfont}   % URW Gothic (avant), en lugar de Nexa, para titulares
+\usepackage{graphicx}                    % solo para los logos del manual (macros \logoIUB...)
 \renewcommand{\ttdefault}{pcr}           % Monoespaciada para código
 \usepackage{textcomp}
 
@@ -43,6 +45,27 @@
 \definecolor{iubblue}{HTML}{00ADE7}
 \definecolor{iuborange}{HTML}{E39037}
 \definecolor{iubgreen}{HTML}{3B9C6D}
+\definecolor{iubpurple}{HTML}{8E6BBF}
+\definecolor{iubgris}{HTML}{D5DAE3}
+\definecolor{iubgrisoscuro}{HTML}{7C8598}
+\definecolor{iubfondoazul}{HTML}{EBF7FD}
+\definecolor{iubfondonaranja}{HTML}{FDF4EA}
+\definecolor{iubfondoverde}{HTML}{EDF8F2}
+\definecolor{iubfondogris}{HTML}{F4F6F9}
+
+% ---------------------------------------------------------------------
+%  Logos del Manual de Identidad (logos/, junto al .tex). Si falta el
+%  archivo, se escribe la marca como texto y la presentación compila igual.
+%  \logoIUBsimbolo{alto}     símbolo en negativo (sobre #121023)
+%  \logoIUBhorizontal{alto}  horizontal a color (sobre blanco)
+%  \logoIUBamarillo{alto}    horizontal a una tinta, amarillo (sobre #121023)
+% ---------------------------------------------------------------------
+\newcommand{\logoIUBsimbolo}[1]{\IfFileExists{logos/logo_iub_blanco.png}{\includegraphics[height=#1]{logos/logo_iub_blanco.png}}{\textcolor{iubyellow}{\bfseries IUB}}}
+\newcommand{\logoIUBhorizontal}[1]{\IfFileExists{logos/logo_iub_horizontal.png}{\includegraphics[height=#1]{logos/logo_iub_horizontal.png}}{\textcolor{iubnavy}{\bfseries IUB}}}
+\newcommand{\logoIUBamarillo}[1]{\IfFileExists{logos/logo_iub_horizontal_amarillo.png}{\includegraphics[height=#1]{logos/logo_iub_horizontal_amarillo.png}}{\textcolor{iubyellow}{\bfseries\Huge IUB}}}
+
+% Un elemento del temario que no se pudo poner (no debería verse: el código sustituye cada uno por su LaTeX)
+\newcommand{\elementoTemario}[2]{\fcolorbox{iuborange}{white}{\scriptsize\textcolor{iuborange}{[#1 #2 del temario: no disponible]}}}
 
 % ---------------------------------------------------------------------
 %  Configuración de Beamer
@@ -70,10 +93,10 @@
     \useasboundingbox (0,0) rectangle (\paperwidth,1.05cm);
     \fill[iubnavy] (0,0) rectangle (\paperwidth,1.05cm);
     \fill[iubyellow] (0,0) rectangle (\paperwidth,0.05cm);
-    \node[anchor=west, text=iubyellow, font=\large\bfseries]
+    \node[anchor=west, text=iubyellow, font=\fuentetitulo\large\bfseries]
       at (0.6cm,0.55cm) {\strut\insertframetitle};
-    \node[anchor=east, text=iubyellow, font=\footnotesize\bfseries]
-      at ([xshift=-0.6cm]\paperwidth,0.55cm) {IUB};
+    \node[anchor=east, inner sep=0pt]
+      at ([xshift=-0.6cm]\paperwidth,0.55cm) {\logoIUBsimbolo{0.72cm}};
   \end{tikzpicture}}
 
 % ---------- Pie de página ----------
@@ -166,7 +189,19 @@
     font=\scriptsize\bfseries, align=center, inner sep=1pt},
   tag/.style={fill=#1, text=white, font=\scriptsize\bfseries, rounded corners=1mm,
     minimum width=0.7cm, anchor=north west},
+  % los de los diagramas del temario (temario_latex.py), con la misma forma y paleta
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt, text=iubnavy},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt, text=iubnavy},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt, text=iubnavy},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt, text=iubnavy},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
 }
+% Las gráficas del temario (pgfplots), del tamaño del área útil de una diapositiva
+\pgfplotsset{iubejes/.style={width=0.86\linewidth, height=4.3cm, grid=major, grid style={iubgris}, axis lines*=left,
+  axis line style={iubnavy}, tick label style={font=\scriptsize}, label style={font=\scriptsize}, title style={font=\bfseries\scriptsize},
+  legend cell align=left, legend style={draw=none, fill=none, font=\scriptsize, anchor=north, legend columns=-1,
+  /tikz/every even column/.append style={column sep=6pt}}, unbounded coords=jump}}
 
 % ---------------------------------------------------------------------
 %  Diapositiva separadora de bloque
@@ -182,7 +217,7 @@
     at ([xshift=0.8cm,yshift=-2.2cm]current page.north west) {BLOQUE};
   \node[anchor=north west, text=white, font=\bfseries\fontsize{72}{72}\selectfont]
     at ([xshift=0.65cm,yshift=-2.9cm]current page.north west) {#1};
-  \node[anchor=north west, text=iubnavy, font=\bfseries\LARGE,
+  \node[anchor=north west, text=iubnavy, font=\fuentetitulo\bfseries\LARGE,
         text width=9.4cm, align=left]
     at ([xshift=6.2cm,yshift=-2.8cm]current page.north west)
     {\hyphenpenalty=10000\exhyphenpenalty=10000 #2};
@@ -193,8 +228,10 @@
         ([yshift=0.35cm]current page.south east);
   \fill[iubyellow] ([xshift=5.2cm,yshift=0.35cm]current page.south west)
         rectangle ([yshift=0.42cm]current page.south east);
-  \node[anchor=north east, text=iubnavy, font=\small\bfseries]
-    at ([xshift=-0.6cm,yshift=-0.5cm]current page.north east) {IUB · IEL04};
+  \node[anchor=north east, inner sep=0pt]
+    at ([xshift=-0.6cm,yshift=-0.5cm]current page.north east) {\logoIUBhorizontal{0.9cm}};
+  \node[anchor=north east, text=iubnavy, font=\scriptsize\bfseries]
+    at ([xshift=-0.6cm,yshift=-1.55cm]current page.north east) {IEL04};
 \end{tikzpicture}
 \end{frame}}
 
@@ -203,49 +240,46 @@
 % =====================================================================
 
 % ---------------------------------------------------------------------
-%  PORTADA
+%  PORTADA (Manual de Identidad IUB, 3.3.1: panel oscuro con el logo)
 % ---------------------------------------------------------------------
 \begin{frame}[plain]
 \begin{tikzpicture}[remember picture, overlay]
-  % Panel institucional
-  \fill[iubnavy] (current page.north west) rectangle
-        ([xshift=5.6cm]current page.south west);
-  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{54}{54}\selectfont]
-    at ([xshift=0.7cm,yshift=-1.0cm]current page.north west) {IUB};
-  \node[anchor=north west, text=white, font=\footnotesize, text width=4.3cm, align=left]
-    at ([xshift=0.75cm,yshift=-3.0cm]current page.north west)
-    {Institución Universitaria de Barranquilla};
+  % Panel institucional: la esquina inferior derecha redondeada (las demás quedan fuera de la página)
+  \fill[iubnavy, rounded corners=1.6cm] ([xshift=-2cm,yshift=2cm]current page.north west) rectangle
+        ([xshift=6.0cm]current page.south west);
+  \node[anchor=north west, inner sep=0pt]
+    at ([xshift=0.7cm,yshift=-1.3cm]current page.north west) {\logoIUBamarillo{1.15cm}};
   \draw[iubyellow, line width=1.2pt]
-    ([xshift=0.75cm,yshift=-4.25cm]current page.north west) --
-    ([xshift=2.6cm,yshift=-4.25cm]current page.north west);
+    ([xshift=0.75cm,yshift=-3.1cm]current page.north west) --
+    ([xshift=2.6cm,yshift=-3.1cm]current page.north west);
   \node[anchor=north west, text=iubyellow, font=\scriptsize\bfseries,
-        text width=4.3cm, align=left]
-    at ([xshift=0.75cm,yshift=-4.5cm]current page.north west)
+        text width=4.6cm, align=left]
+    at ([xshift=0.75cm,yshift=-3.35cm]current page.north west)
     {Tecnología en Gestión de Sistemas Eléctricos};
-  \node[anchor=south west, text=white, font=\scriptsize, text width=4.3cm, align=left]
+  \node[anchor=south west, text=white, font=\scriptsize, text width=4.6cm, align=left]
     at ([xshift=0.75cm,yshift=0.9cm]current page.south west)
-    {Ing. Sergio Martinez Castilla\\[1pt]\textcolor{iubyellow}{\tiny smartinezc@unibarranquilla.edu.co}};
+    {Ing. Sergio Martinez Castilla\\[1pt]\textcolor{iubyellow}{smartinezc@unibarranquilla.edu.co}};
   % Bloque de título
   \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
         font=\scriptsize\bfseries, inner sep=2mm]
-    at ([xshift=6.4cm,yshift=-1.0cm]current page.north west)
+    at ([xshift=6.8cm,yshift=-1.0cm]current page.north west)
     {IEL04 \textperiodcentered{} Semana 8 de 14 \textperiodcentered{} Corte evaluativo 2};
-  \node[anchor=north west, text=iubnavy, font=\small, text width=9.0cm, align=left] (a)
-    at ([xshift=6.4cm,yshift=-1.9cm]current page.north west)
+  \node[anchor=north west, text=iubnavy, font=\small, text width=8.6cm, align=left] (a)
+    at ([xshift=6.8cm,yshift=-1.9cm]current page.north west)
     {Circuitos Eléctricos I};
-  \node[anchor=north west, text=iubnavy, font=\bfseries\fontsize{15}{18}\selectfont,
-        text width=9.0cm, align=left] (t)
+  \node[anchor=north west, text=iubnavy, font=\fuentetitulo\bfseries\fontsize{15}{18}\selectfont,
+        text width=8.6cm, align=left] (t)
     at ([yshift=-0.35cm]a.south west)
     {\hyphenpenalty=10000 Circuitos RL en serie y en paralelo: reactancia inductiva, impedancia y leyes de Kirchhoff con la bobina real};
-  % Franjas de la paleta complementaria
-  \fill[iubblue]   ([xshift=6.4cm,yshift=1.1cm]current page.south west)
+  % Franjas de la paleta complementaria (manual, 1.4)
+  \fill[iubblue]   ([xshift=6.8cm,yshift=1.1cm]current page.south west)
     rectangle ++(1.6cm,0.18cm);
-  \fill[iuborange] ([xshift=8.1cm,yshift=1.1cm]current page.south west)
+  \fill[iuborange] ([xshift=8.5cm,yshift=1.1cm]current page.south west)
     rectangle ++(1.6cm,0.18cm);
-  \fill[iubgreen]  ([xshift=9.8cm,yshift=1.1cm]current page.south west)
+  \fill[iubgreen]  ([xshift=10.2cm,yshift=1.1cm]current page.south west)
     rectangle ++(1.6cm,0.18cm);
   \node[anchor=north west, text=iubnavy, font=\scriptsize]
-    at ([xshift=6.4cm,yshift=0.95cm]current page.south west)
+    at ([xshift=6.8cm,yshift=0.95cm]current page.south west)
     {Sesión teórico-práctica \textperiodcentered{} 240 min};
 \end{tikzpicture}
 \end{frame}
@@ -373,24 +407,25 @@
 
 % ---------------------------------------------------------------------
 \begin{frame}{{\normalsize Qué cambia al pasar de los circuitos RC a los circuitos RL}}
-\centering
-\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
-\begin{tikzpicture}
-  \node[bG, align=center, font=\scriptsize, text width=3.93cm] (n0) at (2.09,4.04) {Método general (semana 7)};
-  \node[bB, align=center, font=\scriptsize, text width=2.84cm] (n1) at (7.34,4.04) {Sustituir C por L};
-  \node[bB, align=center, font=\scriptsize, text width=2.84cm] (n2) at (12.05,4.04) {XL = 2\ensuremath{\pi}fL crece con f};
-  \node[bB, align=center, font=\scriptsize, text width=2.84cm] (n3) at (12.05,1.01) {VL adelanta 90° a IL};
-  \node[bO, align=center, font=\scriptsize, text width=3.26cm] (n4) at (7.34,1.01) {Incluir RW de la bobina};
-  \node[bG, align=center, font=\scriptsize, text width=3.93cm] (n5) at (2.09,1.01) {RL serie (LVK) y paralelo (LCK)};
-  \draw[flecha] (n0) -- (n1);
-  \draw[flecha] (n1) -- (n2);
-  \draw[flecha] (n2) -- (n3);
-  \draw[flecha] (n3) -- (n4);
-  \draw[flecha] (n4) -- (n5);
+\begin{center}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  \node[dterminal, minimum width=1.842in, minimum height=0.680in] (n0) at (0.921,-0.340) {Método general \\ (semana 7)};
+  \node[dcaja, minimum width=1.363in, minimum height=0.680in] (n1) at (3.237,-0.340) {Sustituir C \\ por L};
+  \node[dcaja, minimum width=1.363in, minimum height=0.680in] (n2) at (5.312,-0.340) {XL = 2\ensuremath{\pi}fL \\ crece con f};
+  \node[dcaja, minimum width=1.363in, minimum height=0.680in] (n3) at (5.312,-1.675) {VL adelanta \\ 90\textdegree{} a IL};
+  \node[destado, minimum width=1.549in, minimum height=0.680in] (n4) at (3.237,-1.675) {Incluir RW de \\ la bobina};
+  \node[dterminal, minimum width=1.842in, minimum height=0.890in] (n5) at (0.921,-1.675) {RL serie (LVK) \\ y paralelo \\ (LCK)};
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) -- (n4);
+  \draw[dflecha] (n4) -- (n5);
 \end{tikzpicture}
 \end{adjustbox}
 
-\vspace{1mm}{\scriptsize Qué cambia al pasar de los circuitos RC a los circuitos RL\par}
+{\scriptsize\textbf{Figura 1.} Qué cambia al pasar de los circuitos RC a los circuitos RL\par}
+\end{center}
 \end{frame}
 
 % =====================================================================
@@ -414,21 +449,22 @@
 
 % ---------------------------------------------------------------------
 \begin{frame}{{\normalsize Componentes del kit disponibles para los circuitos RL}}
-\centering\tiny
+\begin{center}
+{\scriptsize\textbf{Tabla 1.} Componentes del kit disponibles para los circuitos RL y su identificación\par}
+\vspace{1mm}
+\scriptsize
 \renewcommand{\arraystretch}{1.35}
-\rowcolors{2}{iubnavy!6}{white}
 \begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-  \rowcolor{iubnavy}
-  \hd{Ref.} & \hd{Tipo} & \hd{Marcado} & \hd{Valor nominal} & \hd{Valor medido} & \hd{RW medida} & \hd{Q a 10 kHz}\\
-  R & resistor de película & azul-gris-marrón-oro & 680 \ensuremath{\Omega} ±5 \% & 676 \ensuremath{\Omega} & — & —\\
-  L1 & inductor radial & 102J & 1 mH ±5 \% & 1.03 mH & 3.2 \ensuremath{\Omega} & 20\\
-  L2 & inductor moldeado & 472K & 4.7 mH ±10 \% & 4.62 mH & 9.8 \ensuremath{\Omega} & 30\\
-  L3 & bobina con núcleo de ferrita & 103K & 10 mH ±10 \% & 10.4 mH & 24.6 \ensuremath{\Omega} & 27\\
-\end{tabularx}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.051\linewidth}>{\raggedright\arraybackslash}p{0.210\linewidth}>{\raggedright\arraybackslash}p{0.152\linewidth}>{\raggedright\arraybackslash}p{0.109\linewidth}>{\raggedleft\arraybackslash}p{0.101\linewidth}>{\raggedright\arraybackslash}p{0.080\linewidth}>{\raggedright\arraybackslash}p{0.087\linewidth}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Ref.}} & \textcolor{white}{\textbf{Tipo}} & \textcolor{white}{\textbf{Marcado}} & \textcolor{white}{\textbf{Valor nominal}} & \textcolor{white}{\textbf{Valor medido}} & \textcolor{white}{\textbf{RW medida}} & \textcolor{white}{\textbf{Q a 10 kHz}} \\
+R & resistor de película & azul-gris-marrón-oro & 680 \ensuremath{\Omega} \textpm{}5 \% & 676 \ensuremath{\Omega} & --- & --- \\
+\rowcolor{iubfondogris} L1 & inductor radial & 102J & 1 mH \textpm{}5 \% & 1.03 mH & 3.2 \ensuremath{\Omega} & 20 \\
+L2 & inductor moldeado & 472K & 4.7 mH \textpm{}10 \% & 4.62 mH & 9.8 \ensuremath{\Omega} & 30 \\
+\rowcolor{iubfondogris} L3 & bobina con núcleo de ferrita & 103K & 10 mH \textpm{}10 \% & 10.4 mH & 24.6 \ensuremath{\Omega} & 27 \\
+\bottomrule
+\end{tabular}
 \end{adjustbox}
-\vspace{2mm}
-{\scriptsize Componentes del kit disponibles para los circuitos RL y su identificación\par}
+\end{center}
 \end{frame}
 
 % =====================================================================
@@ -445,33 +481,157 @@
   \item Con la bobina L3 del kit (10.4 mH) y el resistor de 676 \ensuremath{\Omega}, la resistencia total del lazo es $676 + 24.6 = 700.6\ \Omega$, y $\tau = 10.4 \times 10^{-3}/700.6 \approx 14.8\ \mu\text{s}$.
 \end{itemize}
   \column{0.4\textwidth}
-\begin{caja}{iubblue}{Ecuación clave}
-\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}i(t) = \frac{V_S}{R}\left(1 - e^{-t/\tau}\right) \\ v_L(t) = V_S\,e^{-t/\tau} \\ \tau = \frac{L}{R}\end{gathered}$\end{adjustbox}
-\end{caja}
+\begin{cardO}{Hallazgo contraintuitivo}
+\footnotesize Aumentar la resistencia de un circuito RL acorta su constante de tiempo, al contrario que en el RC, donde la alarga.
+\end{cardO}
 \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Ecuaciones: Respuesta del circuito RL en serie con cd}}
+\begin{cajaplana}{iubblue}
+\centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{minipage}{1.6\linewidth}
+{\large
+\begin{equation*}
+  i(t) = \frac{V_S}{R}\left(1 - e^{-t/\tau}\right), \qquad v_L(t) = V_S\,e^{-t/\tau}, \qquad \tau = \frac{L}{R}
+\end{equation*}
+}
+\end{minipage}
+\end{adjustbox}
+\end{cajaplana}
 \end{frame}
 
 % ---------------------------------------------------------------------
 \begin{frame}{{\normalsize Crecimiento y caída de la corriente en un RL en serie con VS}}
 \begin{columns}[c,onlytextwidth]
   \column{0.62\textwidth}
-\centering
+\begin{center}
+\begin{adjustbox}{max width=\linewidth, max totalheight=4.4cm}
 \begin{tikzpicture}
-  \begin{axis}[width=8.4cm, height=5.7cm, xmin=0, xmax=75, ymin=0, ymax=7.5684,
-      xlabel={Tiempo t (µs)}, ylabel={Corriente i (mA)},
-      label style={font=\scriptsize, text=iubnavy}, tick label style={font=\tiny, text=iubnavy},
-      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},
-      legend style={font=\tiny, fill=white}, legend pos=north east]
-    \addplot[line width=1.4pt, iubblue] coordinates {(0,0) (1.0033,0.468) (2.0067,0.90533) (3.01,1.314) (4.0134,1.6959) (5.0167,2.0527) (6.0201,2.3862) (7.0234,2.6978) (8.0268,2.9889) (9.0301,3.261) (10.033,3.5153) (11.037,3.7529) (12.04,3.9749) (13.043,4.1823) (14.047,4.3762) (15.05,4.5574) (16.054,4.7266) (17.057,4.8848) (18.06,5.0327) (19.064,5.1708) (20.067,5.2999) (21.07,5.4205) (22.074,5.5332) (23.077,5.6385) (24.08,5.7369) (25.084,5.8289) (26.087,5.9148) (27.09,5.9951) (28.094,6.0702) (29.097,6.1403) (30.1,6.2058) (31.104,6.2671) (32.107,6.3243) (33.11,6.3777) (34.114,6.4277) (35.117,6.4744) (36.12,6.518) (37.124,6.5588) (38.127,6.5969) (39.13,6.6325) (40.134,6.6658) (41.137,6.6968) (42.14,6.7259) (43.144,6.753) (44.147,6.7784) (45.151,6.8021) (46.154,6.8242) (47.157,6.8449) (48.161,6.8643) (49.164,6.8824) (50.167,6.8992) (51.171,6.915) (52.174,6.9298) (53.177,6.9435) (54.181,6.9564) (55.184,6.9685) (56.187,6.9797) (57.191,6.9902) (58.194,7) (59.197,7.0092) (60.201,7.0178) (61.204,7.0258) (62.207,7.0333) (63.211,7.0403) (64.214,7.0468) (65.217,7.0529) (66.221,7.0586) (67.224,7.064) (68.227,7.0689) (69.231,7.0736) (70.234,7.078) (71.237,7.082) (72.241,7.0858) (73.244,7.0894) (74.247,7.0927) (75,7.095)};
+  \begin{axis}[
+      iubejes,
+      xlabel={Tiempo t (\textmu{}s)},
+      ylabel={Corriente i (mA)},
+      title={Corriente en un circuito RL en serie},
+      legend style={at={(0.5,-0.30)}},
+      xmin=0,
+      xmax=75]
+    \addplot[color=iubblue, line width=1.4pt, no markers] coordinates {
+      (0,0) (0.250836,0.119992) (0.501672,0.237967) (0.752508,0.35396) (1.00334,0.468003) (1.25418,0.58013)
+      (1.50502,0.690372) (1.75585,0.798762) (2.00669,0.90533) (2.25753,1.01011) (2.50836,1.11312) (2.7592,1.21441)
+      (3.01003,1.31399) (3.26087,1.4119) (3.51171,1.50816) (3.76254,1.60281) (4.01338,1.69587) (4.26421,1.78736)
+      (4.51505,1.87731) (4.76589,1.96576) (5.01672,2.05271) (5.26756,2.13821) (5.51839,2.22226) (5.76923,2.30491)
+      (6.02007,2.38617) (6.2709,2.46606) (6.52174,2.5446) (6.77258,2.62183) (7.02341,2.69776) (7.27425,2.77242)
+      (7.52508,2.84582) (7.77592,2.91798) (8.02676,2.98894) (8.27759,3.0587) (8.52843,3.12729) (8.77926,3.19472)
+      (9.0301,3.26103) (9.28094,3.32621) (9.53177,3.39031) (9.78261,3.45332) (10.0334,3.51528) (10.2843,3.57619)
+      (10.5351,3.63609) (10.786,3.69497) (11.0368,3.75287) (11.2876,3.80979) (11.5385,3.86576) (11.7893,3.92078)
+      (12.0401,3.97488) (12.291,4.02807) (12.5418,4.08037) (12.7926,4.13179) (13.0435,4.18235) (13.2943,4.23205)
+      (13.5452,4.28092) (13.796,4.32897) (14.0468,4.37621) (14.2977,4.42266) (14.5485,4.46832) (14.7993,4.51322)
+      (15.0502,4.55737) (15.301,4.60077) (15.5518,4.64344) (15.8027,4.6854) (16.0535,4.72665) (16.3043,4.76721)
+      (16.5552,4.80708) (16.806,4.84629) (17.0569,4.88484) (17.3077,4.92274) (17.5585,4.96) (17.8094,4.99663)
+      (18.0602,5.03265) (18.311,5.06807) (18.5619,5.10289) (18.8127,5.13712) (19.0635,5.17078) (19.3144,5.20388)
+      (19.5652,5.23642) (19.8161,5.26841) (20.0669,5.29986) (20.3177,5.33078) (20.5686,5.36119) (20.8194,5.39108)
+      (21.0702,5.42047) (21.3211,5.44937) (21.5719,5.47778) (21.8227,5.50572) (22.0736,5.53318) (22.3244,5.56019)
+      (22.5753,5.58674) (22.8261,5.61284) (23.0769,5.63851) (23.3278,5.66374) (23.5786,5.68855) (23.8294,5.71294)
+      (24.0803,5.73692) (24.3311,5.7605) (24.5819,5.78369) (24.8328,5.80648) (25.0836,5.82889) (25.3344,5.85092)
+      (25.5853,5.87259) (25.8361,5.89389) (26.087,5.91483) (26.3378,5.93542) (26.5886,5.95566) (26.8395,5.97557)
+      (27.0903,5.99513) (27.3411,6.01437) (27.592,6.03329) (27.8428,6.05189) (28.0936,6.07018) (28.3445,6.08816)
+      (28.5953,6.10583) (28.8462,6.12321) (29.097,6.1403) (29.3478,6.1571) (29.5987,6.17362) (29.8495,6.18986)
+      (30.1003,6.20583) (30.3512,6.22153) (30.602,6.23696) (30.8528,6.25214) (31.1037,6.26706) (31.3545,6.28173)
+      (31.6054,6.29615) (31.8562,6.31033) (32.107,6.32428) (32.3579,6.33799) (32.6087,6.35146) (32.8595,6.36472)
+      (33.1104,6.37775) (33.3612,6.39056) (33.612,6.40315) (33.8629,6.41553) (34.1137,6.42771) (34.3645,6.43968)
+      (34.6154,6.45145) (34.8662,6.46302) (35.1171,6.4744) (35.3679,6.48558) (35.6187,6.49658) (35.8696,6.50739)
+      (36.1204,6.51802) (36.3712,6.52848) (36.6221,6.53875) (36.8729,6.54886) (37.1237,6.55879) (37.3746,6.56856)
+      (37.6254,6.57816) (37.8763,6.58761) (38.1271,6.59689) (38.3779,6.60602) (38.6288,6.61499) (38.8796,6.62381)
+      (39.1304,6.63249) (39.3813,6.64102) (39.6321,6.6494) (39.8829,6.65765) (40.1338,6.66575) (40.3846,6.67372)
+      (40.6355,6.68156) (40.8863,6.68926) (41.1371,6.69684) (41.388,6.70429) (41.6388,6.71161) (41.8896,6.71881)
+      (42.1405,6.72589) (42.3913,6.73285) (42.6421,6.73969) (42.893,6.74642) (43.1438,6.75303) (43.3946,6.75953)
+      (43.6455,6.76593) (43.8963,6.77221) (44.1472,6.7784) (44.398,6.78447) (44.6488,6.79045) (44.8997,6.79632)
+      (45.1505,6.8021) (45.4013,6.80778) (45.6522,6.81336) (45.903,6.81885) (46.1538,6.82425) (46.4047,6.82955)
+      (46.6555,6.83477) (46.9064,6.8399) (47.1572,6.84494) (47.408,6.8499) (47.6589,6.85478) (47.9097,6.85957)
+      (48.1605,6.86428) (48.4114,6.86892) (48.6622,6.87347) (48.913,6.87795) (49.1639,6.88235) (49.4147,6.88668)
+      (49.6656,6.89094) (49.9164,6.89513) (50.1672,6.89924) (50.4181,6.90329) (50.6689,6.90727) (50.9197,6.91118)
+      (51.1706,6.91502) (51.4214,6.9188) (51.6722,6.92252) (51.9231,6.92618) (52.1739,6.92977) (52.4247,6.9333)
+      (52.6756,6.93678) (52.9264,6.94019) (53.1773,6.94355) (53.4281,6.94685) (53.6789,6.9501) (53.9298,6.95329)
+      (54.1806,6.95643) (54.4314,6.95951) (54.6823,6.96254) (54.9331,6.96553) (55.1839,6.96846) (55.4348,6.97134)
+      (55.6856,6.97418) (55.9365,6.97696) (56.1873,6.9797) (56.4381,6.9824) (56.689,6.98505) (56.9398,6.98765)
+      (57.1906,6.99021) (57.4415,6.99273) (57.6923,6.9952) (57.9431,6.99764) (58.194,7.00003) (58.4448,7.00238)
+      (58.6957,7.00469) (58.9465,7.00697) (59.1973,7.0092) (59.4482,7.0114) (59.699,7.01356) (59.9498,7.01569)
+      (60.2007,7.01778) (60.4515,7.01983) (60.7023,7.02185) (60.9532,7.02384) (61.204,7.02579) (61.4548,7.02771)
+      (61.7057,7.02959) (61.9565,7.03145) (62.2074,7.03327) (62.4582,7.03507) (62.709,7.03683) (62.9599,7.03856)
+      (63.2107,7.04027) (63.4615,7.04195) (63.7124,7.04359) (63.9632,7.04521) (64.214,7.04681) (64.4649,7.04837)
+      (64.7157,7.04991) (64.9666,7.05143) (65.2174,7.05291) (65.4682,7.05438) (65.7191,7.05582) (65.9699,7.05723)
+      (66.2207,7.05862) (66.4716,7.05999) (66.7224,7.06134) (66.9732,7.06266) (67.2241,7.06396) (67.4749,7.06523)
+      (67.7258,7.06649) (67.9766,7.06773) (68.2274,7.06894) (68.4783,7.07014) (68.7291,7.07131) (68.9799,7.07246)
+      (69.2308,7.0736) (69.4816,7.07471) (69.7324,7.07581) (69.9833,7.07689) (70.2341,7.07795) (70.4849,7.07899)
+      (70.7358,7.08002) (70.9866,7.08103) (71.2375,7.08202) (71.4883,7.08299) (71.7391,7.08395) (71.99,7.08489)
+      (72.2408,7.08582) (72.4916,7.08673) (72.7425,7.08762) (72.9933,7.0885) (73.2441,7.08937) (73.495,7.09022)
+      (73.7458,7.09106) (73.9967,7.09188) (74.2475,7.09269) (74.4983,7.09348) (74.7492,7.09427) (75,7.09503)
+    };
     \addlegendentry{Crecimiento al conectar}
-    \addplot[line width=1.4pt, iuborange] coordinates {(0,7.14) (1.0033,6.672) (2.0067,6.2347) (3.01,5.826) (4.0134,5.4441) (5.0167,5.0873) (6.0201,4.7538) (7.0234,4.4422) (8.0268,4.1511) (9.0301,3.879) (10.033,3.6247) (11.037,3.3871) (12.04,3.1651) (13.043,2.9577) (14.047,2.7638) (15.05,2.5826) (16.054,2.4134) (17.057,2.2552) (18.06,2.1073) (19.064,1.9692) (20.067,1.8401) (21.07,1.7195) (22.074,1.6068) (23.077,1.5015) (24.08,1.4031) (25.084,1.3111) (26.087,1.2252) (27.09,1.1449) (28.094,1.0698) (29.097,0.9997) (30.1,0.93417) (31.104,0.87294) (32.107,0.81572) (33.11,0.76225) (34.114,0.71229) (35.117,0.6656) (36.12,0.62198) (37.124,0.58121) (38.127,0.54311) (39.13,0.50751) (40.134,0.47425) (41.137,0.44316) (42.14,0.41411) (43.144,0.38697) (44.147,0.3616) (45.151,0.3379) (46.154,0.31575) (47.157,0.29506) (48.161,0.27572) (49.164,0.25765) (50.167,0.24076) (51.171,0.22498) (52.174,0.21023) (53.177,0.19645) (54.181,0.18357) (55.184,0.17154) (56.187,0.1603) (57.191,0.14979) (58.194,0.13997) (59.197,0.1308) (60.201,0.12222) (61.204,0.11421) (62.207,0.10673) (63.211,0.099731) (64.214,0.093194) (65.217,0.087085) (66.221,0.081377) (67.224,0.076043) (68.227,0.071059) (69.231,0.066401) (70.234,0.062049) (71.237,0.057982) (72.241,0.054181) (73.244,0.05063) (74.247,0.047311) (75,0.044966)};
+    \addplot[color=iuborange, line width=1.4pt, no markers] coordinates {
+      (0,7.14) (0.250836,7.02001) (0.501672,6.90203) (0.752508,6.78604) (1.00334,6.672) (1.25418,6.55987)
+      (1.50502,6.44963) (1.75585,6.34124) (2.00669,6.23467) (2.25753,6.12989) (2.50836,6.02688) (2.7592,5.92559)
+      (3.01003,5.82601) (3.26087,5.7281) (3.51171,5.63184) (3.76254,5.53719) (4.01338,5.44413) (4.26421,5.35264)
+      (4.51505,5.26269) (4.76589,5.17424) (5.01672,5.08729) (5.26756,5.00179) (5.51839,4.91774) (5.76923,4.83509)
+      (6.02007,4.75383) (6.2709,4.67394) (6.52174,4.5954) (6.77258,4.51817) (7.02341,4.44224) (7.27425,4.36758)
+      (7.52508,4.29418) (7.77592,4.22202) (8.02676,4.15106) (8.27759,4.0813) (8.52843,4.01271) (8.77926,3.94528)
+      (9.0301,3.87897) (9.28094,3.81379) (9.53177,3.74969) (9.78261,3.68668) (10.0334,3.62472) (10.2843,3.56381)
+      (10.5351,3.50391) (10.786,3.44503) (11.0368,3.38713) (11.2876,3.33021) (11.5385,3.27424) (11.7893,3.21922)
+      (12.0401,3.16512) (12.291,3.11193) (12.5418,3.05963) (12.7926,3.00821) (13.0435,2.95765) (13.2943,2.90795)
+      (13.5452,2.85908) (13.796,2.81103) (14.0468,2.76379) (14.2977,2.71734) (14.5485,2.67168) (14.7993,2.62678)
+      (15.0502,2.58263) (15.301,2.53923) (15.5518,2.49656) (15.8027,2.4546) (16.0535,2.41335) (16.3043,2.37279)
+      (16.5552,2.33292) (16.806,2.29371) (17.0569,2.25516) (17.3077,2.21726) (17.5585,2.18) (17.8094,2.14337)
+      (18.0602,2.10735) (18.311,2.07193) (18.5619,2.03711) (18.8127,2.00288) (19.0635,1.96922) (19.3144,1.93612)
+      (19.5652,1.90358) (19.8161,1.87159) (20.0669,1.84014) (20.3177,1.80922) (20.5686,1.77881) (20.8194,1.74892)
+      (21.0702,1.71953) (21.3211,1.69063) (21.5719,1.66222) (21.8227,1.63428) (22.0736,1.60682) (22.3244,1.57981)
+      (22.5753,1.55326) (22.8261,1.52716) (23.0769,1.50149) (23.3278,1.47626) (23.5786,1.45145) (23.8294,1.42706)
+      (24.0803,1.40308) (24.3311,1.3795) (24.5819,1.35631) (24.8328,1.33352) (25.0836,1.31111) (25.3344,1.28908)
+      (25.5853,1.26741) (25.8361,1.24611) (26.087,1.22517) (26.3378,1.20458) (26.5886,1.18434) (26.8395,1.16443)
+      (27.0903,1.14487) (27.3411,1.12563) (27.592,1.10671) (27.8428,1.08811) (28.0936,1.06982) (28.3445,1.05184)
+      (28.5953,1.03417) (28.8462,1.01679) (29.097,0.9997) (29.3478,0.982899) (29.5987,0.966381) (29.8495,0.950141)
+      (30.1003,0.934173) (30.3512,0.918474) (30.602,0.903038) (30.8528,0.887862) (31.1037,0.872941) (31.3545,0.858271)
+      (31.6054,0.843847) (31.8562,0.829666) (32.107,0.815723) (32.3579,0.802014) (32.6087,0.788536) (32.8595,0.775284)
+      (33.1104,0.762255) (33.3612,0.749445) (33.612,0.73685) (33.8629,0.724467) (34.1137,0.712292) (34.3645,0.700321)
+      (34.6154,0.688552) (34.8662,0.67698) (35.1171,0.665603) (35.3679,0.654418) (35.6187,0.64342) (35.8696,0.632607)
+      (36.1204,0.621975) (36.3712,0.611523) (36.6221,0.601246) (36.8729,0.591141) (37.1237,0.581207) (37.3746,0.571439)
+      (37.6254,0.561836) (37.8763,0.552394) (38.1271,0.543111) (38.3779,0.533983) (38.6288,0.52501) (38.8796,0.516187)
+      (39.1304,0.507512) (39.3813,0.498983) (39.6321,0.490597) (39.8829,0.482352) (40.1338,0.474246) (40.3846,0.466276)
+      (40.6355,0.45844) (40.8863,0.450736) (41.1371,0.443161) (41.388,0.435713) (41.6388,0.428391) (41.8896,0.421191)
+      (42.1405,0.414113) (42.3913,0.407154) (42.6421,0.400311) (42.893,0.393584) (43.1438,0.386969) (43.3946,0.380466)
+      (43.6455,0.374072) (43.8963,0.367786) (44.1472,0.361605) (44.398,0.355528) (44.6488,0.349553) (44.8997,0.343679)
+      (45.1505,0.337903) (45.4013,0.332224) (45.6522,0.326641) (45.903,0.321152) (46.1538,0.315754) (46.4047,0.310448)
+      (46.6555,0.305231) (46.9064,0.300101) (47.1572,0.295058) (47.408,0.290099) (47.6589,0.285224) (47.9097,0.280431)
+      (48.1605,0.275718) (48.4114,0.271084) (48.6622,0.266528) (48.913,0.262049) (49.1639,0.257645) (49.4147,0.253316)
+      (49.6656,0.249058) (49.9164,0.244873) (50.1672,0.240758) (50.4181,0.236712) (50.6689,0.232733) (50.9197,0.228822)
+      (51.1706,0.224977) (51.4214,0.221196) (51.6722,0.217479) (51.9231,0.213824) (52.1739,0.21023) (52.4247,0.206697)
+      (52.6756,0.203224) (52.9264,0.199808) (53.1773,0.19645) (53.4281,0.193149) (53.6789,0.189903) (53.9298,0.186712)
+      (54.1806,0.183574) (54.4314,0.180489) (54.6823,0.177455) (54.9331,0.174473) (55.1839,0.171541) (55.4348,0.168658)
+      (55.6856,0.165824) (55.9365,0.163037) (56.1873,0.160297) (56.4381,0.157603) (56.689,0.154955) (56.9398,0.152351)
+      (57.1906,0.14979) (57.4415,0.147273) (57.6923,0.144798) (57.9431,0.142365) (58.194,0.139972) (58.4448,0.13762)
+      (58.6957,0.135307) (58.9465,0.133033) (59.1973,0.130797) (59.4482,0.128599) (59.699,0.126438) (59.9498,0.124313)
+      (60.2007,0.122224) (60.4515,0.12017) (60.7023,0.11815) (60.9532,0.116165) (61.204,0.114213) (61.4548,0.112293)
+      (61.7057,0.110406) (61.9565,0.108551) (62.2074,0.106726) (62.4582,0.104933) (62.709,0.103169) (62.9599,0.101435)
+      (63.2107,0.0997308) (63.4615,0.0980548) (63.7124,0.0964069) (63.9632,0.0947867) (64.214,0.0931938) (64.4649,0.0916276)
+      (64.7157,0.0900878) (64.9666,0.0885738) (65.2174,0.0870853) (65.4682,0.0856217) (65.7191,0.0841828) (65.9699,0.0827681)
+      (66.2207,0.0813771) (66.4716,0.0800095) (66.7224,0.0786649) (66.9732,0.0773429) (67.2241,0.0760431) (67.4749,0.0747652)
+      (67.7258,0.0735087) (67.9766,0.0722733) (68.2274,0.0710587) (68.4783,0.0698646) (68.7291,0.0686904) (68.9799,0.0675361)
+      (69.2308,0.0664011) (69.4816,0.0652852) (69.7324,0.064188) (69.9833,0.0631093) (70.2341,0.0620487) (70.4849,0.061006)
+      (70.7358,0.0599807) (70.9866,0.0589727) (71.2375,0.0579816) (71.4883,0.0570072) (71.7391,0.0560492) (71.99,0.0551072)
+      (72.2408,0.0541811) (72.4916,0.0532706) (72.7425,0.0523753) (72.9933,0.0514951) (73.2441,0.0506297) (73.495,0.0497789)
+      (73.7458,0.0489423) (73.9967,0.0481198) (74.2475,0.0473111) (74.4983,0.046516) (74.7492,0.0457343) (75,0.0449657)
+    };
     \addlegendentry{Caída al cortocircuitar la fuente}
-    \addplot[line width=1pt, dashed, iubnavy!70] coordinates {(14.8,0) (14.8,7.5684)};
-    \addlegendentry{t = \ensuremath{\tau}}
-    \addplot[line width=1pt, dashed, iubnavy!70] coordinates {(0,4.5) (75,4.5)};
-    \addlegendentry{63 \% de Imax}
+    \draw[iubgrisoscuro, dashed, line width=0.9pt] ({axis cs:14.8,0}|-{rel axis cs:0,0}) -- ({axis cs:14.8,0}|-{rel axis cs:0,1}) node[drotulo, pos=1, anchor=north west] {t = \ensuremath{\tau}};
+    \draw[iubgrisoscuro, dashed, line width=0.9pt] ({rel axis cs:0,0}|-{axis cs:0,4.5}) -- ({rel axis cs:1,0}|-{axis cs:0,4.5}) node[drotulo, pos=1, anchor=south east] {63 \% de Imax};
   \end{axis}
 \end{tikzpicture}
+\end{adjustbox}
+
+{\scriptsize\textbf{Figura 2.} Crecimiento y caída de la corriente en un RL en serie con VS = 5 V, L = 10.4 mH y R = 700.6 \ensuremath{\Omega} (\ensuremath{\tau} = 14.8 \textmu{}s)\par}
+\end{center}
   \column{0.35\textwidth}
 \begin{caja}{iubblue}{Lectura de la gráfica}
 \footnotesize La gráfica es idéntica en forma a la de carga y descarga del condensador, con la corriente en lugar de la tensión.
@@ -494,31 +654,100 @@
   \item Los extremos de la fórmula confirman lo ya visto.
 \end{itemize}
   \column{0.4\textwidth}
-\begin{caja}{iubblue}{Ecuación clave}
-\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle X_L = 2\pi f L$\end{adjustbox}
-\end{caja}
+\begin{cardO}{Error frecuente}
+\footnotesize Aplicar a la bobina la fórmula del condensador invertida, $X_L = 1/(2\pi f L)$.
+\end{cardO}
 \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Ecuaciones: Reactancia inductiva y respuesta sinusoidal}}
+\begin{cajaplana}{iubblue}
+\centering
+{\large
+\begin{equation*}
+  X_L = 2\pi f L
+\end{equation*}
+}
+\end{cajaplana}
 \end{frame}
 
 % ---------------------------------------------------------------------
 \begin{frame}{{\normalsize Reactancia inductiva de la bobina L3 (10.4 mH) en función}}
 \begin{columns}[c,onlytextwidth]
   \column{0.62\textwidth}
-\centering
+\begin{center}
+\begin{adjustbox}{max width=\linewidth, max totalheight=4.4cm}
 \begin{tikzpicture}
-  \begin{axis}[width=8.4cm, height=5.7cm, xmin=0, xmax=20000, ymin=0, ymax=1385.3,
-      xlabel={Frecuencia f (Hz)}, ylabel={Reactancia XL (\ensuremath{\Omega})},
-      label style={font=\scriptsize, text=iubnavy}, tick label style={font=\tiny, text=iubnavy},
-      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},
-      legend style={font=\tiny, fill=white}, legend pos=north east]
-    \addplot[line width=1.4pt, iubblue] coordinates {(0,0) (267.56,17.484) (535.12,34.967) (802.68,52.451) (1070.2,69.935) (1337.8,87.418) (1605.4,104.9) (1872.9,122.39) (2140.5,139.87) (2408,157.35) (2675.6,174.84) (2943.1,192.32) (3210.7,209.8) (3478.3,227.29) (3745.8,244.77) (4013.4,262.25) (4280.9,279.74) (4548.5,297.22) (4816.1,314.71) (5083.6,332.19) (5351.2,349.67) (5618.7,367.16) (5886.3,384.64) (6153.8,402.12) (6421.4,419.61) (6689,437.09) (6956.5,454.57) (7224.1,472.06) (7491.6,489.54) (7759.2,507.03) (8026.8,524.51) (8294.3,541.99) (8561.9,559.48) (8829.4,576.96) (9097,594.44) (9364.5,611.93) (9632.1,629.41) (9899.7,646.89) (10167,664.38) (10435,681.86) (10702,699.35) (10970,716.83) (11237,734.31) (11505,751.8) (11773,769.28) (12040,786.76) (12308,804.25) (12575,821.73) (12843,839.22) (13110,856.7) (13378,874.18) (13645,891.67) (13913,909.15) (14181,926.63) (14448,944.12) (14716,961.6) (14983,979.08) (15251,996.57) (15518,1014.1) (15786,1031.5) (16054,1049) (16321,1066.5) (16589,1084) (16856,1101.5) (17124,1119) (17391,1136.4) (17659,1153.9) (17926,1171.4) (18194,1188.9) (18462,1206.4) (18729,1223.9) (18997,1241.3) (19264,1258.8) (19532,1276.3) (19799,1293.8) (20000,1306.9)};
+  \begin{axis}[
+      iubejes,
+      xlabel={Frecuencia f (Hz)},
+      ylabel={Reactancia XL (\ensuremath{\Omega})},
+      title={Reactancia inductiva XL = 2\ensuremath{\pi}fL, L = 10.4 mH},
+      legend style={at={(0.5,-0.30)}},
+      xmin=0,
+      xmax=20000]
+    \addplot[color=iubblue, line width=1.4pt, no markers] coordinates {
+      (0,0) (66.8896,4.37091) (133.779,8.74182) (200.669,13.1127) (267.559,17.4836) (334.448,21.8546)
+      (401.338,26.2255) (468.227,30.5964) (535.117,34.9673) (602.007,39.3382) (668.896,43.7091) (735.786,48.08)
+      (802.676,52.4509) (869.565,56.8218) (936.455,61.1928) (1003.34,65.5637) (1070.23,69.9346) (1137.12,74.3055)
+      (1204.01,78.6764) (1270.9,83.0473) (1337.79,87.4182) (1404.68,91.7891) (1471.57,96.1601) (1538.46,100.531)
+      (1605.35,104.902) (1672.24,109.273) (1739.13,113.644) (1806.02,118.015) (1872.91,122.386) (1939.8,126.756)
+      (2006.69,131.127) (2073.58,135.498) (2140.47,139.869) (2207.36,144.24) (2274.25,148.611) (2341.14,152.982)
+      (2408.03,157.353) (2474.92,161.724) (2541.81,166.095) (2608.7,170.466) (2675.59,174.836) (2742.47,179.207)
+      (2809.36,183.578) (2876.25,187.949) (2943.14,192.32) (3010.03,196.691) (3076.92,201.062) (3143.81,205.433)
+      (3210.7,209.804) (3277.59,214.175) (3344.48,218.546) (3411.37,222.916) (3478.26,227.287) (3545.15,231.658)
+      (3612.04,236.029) (3678.93,240.4) (3745.82,244.771) (3812.71,249.142) (3879.6,253.513) (3946.49,257.884)
+      (4013.38,262.255) (4080.27,266.626) (4147.16,270.997) (4214.05,275.367) (4280.94,279.738) (4347.83,284.109)
+      (4414.72,288.48) (4481.61,292.851) (4548.49,297.222) (4615.38,301.593) (4682.27,305.964) (4749.16,310.335)
+      (4816.05,314.706) (4882.94,319.077) (4949.83,323.447) (5016.72,327.818) (5083.61,332.189) (5150.5,336.56)
+      (5217.39,340.931) (5284.28,345.302) (5351.17,349.673) (5418.06,354.044) (5484.95,358.415) (5551.84,362.786)
+      (5618.73,367.157) (5685.62,371.527) (5752.51,375.898) (5819.4,380.269) (5886.29,384.64) (5953.18,389.011)
+      (6020.07,393.382) (6086.96,397.753) (6153.85,402.124) (6220.74,406.495) (6287.63,410.866) (6354.52,415.237)
+      (6421.4,419.608) (6488.29,423.978) (6555.18,428.349) (6622.07,432.72) (6688.96,437.091) (6755.85,441.462)
+      (6822.74,445.833) (6889.63,450.204) (6956.52,454.575) (7023.41,458.946) (7090.3,463.317) (7157.19,467.688)
+      (7224.08,472.058) (7290.97,476.429) (7357.86,480.8) (7424.75,485.171) (7491.64,489.542) (7558.53,493.913)
+      (7625.42,498.284) (7692.31,502.655) (7759.2,507.026) (7826.09,511.397) (7892.98,515.768) (7959.87,520.138)
+      (8026.76,524.509) (8093.65,528.88) (8160.54,533.251) (8227.42,537.622) (8294.31,541.993) (8361.2,546.364)
+      (8428.09,550.735) (8494.98,555.106) (8561.87,559.477) (8628.76,563.848) (8695.65,568.218) (8762.54,572.589)
+      (8829.43,576.96) (8896.32,581.331) (8963.21,585.702) (9030.1,590.073) (9096.99,594.444) (9163.88,598.815)
+      (9230.77,603.186) (9297.66,607.557) (9364.55,611.928) (9431.44,616.299) (9498.33,620.669) (9565.22,625.04)
+      (9632.11,629.411) (9699,633.782) (9765.89,638.153) (9832.78,642.524) (9899.67,646.895) (9966.56,651.266)
+      (10033.4,655.637) (10100.3,660.008) (10167.2,664.379) (10234.1,668.749) (10301,673.12) (10367.9,677.491)
+      (10434.8,681.862) (10501.7,686.233) (10568.6,690.604) (10635.5,694.975) (10702.3,699.346) (10769.2,703.717)
+      (10836.1,708.088) (10903,712.459) (10969.9,716.829) (11036.8,721.2) (11103.7,725.571) (11170.6,729.942)
+      (11237.5,734.313) (11304.3,738.684) (11371.2,743.055) (11438.1,747.426) (11505,751.797) (11571.9,756.168)
+      (11638.8,760.539) (11705.7,764.91) (11772.6,769.28) (11839.5,773.651) (11906.4,778.022) (11973.2,782.393)
+      (12040.1,786.764) (12107,791.135) (12173.9,795.506) (12240.8,799.877) (12307.7,804.248) (12374.6,808.619)
+      (12441.5,812.99) (12508.4,817.36) (12575.3,821.731) (12642.1,826.102) (12709,830.473) (12775.9,834.844)
+      (12842.8,839.215) (12909.7,843.586) (12976.6,847.957) (13043.5,852.328) (13110.4,856.699) (13177.3,861.07)
+      (13244.1,865.44) (13311,869.811) (13377.9,874.182) (13444.8,878.553) (13511.7,882.924) (13578.6,887.295)
+      (13645.5,891.666) (13712.4,896.037) (13779.3,900.408) (13846.2,904.779) (13913,909.15) (13979.9,913.521)
+      (14046.8,917.891) (14113.7,922.262) (14180.6,926.633) (14247.5,931.004) (14314.4,935.375) (14381.3,939.746)
+      (14448.2,944.117) (14515.1,948.488) (14581.9,952.859) (14648.8,957.23) (14715.7,961.601) (14782.6,965.971)
+      (14849.5,970.342) (14916.4,974.713) (14983.3,979.084) (15050.2,983.455) (15117.1,987.826) (15183.9,992.197)
+      (15250.8,996.568) (15317.7,1000.94) (15384.6,1005.31) (15451.5,1009.68) (15518.4,1014.05) (15585.3,1018.42)
+      (15652.2,1022.79) (15719.1,1027.16) (15786,1031.54) (15852.8,1035.91) (15919.7,1040.28) (15986.6,1044.65)
+      (16053.5,1049.02) (16120.4,1053.39) (16187.3,1057.76) (16254.2,1062.13) (16321.1,1066.5) (16388,1070.87)
+      (16454.8,1075.24) (16521.7,1079.62) (16588.6,1083.99) (16655.5,1088.36) (16722.4,1092.73) (16789.3,1097.1)
+      (16856.2,1101.47) (16923.1,1105.84) (16990,1110.21) (17056.9,1114.58) (17123.7,1118.95) (17190.6,1123.32)
+      (17257.5,1127.7) (17324.4,1132.07) (17391.3,1136.44) (17458.2,1140.81) (17525.1,1145.18) (17592,1149.55)
+      (17658.9,1153.92) (17725.8,1158.29) (17792.6,1162.66) (17859.5,1167.03) (17926.4,1171.4) (17993.3,1175.78)
+      (18060.2,1180.15) (18127.1,1184.52) (18194,1188.89) (18260.9,1193.26) (18327.8,1197.63) (18394.6,1202)
+      (18461.5,1206.37) (18528.4,1210.74) (18595.3,1215.11) (18662.2,1219.48) (18729.1,1223.86) (18796,1228.23)
+      (18862.9,1232.6) (18929.8,1236.97) (18996.7,1241.34) (19063.5,1245.71) (19130.4,1250.08) (19197.3,1254.45)
+      (19264.2,1258.82) (19331.1,1263.19) (19398,1267.56) (19464.9,1271.94) (19531.8,1276.31) (19598.7,1280.68)
+      (19665.6,1285.05) (19732.4,1289.42) (19799.3,1293.79) (19866.2,1298.16) (19933.1,1302.53) (20000,1306.9)
+    };
     \addlegendentry{XL}
-    \addplot[line width=1pt, dashed, iubnavy!70] coordinates {(0,700.6) (20000,700.6)};
-    \addlegendentry{R + RW = 700.6 \ensuremath{\Omega}}
-    \addplot[line width=1pt, dashed, iubnavy!70] coordinates {(10722,0) (10722,1385.3)};
-    \addlegendentry{XL = R (10.7 kHz)}
+    \draw[iubgrisoscuro, dashed, line width=0.9pt] ({rel axis cs:0,0}|-{axis cs:0,700.6}) -- ({rel axis cs:1,0}|-{axis cs:0,700.6}) node[drotulo, pos=1, anchor=south east] {R + RW = 700.6 \ensuremath{\Omega}};
+    \draw[iubgrisoscuro, dashed, line width=0.9pt] ({axis cs:10722,0}|-{rel axis cs:0,0}) -- ({axis cs:10722,0}|-{rel axis cs:0,1}) node[drotulo, pos=1, anchor=north west] {XL = R (10.7 kHz)};
   \end{axis}
 \end{tikzpicture}
+\end{adjustbox}
+
+{\scriptsize\textbf{Figura 3.} Reactancia inductiva de la bobina L3 (10.4 mH) en función de la frecuencia, comparada con la resistencia total de 700.6 \ensuremath{\Omega}\par}
+\end{center}
   \column{0.35\textwidth}
 \begin{caja}{iubblue}{Lectura de la gráfica}
 \footnotesize La recta cruza la resistencia total en unos 10.7 kHz: por debajo de esa frecuencia domina el resistor, y por encima, la bobina.
@@ -540,20 +769,6 @@
   \item La ley de voltajes de Kirchhoff se aplica, como en el RC, sumando fasores.
 \end{itemize}
   \column{0.4\textwidth}
-\begin{caja}{iubblue}{Ecuación clave}
-\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \mathbf{Z} = R + jX_L = \sqrt{R^{2} + X_L^{2}}\ \angle \tan^{-1}\!\left(\frac{X_L}{R}\right)$\end{adjustbox}
-\end{caja}
-\end{columns}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{Ecuaciones: Circuito RL en serie y ley de voltajes}
-\begin{columns}[c,onlytextwidth]
-  \column{0.55\textwidth}
-\begin{cajaplana}{iubblue}
-\centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}\mathbf{V}_S = V_R + jV_L \\ V_S = \sqrt{V_R^{2} + V_L^{2}} \\ \theta = \tan^{-1}\!\left(\frac{V_L}{V_R}\right)\end{gathered}$\end{adjustbox}
-\end{cajaplana}
-  \column{0.42\textwidth}
 \begin{cardO}{Error frecuente}
 \footnotesize Usar el signo del circuito RC y escribir $\mathbf{Z} = R - jX_L$.
 \end{cardO}
@@ -561,23 +776,45 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
+\begin{frame}{Ecuaciones: Circuito RL en serie y ley de voltajes}
+\begin{cajaplana}{iubblue}
+\centering
+{\large
+\begin{equation*}
+  \mathbf{Z} = R + jX_L = \sqrt{R^{2} + X_L^{2}}\ \angle \tan^{-1}\!\left(\frac{X_L}{R}\right)
+\end{equation*}
+}
+\end{cajaplana}
+\vspace{1mm}
+\begin{cajaplana}{iuborange}
+\centering
+{\large
+\begin{equation*}
+  \mathbf{V}_S = V_R + jV_L, \qquad V_S = \sqrt{V_R^{2} + V_L^{2}}, \qquad \theta = \tan^{-1}\!\left(\frac{V_L}{V_R}\right)
+\end{equation*}
+}
+\end{cajaplana}
+\end{frame}
+
+% ---------------------------------------------------------------------
 \begin{frame}{{\normalsize Impedancia y ángulo de fase de un RL en serie ideal}}
-\centering\scriptsize
+\begin{center}
+{\scriptsize\textbf{Tabla 2.} Impedancia y ángulo de fase de un RL en serie ideal (R = 680 \ensuremath{\Omega}, L = 10 mH) en función de la frecuencia\par}
+\vspace{1mm}
+\scriptsize
 \renewcommand{\arraystretch}{1.35}
-\rowcolors{2}{iubnavy!6}{white}
 \begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-  \rowcolor{iubnavy}
-  \hd{f (Hz)} & \hd{XL (\ensuremath{\Omega})} & \hd{Z (\ensuremath{\Omega})} & \hd{\ensuremath{\theta} (°)} & \hd{Comportamiento}\\
-  1000 & 62.8 & 683 & 5.3 & casi resistivo\\
-  5000 & 314 & 749 & 24.8 & predomina R\\
-  10 000 & 628 & 926 & 42.7 & equilibrado\\
-  10 823 & 680 & 962 & 45.0 & XL = R\\
-  20 000 & 1257 & 1429 & 61.6 & predomina L\\
-\end{tabularx}
+\begin{tabular}{>{\raggedleft\arraybackslash}p{0.148\linewidth}>{\raggedleft\arraybackslash}p{0.148\linewidth}>{\raggedleft\arraybackslash}p{0.129\linewidth}>{\raggedleft\arraybackslash}p{0.129\linewidth}>{\raggedright\arraybackslash}p{0.295\linewidth}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{XL (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Z (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{\ensuremath{\theta} (\textdegree{})}} & \textcolor{white}{\textbf{Comportamiento}} \\
+1000 & 62.8 & 683 & 5.3 & casi resistivo \\
+\rowcolor{iubfondogris} 5000 & 314 & 749 & 24.8 & predomina R \\
+10 000 & 628 & 926 & 42.7 & equilibrado \\
+\rowcolor{iubfondogris} 10 823 & 680 & 962 & 45.0 & XL = R \\
+20 000 & 1257 & 1429 & 61.6 & predomina L \\
+\bottomrule
+\end{tabular}
 \end{adjustbox}
-\vspace{2mm}
-{\scriptsize Impedancia y ángulo de fase de un RL en serie ideal (R = 680 \ensuremath{\Omega}, L = 10 mH) en función de la frecuencia\par}
+\end{center}
 \end{frame}
 
 % =====================================================================
@@ -593,20 +830,6 @@
   \item En el circuito RL en paralelo, la tensión de la fuente es común al resistor y a la bobina, y se toma como referencia.
 \end{itemize}
   \column{0.4\textwidth}
-\begin{caja}{iubblue}{Ecuación clave}
-\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}\mathbf{Y}= G - jB_L \\ = \sqrt{G^{2} + B_L^{2}}\ \angle -\tan^{-1}\!\left(\frac{B_L}{G}\right) \\ B_L = \frac{1}{2\pi f L}\end{gathered}$\end{adjustbox}
-\end{caja}
-\end{columns}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{{\normalsize Ecuaciones: Circuito RL en paralelo y ley de corrientes}}
-\begin{columns}[c,onlytextwidth]
-  \column{0.55\textwidth}
-\begin{cajaplana}{iubblue}
-\centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}I_T = \sqrt{I_R^{2} + I_L^{2}} \\ \theta = -\tan^{-1}\!\left(\frac{I_L}{I_R}\right)\end{gathered}$\end{adjustbox}
-\end{cajaplana}
-  \column{0.42\textwidth}
 \begin{cardO}{Advertencia de seguridad}
 \footnotesize Nunca se conecta un RL en paralelo directamente a una fuente de cd o de muy baja frecuencia sin una resistencia en serie que limite la corriente: la bobina se comporta como un cortocircuito y puede dañar la fuente, el generador o la propia bobina por sobrecalentamiento.
 \end{cardO}
@@ -614,22 +837,44 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Ecuaciones: Circuito RL en paralelo y ley de corrientes}}
+\begin{cajaplana}{iubblue}
+\centering
+{\large
+\begin{equation*}
+  \mathbf{Y} = G - jB_L = \sqrt{G^{2} + B_L^{2}}\ \angle -\tan^{-1}\!\left(\frac{B_L}{G}\right), \qquad B_L = \frac{1}{2\pi f L}
+\end{equation*}
+}
+\end{cajaplana}
+\vspace{1mm}
+\begin{cajaplana}{iuborange}
+\centering
+{\large
+\begin{equation*}
+  I_T = \sqrt{I_R^{2} + I_L^{2}}, \qquad \theta = -\tan^{-1}\!\left(\frac{I_L}{I_R}\right)
+\end{equation*}
+}
+\end{cajaplana}
+\end{frame}
+
+% ---------------------------------------------------------------------
 \begin{frame}{Corrientes de un RL en paralelo ideal}
-\centering\tiny
+\begin{center}
+{\scriptsize\textbf{Tabla 3.} Corrientes de un RL en paralelo ideal (R = 680 \ensuremath{\Omega}, L = 10 mH, VS = 5 V eficaces) en función de la frecuencia\par}
+\vspace{1mm}
+\scriptsize
 \renewcommand{\arraystretch}{1.35}
-\rowcolors{2}{iubnavy!6}{white}
 \begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-  \rowcolor{iubnavy}
-  \hd{f (Hz)} & \hd{XL (\ensuremath{\Omega})} & \hd{IR (mA)} & \hd{IL (mA)} & \hd{IT (mA)} & \hd{\ensuremath{\theta} (°)}\\
-  1000 & 62.8 & 7.35 & 79.6 & 79.9 & \ensuremath{-}84.7\\
-  5000 & 314 & 7.35 & 15.9 & 17.5 & \ensuremath{-}65.2\\
-  10 000 & 628 & 7.35 & 7.96 & 10.8 & \ensuremath{-}47.3\\
-  20 000 & 1257 & 7.35 & 3.98 & 8.36 & \ensuremath{-}28.4\\
-\end{tabularx}
+\begin{tabular}{>{\raggedleft\arraybackslash}p{0.131\linewidth}>{\raggedleft\arraybackslash}p{0.131\linewidth}>{\raggedleft\arraybackslash}p{0.148\linewidth}>{\raggedleft\arraybackslash}p{0.148\linewidth}>{\raggedleft\arraybackslash}p{0.148\linewidth}>{\raggedleft\arraybackslash}p{0.115\linewidth}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{XL (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{IR (mA)}} & \textcolor{white}{\textbf{IL (mA)}} & \textcolor{white}{\textbf{IT (mA)}} & \textcolor{white}{\textbf{\ensuremath{\theta} (\textdegree{})}} \\
+1000 & 62.8 & 7.35 & 79.6 & 79.9 & \ensuremath{-}84.7 \\
+\rowcolor{iubfondogris} 5000 & 314 & 7.35 & 15.9 & 17.5 & \ensuremath{-}65.2 \\
+10 000 & 628 & 7.35 & 7.96 & 10.8 & \ensuremath{-}47.3 \\
+\rowcolor{iubfondogris} 20 000 & 1257 & 7.35 & 3.98 & 8.36 & \ensuremath{-}28.4 \\
+\bottomrule
+\end{tabular}
 \end{adjustbox}
-\vspace{2mm}
-{\scriptsize Corrientes de un RL en paralelo ideal (R = 680 \ensuremath{\Omega}, L = 10 mH, VS = 5 V eficaces) en función de la frecuencia\par}
+\end{center}
 \end{frame}
 
 % =====================================================================
@@ -647,48 +892,46 @@
   \item La columna del cálculo ideal permite ver dónde pesa la resistencia de devanado.
 \end{itemize}
   \column{0.4\textwidth}
-\begin{caja}{iubblue}{Ecuación clave}
-\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}\mathbf{V}_S = V_R\angle 0^\circ + V_{bob}\angle \varphi_b \\ \varphi_b = \tan^{-1}\!\left(\frac{X_L}{R_W}\right)\end{gathered}$\end{adjustbox}
-\end{caja}
+\begin{cardO}{Nota pedagógica}
+\footnotesize Cuando un circuito RL «casi» cumple la ley de voltajes de Kirchhoff con la fórmula del triángulo rectángulo pero sobra o falta un 1 \% o 2 \%, lo primero que hay que revisar es si se incluyó la resistencia de devanado de la bobina.
+\end{cardO}
 \end{columns}
 \end{frame}
 
 % ---------------------------------------------------------------------
-\begin{frame}{Circuitos RL en serie y en paralelo a 10 kHz (1/2)}
-\centering\scriptsize
-\renewcommand{\arraystretch}{1.35}
-\rowcolors{2}{iubnavy!6}{white}
-\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-  \rowcolor{iubnavy}
-  \hd{Magnitud} & \hd{Cálculo con RW} & \hd{Cálculo ideal (sin RW)} & \hd{Medido} & \hd{Diferencia con el cálculo con RW}\\
-  Serie: I & 5.22 mA & 5.32 mA & 5.21 mA & \ensuremath{-}0.2 \%\\
-  Serie: VR & 3.53 V & 3.60 V & 3.52 V & \ensuremath{-}0.3 \%\\
-  Serie: Vbob & 3.41 V & 3.48 V & 3.42 V & +0.3 \%\\
-  Serie: \ensuremath{\theta} & 43.0° & 44.0° & 43.2° & 0.2°\\
-\end{tabularx}
-\end{adjustbox}
-\vspace{2mm}
-{\scriptsize Circuitos RL en serie y en paralelo a 10 kHz con la bobina L3: cálculo con bobina real, cálculo ideal y medición (lecturas de ejemplo)\par}
+\begin{frame}{Ecuaciones: Medición de circuitos RL en serie}
+\begin{cajaplana}{iubblue}
+\centering
+{\large
+\begin{equation*}
+  \mathbf{V}_S = V_R\angle 0^\circ + V_{\mathrm{bob}}\angle \varphi_b, \qquad \varphi_b = \tan^{-1}\!\left(\frac{X_L}{R_W}\right)
+\end{equation*}
+}
+\end{cajaplana}
 \end{frame}
 
 % ---------------------------------------------------------------------
-\begin{frame}{Circuitos RL en serie y en paralelo a 10 kHz (2/2)}
-\centering\scriptsize
+\begin{frame}{{\normalsize Circuitos RL en serie y en paralelo a 10 kHz con la bobina}}
+\begin{center}
+{\scriptsize\textbf{Tabla 4.} Circuitos RL en serie y en paralelo a 10 kHz con la bobina L3: cálculo con bobina real, cálculo ideal y medición (lecturas de ejemplo)\par}
+\vspace{1mm}
+\scriptsize
 \renewcommand{\arraystretch}{1.35}
-\rowcolors{2}{iubnavy!6}{white}
 \begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-  \rowcolor{iubnavy}
-  \hd{Magnitud} & \hd{Cálculo con RW} & \hd{Cálculo ideal (sin RW)} & \hd{Medido} & \hd{Diferencia con el cálculo con RW}\\
-  Paralelo: IR & 7.40 mA & 7.40 mA & 7.38 mA & \ensuremath{-}0.3 \%\\
-  Paralelo: Ibob & 7.65 mA & 7.65 mA & 7.66 mA & +0.1 \%\\
-  Paralelo: IT & 10.8 mA & 10.6 mA & 10.8 mA & 0.0 \%\\
-  Paralelo: \ensuremath{\theta} & \ensuremath{-}44.8° & \ensuremath{-}46.0° & \ensuremath{-}44.9° & 0.1°\\
-\end{tabularx}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.131\linewidth}>{\raggedleft\arraybackslash}p{0.140\linewidth}>{\raggedleft\arraybackslash}p{0.210\linewidth}>{\raggedleft\arraybackslash}p{0.070\linewidth}>{\raggedleft\arraybackslash}p{0.298\linewidth}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{Cálculo con RW}} & \textcolor{white}{\textbf{Cálculo ideal (sin RW)}} & \textcolor{white}{\textbf{Medido}} & \textcolor{white}{\textbf{Diferencia con el cálculo con RW}} \\
+Serie: I & 5.22 mA & 5.32 mA & 5.21 mA & \ensuremath{-}0.2 \% \\
+\rowcolor{iubfondogris} Serie: VR & 3.53 V & 3.60 V & 3.52 V & \ensuremath{-}0.3 \% \\
+Serie: Vbob & 3.41 V & 3.48 V & 3.42 V & +0.3 \% \\
+\rowcolor{iubfondogris} Serie: \ensuremath{\theta} & 43.0\textdegree{} & 44.0\textdegree{} & 43.2\textdegree{} & 0.2\textdegree{} \\
+Paralelo: IR & 7.40 mA & 7.40 mA & 7.38 mA & \ensuremath{-}0.3 \% \\
+\rowcolor{iubfondogris} Paralelo: Ibob & 7.65 mA & 7.65 mA & 7.66 mA & +0.1 \% \\
+Paralelo: IT & 10.8 mA & 10.6 mA & 10.8 mA & 0.0 \% \\
+\rowcolor{iubfondogris} Paralelo: \ensuremath{\theta} & \ensuremath{-}44.8\textdegree{} & \ensuremath{-}46.0\textdegree{} & \ensuremath{-}44.9\textdegree{} & 0.1\textdegree{} \\
+\bottomrule
+\end{tabular}
 \end{adjustbox}
-\vspace{2mm}
-{\scriptsize Circuitos RL en serie y en paralelo a 10 kHz con la bobina L3: cálculo con bobina real, cálculo ideal y medición (lecturas de ejemplo)\par}
+\end{center}
 \end{frame}
 
 % =====================================================================
@@ -753,8 +996,10 @@
 \begin{frame}[plain]
 \begin{tikzpicture}[remember picture, overlay]
   \fill[iubnavy] (current page.north west) rectangle (current page.south east);
-  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{40}{44}\selectfont]
+  \node[anchor=north west, text=iubyellow, font=\fuentetitulo\bfseries\fontsize{40}{44}\selectfont]
     at ([xshift=1.2cm,yshift=-1.6cm]current page.north west) {\textexclamdown{}Gracias!};
+  \node[anchor=south east, inner sep=0pt]
+    at ([xshift=-0.9cm,yshift=0.75cm]current page.south east) {\logoIUBamarillo{0.95cm}};
   \node[anchor=north west, text=white, font=\normalsize, text width=14cm, align=left]
     at ([xshift=1.2cm,yshift=-3.4cm]current page.north west)
     {IEL04 \textperiodcentered{} Circuitos Eléctricos I};
@@ -764,7 +1009,7 @@
     {Próxima sesión \textperiodcentered{} Semana 9: Cálculo y medición de parámetros en circuitos RL serie y paralelo según el tipo de conexionado};
   \node[anchor=south west, text=iubyellow, font=\small, align=left]
     at ([xshift=1.2cm,yshift=0.9cm]current page.south west)
-    {Ing. Sergio Martinez Castilla \quad · \quad smartinezc@unibarranquilla.edu.co};
+    {Ing. Sergio Martinez Castilla \\[1pt] smartinezc@unibarranquilla.edu.co};
   \fill[iubblue]   ([xshift=1.2cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
   \fill[iuborange] ([xshift=2.9cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
   \fill[iubgreen]  ([xshift=4.6cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);

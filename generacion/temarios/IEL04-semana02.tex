@@ -1,0 +1,682 @@
+% =====================================================================
+%  Temario generado por TEMARIO (src/temario.py + src/temario_latex.py), sin LLM,
+%  a partir de los mismos datos que el .md. Compilar con pdfLaTeX (dos pasadas).
+% =====================================================================
+\documentclass[11pt,letterpaper]{article}
+
+% ---------------------------------------------------------------------
+%  Codificacion, idioma y tipografia
+% ---------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot,es-noshorthands,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage[margin=2.3cm,headheight=14pt]{geometry}
+
+% ---------------------------------------------------------------------
+%  Matematicas y unidades del SI
+% ---------------------------------------------------------------------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={.}, per-mode=symbol}
+
+% ---------------------------------------------------------------------
+%  Tablas profesionales (sin lineas verticales) y flotantes
+% ---------------------------------------------------------------------
+\usepackage[table]{xcolor}
+\usepackage{booktabs,array,multirow,tabularx,xltabular}
+\usepackage{graphicx,float}
+\usepackage[font=small,labelfont={bf,color=iubnavy},labelsep=period]{caption}
+
+% ---------------------------------------------------------------------
+%  Listas, cajas, graficas, diagramas y codigo
+% ---------------------------------------------------------------------
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+% ---------------------------------------------------------------------
+%  Encabezados de pagina y enlaces (hyperref, siempre el ultimo)
+% ---------------------------------------------------------------------
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+% ---------------------------------------------------------------------
+%  Paleta institucional IUB (Manual de Identidad Visual 2025)
+% ---------------------------------------------------------------------
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\definecolor{iubpurple}{HTML}{8E6BBF}
+\definecolor{iubgris}{HTML}{D5DAE3}
+\definecolor{iubgrisoscuro}{HTML}{7C8598}
+\definecolor{iubfondoazul}{HTML}{EBF7FD}
+\definecolor{iubfondonaranja}{HTML}{FDF4EA}
+\definecolor{iubfondoverde}{HTML}{EDF8F2}
+\definecolor{iubfondogris}{HTML}{F4F6F9}
+
+% ---------------------------------------------------------------------
+%  Formato general
+% ---------------------------------------------------------------------
+\setcounter{secnumdepth}{3}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.25}
+\setlist{itemsep=0.15em,topsep=0.3em}
+\setlist[itemize]{label=\textcolor{iubblue}{\small$\blacktriangleright$}}
+
+% ---------------------------------------------------------------------
+%  Encabezado y pie de pagina
+% ---------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{iubnavy}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\textcolor{iubnavy}{\textbf{IUB}\quad IEL04 --- Circuitos Eléctricos I}}
+\fancyhead[R]{\small\textcolor{iubnavy}{Semana 2 de 14}}
+\fancyfoot[C]{\small\textcolor{iubnavy}{\thepage}}
+
+% ---------------------------------------------------------------------
+%  Codigo (listings: el codigo va transliterado a ASCII)
+% ---------------------------------------------------------------------
+\lstset{basicstyle=\ttfamily\small, breaklines=true, columns=fullflexible, keepspaces=true, frame=single,
+  rulecolor=\color{iubgris}, backgroundcolor=\color{iubfondogris}, numbers=left, numberstyle=\tiny\color{iubgrisoscuro},
+  keywordstyle=\color{iubblue}\bfseries, commentstyle=\color{iubgreen}\itshape, stringstyle=\color{iuborange},
+  showstringspaces=false, captionpos=t, aboveskip=0.8em, belowskip=0.8em}
+\renewcommand{\lstlistingname}{Listado}
+
+% ---------------------------------------------------------------------
+%  Cajas: cabecera, notas, alineacion con el RA y cita actitudinal
+% ---------------------------------------------------------------------
+\newtcolorbox{cabecera}{enhanced, colback=iubnavy, colframe=iubnavy, coltext=white, arc=2pt, boxrule=0pt,
+  left=12pt, right=12pt, top=10pt, bottom=10pt, borderline north={3pt}{0pt}{iubyellow}}
+\newtcolorbox{nota}[1]{enhanced, colback=iubfondonaranja, colframe=iuborange, arc=2pt, boxrule=0.6pt, leftrule=3pt,
+  fonttitle=\bfseries\small, coltitle=iuborange, colbacktitle=iubfondonaranja, title={#1}, attach title to upper={\ }}
+\newtcolorbox{alineacion}{enhanced, colback=iubfondoazul, colframe=iubblue, arc=2pt, boxrule=0.6pt, leftrule=3pt}
+\newtcolorbox{cita}{enhanced, colback=iubnavy, colframe=iubnavy, coltext=white, arc=2pt, boxrule=0pt, leftrule=4pt,
+  borderline west={4pt}{0pt}{iubyellow}, fontupper=\itshape}
+
+% ---------------------------------------------------------------------
+%  Estilos de los diagramas (TikZ) y de las graficas (pgfplots)
+% ---------------------------------------------------------------------
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+\pgfplotsset{iubejes/.style={width=0.95\linewidth, height=6.2cm, grid=major, grid style={iubgris}, axis lines*=left,
+  axis line style={iubnavy}, tick label style={font=\small}, label style={font=\small}, title style={font=\bfseries\small},
+  legend cell align=left, legend style={draw=none, fill=none, font=\small, anchor=north, legend columns=-1,
+  /tikz/every even column/.append style={column sep=8pt}}, unbounded coords=jump}}
+
+\hypersetup{pdftitle={La bobina: inductancia, inducción electromagnética, tipos de núcleo e identificación de inductores}, pdfauthor={Institución Universitaria de Barranquilla}}
+
+\begin{document}
+
+\begin{cabecera}
+{\color{iubyellow}\Large\bfseries La bobina: inductancia, inducción electromagnética, tipos de núcleo e identificación de inductores\par}
+\vspace{0.6em}
+\small
+\textbf{\color{iubyellow}Módulos:} IEL04 --- Circuitos Eléctricos I\par
+\textbf{\color{iubyellow}Duración:} 240 minutos (sesión teórico-práctica)\par
+\textbf{\color{iubyellow}Nivel:} Pregrado\par
+\textbf{\color{iubyellow}Semana:} 2 de 14 (corte evaluativo 1)\par
+\textbf{\color{iubyellow}Resultado de aprendizaje del módulo:} IEL04-RA1\par
+\textbf{\color{iubyellow}Trabajo independiente:} 5 h/semana\par
+\end{cabecera}
+
+\section{Metadatos de la Sesión}
+
+\subsection{Continuidad curricular}
+
+La semana 1 presentó el condensador, el elemento que almacena energía en un campo eléctrico. Esta sesión estudia su contraparte, la bobina o inductor, que almacena energía en un campo magnético y se opone a los cambios de corriente, del mismo modo que el condensador se opone a los cambios de tensión. Se sigue deliberadamente el mismo recorrido ---estructura, comportamiento interno, tipos, identificación, unidades y verificación en el laboratorio--- para que la comparación entre ambos elementos sea explícita. Con los dos elementos identificados y verificados, la semana 3 los reúne para calcular y medir asociaciones en serie, en paralelo y mixtas, y circuitos LC.
+
+\begin{enumerate}
+  \item Semana 1: Condensadores: estructura, comportamiento interno, identificación y tipos
+  \item \textbf{Presente sesión (semana 2):} Bobinas o inductores: estructura, comportamiento interno, identificación y tipos
+  \item Semana 3: Condensadores y bobinas en serie, en paralelo y mixto: cálculo y medición en circuitos L, C y LC
+\end{enumerate}
+
+\subsection{Prerrequisitos}
+
+\begin{itemize}
+  \item Explicar qué es un campo magnético alrededor de un conductor con corriente y su relación con el sentido de la corriente.
+  \item Definir la capacitancia y calcular la energía almacenada en un condensador (semana 1).
+  \item Leer el código de colores de un resistor y el código de tres dígitos de un condensador (semana 1).
+  \item Convertir unidades con prefijos métricos (m, \textmu{}, n).
+  \item Medir resistencia y continuidad con un multímetro digital.
+\end{itemize}
+
+\section{Resultados de Aprendizaje}
+
+\begin{alineacion}
+\textbf{RA IEL04-RA1:} Calcular un circuito capacitivo, inductivo y LC, sea en serie o paralelo.
+
+\textbf{Criterios de evaluación:}
+
+\begin{itemize}
+  \item \textbf{CE1} (cognitiva\_conceptual): Identificar los tipos de capacitores e inductores.
+  \item \textbf{CE2} (manipulacion\_fisica): Realizar mediciones en un circuito capacitivo e inductivo.
+  \item \textbf{CE3} (manipulacion\_fisica): Realizar mediciones en un circuito LC.
+\end{itemize}
+
+\textbf{Unidades de competencia de la asignatura:}
+
+\begin{itemize}
+  \item UC2: Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.
+\end{itemize}
+\end{alineacion}
+
+Al finalizar la sesión, el estudiante estará en capacidad de lograr los siguientes resultados, que desarrollan el RA del módulo:
+
+\begin{xltabular}{\linewidth}{>{\raggedright\arraybackslash}p{1.1cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.9cm}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Resultado de aprendizaje}} & \textcolor{white}{\textbf{Nivel (Taxonomía de Bloom)}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Resultado de aprendizaje}} & \textcolor{white}{\textbf{Nivel (Taxonomía de Bloom)}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  RA1 & \textbf{Explicar} cómo una bobina se opone a los cambios de corriente a partir de las leyes de Faraday y de Lenz. (CE1) & Comprender \\
+  \rowcolor{iubfondogris} RA2 & \textbf{Calcular} la inductancia de una bobina a partir de sus parámetros físicos, y la tensión inducida y la energía almacenada a partir de su corriente. (CE1) & Aplicar \\
+  RA3 & \textbf{Identificar} el tipo de núcleo, el valor nominal y la tolerancia de inductores comerciales a partir de su construcción y su marcado. (CE1) & Aplicar \\
+  \rowcolor{iubfondogris} RA4 & \textbf{Medir} la inductancia y la resistencia de devanado de bobinas y decidir si son aptas para las mediciones en circuitos inductivos y LC. (CE2, CE3) & Evaluar \\
+\end{xltabular}
+
+\section{Índice Temporizado (240 minutos)}
+
+\begin{xltabular}{\linewidth}{>{\raggedright\arraybackslash}p{1.4cm}>{\raggedright\arraybackslash}X>{\raggedleft\arraybackslash}p{2.2cm}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bloque}} & \textcolor{white}{\textbf{Contenido}} & \textcolor{white}{\textbf{Duración}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bloque}} & \textcolor{white}{\textbf{Contenido}} & \textcolor{white}{\textbf{Duración}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  1 & La bobina como elemento que se opone a los cambios de corriente y almacena energía magnética & 20 min \\
+  \rowcolor{iubfondogris} 2 & Espiras, núcleo, permeabilidad y L = N\texttwosuperior{}\textmu{}A/l & 35 min \\
+  3 & Tensión inducida v = L di/dt, oposición al cambio, W = LI\texttwosuperior{}/2 y modelo real con RW y CW & 35 min \\
+  \rowcolor{iubfondogris} 4 & Núcleo de aire, de hierro y de ferrita; toroidales, moldeados, de montaje superficial y variables & 35 min \\
+  5 & Lectura del valor, la tolerancia y la corriente nominal en el cuerpo del inductor & 30 min \\
+  \rowcolor{iubfondogris} 6 & Henrio, mH y \textmu{}H, conversiones y símbolos de núcleo de aire, hierro, ferrita y variable & 25 min \\
+  7 & Decodificar el marcado, medir inductancia y resistencia de devanado, y detectar abiertos y cortos & 45 min \\
+  \rowcolor{iubfondogris} 8 & Síntesis, cierre actitudinal y bibliografía & 15 min \\
+  \midrule
+  \rowcolor{iubfondogris}  & \textbf{Total} & \textbf{240 min} \\
+\end{xltabular}
+
+\section{Desarrollo Teórico}
+
+\subsection{Introducción Conceptual (Bloque 1)}
+
+La semana anterior mostró que el condensador guarda energía en un campo eléctrico y se opone a los cambios bruscos de tensión. La bobina completa el par de elementos reactivos: basta dar forma de espiral a un tramo de alambre para obtener un inductor, y los términos bobina e inductor se usan indistintamente [1]. Cuando circula corriente por las espiras, los campos magnéticos de cada vuelta se suman y forman un campo electromagnético intenso dentro y alrededor de la bobina, con un polo norte y un polo sur [1]. En ese campo queda almacenada energía, y de él surge la propiedad que define al inductor: la oposición a cualquier cambio de la corriente.
+
+Esa oposición tiene consecuencias visibles en cualquier sistema eléctrico. La corriente por una bobina no puede cambiar instantáneamente: se necesita un tiempo, fijado por la inductancia y la resistencia del circuito, para que la corriente alcance su nuevo valor [2]. Por eso las bobinas se usan como filtros que suavizan la corriente de una fuente, como \textit{chokes} que bloquean interferencias en líneas de potencia y, en su versión más grande, como devanados de motores, transformadores y reactores de las subestaciones. La misma propiedad explica un riesgo: al interrumpir de golpe la corriente de una bobina aparece una tensión inducida muy alta entre sus terminales [1].
+
+% --- Figura 1: Cadena causal de la autoinducción: el cambio de corriente induce una tensión que se opone… (diagrama en TikZ con la disposición del PNG) ---
+\begin{figure}[H]
+  \centering
+  \begin{adjustbox}{max width=\linewidth}
+  \begin{tikzpicture}[x=1in, y=1in, font=\small]
+    % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+    \node[dterminal, minimum width=1.377in, minimum height=0.890in] (n0) at (0.689,-1.040) {Corriente \\ por las \\ espiras};  % i
+    \node[dcaja, minimum width=1.177in, minimum height=1.100in] (n1) at (3.316,-1.040) {Campo \\ magnético \\ en el \\ núcleo};  % b
+    \node[ddecision, minimum width=1.905in, minimum height=1.156in] (n2) at (6.207,-1.040) {\textquestiondown{}Cambia la \\ corriente?};  % c
+    \node[dcaja, minimum width=1.177in, minimum height=0.890in] (n3) at (9.244,-1.635) {Tensión \\ inducida \\ (Faraday)};  % v
+    \node[destado, minimum width=1.177in, minimum height=0.890in] (n4) at (9.244,-3.075) {Oposición \\ al cambio \\ (Lenz)};  % o
+    \node[dterminal, minimum width=1.470in, minimum height=0.890in] (n5) at (9.244,-0.445) {Energía \\ almacenada \\ estable};  % w
+    % flechas (las de retorno, curvas)
+    \draw[dflecha] (n0) -- (n1);
+    \draw[dflecha] (n1) -- (n2);
+    \draw[dflecha] (n2) -- (n3);
+    \draw[dflecha] (n3) -- (n4);
+    \draw[dflecha] (n2) -- (n5);
+    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    \node[drotulo] at (7.725,-1.337) {sí: di/dt \ensuremath{\neq} 0};
+    \node[drotulo] at (7.725,-0.743) {no: cd constante};
+  \end{tikzpicture}
+  \end{adjustbox}
+  \caption{Cadena causal de la autoinducción: el cambio de corriente induce una tensión que se opone a ese cambio}
+\end{figure}
+
+El diagrama resume el mecanismo que se desarrollará. La corriente crea un campo magnético; si la corriente cambia, el campo cambia y ese cambio induce una tensión entre los terminales de la bobina, cuyo sentido se opone precisamente al cambio que la produjo. Si la corriente es continua y constante, no hay tensión inducida: la bobina ideal se comporta como un cortocircuito y solo aparece la caída en la resistencia del alambre [1]. Esta dualidad con el condensador, que en cd constante se comporta como un circuito abierto, es la clave para entender los circuitos LC de la semana siguiente.
+
+\begin{nota}{Advertencia de seguridad:}
+Al trabajar con inductores pueden desarrollarse tensiones inducidas altas cuando el campo magnético cambia con rapidez, por ejemplo al abrir el circuito o al cambiar la corriente abruptamente [1]. En el laboratorio no se desconecta una bobina con corriente tocando sus terminales, y se usan las puntas del instrumento con el circuito desenergizado.
+\end{nota}
+
+La sesión recorre el tema con el mismo orden de la semana 1, para facilitar la comparación: estructura y definición de inductancia, comportamiento interno según las leyes de Faraday y de Lenz y energía almacenada, tipos de inductores según su núcleo, lectura del marcado y valores estándar, unidades y simbología, y un caso aplicado de verificación de las bobinas de un kit de prácticas con medidor LCR y ohmímetro.
+
+\subsection{Conceptos Clave}
+
+\subsubsection{Estructura de la bobina y definición de inductancia (Bloque 2)}
+
+Un inductor es un componente pasivo formado por un alambre enrollado alrededor de un \textbf{núcleo}, que exhibe la propiedad de inductancia [1]. El alambre suele ser de cobre esmaltado, de modo que las espiras quedan aisladas entre sí aunque se toquen, y el núcleo puede ser un material magnético (hierro, níquel, cobalto o sus aleaciones) o no magnético (aire, plástico, vidrio) [1]. Las formas más comunes son el solenoide, con el alambre enrollado sobre un cilindro, y el toroide, con el alambre enrollado sobre un anillo cerrado [2].
+
+La \textbf{inductancia} $L$ es la medida de la capacidad de una bobina para establecer una tensión inducida cuando cambia su corriente, de forma que esa tensión actúe en sentido opuesto al cambio [1]. Su unidad es el henrio (H): una bobina tiene un henrio cuando una corriente que cambia a razón de un amperio por segundo induce un voltio entre sus terminales [1]. Al igual que la capacitancia, la inductancia es una propiedad de la construcción, no de la corriente que circula.
+
+Cuatro parámetros físicos fijan su valor. La inductancia es directamente proporcional a la \textbf{permeabilidad} del núcleo, que indica la facilidad con que el material permite establecer un campo magnético; directamente proporcional al \textbf{cuadrado del número de vueltas}; directamente proporcional al \textbf{área de la sección transversal} del núcleo; e inversamente proporcional a su \textbf{longitud} [1]. Las cuatro dependencias se reúnen en una expresión que es una buena aproximación para solenoides y toroides [2]:
+
+\begin{equation}
+  L = \frac{N^{2}\,\mu\,A}{l}, \qquad \mu = \mu_r\,\mu_0, \qquad \mu_0 = 4\pi \times 10^{-7}\ \text{H/m}
+\end{equation}
+
+donde $L$ es la inductancia en henrios (H), $N$ el número de vueltas (adimensional), $\mu$ la permeabilidad del núcleo en henrios por metro (H/m), $\mu_r$ la permeabilidad relativa del material (adimensional), $\mu_0$ la permeabilidad del vacío en H/m, $A$ el área de la sección transversal del núcleo en metros cuadrados (m\texttwosuperior{}) y $l$ la longitud media del núcleo en metros (m) [1], [2]. En los materiales ferromagnéticos, $\mu$ no es una constante: depende del nivel de magnetización, así que la ecuación da un valor aproximado [2].
+
+La dependencia con $N^2$ es la más fuerte de todas: duplicar el número de vueltas cuadruplica la inductancia, porque cada vuelta adicional aumenta el campo y, a la vez, enlaza el campo de todas las demás. Los materiales ferromagnéticos tienen permeabilidades cientos o miles de veces mayores que la del vacío y ofrecen una trayectoria mucho mejor a las líneas de fuerza, mientras los no magnéticos tienen la misma permeabilidad que el vacío [1]. Por eso un núcleo magnético multiplica la inductancia por su permeabilidad relativa respecto a la misma bobina con núcleo de aire [2].
+
+Dos ejemplos lo cuantifican. Una bobina de 100 vueltas con núcleo de aire, 4 mm de diámetro y 100 mm de longitud tiene $A = \pi (4 \times 10^{-3})^2/4 = 12.57 \times 10^{-6}\ \text{m}^2$ y $L = (100)^2 (4\pi \times 10^{-7})(12.57 \times 10^{-6}) / 0.1 \approx 1.58\ \mu\text{H}$; la misma bobina con un núcleo de hierro de $\mu_r = 2000$ tendría $L \approx 3.16\ \text{mH}$ [2]. Una bobina de 350 vueltas sobre un núcleo de 1.5 cm de longitud y 0.5 cm de diámetro, con $\mu = 0.25 \times 10^{-3}\ \text{H/m}$, tiene $A = 1.96 \times 10^{-5}\ \text{m}^2$ y $L = (350)^2 (0.25 \times 10^{-3})(1.96 \times 10^{-5}) / 0.015 \approx 40\ \text{mH}$ [1].
+
+% --- Tabla 1: Efecto del núcleo y del número de vueltas sobre la inductancia (ejemplos de [1] y [2]) (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=2.042\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.51\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.458\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.948\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.948\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.51\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.584\hsize\linewidth=\hsize\raggedleft\arraybackslash}X}
+\caption{Efecto del núcleo y del número de vueltas sobre la inductancia (ejemplos de [1] y [2])} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bobina}} & \textcolor{white}{\textbf{N}} & \textcolor{white}{\textbf{Núcleo}} & \textcolor{white}{\textbf{\ensuremath{\mu} (H/m)}} & \textcolor{white}{\textbf{A (m\texttwosuperior{})}} & \textcolor{white}{\textbf{l (m)}} & \textcolor{white}{\textbf{L}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bobina}} & \textcolor{white}{\textbf{N}} & \textcolor{white}{\textbf{Núcleo}} & \textcolor{white}{\textbf{\ensuremath{\mu} (H/m)}} & \textcolor{white}{\textbf{A (m\texttwosuperior{})}} & \textcolor{white}{\textbf{l (m)}} & \textcolor{white}{\textbf{L}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  Solenoide de aire & 100 & Aire (\ensuremath{\mu}r = 1) & 1.257 \texttimes{} 10\ensuremath{^{-}}\ensuremath{^{6}} & 12.57 \texttimes{} 10\ensuremath{^{-}}\ensuremath{^{6}} & 0.100 & 1.58 \textmu{}H \\
+  \rowcolor{iubfondogris} Mismo solenoide & 100 & Hierro (\ensuremath{\mu}r = 2000) & 2.51 \texttimes{} 10\ensuremath{^{-}}\textthreesuperior{} & 12.57 \texttimes{} 10\ensuremath{^{-}}\ensuremath{^{6}} & 0.100 & 3.16 mH \\
+  Bobina con núcleo magnético & 350 & \ensuremath{\mu} = 0.25 \texttimes{} 10\ensuremath{^{-}}\textthreesuperior{} H/m & 0.25 \texttimes{} 10\ensuremath{^{-}}\textthreesuperior{} & 1.96 \texttimes{} 10\ensuremath{^{-}}\ensuremath{^{5}} & 0.015 & 40 mH \\
+\end{xltabular}
+
+La tabla muestra que el núcleo y el número de vueltas determinan el orden de magnitud: con aire y pocas vueltas se obtienen microhenrios, útiles en alta frecuencia; con núcleos magnéticos y muchas vueltas se alcanzan milihenrios o henrios, propios de filtros y aplicaciones de potencia. A diferencia del condensador, cuyo dieléctrico solo cambia la capacitancia en un factor fijo, el núcleo magnético hace que la inductancia dependa de la corriente cuando el material se acerca a la saturación.
+
+\begin{nota}{Error frecuente:}
+Calcular el área con el diámetro en lugar del radio, o dejar las dimensiones en centímetros. En $A = \pi r^2$ hay que usar el radio, y todas las longitudes deben estar en metros antes de sustituir en la fórmula.
+\end{nota}
+
+\subsubsection{Comportamiento interno: ley de Faraday, ley de Lenz y energía almacenada (Bloque 3)}
+
+El comportamiento de la bobina se apoya en dos leyes del electromagnetismo. La \textbf{ley de Faraday}, descubierta en 1831, establece que la tensión inducida en una bobina es directamente proporcional a la razón de cambio del campo magnético respecto a la bobina: al mover un imán a través de las espiras aparece una tensión, tanto mayor cuanto más rápido es el movimiento [1]. En forma de ecuación, la tensión inducida es el número de vueltas multiplicado por la razón de cambio del flujo magnético [1]. La \textbf{ley de Lenz} fija el sentido: un efecto inducido siempre se opone a la causa que lo produce [2].
+
+En un inductor no hace falta un imán externo: la propia corriente crea el flujo. Cuando la corriente aumenta, el campo crece; cuando disminuye, el campo se reduce; y ese campo cambiante induce entre los terminales una tensión que se opone al cambio de corriente [1]. Esta \textbf{autoinducción} se expresa directamente en función de la corriente [1]:
+
+\begin{equation}
+  v_{\mathrm{ind}} = L\,\frac{di}{dt}
+\end{equation}
+
+donde $v_{\mathrm{ind}}$ es la tensión inducida en voltios (V), $L$ la inductancia en henrios (H) y $di/dt$ la razón de cambio de la corriente en amperios por segundo (A/s). Un inductor de 1 H cuya corriente cambia a razón de 2 A/s desarrolla 2 V entre sus terminales [1]. La ecuación es la dual de la del condensador, $i = C\,dv/dt$ [1]: en el condensador la corriente depende de cómo cambia la tensión; en la bobina, la tensión depende de cómo cambia la corriente. De ahí dos consecuencias prácticas. Con corriente continua constante, $di/dt = 0$ y no hay tensión inducida: la inductancia se comporta como un cortocircuito [1]. Y si la corriente se interrumpe muy rápido, $di/dt$ es enorme: una bobina de 10 mH que conduce 0.5 A y se abre en 10 \textmu{}s genera del orden de $0.01 \times 0.5 / (10 \times 10^{-6}) = 500\ \text{V}$.
+
+La energía que la corriente invierte en establecer el campo no se pierde: queda almacenada en el campo electromagnético y es proporcional a la inductancia y al cuadrado de la corriente [1]:
+
+\begin{equation}
+  W = \frac{1}{2} L I^{2}
+\end{equation}
+
+donde $W$ es la energía almacenada en julios (J), $L$ la inductancia en henrios (H) e $I$ la corriente en amperios (A) [1]. La bobina de 40 mH calculada en el concepto anterior, con 0.5 A, almacena $W = \tfrac{1}{2}(0.040)(0.5)^2 = 5\ \text{mJ}$; una de 10 mH con la misma corriente, 1.25 mJ. La gráfica compara ambas.
+
+% --- Figura 2: Energía almacenada en función de la corriente para bobinas de 10 mH y 40 mH, con la corri… (gráfica en pgfplots con los puntos de su especificación) ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        iubejes,
+        xlabel={Corriente I (A)},
+        ylabel={Energía W (J)},
+        title={Energía almacenada W = LI\texttwosuperior{}/2},
+        legend style={at={(0.5,-0.30)}},
+        xmin=0,
+        xmax=1]
+      % serie 1: L = 10 mH («0.5*L1*I 2» en 300 puntos)
+      \addplot[color=iubblue, line width=1.4pt, no markers] coordinates {
+        (0,0) (0.00334448,5.59278e-08) (0.00668896,2.23711e-07) (0.0100334,5.0335e-07) (0.0133779,8.94845e-07) (0.0167224,1.39819e-06)
+        (0.0200669,2.0134e-06) (0.0234114,2.74046e-06) (0.0267559,3.57938e-06) (0.0301003,4.53015e-06) (0.0334448,5.59278e-06) (0.0367893,6.76726e-06)
+        (0.0401338,8.0536e-06) (0.0434783,9.4518e-06) (0.0468227,1.09618e-05) (0.0501672,1.25838e-05) (0.0535117,1.43175e-05) (0.0568562,1.61631e-05)
+        (0.0602007,1.81206e-05) (0.0635452,2.01899e-05) (0.0668896,2.23711e-05) (0.0702341,2.46642e-05) (0.0735786,2.7069e-05) (0.0769231,2.95858e-05)
+        (0.0802676,3.22144e-05) (0.083612,3.49549e-05) (0.0869565,3.78072e-05) (0.090301,4.07714e-05) (0.0936455,4.38474e-05) (0.09699,4.70353e-05)
+        (0.100334,5.0335e-05) (0.103679,5.37466e-05) (0.107023,5.72701e-05) (0.110368,6.09054e-05) (0.113712,6.46525e-05) (0.117057,6.85115e-05)
+        (0.120401,7.24824e-05) (0.123746,7.65651e-05) (0.12709,8.07597e-05) (0.130435,8.50662e-05) (0.133779,8.94845e-05) (0.137124,9.40146e-05)
+        (0.140468,9.86566e-05) (0.143813,0.00010341) (0.147157,0.000108276) (0.150502,0.000113254) (0.153846,0.000118343) (0.157191,0.000123544)
+        (0.160535,0.000128858) (0.16388,0.000134283) (0.167224,0.000139819) (0.170569,0.000145468) (0.173913,0.000151229) (0.177258,0.000157101)
+        (0.180602,0.000163085) (0.183946,0.000169182) (0.187291,0.00017539) (0.190635,0.000181709) (0.19398,0.000188141) (0.197324,0.000194685)
+        (0.200669,0.00020134) (0.204013,0.000208107) (0.207358,0.000214986) (0.210702,0.000221977) (0.214047,0.00022908) (0.217391,0.000236295)
+        (0.220736,0.000243621) (0.22408,0.00025106) (0.227425,0.00025861) (0.230769,0.000266272) (0.234114,0.000274046) (0.237458,0.000281932)
+        (0.240803,0.00028993) (0.244147,0.000298039) (0.247492,0.000306261) (0.250836,0.000314594) (0.254181,0.000323039) (0.257525,0.000331596)
+        (0.26087,0.000340265) (0.264214,0.000349045) (0.267559,0.000357938) (0.270903,0.000366942) (0.274247,0.000376058) (0.277592,0.000385287)
+        (0.280936,0.000394626) (0.284281,0.000404078) (0.287625,0.000413642) (0.29097,0.000423317) (0.294314,0.000433105) (0.297659,0.000443004)
+        (0.301003,0.000453015) (0.304348,0.000463138) (0.307692,0.000473373) (0.311037,0.000483719) (0.314381,0.000494178) (0.317726,0.000504748)
+        (0.32107,0.00051543) (0.324415,0.000526225) (0.327759,0.00053713) (0.331104,0.000548148) (0.334448,0.000559278) (0.337793,0.000570519)
+        (0.341137,0.000581873) (0.344482,0.000593338) (0.347826,0.000604915) (0.351171,0.000616604) (0.354515,0.000628405) (0.35786,0.000640317)
+        (0.361204,0.000652342) (0.364548,0.000664478) (0.367893,0.000676726) (0.371237,0.000689086) (0.374582,0.000701558) (0.377926,0.000714142)
+        (0.381271,0.000726838) (0.384615,0.000739645) (0.38796,0.000752564) (0.391304,0.000765595) (0.394649,0.000778738) (0.397993,0.000791993)
+        (0.401338,0.00080536) (0.404682,0.000818839) (0.408027,0.000832429) (0.411371,0.000846131) (0.414716,0.000859946) (0.41806,0.000873872)
+        (0.421405,0.00088791) (0.424749,0.000902059) (0.428094,0.000916321) (0.431438,0.000930694) (0.434783,0.00094518) (0.438127,0.000959777)
+        (0.441472,0.000974486) (0.444816,0.000989307) (0.448161,0.00100424) (0.451505,0.00101928) (0.454849,0.00103444) (0.458194,0.00104971)
+        (0.461538,0.00106509) (0.464883,0.00108058) (0.468227,0.00109618) (0.471572,0.0011119) (0.474916,0.00112773) (0.478261,0.00114367)
+        (0.481605,0.00115972) (0.48495,0.00117588) (0.488294,0.00119216) (0.491639,0.00120854) (0.494983,0.00122504) (0.498328,0.00124165)
+        (0.501672,0.00125838) (0.505017,0.00127521) (0.508361,0.00129216) (0.511706,0.00130921) (0.51505,0.00132638) (0.518395,0.00134367)
+        (0.521739,0.00136106) (0.525084,0.00137856) (0.528428,0.00139618) (0.531773,0.00141391) (0.535117,0.00143175) (0.538462,0.0014497)
+        (0.541806,0.00146777) (0.545151,0.00148595) (0.548495,0.00150423) (0.551839,0.00152263) (0.555184,0.00154115) (0.558528,0.00155977)
+        (0.561873,0.00157851) (0.565217,0.00159735) (0.568562,0.00161631) (0.571906,0.00163538) (0.575251,0.00165457) (0.578595,0.00167386)
+        (0.58194,0.00169327) (0.585284,0.00171279) (0.588629,0.00173242) (0.591973,0.00175216) (0.595318,0.00177202) (0.598662,0.00179198)
+        (0.602007,0.00181206) (0.605351,0.00183225) (0.608696,0.00185255) (0.61204,0.00187297) (0.615385,0.00189349) (0.618729,0.00191413)
+        (0.622074,0.00193488) (0.625418,0.00195574) (0.628763,0.00197671) (0.632107,0.0019978) (0.635452,0.00201899) (0.638796,0.0020403)
+        (0.64214,0.00206172) (0.645485,0.00208325) (0.648829,0.0021049) (0.652174,0.00212665) (0.655518,0.00214852) (0.658863,0.0021705)
+        (0.662207,0.00219259) (0.665552,0.0022148) (0.668896,0.00223711) (0.672241,0.00225954) (0.675585,0.00228208) (0.67893,0.00230473)
+        (0.682274,0.00232749) (0.685619,0.00235037) (0.688963,0.00237335) (0.692308,0.00239645) (0.695652,0.00241966) (0.698997,0.00244298)
+        (0.702341,0.00246642) (0.705686,0.00248996) (0.70903,0.00251362) (0.712375,0.00253739) (0.715719,0.00256127) (0.719064,0.00258526)
+        (0.722408,0.00260937) (0.725753,0.00263358) (0.729097,0.00265791) (0.732441,0.00268235) (0.735786,0.0027069) (0.73913,0.00273157)
+        (0.742475,0.00275635) (0.745819,0.00278123) (0.749164,0.00280623) (0.752508,0.00283134) (0.755853,0.00285657) (0.759197,0.0028819)
+        (0.762542,0.00290735) (0.765886,0.00293291) (0.769231,0.00295858) (0.772575,0.00298436) (0.77592,0.00301026) (0.779264,0.00303626)
+        (0.782609,0.00306238) (0.785953,0.00308861) (0.789298,0.00311495) (0.792642,0.00314141) (0.795987,0.00316797) (0.799331,0.00319465)
+        (0.802676,0.00322144) (0.80602,0.00324834) (0.809365,0.00327535) (0.812709,0.00330248) (0.816054,0.00332972) (0.819398,0.00335707)
+        (0.822742,0.00338453) (0.826087,0.0034121) (0.829431,0.00343978) (0.832776,0.00346758) (0.83612,0.00349549) (0.839465,0.00352351)
+        (0.842809,0.00355164) (0.846154,0.00357988) (0.849498,0.00360824) (0.852843,0.0036367) (0.856187,0.00366528) (0.859532,0.00369397)
+        (0.862876,0.00372278) (0.866221,0.00375169) (0.869565,0.00378072) (0.87291,0.00380986) (0.876254,0.00383911) (0.879599,0.00386847)
+        (0.882943,0.00389794) (0.886288,0.00392753) (0.889632,0.00395723) (0.892977,0.00398704) (0.896321,0.00401696) (0.899666,0.00404699)
+        (0.90301,0.00407714) (0.906355,0.00410739) (0.909699,0.00413776) (0.913043,0.00416824) (0.916388,0.00419883) (0.919732,0.00422954)
+        (0.923077,0.00426036) (0.926421,0.00429128) (0.929766,0.00432232) (0.93311,0.00435347) (0.936455,0.00438474) (0.939799,0.00441611)
+        (0.943144,0.0044476) (0.946488,0.0044792) (0.949833,0.00451091) (0.953177,0.00454273) (0.956522,0.00457467) (0.959866,0.00460672)
+        (0.963211,0.00463887) (0.966555,0.00467114) (0.9699,0.00470353) (0.973244,0.00473602) (0.976589,0.00476863) (0.979933,0.00480134)
+        (0.983278,0.00483417) (0.986622,0.00486712) (0.989967,0.00490017) (0.993311,0.00493333) (0.996656,0.00496661) (1,0.005)
+      };
+      \addlegendentry{L = 10 mH}
+      % serie 2: L = 40 mH («0.5*L2*I 2» en 300 puntos)
+      \addplot[color=iuborange, line width=1.4pt, no markers] coordinates {
+        (0,0) (0.00334448,2.23711e-07) (0.00668896,8.94845e-07) (0.0100334,2.0134e-06) (0.0133779,3.57938e-06) (0.0167224,5.59278e-06)
+        (0.0200669,8.0536e-06) (0.0234114,1.09618e-05) (0.0267559,1.43175e-05) (0.0301003,1.81206e-05) (0.0334448,2.23711e-05) (0.0367893,2.7069e-05)
+        (0.0401338,3.22144e-05) (0.0434783,3.78072e-05) (0.0468227,4.38474e-05) (0.0501672,5.0335e-05) (0.0535117,5.72701e-05) (0.0568562,6.46525e-05)
+        (0.0602007,7.24824e-05) (0.0635452,8.07597e-05) (0.0668896,8.94845e-05) (0.0702341,9.86566e-05) (0.0735786,0.000108276) (0.0769231,0.000118343)
+        (0.0802676,0.000128858) (0.083612,0.000139819) (0.0869565,0.000151229) (0.090301,0.000163085) (0.0936455,0.00017539) (0.09699,0.000188141)
+        (0.100334,0.00020134) (0.103679,0.000214986) (0.107023,0.00022908) (0.110368,0.000243621) (0.113712,0.00025861) (0.117057,0.000274046)
+        (0.120401,0.00028993) (0.123746,0.000306261) (0.12709,0.000323039) (0.130435,0.000340265) (0.133779,0.000357938) (0.137124,0.000376058)
+        (0.140468,0.000394626) (0.143813,0.000413642) (0.147157,0.000433105) (0.150502,0.000453015) (0.153846,0.000473373) (0.157191,0.000494178)
+        (0.160535,0.00051543) (0.16388,0.00053713) (0.167224,0.000559278) (0.170569,0.000581873) (0.173913,0.000604915) (0.177258,0.000628405)
+        (0.180602,0.000652342) (0.183946,0.000676726) (0.187291,0.000701558) (0.190635,0.000726838) (0.19398,0.000752564) (0.197324,0.000778738)
+        (0.200669,0.00080536) (0.204013,0.000832429) (0.207358,0.000859946) (0.210702,0.00088791) (0.214047,0.000916321) (0.217391,0.00094518)
+        (0.220736,0.000974486) (0.22408,0.00100424) (0.227425,0.00103444) (0.230769,0.00106509) (0.234114,0.00109618) (0.237458,0.00112773)
+        (0.240803,0.00115972) (0.244147,0.00119216) (0.247492,0.00122504) (0.250836,0.00125838) (0.254181,0.00129216) (0.257525,0.00132638)
+        (0.26087,0.00136106) (0.264214,0.00139618) (0.267559,0.00143175) (0.270903,0.00146777) (0.274247,0.00150423) (0.277592,0.00154115)
+        (0.280936,0.00157851) (0.284281,0.00161631) (0.287625,0.00165457) (0.29097,0.00169327) (0.294314,0.00173242) (0.297659,0.00177202)
+        (0.301003,0.00181206) (0.304348,0.00185255) (0.307692,0.00189349) (0.311037,0.00193488) (0.314381,0.00197671) (0.317726,0.00201899)
+        (0.32107,0.00206172) (0.324415,0.0021049) (0.327759,0.00214852) (0.331104,0.00219259) (0.334448,0.00223711) (0.337793,0.00228208)
+        (0.341137,0.00232749) (0.344482,0.00237335) (0.347826,0.00241966) (0.351171,0.00246642) (0.354515,0.00251362) (0.35786,0.00256127)
+        (0.361204,0.00260937) (0.364548,0.00265791) (0.367893,0.0027069) (0.371237,0.00275635) (0.374582,0.00280623) (0.377926,0.00285657)
+        (0.381271,0.00290735) (0.384615,0.00295858) (0.38796,0.00301026) (0.391304,0.00306238) (0.394649,0.00311495) (0.397993,0.00316797)
+        (0.401338,0.00322144) (0.404682,0.00327535) (0.408027,0.00332972) (0.411371,0.00338453) (0.414716,0.00343978) (0.41806,0.00349549)
+        (0.421405,0.00355164) (0.424749,0.00360824) (0.428094,0.00366528) (0.431438,0.00372278) (0.434783,0.00378072) (0.438127,0.00383911)
+        (0.441472,0.00389794) (0.444816,0.00395723) (0.448161,0.00401696) (0.451505,0.00407714) (0.454849,0.00413776) (0.458194,0.00419883)
+        (0.461538,0.00426036) (0.464883,0.00432232) (0.468227,0.00438474) (0.471572,0.0044476) (0.474916,0.00451091) (0.478261,0.00457467)
+        (0.481605,0.00463887) (0.48495,0.00470353) (0.488294,0.00476863) (0.491639,0.00483417) (0.494983,0.00490017) (0.498328,0.00496661)
+        (0.501672,0.0050335) (0.505017,0.00510084) (0.508361,0.00516862) (0.511706,0.00523685) (0.51505,0.00530553) (0.518395,0.00537466)
+        (0.521739,0.00544423) (0.525084,0.00551426) (0.528428,0.00558473) (0.531773,0.00565564) (0.535117,0.00572701) (0.538462,0.00579882)
+        (0.541806,0.00587108) (0.545151,0.00594378) (0.548495,0.00601693) (0.551839,0.00609054) (0.555184,0.00616458) (0.558528,0.00623908)
+        (0.561873,0.00631402) (0.565217,0.00638941) (0.568562,0.00646525) (0.571906,0.00654154) (0.575251,0.00661827) (0.578595,0.00669545)
+        (0.58194,0.00677308) (0.585284,0.00685115) (0.588629,0.00692968) (0.591973,0.00700865) (0.595318,0.00708806) (0.598662,0.00716793)
+        (0.602007,0.00724824) (0.605351,0.007329) (0.608696,0.00741021) (0.61204,0.00749186) (0.615385,0.00757396) (0.618729,0.00765651)
+        (0.622074,0.00773951) (0.625418,0.00782296) (0.628763,0.00790685) (0.632107,0.00799119) (0.635452,0.00807597) (0.638796,0.00816121)
+        (0.64214,0.00824689) (0.645485,0.00833302) (0.648829,0.00841959) (0.652174,0.00850662) (0.655518,0.00859409) (0.658863,0.00868201)
+        (0.662207,0.00877037) (0.665552,0.00885919) (0.668896,0.00894845) (0.672241,0.00903815) (0.675585,0.00912831) (0.67893,0.00921891)
+        (0.682274,0.00930996) (0.685619,0.00940146) (0.688963,0.00949341) (0.692308,0.0095858) (0.695652,0.00967864) (0.698997,0.00977193)
+        (0.702341,0.00986566) (0.705686,0.00995984) (0.70903,0.0100545) (0.712375,0.0101496) (0.715719,0.0102451) (0.719064,0.010341)
+        (0.722408,0.0104375) (0.725753,0.0105343) (0.729097,0.0106316) (0.732441,0.0107294) (0.735786,0.0108276) (0.73913,0.0109263)
+        (0.742475,0.0110254) (0.745819,0.0111249) (0.749164,0.0112249) (0.752508,0.0113254) (0.755853,0.0114263) (0.759197,0.0115276)
+        (0.762542,0.0116294) (0.765886,0.0117316) (0.769231,0.0118343) (0.772575,0.0119375) (0.77592,0.012041) (0.779264,0.0121451)
+        (0.782609,0.0122495) (0.785953,0.0123544) (0.789298,0.0124598) (0.792642,0.0125656) (0.795987,0.0126719) (0.799331,0.0127786)
+        (0.802676,0.0128858) (0.80602,0.0129934) (0.809365,0.0131014) (0.812709,0.0132099) (0.816054,0.0133189) (0.819398,0.0134283)
+        (0.822742,0.0135381) (0.826087,0.0136484) (0.829431,0.0137591) (0.832776,0.0138703) (0.83612,0.0139819) (0.839465,0.014094)
+        (0.842809,0.0142066) (0.846154,0.0143195) (0.849498,0.0144329) (0.852843,0.0145468) (0.856187,0.0146611) (0.859532,0.0147759)
+        (0.862876,0.0148911) (0.866221,0.0150068) (0.869565,0.0151229) (0.87291,0.0152394) (0.876254,0.0153564) (0.879599,0.0154739)
+        (0.882943,0.0155918) (0.886288,0.0157101) (0.889632,0.0158289) (0.892977,0.0159481) (0.896321,0.0160678) (0.899666,0.016188)
+        (0.90301,0.0163085) (0.906355,0.0164296) (0.909699,0.016551) (0.913043,0.016673) (0.916388,0.0167953) (0.919732,0.0169182)
+        (0.923077,0.0170414) (0.926421,0.0171651) (0.929766,0.0172893) (0.93311,0.0174139) (0.936455,0.017539) (0.939799,0.0176645)
+        (0.943144,0.0177904) (0.946488,0.0179168) (0.949833,0.0180436) (0.953177,0.0181709) (0.956522,0.0182987) (0.959866,0.0184269)
+        (0.963211,0.0185555) (0.966555,0.0186846) (0.9699,0.0188141) (0.973244,0.0189441) (0.976589,0.0190745) (0.979933,0.0192054)
+        (0.983278,0.0193367) (0.986622,0.0194685) (0.989967,0.0196007) (0.993311,0.0197333) (0.996656,0.0198664) (1,0.02)
+      };
+      \addlegendentry{L = 40 mH}
+      % línea de referencia en x = 0.5
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({axis cs:0.5,0}|-{rel axis cs:0,0}) -- ({axis cs:0.5,0}|-{rel axis cs:0,1}) node[drotulo, pos=1, anchor=north west] {I = 0.5 A};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Energía almacenada en función de la corriente para bobinas de 10 mH y 40 mH, con la corriente de 0.5 A marcada}
+\end{figure}
+
+Como en el condensador, la dependencia es cuadrática: duplicar la corriente cuadruplica la energía. La diferencia está en qué magnitud manda: en el condensador, la tensión; en la bobina, la corriente. Esa energía es la que se libera en forma de chispa cuando se abre bruscamente un circuito inductivo.
+
+Una bobina real no es solo inductancia. El alambre tiene resistencia por unidad de longitud y, con muchas vueltas, la \textbf{resistencia de devanado} $R_W$ puede ser significativa; aparece efectivamente en serie con la inductancia [1]. Su valor va desde unos pocos ohmios hasta unos cientos, y es mayor cuanto más largo y delgado es el alambre [2]. Además, las espiras vecinas forman pequeños condensadores cuya suma, la \textbf{capacitancia de devanado} $C_W$, actúa en paralelo con la bobina y se vuelve importante a altas frecuencias [1]. Para la mayoría de los análisis del curso basta el modelo de $L$ en serie con $R_W$, porque $R_W$ sí puede afectar la respuesta del circuito [2].
+
+\begin{nota}{Hallazgo contraintuitivo:}
+A diferencia del condensador, que en la práctica puede tratarse como ideal, la bobina casi nunca es ideal: su resistencia de devanado se mide con un ohmímetro y debe incluirse en los cálculos cuando no es despreciable frente a las demás resistencias del circuito.
+\end{nota}
+
+\subsubsection{Tipos de inductores según su núcleo y su construcción (Bloque 4)}
+
+Los inductores se fabrican en una gran diversidad de formas y tamaños, pero caen en dos categorías generales: \textbf{fijos} y \textbf{variables} [1]. Tanto unos como otros se clasifican además según el material del núcleo, y los tres tipos comunes son el núcleo de aire, el de hierro y el de ferrita, cada uno con su propio símbolo [1]. El diagrama organiza esa clasificación, que es la primera pregunta que se hace el técnico frente a una bobina desconocida: \textquestiondown{}de qué es el núcleo y se puede ajustar?
+
+% --- Figura 3: Clasificación de los inductores según su ajuste y el material de su núcleo (diagrama en TikZ con la disposición del PNG) ---
+\begin{figure}[H]
+  \centering
+  \begin{adjustbox}{max width=\linewidth}
+  \begin{tikzpicture}[x=1in, y=1in, font=\small]
+    % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+    \node[dterminal, minimum width=1.470in, minimum height=0.470in] (n0) at (0.735,-1.320) {Inductores};  % i
+    \node[dcaja, minimum width=0.805in, minimum height=0.470in] (n1) at (3.502,-0.725) {Fijos};  % f
+    \node[dcaja, minimum width=1.363in, minimum height=0.890in] (n2) at (3.502,-1.705) {Variables \\ (núcleo \\ deslizante)};  % v
+    \node[destado, minimum width=1.177in, minimum height=0.680in] (n3) at (6.122,-0.340) {Núcleo de \\ aire};  % a
+    \node[destado, minimum width=1.177in, minimum height=0.680in] (n4) at (6.122,-1.320) {Núcleo de \\ hierro};  % h
+    \node[destado, minimum width=1.177in, minimum height=0.680in] (n5) at (6.122,-2.300) {Núcleo de \\ ferrita};  % fe
+    % flechas (las de retorno, curvas)
+    \draw[dflecha] (n0) -- (n1);
+    \draw[dflecha] (n0) -- (n2);
+    \draw[dflecha] (n1) -- (n3);
+    \draw[dflecha] (n1) -- (n4);
+    \draw[dflecha] (n1) -- (n5);
+    \draw[dflecha] (n2) -- (n5);
+    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    \node[drotulo] at (4.812,-0.532) {alta frecuencia};
+    \node[drotulo] at (4.812,-1.022) {baja frecuencia};
+    \node[drotulo] at (4.812,-2.002) {ajuste por tornillo};
+  \end{tikzpicture}
+  \end{adjustbox}
+  \caption{Clasificación de los inductores según su ajuste y el material de su núcleo}
+\end{figure}
+
+Las bobinas de \textbf{núcleo de aire} (o sobre un soporte no magnético) tienen la permeabilidad del vacío, así que con pocas vueltas dan valores pequeños, del orden de microhenrios; a cambio, su inductancia no depende de la corriente ni se satura, lo que las hace adecuadas para alta frecuencia. Los fabricantes las ofrecen con pocas espiras, de 1 a 32 vueltas, para aplicaciones de alta frecuencia [2]. Las de \textbf{núcleo de hierro} aprovechan una permeabilidad cientos o miles de veces mayor [1] para alcanzar milihenrios y henrios con tamaños razonables; son las de los filtros de fuentes de potencia y de las aplicaciones de baja frecuencia. Las de \textbf{núcleo de ferrita}, un material cerámico magnético, combinan una permeabilidad alta con pérdidas bajas a frecuencias elevadas, y son las más comunes en la electrónica actual.
+
+Por su forma, se distinguen los solenoides, con el alambre enrollado sobre una barra, y las \textbf{bobinas toroidales}, enrolladas sobre un anillo cerrado que confina el campo magnético y reduce la interferencia con los componentes vecinos [2]. Los inductores fijos pequeños se encapsulan a menudo en un material aislante que protege el alambre fino; estos \textbf{inductores moldeados} tienen una apariencia similar a la de un resistor, incluso con bandas de colores, y es fácil confundirlos [1]. Los \textbf{inductores variables} suelen tener un ajuste de tornillo que desplaza un núcleo deslizante hacia dentro o hacia fuera de la bobina y cambia así la inductancia [1]; se llaman también de permeabilidad sintonizada [2].
+
+A las bobinas que se usan para bloquear cambios de corriente se les llama a menudo \textbf{choke}, por su capacidad de resistir esos cambios [2]. La tabla reúne los tipos que el técnico encontrará con más frecuencia, con los intervalos típicos de valores y las aplicaciones que reporta [2]; sirve como \guillemotleft{}factor de reconocimiento\guillemotright{} para asociar la forma de una bobina con su orden de magnitud.
+
+% --- Tabla 2: Tipos de inductores, valores típicos y aplicaciones [2] (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=1.021\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.543\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.436\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Tipos de inductores, valores típicos y aplicaciones [2]} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Tipo}} & \textcolor{white}{\textbf{Valores típicos}} & \textcolor{white}{\textbf{Aplicación típica}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Tipo}} & \textcolor{white}{\textbf{Valores típicos}} & \textcolor{white}{\textbf{Aplicación típica}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  Bobina de núcleo abierto & 3 mH a 40 mH & filtros pasa bajos, redes de distribución de frecuencias \\
+  \rowcolor{iubfondogris} Bobina toroidal & 1 mH a 30 mH & choke en líneas de ca, reducción de transitorios y EMI \\
+  Choke de modo común & 0.6 mH a 50 mH & filtros de línea de ca, fuentes conmutadas, cargadores \\
+  \rowcolor{iubfondogris} Choke de RF & 10 \textmu{}H a 50 \textmu{}H & radio, televisión, comunicaciones \\
+  Bobina ajustable de RF & 1 \textmu{}H a 100 \textmu{}H & osciladores y circuitos de RF \\
+  \rowcolor{iubfondogris} Inductor de montaje superficial & 0.01 \textmu{}H a 100 \textmu{}H & circuitos miniaturizados en PCB multicapa \\
+\end{xltabular}
+
+La tabla deja ver dos familias. Las bobinas de milihenrios, con núcleo magnético y a menudo toroidales, trabajan en los circuitos de potencia y de línea, donde manejan corrientes apreciables y filtran interferencias. Las de microhenrios, de aire, ferrita o montaje superficial, trabajan en circuitos de radiofrecuencia y en electrónica miniaturizada. En el laboratorio de circuitos, las bobinas de las prácticas suelen ser de la primera familia, de algunos milihenrios, porque con ellas los efectos inductivos se miden con facilidad a las frecuencias de un generador de funciones.
+
+\begin{nota}{Error frecuente:}
+Tomar un inductor moldeado por un resistor. Si la lectura de sus bandas da un valor de resistencia que no coincide con lo que mide el ohmímetro (normalmente unos pocos ohmios), se trata de una bobina: el código de colores expresa entonces su inductancia.
+\end{nota}
+
+\subsubsection{Identificación: marcado, valores estándar y tolerancia de inductores (Bloque 5)}
+
+Identificar una bobina exige los mismos tres datos que un condensador ---valor nominal, tolerancia y un límite de trabajo---, pero el límite no es una tensión sino una \textbf{corriente nominal}: la corriente máxima que el devanado soporta sin sobrecalentarse y, en los núcleos magnéticos, sin que el núcleo se sature y la inductancia caiga. Las bobinas grandes llevan el valor impreso completo, por ejemplo \guillemotleft{}10 mH 0.5 A\guillemotright{}; las pequeñas usan códigos, y la hoja de datos del fabricante completa lo que no cabe en el cuerpo: la resistencia de devanado en cd y la corriente nominal.
+
+El punto de partida de la identificación son los \textbf{valores estándar}. Los inductores emplean los mismos multiplicadores numéricos que los resistores y los condensadores: los de mayor demanda usan la serie de los resistores más comunes, con tolerancias del 5 \%, 10 \% y 20 \%, y también se encuentran los multiplicadores de la serie de 5 \% y 10 \% [2]. En la práctica aparecen valores como 0.10, 0.12, 0.15, 0.18, 0.22, 0.27, 0.33, 0.39, 0.47, 0.56, 0.68 y 0.82, multiplicados por la potencia de diez que corresponda: 1.0, 1.2, 1.5, 1.8, 2.2, 2.7\ldots{} [2]. Saber que un valor medido de 4.62 mH corresponde a una bobina de 4.7 mH, y no a una de 4.5 mH, que no existe en la serie, es parte de la identificación.
+
+Los inductores moldeados usan un \textbf{código de colores} con la misma estructura que el de los resistores: la primera banda es el primer dígito, la segunda el segundo dígito, la tercera el multiplicador (el número de ceros) y la cuarta la tolerancia \textcolor{iuborange}{\textbf{[FUENTE NO CARGADA EN raw/]}}. La diferencia es la unidad: el resultado de un inductor se expresa en microhenrios. Los inductores de montaje superficial y muchos radiales usan un \textbf{código de tres dígitos}, también en microhenrios: los dos primeros son las cifras significativas y el tercero el número de ceros. Cuando el valor tiene decimales, la letra R marca la posición del punto: 4R7 significa 4.7 \textmu{}H \textcolor{iuborange}{\textbf{[FUENTE NO CARGADA EN raw/]}}. El valor nominal se obtiene así:
+
+\begin{equation}
+  L_{n} = (10\,a + b) \times 10^{\,m}\ \mu\text{H}
+\end{equation}
+
+donde $L_n$ es la inductancia nominal en microhenrios (\textmu{}H), $a$ y $b$ son el primer y el segundo dígito del código (adimensionales) y $m$ es el tercer dígito o la banda multiplicadora (adimensional). Para \textbf{101}, $L_n = 10 \times 10^1 = 100\ \mu\text{H}$; para \textbf{472}, $L_n = 47 \times 10^2 = 4700\ \mu\text{H} = 4.7\ \text{mH}$; para \textbf{103}, $L_n = 10\ \text{mH}$. Obsérvese que el mismo código 103 significa 10 nF en un condensador y 10 mH en una bobina: la unidad la decide el tipo de componente, no el número.
+
+La \textbf{tolerancia} se indica con la cuarta banda de color (plata \textpm{}10 \%, oro \textpm{}5 \%, como en los resistores [1]) o con una letra tras el código, con el mismo significado que en los condensadores: J (\textpm{}5 \%), K (\textpm{}10 \%) y M (\textpm{}20 \%). El intervalo admisible se calcula igual que para el condensador:
+
+\begin{equation}
+  L_{\min} = L_{n}\,(1 - t), \qquad L_{\max} = L_{n}\,(1 + t)
+\end{equation}
+
+donde $L_{\min}$ y $L_{\max}$ son los límites de la inductancia admisible, $L_n$ la inductancia nominal, ambas en la misma unidad (\textmu{}H, mH o H), y $t$ la tolerancia como fracción (adimensional). Una bobina \textbf{472K} tiene $L_n = 4.7\ \text{mH}$ y $t = 0.10$: su valor real debe estar entre 4.23 mH y 5.17 mH. La tabla reúne ejemplos de lectura.
+
+% --- Tabla 3: Lectura de marcados frecuentes de inductores [FUENTE NO CARGADA EN raw/] (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=0.96\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.72\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.68\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.64\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Lectura de marcados frecuentes de inductores \textcolor{iuborange}{\textbf{[FUENTE NO CARGADA EN raw/]}}} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Marcado}} & \textcolor{white}{\textbf{Valor nominal}} & \textcolor{white}{\textbf{Tolerancia}} & \textcolor{white}{\textbf{Observación}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Marcado}} & \textcolor{white}{\textbf{Valor nominal}} & \textcolor{white}{\textbf{Tolerancia}} & \textcolor{white}{\textbf{Observación}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  4R7 & 4.7 \textmu{}H & no indicada & R marca el punto decimal \\
+  \rowcolor{iubfondogris} 101 & 100 \textmu{}H & no indicada & montaje superficial o radial \\
+  102J & 1000 \textmu{}H = 1 mH & \textpm{}5 \% & --- \\
+  \rowcolor{iubfondogris} 472K & 4700 \textmu{}H = 4.7 mH & \textpm{}10 \% & --- \\
+  103 & 10 000 \textmu{}H = 10 mH & no indicada & mismo código que 10 nF en un condensador \\
+  \rowcolor{iubfondogris} marrón-negro-rojo-plata & 1000 \textmu{}H = 1 mH & \textpm{}10 \% & inductor moldeado con bandas \\
+  10 mH 0.5 A & 10 mH & según fabricante & corriente nominal impresa \\
+\end{xltabular}
+
+\begin{nota}{Nota pedagógica:}
+Un buen hábito es comprobar que el valor leído pertenece a la serie estándar. Si la lectura del código da un valor que no existe en la serie (por ejemplo, 4.5 mH), lo más probable es que se haya leído mal una banda o un dígito.
+\end{nota}
+
+\subsubsection{Unidades, múltiplos, submúltiplos, simbología y nomenclatura de la inductancia (Bloque 6)}
+
+La unidad de inductancia es el \textbf{henrio} (H), nombrado en honor de Joseph Henry: una bobina tiene un henrio cuando una corriente que cambia a razón de un amperio por segundo induce un voltio entre sus terminales [1], [2]. El henrio es una unidad grande, y en la práctica las unidades más comunes son el milihenrio (mH) y el microhenrio (\textmu{}H) [1]. A diferencia del faradio, que casi nunca aparece sin prefijo, el henrio sí se usa directamente en bobinas de filtro, reactores y devanados de máquinas eléctricas, donde son habituales valores de 1 H a 10 H.
+
+Las conversiones siguen la notación de ingeniería, con exponentes múltiplos de tres y un prefijo métrico asociado a cada uno [1]: $1\ \text{mH} = 10^{-3}\ \text{H}$, $1\ \mu\text{H} = 10^{-6}\ \text{H}$ y, en circuitos de muy alta frecuencia, $1\ \text{nH} = 10^{-9}\ \text{H}$. Entre unidades consecutivas el factor es 1000. Así, 0.0047 H equivalen a 4.7 mH y a 4700 \textmu{}H; 220 \textmu{}H equivalen a 0.22 mH. La conversión importa en el laboratorio porque el medidor LCR puede mostrar mH mientras el código de la bobina está en \textmu{}H.
+
+% --- Tabla 4: Unidades de inductancia y conversiones (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=0.619\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.464\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.619\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.186\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=2.112\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Unidades de inductancia y conversiones} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Unidad}} & \textcolor{white}{\textbf{Símbolo}} & \textcolor{white}{\textbf{Valor en H}} & \textcolor{white}{\textbf{Equivalencia práctica}} & \textcolor{white}{\textbf{Uso típico}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Unidad}} & \textcolor{white}{\textbf{Símbolo}} & \textcolor{white}{\textbf{Valor en H}} & \textcolor{white}{\textbf{Equivalencia práctica}} & \textcolor{white}{\textbf{Uso típico}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  henrio & H & 1 & 1000 mH & filtros de potencia, reactores \\
+  \rowcolor{iubfondogris} milihenrio & mH & 10\ensuremath{^{-}}\textthreesuperior{} & 1000 \textmu{}H & filtros de línea, bobinas de laboratorio \\
+  microhenrio & \textmu{}H & 10\ensuremath{^{-}}\ensuremath{^{6}} & 1000 nH & RF, montaje superficial \\
+  \rowcolor{iubfondogris} nanohenrio & nH & 10\ensuremath{^{-}}\ensuremath{^{9}} & --- & pistas y bobinas de muy alta frecuencia \\
+\end{xltabular}
+
+La \textbf{simbología} del inductor representa las espiras del devanado: una línea ondulada o una sucesión de semicírculos entre dos terminales [1]. El núcleo se indica con líneas paralelas al lado de las espiras: sin líneas, núcleo de aire; con líneas continuas, núcleo de hierro; con líneas discontinuas, núcleo de ferrita [1], [2]. El inductor variable se distingue por una flecha que atraviesa el símbolo o por una flecha junto al núcleo, que indica el núcleo deslizante de permeabilidad sintonizada [1], [2]. Como la función principal del inductor es introducir inductancia en una red, el símbolo no incluye la resistencia ni la capacitancia de devanado: cuando importan, se dibujan aparte en el circuito equivalente [2].
+
+% --- Tabla 5: Símbolos y nomenclatura de los inductores (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=0.849\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.934\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.217\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Símbolos y nomenclatura de los inductores} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Elemento}} & \textcolor{white}{\textbf{Representación}} & \textcolor{white}{\textbf{Significado}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Elemento}} & \textcolor{white}{\textbf{Representación}} & \textcolor{white}{\textbf{Significado}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  Inductor de núcleo de aire & espiras sin líneas adicionales & núcleo no magnético \\
+  \rowcolor{iubfondogris} Inductor de núcleo de hierro & espiras con dos líneas continuas & núcleo ferromagnético laminado \\
+  Inductor de núcleo de ferrita & espiras con líneas discontinuas & núcleo cerámico magnético \\
+  \rowcolor{iubfondogris} Inductor variable & símbolo con flecha & núcleo deslizante ajustable \\
+  Designador & L1, L2, L3\ldots{} & referencia del componente en el plano \\
+  \rowcolor{iubfondogris} RW o DCR & resistencia de devanado & se dibuja en serie con L en el equivalente \\
+\end{xltabular}
+
+En los planos, cada bobina se identifica con la letra \textbf{L} y un número correlativo, del mismo modo que los condensadores usan la C. En las hojas de datos conviene reconocer tres abreviaturas: DCR (resistencia en cd del devanado, la $R_W$ del modelo), la corriente nominal y la frecuencia de autorresonancia, que es la frecuencia a la que la capacitancia de devanado resuena con la inductancia y la bobina deja de comportarse como tal.
+
+La comparación con la semana anterior es directa. El condensador se mide en faradios con submúltiplos pequeños (pF, nF, \textmu{}F) y almacena energía con la tensión; la bobina se mide en henrios con submúltiplos moderados (\textmu{}H, mH) y almacena energía con la corriente. Tener presentes los órdenes de magnitud típicos de cada uno evita errores de lectura y de cálculo: una bobina de laboratorio de \guillemotleft{}10\guillemotright{} casi seguro tiene 10 mH, no 10 H ni 10 \textmu{}H.
+
+\begin{nota}{Error frecuente:}
+Escribir \guillemotleft{}mH\guillemotright{} cuando se quiere decir \guillemotleft{}\textmu{}H\guillemotright{}, o al revés. Los textos convertidos desde PDF suelen perder la letra griega \textmu{} y mostrarla como \guillemotleft{}m\guillemotright{}; ante la duda, el orden de magnitud y el tipo de bobina deciden cuál es la unidad correcta.
+\end{nota}
+
+\section{Caso de Estudio Aplicado: Identificación y verificación de las bobinas de un kit de laboratorio (Bloque 7)}
+
+\subsection{Descripción del problema}
+
+Con los condensadores del kit ya verificados en la semana 1, el técnico de laboratorio debe preparar las bobinas que se usarán en las prácticas de circuitos inductivos y LC. El kit tiene cuatro inductores. Las causas principales de falla de un inductor son los cortos entre espiras y los circuitos abiertos en el devanado, provocados por corrientes excesivas, sobrecalentamiento o el paso del tiempo [2]. La tarea es identificar cada bobina por su marcado, medir su inductancia y su resistencia de devanado, y decidir si es apta.
+
+Los componentes son: L1, un inductor radial marcado \textbf{102J}; L2, un inductor moldeado marcado \textbf{472K}; L3, una bobina con núcleo de ferrita marcada \textbf{103K}, cuya hoja de datos indica una resistencia de devanado de 25 \ensuremath{\Omega}; y L4, una bobina toroidal reutilizada marcada \textbf{33 mH \textpm{}20 \%}, con una resistencia de devanado de 18 \ensuremath{\Omega} según su hoja de datos. Las lecturas que se usan más abajo son valores de ejemplo para ilustrar el procedimiento.
+
+\subsection{Procedimiento de medición}
+
+\begin{itemize}
+  \item Verificar que la bobina está desconectada de cualquier circuito energizado.
+  \item Identificar tipo de núcleo, valor nominal y tolerancia a partir del marcado y convertir a mH.
+  \item Medir la resistencia de devanado con el ohmímetro: una lectura infinita indica devanado abierto.
+  \item Comprobar el aislamiento entre el devanado y el núcleo metálico: una lectura de cero ohmios indica un corto.
+  \item Medir la inductancia con el medidor LCR y compararla con el intervalo de tolerancia.
+\end{itemize}
+
+El circuito abierto se detecta con facilidad con un ohmímetro, que indica una resistencia infinita [2]. El cortocircuito entre espiras es más difícil de detectar solo con el ohmímetro, porque la resistencia de una bobina en buen estado ya es pequeña y el corto de unas pocas espiras apenas la modifica; si se conoce la resistencia típica de la bobina, se puede comparar con la medida [2]. El corto entre el devanado y el núcleo se revisa colocando una punta en un terminal y la otra sobre el núcleo: como todo el alambre tiene cubierta aislante, una lectura de cero ohmios revela el corto [2]. La inductancia se verifica con un medidor LCR [2]. La desviación se calcula como en la semana 1:
+
+\begin{equation}
+  e_{\text{\%}} = \frac{L_{m} - L_{n}}{L_{n}} \times 100
+\end{equation}
+
+donde $e_{\text{\%}}$ es la desviación relativa en porcentaje (\%), $L_m$ la inductancia medida y $L_n$ la inductancia nominal, ambas en la misma unidad (mH). La bobina se acepta si $|e_{\text{\%}}|$ no supera la tolerancia, su devanado tiene continuidad y está aislado del núcleo.
+
+\subsection{Cálculos y resultados}
+
+L1: el código 102 da $L_n = 10 \times 10^2\ \mu\text{H} = 1\ \text{mH}$, con J (\textpm{}5 \%); el intervalo es de 0.95 mH a 1.05 mH, y la lectura de 1.03 mH da $e_{\text{\%}} = +3.0\ \text{\%}$. L2: 472 son 4.7 mH, con K (\textpm{}10 \%); el intervalo va de 4.23 mH a 5.17 mH, y 4.62 mH da $e_{\text{\%}} = -1.7\ \text{\%}$. L3: 103 son 10 mH \textpm{}10 \%; la lectura de 10.4 mH da $e_{\text{\%}} = +4.0\ \text{\%}$, y la resistencia de 24.6 \ensuremath{\Omega} coincide con los 25 \ensuremath{\Omega} de la hoja de datos. L4: el intervalo de \textpm{}20 \% va de 26.4 mH a 39.6 mH, pero la lectura es de 21.5 mH, con $e_{\text{\%}} = -34.8\ \text{\%}$; además, su resistencia de devanado mide 12.1 \ensuremath{\Omega} frente a los 18 \ensuremath{\Omega} esperados.
+
+% --- Tabla 6: Identificación y verificación de las bobinas del kit (lecturas de ejemplo) (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=0.593\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.017\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.593\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.017\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.78\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.678\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.593\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.932\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.949\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.848\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Identificación y verificación de las bobinas del kit (lecturas de ejemplo)} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Ref.}} & \textcolor{white}{\textbf{Marcado}} & \textcolor{white}{\textbf{Ln}} & \textcolor{white}{\textbf{Tolerancia}} & \textcolor{white}{\textbf{Intervalo admisible}} & \textcolor{white}{\textbf{Lm}} & \textcolor{white}{\textbf{e (\%)}} & \textcolor{white}{\textbf{RW medida}} & \textcolor{white}{\textbf{Aislamiento al núcleo}} & \textcolor{white}{\textbf{Decisión}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Ref.}} & \textcolor{white}{\textbf{Marcado}} & \textcolor{white}{\textbf{Ln}} & \textcolor{white}{\textbf{Tolerancia}} & \textcolor{white}{\textbf{Intervalo admisible}} & \textcolor{white}{\textbf{Lm}} & \textcolor{white}{\textbf{e (\%)}} & \textcolor{white}{\textbf{RW medida}} & \textcolor{white}{\textbf{Aislamiento al núcleo}} & \textcolor{white}{\textbf{Decisión}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  L1 & 102J & 1 mH & \textpm{}5 \% & 0.95 a 1.05 mH & 1.03 mH & +3.0 & 3.2 \ensuremath{\Omega} & no aplica & Acepta \\
+  \rowcolor{iubfondogris} L2 & 472K & 4.7 mH & \textpm{}10 \% & 4.23 a 5.17 mH & 4.62 mH & \ensuremath{-}1.7 & 9.8 \ensuremath{\Omega} & no aplica & Acepta \\
+  L3 & 103K & 10 mH & \textpm{}10 \% & 9.0 a 11.0 mH & 10.4 mH & +4.0 & 24.6 \ensuremath{\Omega} & correcto & Acepta \\
+  \rowcolor{iubfondogris} L4 & 33 mH \textpm{}20 \% & 33 mH & \textpm{}20 \% & 26.4 a 39.6 mH & 21.5 mH & \ensuremath{-}34.8 & 12.1 \ensuremath{\Omega} & correcto & Rechaza \\
+\end{xltabular}
+
+L4 ilustra el caso difícil que describe la fuente: su resistencia bajó, pero no a cero, así que el ohmímetro por sí solo no habría sido concluyente. La combinación de las dos mediciones sí lo es. Como la inductancia depende del cuadrado del número de vueltas, una caída de la inductancia al 65 \% de su valor equivale a perder cerca del 19 \% de las espiras efectivas ($\sqrt{0.65} \approx 0.81$); la resistencia, que depende de la longitud de alambre, también cayó. Ambos indicadores apuntan a espiras en cortocircuito, probablemente por un sobrecalentamiento previo.
+
+\subsection{Conclusiones para la práctica}
+
+La verificación de una bobina necesita dos instrumentos, no uno: el medidor LCR para la inductancia y el ohmímetro para la continuidad, la resistencia de devanado y el aislamiento al núcleo. La resistencia de devanado medida se registra junto con la inductancia, porque en los circuitos inductivos y LC de las próximas semanas esa resistencia forma parte del modelo real $L$ en serie con $R_W$ y explica parte de las diferencias entre el cálculo y la medición. Con L1, L2 y L3 aceptadas, y los condensadores verificados la semana anterior, el kit queda listo para las asociaciones en serie, en paralelo y mixtas.
+
+\begin{nota}{Nota pedagógica:}
+Conviene medir la resistencia de devanado de cada bobina nueva y anotarla en su bolsa o en el inventario: ese dato de referencia es el que permitirá detectar más adelante un corto entre espiras que el ohmímetro, por sí solo, no revela.
+\end{nota}
+
+\section{Síntesis (Bloque 8)}
+
+La bobina es el elemento dual del condensador. Donde el condensador acumula carga y se opone a los cambios de tensión, la bobina establece un campo magnético y se opone a los cambios de corriente, según las leyes de Faraday y de Lenz: $v = L\,di/dt$. Su inductancia, $L = N^2 \mu A / l$, la fijan la construcción y sobre todo el número de vueltas y el núcleo, y la energía que almacena, $W = \tfrac{1}{2}LI^2$, depende del cuadrado de la corriente. Esa misma física explica los tipos comerciales ---aire para alta frecuencia, hierro y ferrita para alcanzar milihenrios--- y el riesgo de las sobretensiones al abrir un circuito inductivo. El caso del kit mostró la diferencia práctica más importante con el condensador: \textbf{una bobina real casi nunca es ideal}, y su verificación exige medir tanto la inductancia como la resistencia de devanado, además de la continuidad y el aislamiento al núcleo. Un corto entre espiras reduce a la vez la inductancia y la resistencia, y solo la comparación con los valores de referencia lo revela. Con condensadores y bobinas identificados, medidos y registrados, queda la base del resultado de aprendizaje: calcular y medir asociaciones en serie, en paralelo y mixtas, y circuitos LC, tema de la semana 3.
+
+\subsection*{Componente Actitudinal}
+
+\begin{cita}
+Registrar con cuidado la inductancia y la resistencia de devanado de cada bobina, y no solo si funciona, es un trabajo que beneficia a todo el equipo: esos datos permitirán a los compañeros de los próximos semestres detectar a tiempo una bobina deteriorada.
+\end{cita}
+
+\section{Bibliografía (Formato IEEE)}
+
+{\sloppy
+\begin{itemize}[leftmargin=2.6em, labelwidth=2.2em, labelsep=0.4em, align=left]
+  \item[{[1]}] T. L. Floyd, Principios de circuitos eléctricos, 8.\textordfeminine{} ed. México: Pearson Educación, 2007.
+  \item[{[2]}] R. L. Boylestad, Introducción al análisis de circuitos, 10.\textordfeminine{} ed. México: Pearson Educación, 2004.
+  \item[{[3]}] Hoja de datos del fabricante de los inductores del kit de laboratorio (código de colores y código de tres dígitos de inductores); no está cargada en el wiki. \textcolor{iuborange}{\textbf{[FUENTE NO CARGADA EN raw/]}}
+\end{itemize}
+}
+
+\end{document}

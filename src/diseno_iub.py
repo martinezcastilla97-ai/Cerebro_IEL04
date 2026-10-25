@@ -497,7 +497,8 @@ def referencias(doc: Documento) -> list[str]:
 
 def cierre(doc: Documento) -> str:
     c = doc.conv
-    firma = " \\quad · \\quad ".join([c.escapar(_recorte(doc.docente, 60))] + ([c.escapar(_recorte(doc.contacto, 60))] if doc.contacto else []))
+    # docente y contacto en dos lineas: en una sola, un correo largo quedaba debajo del logo (abajo a la derecha)
+    firma = " \\\\[1pt] ".join([c.escapar(_recorte(doc.docente, 60))] + ([c.escapar(_recorte(doc.contacto, 60))] if doc.contacto else []))
     siguiente = (rf"""  \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
         font=\small\bfseries, inner sep=2.2mm, text width=11.5cm]
     at ([xshift=1.2cm,yshift=-4.4cm]current page.north west)

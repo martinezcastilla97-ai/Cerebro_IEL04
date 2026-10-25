@@ -1,0 +1,633 @@
+% =====================================================================
+%  Temario generado por TEMARIO (src/temario.py + src/temario_latex.py), sin LLM,
+%  a partir de los mismos datos que el .md. Compilar con pdfLaTeX (dos pasadas).
+% =====================================================================
+\documentclass[11pt,letterpaper]{article}
+
+% ---------------------------------------------------------------------
+%  Codificacion, idioma y tipografia
+% ---------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot,es-noshorthands,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage[margin=2.3cm,headheight=14pt]{geometry}
+
+% ---------------------------------------------------------------------
+%  Matematicas y unidades del SI
+% ---------------------------------------------------------------------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={.}, per-mode=symbol}
+
+% ---------------------------------------------------------------------
+%  Tablas profesionales (sin lineas verticales) y flotantes
+% ---------------------------------------------------------------------
+\usepackage[table]{xcolor}
+\usepackage{booktabs,array,multirow,tabularx,xltabular}
+\usepackage{graphicx,float}
+\usepackage[font=small,labelfont={bf,color=iubnavy},labelsep=period]{caption}
+
+% ---------------------------------------------------------------------
+%  Listas, cajas, graficas, diagramas y codigo
+% ---------------------------------------------------------------------
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+% ---------------------------------------------------------------------
+%  Encabezados de pagina y enlaces (hyperref, siempre el ultimo)
+% ---------------------------------------------------------------------
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+% ---------------------------------------------------------------------
+%  Paleta institucional IUB (Manual de Identidad Visual 2025)
+% ---------------------------------------------------------------------
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\definecolor{iubpurple}{HTML}{8E6BBF}
+\definecolor{iubgris}{HTML}{D5DAE3}
+\definecolor{iubgrisoscuro}{HTML}{7C8598}
+\definecolor{iubfondoazul}{HTML}{EBF7FD}
+\definecolor{iubfondonaranja}{HTML}{FDF4EA}
+\definecolor{iubfondoverde}{HTML}{EDF8F2}
+\definecolor{iubfondogris}{HTML}{F4F6F9}
+
+% ---------------------------------------------------------------------
+%  Formato general
+% ---------------------------------------------------------------------
+\setcounter{secnumdepth}{3}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.25}
+\setlist{itemsep=0.15em,topsep=0.3em}
+\setlist[itemize]{label=\textcolor{iubblue}{\small$\blacktriangleright$}}
+
+% ---------------------------------------------------------------------
+%  Encabezado y pie de pagina
+% ---------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{iubnavy}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\textcolor{iubnavy}{\textbf{IUB}\quad IEL04 --- Circuitos Eléctricos I}}
+\fancyhead[R]{\small\textcolor{iubnavy}{Semana 9 de 14}}
+\fancyfoot[C]{\small\textcolor{iubnavy}{\thepage}}
+
+% ---------------------------------------------------------------------
+%  Codigo (listings: el codigo va transliterado a ASCII)
+% ---------------------------------------------------------------------
+\lstset{basicstyle=\ttfamily\small, breaklines=true, columns=fullflexible, keepspaces=true, frame=single,
+  rulecolor=\color{iubgris}, backgroundcolor=\color{iubfondogris}, numbers=left, numberstyle=\tiny\color{iubgrisoscuro},
+  keywordstyle=\color{iubblue}\bfseries, commentstyle=\color{iubgreen}\itshape, stringstyle=\color{iuborange},
+  showstringspaces=false, captionpos=t, aboveskip=0.8em, belowskip=0.8em}
+\renewcommand{\lstlistingname}{Listado}
+
+% ---------------------------------------------------------------------
+%  Cajas: cabecera, notas, alineacion con el RA y cita actitudinal
+% ---------------------------------------------------------------------
+\newtcolorbox{cabecera}{enhanced, colback=iubnavy, colframe=iubnavy, coltext=white, arc=2pt, boxrule=0pt,
+  left=12pt, right=12pt, top=10pt, bottom=10pt, borderline north={3pt}{0pt}{iubyellow}}
+\newtcolorbox{nota}[1]{enhanced, colback=iubfondonaranja, colframe=iuborange, arc=2pt, boxrule=0.6pt, leftrule=3pt,
+  fonttitle=\bfseries\small, coltitle=iuborange, colbacktitle=iubfondonaranja, title={#1}, attach title to upper={\ }}
+\newtcolorbox{alineacion}{enhanced, colback=iubfondoazul, colframe=iubblue, arc=2pt, boxrule=0.6pt, leftrule=3pt}
+\newtcolorbox{cita}{enhanced, colback=iubnavy, colframe=iubnavy, coltext=white, arc=2pt, boxrule=0pt, leftrule=4pt,
+  borderline west={4pt}{0pt}{iubyellow}, fontupper=\itshape}
+
+% ---------------------------------------------------------------------
+%  Estilos de los diagramas (TikZ) y de las graficas (pgfplots)
+% ---------------------------------------------------------------------
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+\pgfplotsset{iubejes/.style={width=0.95\linewidth, height=6.2cm, grid=major, grid style={iubgris}, axis lines*=left,
+  axis line style={iubnavy}, tick label style={font=\small}, label style={font=\small}, title style={font=\bfseries\small},
+  legend cell align=left, legend style={draw=none, fill=none, font=\small, anchor=north, legend columns=-1,
+  /tikz/every even column/.append style={column sep=8pt}}, unbounded coords=jump}}
+
+\hypersetup{pdftitle={Cálculo y medición de parámetros en circuitos RL según el conexionado: equivalentes serie-paralelo, circuitos mixtos, potencia y medición de inductancia}, pdfauthor={Institución Universitaria de Barranquilla}}
+
+\begin{document}
+
+\begin{cabecera}
+{\color{iubyellow}\Large\bfseries Cálculo y medición de parámetros en circuitos RL según el conexionado: equivalentes serie-paralelo, circuitos mixtos, potencia y medición de inductancia\par}
+\vspace{0.6em}
+\small
+\textbf{\color{iubyellow}Módulos:} IEL04 --- Circuitos Eléctricos I\par
+\textbf{\color{iubyellow}Duración:} 240 minutos (sesión teórico-práctica)\par
+\textbf{\color{iubyellow}Nivel:} Pregrado\par
+\textbf{\color{iubyellow}Semana:} 9 de 14 (corte evaluativo 2)\par
+\textbf{\color{iubyellow}Resultado de aprendizaje del módulo:} IEL04-RA3\par
+\textbf{\color{iubyellow}Trabajo independiente:} 5 h/semana\par
+\end{cabecera}
+
+\section{Metadatos de la Sesión}
+
+\subsection{Continuidad curricular}
+
+La semana 8 presentó los circuitos RL en serie y en paralelo, con sus leyes de Kirchhoff y el papel de la resistencia de devanado. Esta sesión cierra el RA3 profundizando en el cálculo según el tipo de conexionado: cómo convertir una bobina real entre sus modelos en serie y en paralelo, cómo resolver circuitos RL mixtos, cómo se comporta el RL como filtro, cómo se reparte la potencia entre resistencia e inductancia ---el origen del factor de potencia en las instalaciones--- y cómo medir una inductancia desconocida con instrumentos básicos. La semana 10 es de examen; la semana 11 abre el RA4 con los circuitos RLC.
+
+\begin{enumerate}
+  \item Semana 8: Circuitos RL en serie y en paralelo: tipos e identificación de resistores e inductores, análisis con las leyes de voltajes y corrientes de Kirchhoff
+  \item \textbf{Presente sesión (semana 9):} Cálculo y medición de parámetros en circuitos RL serie y paralelo según el tipo de conexionado
+  \item Semana 10: evaluación (semana de examen)
+\end{enumerate}
+
+\subsection{Prerrequisitos}
+
+\begin{itemize}
+  \item Calcular impedancia, ángulo de fase, tensiones y corrientes de circuitos RL en serie y en paralelo (semana 8).
+  \item Aplicar el método general de análisis fasorial con impedancias y admitancias (semana 7).
+  \item Calcular la constante de tiempo \ensuremath{\tau} = L/R de un circuito RL en serie.
+  \item Calcular potencia en cd como P = VI = I\texttwosuperior{}R.
+  \item Usar el osciloscopio con cursores de tiempo y de tensión.
+\end{itemize}
+
+\section{Resultados de Aprendizaje}
+
+\begin{alineacion}
+\textbf{RA IEL04-RA3:} Calcular un circuito resistivo, inductivo y RL, sea en serie o paralelo.
+
+\textbf{Criterios de evaluación:}
+
+\begin{itemize}
+  \item \textbf{CE1} (cognitiva\_conceptual): Identificar los tipos de resistores e inductores.
+  \item \textbf{CE2} (manipulacion\_fisica): Realizar mediciones en un circuito resistivo e inductivo.
+  \item \textbf{CE3} (manipulacion\_fisica): Realizar mediciones en un circuito RL.
+\end{itemize}
+
+\textbf{Unidades de competencia de la asignatura:}
+
+\begin{itemize}
+  \item UC2: Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.
+\end{itemize}
+\end{alineacion}
+
+Al finalizar la sesión, el estudiante estará en capacidad de lograr los siguientes resultados, que desarrollan el RA del módulo:
+
+\begin{xltabular}{\linewidth}{>{\raggedright\arraybackslash}p{1.1cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.9cm}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Resultado de aprendizaje}} & \textcolor{white}{\textbf{Nivel (Taxonomía de Bloom)}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Resultado de aprendizaje}} & \textcolor{white}{\textbf{Nivel (Taxonomía de Bloom)}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  RA1 & \textbf{Identificar} los componentes de un circuito RL y representar la bobina real con su modelo en serie o en paralelo según el conexionado. (CE1) & Aplicar \\
+  \rowcolor{iubfondogris} RA2 & \textbf{Calcular} impedancias, corrientes y tensiones de circuitos RL mixtos y la frecuencia de corte de un filtro RL. (CE3) & Aplicar \\
+  RA3 & \textbf{Calcular} la potencia activa, reactiva y aparente y el factor de potencia de un circuito RL. (CE3) & Analizar \\
+  \rowcolor{iubfondogris} RA4 & \textbf{Medir} una inductancia desconocida por su constante de tiempo y por su impedancia, y evaluar la concordancia entre ambos métodos. (CE2, CE3) & Evaluar \\
+\end{xltabular}
+
+\section{Índice Temporizado (240 minutos)}
+
+\begin{xltabular}{\linewidth}{>{\raggedright\arraybackslash}p{1.4cm}>{\raggedright\arraybackslash}X>{\raggedleft\arraybackslash}p{2.2cm}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bloque}} & \textcolor{white}{\textbf{Contenido}} & \textcolor{white}{\textbf{Duración}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bloque}} & \textcolor{white}{\textbf{Contenido}} & \textcolor{white}{\textbf{Duración}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  1 & Qué parámetros de un circuito RL se calculan y cuáles se miden, según el conexionado & 15 min \\
+  \rowcolor{iubfondogris} 2 & Equivalencia entre RW + jXL y un paralelo Rp \ensuremath{\parallel} jXLp, y su uso según el conexionado & 30 min \\
+  3 & Resistor en serie con un paralelo RL: reducción, reparto de tensiones y corrientes & 35 min \\
+  \rowcolor{iubfondogris} 4 & Filtros pasabajas y pasaaltas RL y fc = R/(2\ensuremath{\pi}L) & 30 min \\
+  5 & Potencia activa, reactiva y aparente, triángulo de potencia y FP = cos \ensuremath{\theta} & 35 min \\
+  \rowcolor{iubfondogris} 6 & Onda cuadrada, cinco constantes de tiempo y cálculo de L = \ensuremath{\tau}R & 30 min \\
+  7 & Medir L por \ensuremath{\tau} y por impedancia, y comprobar un circuito RL mixto con su potencia & 50 min \\
+  \rowcolor{iubfondogris} 8 & Síntesis, cierre actitudinal y bibliografía & 15 min \\
+  \midrule
+  \rowcolor{iubfondogris}  & \textbf{Total} & \textbf{240 min} \\
+\end{xltabular}
+
+\section{Desarrollo Teórico}
+
+\subsection{Introducción Conceptual (Bloque 1)}
+
+En la semana 8 se resolvieron los dos circuitos RL básicos y se comprobó en el laboratorio que la resistencia de devanado de la bobina no puede ignorarse. Queda por responder una pregunta práctica que el técnico se hace con frecuencia: \textbf{qué parámetros de un circuito RL conviene calcular y cuáles conviene medir, y cómo depende eso del conexionado}. En la industria, la mayoría de las cargas son inductivas, y lo que interesa de ellas no es solo la corriente, sino cuánta de la potencia que toman se convierte en trabajo útil y cuánta va y vuelve entre la red y el campo magnético. En el taller, además, es habitual encontrar bobinas sin marcado cuya inductancia hay que determinar con los instrumentos disponibles.
+
+Para responder, la sesión amplía las herramientas de la semana 8 en cuatro direcciones. Primero, la bobina real puede describirse con un modelo en serie o con un modelo en paralelo, y elegir el adecuado según el conexionado simplifica el cálculo. Segundo, los circuitos mixtos combinan partes en serie y en paralelo. Tercero, el RL se comporta como filtro, con una frecuencia de corte análoga a la del RC. Y cuarto, la potencia en un circuito RL se reparte entre la resistencia, que la disipa, y la inductancia, que la almacena y la devuelve; los valores relativos de resistencia y reactancia determinan cuánta energía se convierte en calor [1]. El diagrama ordena el procedimiento completo.
+
+% --- Figura 1: Procedimiento de cálculo y medición de parámetros en un circuito RL (diagrama en TikZ con la disposición del PNG) ---
+\begin{figure}[H]
+  \centering
+  \begin{adjustbox}{max width=\linewidth}
+  \begin{tikzpicture}[x=1in, y=1in, font=\small]
+    % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+    \node[dterminal, minimum width=1.563in, minimum height=0.890in] (n0) at (0.781,-0.550) {Identificar \\ R y bobina \\ (L, RW)};  % a
+    \node[dcaja, minimum width=1.084in, minimum height=1.100in] (n1) at (2.864,-0.550) {Elegir \\ modelo \\ serie o \\ paralelo};  % b
+    \node[dcaja, minimum width=1.363in, minimum height=0.680in] (n2) at (4.848,-0.550) {Reducir: Z, \\ I y V};  % c
+    \node[dcaja, minimum width=1.177in, minimum height=0.890in] (n3) at (4.848,-2.095) {Potencia: \\ P, Q, S y \\ FP};  % d
+    \node[destado, minimum width=1.363in, minimum height=0.680in] (n4) at (2.864,-2.095) {Medir L, V, \\ I y desfase};  % e
+    \node[dterminal, minimum width=1.470in, minimum height=0.680in] (n5) at (0.781,-2.095) {Comparar y \\ explicar};  % f
+    % flechas (las de retorno, curvas)
+    \draw[dflecha] (n0) -- (n1);
+    \draw[dflecha] (n1) -- (n2);
+    \draw[dflecha] (n2) -- (n3);
+    \draw[dflecha] (n3) -- (n4);
+    \draw[dflecha] (n4) -- (n5);
+  \end{tikzpicture}
+  \end{adjustbox}
+  \caption{Procedimiento de cálculo y medición de parámetros en un circuito RL}
+\end{figure}
+
+El diagrama es el método general de la semana 7 con dos pasos nuevos: la elección del modelo de la bobina, que en los condensadores no hacía falta porque se tratan como ideales, y el cálculo de la potencia, que en los circuitos de señal pasa desapercibido pero en los sistemas eléctricos es el dato que se factura. El caso final aplica el procedimiento a una bobina sin marcado: se mide su inductancia por dos métodos independientes, la constante de tiempo y la impedancia, y se usa en un circuito RL mixto cuyo factor de potencia se calcula y se verifica.
+
+\begin{nota}{Nota pedagógica:}
+Esta es la última sesión antes del examen de la semana 10, que evalúa los RA2 y RA3. Los ejercicios de cálculo de las unidades sirven como preparación: conviene resolverlos antes de leer la solución y comparar.
+\end{nota}
+
+\subsection{Conceptos Clave}
+
+\subsubsection{Modelo serie y modelo paralelo de la bobina real (Bloque 2)}
+
+La semana 8 representó la bobina real como su inductancia en serie con la resistencia de devanado, $R_W + jX_L$. Es el modelo natural, porque la resistencia está distribuida a lo largo del mismo alambre que forma las espiras. Pero cuando la bobina forma parte de un circuito en paralelo, ese modelo obliga a sumar admitancias de ramas que no son puramente reactivas, y el cálculo se complica. La alternativa es sustituir la bobina real por un \textbf{equivalente en paralelo}: una resistencia $R_p$ en paralelo con una reactancia $X_{Lp}$ que, a la frecuencia de trabajo, toma exactamente la misma corriente con el mismo ángulo. Floyd usa esta sustitución, por ejemplo, para analizar un circuito tanque con bobina real, representando la resistencia de devanado como una resistencia equivalente en paralelo [1].
+
+La conversión se obtiene igualando las admitancias de ambos modelos. La admitancia del modelo serie es $1/(R_W + jX_L) = (R_W - jX_L)/(R_W^2 + X_L^2)$; su parte real es la conductancia del paralelo, $1/R_p$, y su parte imaginaria, la susceptancia $1/X_{Lp}$. Expresando el resultado en función del factor de calidad de la bobina, $Q = X_L/R_W$ ---la razón entre la potencia reactiva de la bobina y la potencia real en su resistencia de devanado [1]---, las fórmulas quedan:
+
+\begin{equation}
+  R_p = R_W\,(1 + Q^{2}), \qquad X_{Lp} = X_L\,\frac{1 + Q^{2}}{Q^{2}}, \qquad Q = \frac{X_L}{R_W}
+\end{equation}
+
+donde $R_p$ es la resistencia equivalente en paralelo en ohmios (\ensuremath{\Omega}), $X_{Lp}$ la reactancia equivalente en paralelo en ohmios, $R_W$ la resistencia de devanado en ohmios, $X_L$ la reactancia inductiva en ohmios y $Q$ el factor de calidad de la bobina (adimensional). Dos consecuencias saltan a la vista. Si $Q$ es grande, $X_{Lp} \approx X_L$ y $R_p$ es mucho mayor que $R_W$: una resistencia de devanado pequeña en serie equivale a una resistencia muy grande en paralelo. Y como $Q$ depende de la frecuencia, \textbf{el equivalente en paralelo solo vale a una frecuencia}: al cambiarla, cambian $R_p$ y $X_{Lp}$.
+
+Para la bobina L3 del kit, con 10.4 mH y 24.6 \ensuremath{\Omega}, a 10 kHz $X_L = 653.5\ \Omega$ y $Q = 26.6$; entonces $R_p = 24.6(1 + 26.6^2) \approx 17.4\ \text{k}\Omega$ y $X_{Lp} \approx 654\ \Omega$, prácticamente igual a $X_L$. A 1 kHz, en cambio, $Q = 2.66$, $R_p \approx 198\ \Omega$ y $X_{Lp} \approx 74.6\ \Omega$, un 14 \% mayor que $X_L$: a baja frecuencia, el equivalente en paralelo de la bobina se aparta mucho de una inductancia pura. La tabla muestra la evolución.
+
+% --- Tabla 1: Equivalente en paralelo de la bobina L3 (L = 10.4 mH, RW = 24.6 Ω) a distintas frecuencias (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=1.0\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.0\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.875\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.0\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.125\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.0\hsize\linewidth=\hsize\raggedleft\arraybackslash}X}
+\caption{Equivalente en paralelo de la bobina L3 (L = 10.4 mH, RW = 24.6 \ensuremath{\Omega}) a distintas frecuencias} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{XL (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Q}} & \textcolor{white}{\textbf{Rp (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{XLp (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{XLp/XL}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{XL (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Q}} & \textcolor{white}{\textbf{Rp (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{XLp (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{XLp/XL}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  1000 & 65.3 & 2.66 & 198 & 74.6 & 1.14 \\
+  \rowcolor{iubfondogris} 5000 & 327 & 13.3 & 4364 & 329 & 1.006 \\
+  10 000 & 653 & 26.6 & 17 390 & 654 & 1.001 \\
+  \rowcolor{iubfondogris} 20 000 & 1307 & 53.1 & 69 470 & 1307 & 1.000 \\
+\end{xltabular}
+
+La regla práctica que deja la tabla es la misma de la semana 8, ahora con fundamento: con $Q > 10$ los dos modelos dan casi la misma reactancia, y la bobina puede tratarse como una inductancia ideal más una resistencia grande en paralelo, casi siempre despreciable frente al resto del circuito. Con $Q < 10$ hay que elegir el modelo con cuidado: en un circuito en serie se usa el modelo serie, que suma $R_W$ directamente a las demás resistencias; en un circuito en paralelo, el modelo paralelo, que suma $1/R_p$ directamente a las demás conductancias. Así cada cálculo se reduce a sumas del mismo tipo.
+
+\begin{nota}{Error frecuente:}
+Colocar la resistencia de devanado medida con el ohmímetro directamente en paralelo con la inductancia. El ohmímetro mide $R_W$, el modelo serie; en paralelo hay que usar $R_p = R_W(1 + Q^2)$, que puede ser cientos de veces mayor.
+\end{nota}
+
+\subsubsection{Circuitos RL mixtos (serie-paralelo) (Bloque 3)}
+
+Un circuito RL mixto combina, igual que en la semana 7, un grupo en serie con un grupo en paralelo. El caso típico es un resistor $R_1$ en serie con el paralelo de un resistor $R_2$ y una bobina $L$: es el modelo de un motor, cuya rama resistiva representa la potencia mecánica y cuya rama inductiva representa la magnetización, alimentado a través de la resistencia de los conductores. El procedimiento no cambia: se reduce primero el paralelo con admitancias, se convierte a forma rectangular para sumarlo con $R_1$ y se vuelve hacia atrás con la ley de Ohm fasorial.
+
+\begin{equation}
+  \mathbf{Z}_T = R_1 + \frac{1}{G_2 - jB_L}, \qquad G_2 = \frac{1}{R_2}, \qquad B_L = \frac{1}{2\pi f L}
+\end{equation}
+
+donde $\mathbf{Z}_T$ es la impedancia total en ohmios (\ensuremath{\Omega}), $R_1$ la resistencia en serie en ohmios, $G_2$ la conductancia del resistor en paralelo en siemens (S), $B_L$ la susceptancia inductiva en siemens, $f$ la frecuencia en hercios (Hz) y $L$ la inductancia en henrios (H). El signo negativo de la susceptancia es el que distingue este circuito de su análogo RC. Si la resistencia de devanado no fuera despreciable, se incluiría con el modelo paralelo de la unidad anterior, sumando $1/R_p$ a $G_2$.
+
+Un ejemplo con valores nominales: $R_1 = 470\ \Omega$, $R_2 = 680\ \Omega$ y $L = 10\ \text{mH}$, a 10 kHz y con 5 V eficaces. Primero, $G_2 = 1.471\ \text{mS}$ y $B_L = 1/(628.3) = 1.592\ \text{mS}$, de modo que $\mathbf{Y}_p = 2.167 \angle -47.3^\circ\ \text{mS}$ y $\mathbf{Z}_p = 461.5 \angle 47.3^\circ\ \Omega = 313.3 + j338.9\ \Omega$. Segundo, $\mathbf{Z}_T = 783.3 + j338.9\ \Omega = 853.5 \angle 23.4^\circ\ \Omega$. Tercero, $\mathbf{I} = 5/853.5 = 5.86 \angle -23.4^\circ\ \text{mA}$, retrasada respecto a la fuente. Cuarto, $V_{R1} = (5.86)(0.470) = 2.75\ \text{V}$ y $V_p = (5.86)(0.4615) = 2.70\ \text{V}$, esta última a +23.9\textdegree{} de la tensión de la fuente. Quinto, las corrientes de rama: $I_{R2} = 2.70/680 = 3.98\ \text{mA}$ e $I_L = 2.70/628.3 = 4.30\ \text{mA}$.
+
+% --- Tabla 2: Circuito RL mixto R1 + (R2 ∥ L) con valores nominales (5 V eficaces a 10 kHz) (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=1.27\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.508\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.143\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.079\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Circuito RL mixto R1 + (R2 \ensuremath{\parallel} L) con valores nominales (5 V eficaces a 10 kHz)} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{Valor}} & \textcolor{white}{\textbf{Ángulo (ref. VS)}} & \textcolor{white}{\textbf{Comprobación}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{Valor}} & \textcolor{white}{\textbf{Ángulo (ref. VS)}} & \textcolor{white}{\textbf{Comprobación}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  ZT & 853.5 \ensuremath{\Omega} & +23.4\textdegree{} & 783.3 + j338.9 \ensuremath{\Omega} \\
+  \rowcolor{iubfondogris} I & 5.86 mA & \ensuremath{-}23.4\textdegree{} & VS/ZT \\
+  VR1 & 2.75 V & \ensuremath{-}23.4\textdegree{} & en fase con I \\
+  \rowcolor{iubfondogris} Vp & 2.70 V & +23.9\textdegree{} & común a R2 y L \\
+  IR2 & 3.98 mA & +23.9\textdegree{} & en fase con Vp \\
+  \rowcolor{iubfondogris} IL & 4.30 mA & \ensuremath{-}66.1\textdegree{} & 90\textdegree{} detrás de Vp \\
+  \ensuremath{\surd}(IR2\texttwosuperior{} + IL\texttwosuperior{}) & 5.86 mA & --- & LCK: igual a I \\
+  \rowcolor{iubfondogris} VR1 + Vp (fasorial) & 5.00 V & 0\textdegree{} & LVK: igual a VS \\
+\end{xltabular}
+
+La verificación con ambas leyes de Kirchhoff cierra el cálculo: la suma fasorial de las corrientes de rama devuelve los 5.86 mA de la corriente total, y la de las tensiones, los 5.00 V de la fuente, mientras que sus sumas aritméticas darían 8.28 mA y 5.45 V. Comparado con el mixto RC de la semana 7, todos los ángulos cambian de signo: aquí la corriente total se retrasa y la tensión del paralelo se adelanta a la de la fuente. El ángulo total, 23.4\textdegree{}, es la mitad del de la rama inductiva porque $R_1$ añade resistencia sin reactancia; ese ángulo determina el factor de potencia del conjunto, como se verá más adelante.
+
+El comportamiento con la frecuencia también se invierte respecto al RC. Si la frecuencia sube a 20 kHz, la reactancia de la bobina se duplica a 1257 \ensuremath{\Omega}, su susceptancia baja a 0.796 mS y la rama inductiva conduce menos: el paralelo pasa a $598 \angle 28.4^\circ\ \Omega$, la impedancia total a $1036 \angle 16.0^\circ\ \Omega$ y la corriente baja a 4.83 mA. A frecuencias altas el circuito se vuelve más resistivo y a frecuencias bajas más inductivo, porque la bobina tiende a cortocircuitar a $R_2$. En el límite de cd, la impedancia se reduciría a $R_1$ más la resistencia de devanado, y la corriente quedaría limitada casi solo por $R_1$: una razón práctica para que ese resistor exista en el circuito.
+
+\begin{nota}{Error frecuente:}
+Tomar la tensión del paralelo como la tensión de la fuente menos $V_{R1}$ en aritmética: $5 - 2.75 = 2.25\ \text{V}$ en lugar de 2.70 V. En ca la resta, igual que la suma, debe hacerse con fasores.
+\end{nota}
+
+\subsubsection{El circuito RL como filtro: frecuencia de corte (Bloque 4)}
+
+Igual que el RC, el circuito RL en serie funciona como filtro según dónde se tome la salida, pero con los papeles intercambiados. Si la salida se toma en el \textbf{resistor}, a frecuencias bajas la bobina casi no se opone y casi toda la tensión llega a la salida; a frecuencias altas, la reactancia de la bobina crece, se queda con la mayor parte de la tensión y la salida cae: es un filtro \textbf{pasabajas}. Si la salida se toma en la \textbf{bobina}, ocurre lo contrario y el circuito es un \textbf{pasaaltas}. En el RC, el pasabajas tenía la salida en el condensador; en el RL, en el resistor. La regla que los unifica es que la salida del pasabajas se toma en el elemento que se queda con la mayor parte de la tensión a frecuencias bajas: el condensador en el RC y el resistor en el RL.
+
+La frecuencia de corte se define de la misma forma: es la frecuencia en la que la reactancia es igual a la resistencia, y en ella la salida vale el 70.7 \% de su valor máximo [1]. Al imponer $2\pi f_c L = R$ se obtiene:
+
+\begin{equation}
+  f_c = \frac{R}{2\pi L}, \qquad \frac{V_{\mathrm{sal}}}{V_{\mathrm{ent}}}\bigg|_{\text{salida}\ en\ R} = \frac{1}{\sqrt{1 + (f/f_c)^{2}}}, \qquad \frac{V_{\mathrm{sal}}}{V_{\mathrm{ent}}}\bigg|_{\text{salida}\ en\ L} = \frac{f/f_c}{\sqrt{1 + (f/f_c)^{2}}}
+\end{equation}
+
+donde $f_c$ es la frecuencia de corte en hercios (Hz), $R$ la resistencia total del lazo en ohmios (\ensuremath{\Omega}), $L$ la inductancia en henrios (H), $f$ la frecuencia de la señal en hercios, y $V_{\mathrm{sal}}/V_{\mathrm{ent}}$ la relación de magnitudes eficaces (adimensional). Obsérvese que en el RL la resistencia está en el numerador: aumentar $R$ sube la frecuencia de corte, mientras que en el RC la bajaba. Con $R = 680\ \Omega$ y $L = 10\ \text{mH}$, $f_c = 680/(2\pi \times 0.01) \approx 10.8\ \text{kHz}$, la frecuencia en la que la semana 8 encontró $X_L = R$ y un ángulo de 45\textdegree{}.
+
+% --- Figura 2: Respuesta en frecuencia de un circuito RL en serie (R = 680 Ω, L = 10 mH) con salida en e… (gráfica en pgfplots con los puntos de su especificación) ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        iubejes,
+        xlabel={Frecuencia f (Hz)},
+        ylabel={Vsal / Vent},
+        title={Filtros RL (fc = 10.8 kHz)},
+        legend style={at={(0.5,-0.30)}},
+        xmode=log,
+        xmin=100,
+        xmax=1e+06]
+      % serie 1: Salida en R (pasabajas) («1/sqrt(1+(f/fc) 2)» en 300 puntos)
+      \addplot[color=iubblue, line width=1.4pt, no markers] coordinates {
+        (100,0.999957) (103.128,0.999955) (106.354,0.999952) (109.682,0.999949) (113.113,0.999945) (116.651,0.999942)
+        (120.301,0.999938) (124.064,0.999934) (127.945,0.99993) (131.948,0.999926) (136.075,0.999921) (140.332,0.999916)
+        (144.722,0.999911) (149.25,0.999905) (153.919,0.999899) (158.734,0.999892) (163.699,0.999886) (168.82,0.999878)
+        (174.102,0.999871) (179.548,0.999862) (185.165,0.999854) (190.957,0.999844) (196.931,0.999835) (203.092,0.999824)
+        (209.445,0.999813) (215.997,0.999801) (222.754,0.999788) (229.723,0.999775) (236.909,0.999761) (244.32,0.999745)
+        (251.964,0.999729) (259.846,0.999712) (267.975,0.999694) (276.358,0.999674) (285.003,0.999653) (293.919,0.999631)
+        (303.114,0.999608) (312.596,0.999583) (322.375,0.999557) (332.46,0.999529) (342.86,0.999499) (353.586,0.999467)
+        (364.647,0.999433) (376.055,0.999397) (387.819,0.999359) (399.951,0.999318) (412.463,0.999275) (425.366,0.999229)
+        (438.673,0.99918) (452.396,0.999128) (466.548,0.999072) (481.143,0.999013) (496.195,0.998951) (511.717,0.998884)
+        (527.725,0.998813) (544.234,0.998738) (561.26,0.998658) (578.818,0.998573) (596.925,0.998483) (615.599,0.998386)
+        (634.857,0.998284) (654.717,0.998175) (675.198,0.99806) (696.321,0.997937) (718.104,0.997806) (740.568,0.997667)
+        (763.736,0.997519) (787.628,0.997362) (812.267,0.997196) (837.678,0.997018) (863.883,0.99683) (890.908,0.996629)
+        (918.778,0.996416) (947.521,0.99619) (977.162,0.995949) (1007.73,0.995693) (1039.26,0.995421) (1071.77,0.995133)
+        (1105.3,0.994826) (1139.87,0.9945) (1175.53,0.994153) (1212.31,0.993785) (1250.23,0.993394) (1289.34,0.992979)
+        (1329.68,0.992538) (1371.27,0.992069) (1414.17,0.991571) (1458.41,0.991043) (1504.03,0.990482) (1551.08,0.989886)
+        (1599.61,0.989254) (1649.65,0.988583) (1701.25,0.98787) (1754.47,0.987114) (1809.36,0.986312) (1865.96,0.985461)
+        (1924.34,0.984559) (1984.54,0.983601) (2046.62,0.982586) (2110.64,0.98151) (2176.67,0.98037) (2244.76,0.979161)
+        (2314.99,0.977881) (2387.41,0.976524) (2462.09,0.975088) (2539.11,0.973567) (2618.55,0.971957) (2700.46,0.970254)
+        (2784.94,0.968452) (2872.06,0.966547) (2961.91,0.964533) (3054.57,0.962405) (3150.12,0.960157) (3248.67,0.957783)
+        (3350.3,0.955278) (3455.11,0.952635) (3563.19,0.949848) (3674.66,0.94691) (3789.62,0.943816) (3908.17,0.940558)
+        (4030.43,0.937129) (4156.51,0.933524) (4286.54,0.929735) (4420.64,0.925755) (4558.93,0.921578) (4701.55,0.917197)
+        (4848.63,0.912606) (5000.31,0.907797) (5156.73,0.902766) (5318.05,0.897505) (5484.42,0.89201) (5655.99,0.886276)
+        (5832.92,0.880296) (6015.4,0.874067) (6203.58,0.867586) (6397.64,0.860849) (6597.78,0.853853) (6804.18,0.846596)
+        (7017.04,0.839078) (7236.55,0.831297) (7462.94,0.823256) (7696.4,0.814954) (7937.17,0.806394) (8185.47,0.797581)
+        (8441.53,0.788517) (8705.61,0.779208) (8977.95,0.769661) (9258.81,0.759882) (9548.46,0.749881) (9847.16,0.739665)
+        (10155.2,0.729246) (10472.9,0.718634) (10800.5,0.707841) (11138.4,0.69688) (11486.8,0.685763) (11846.2,0.674504)
+        (12216.8,0.663119) (12599,0.65162) (12993.1,0.640025) (13399.6,0.628347) (13818.7,0.616603) (14251,0.604808)
+        (14696.8,0.592977) (15156.6,0.581126) (15630.8,0.569271) (16119.7,0.557425) (16624,0.545605) (17144.1,0.533823)
+        (17680.4,0.522093) (18233.5,0.51043) (18803.9,0.498844) (19392.1,0.487349) (19998.8,0.475954) (20624.4,0.464672)
+        (21269.6,0.453511) (21935,0.442482) (22621.2,0.431591) (23328.8,0.420848) (24058.6,0.410258) (24811.3,0.399829)
+        (25587.4,0.389565) (26387.9,0.379472) (27213.4,0.369554) (28064.7,0.359815) (28942.7,0.350258) (29848.1,0.340885)
+        (30781.8,0.331698) (31744.8,0.322698) (32737.9,0.313888) (33762,0.305266) (34818.2,0.296833) (35907.4,0.28859)
+        (37030.7,0.280535) (38189.1,0.272667) (39383.8,0.264985) (40615.9,0.257487) (41886.5,0.250173) (43196.8,0.243039)
+        (44548.1,0.236083) (45941.7,0.229304) (47378.9,0.222698) (48861.1,0.216264) (50389.6,0.209997) (51966,0.203896)
+        (53591.6,0.197957) (55268.1,0.192177) (56997.1,0.186553) (58780.2,0.181083) (60619,0.175762) (62515.3,0.170588)
+        (64471,0.165557) (66487.9,0.160667) (68567.8,0.155913) (70712.8,0.151294) (72925,0.146805) (75206.3,0.142443)
+        (77559,0.138206) (79985.3,0.13409) (82487.5,0.130093) (85067.9,0.12621) (87729.1,0.12244) (90473.6,0.118779)
+        (93303.9,0.115225) (96222.7,0.111774) (99232.9,0.108424) (102337,0.105172) (105539,0.102015) (108840,0.0989513)
+        (112245,0.0959778) (115756,0.093092) (119378,0.0902915) (123112,0.0875739) (126964,0.0849369) (130935,0.0823782)
+        (135031,0.0798955) (139256,0.0774867) (143612,0.0751497) (148105,0.0728824) (152738,0.0706828) (157516,0.0685489)
+        (162444,0.0664789) (167525,0.0644708) (172766,0.0625229) (178171,0.0606334) (183744,0.0588006) (189492,0.0570228)
+        (195420,0.0552984) (201534,0.0536259) (207838,0.0520037) (214340,0.0504302) (221045,0.0489042) (227960,0.0474241)
+        (235092,0.0459886) (242446,0.0445964) (250031,0.0432462) (257852,0.0419367) (265919,0.0406667) (274238,0.0394351)
+        (282817,0.0382406) (291664,0.0370822) (300788,0.0359589) (310198,0.0348694) (319902,0.0338129) (329909,0.0327883)
+        (340230,0.0317948) (350873,0.0308312) (361850,0.0298968) (373170,0.0289907) (384844,0.028112) (396883,0.0272599)
+        (409298,0.0264336) (422103,0.0256323) (435307,0.0248552) (448925,0.0241017) (462969,0.023371) (477452,0.0226624)
+        (492388,0.0219753) (507792,0.021309) (523677,0.0206629) (540059,0.0200364) (556954,0.0194288) (574377,0.0188397)
+        (592346,0.0182684) (610876,0.0177144) (629986,0.0171772) (649694,0.0166563) (670019,0.0161512) (690979,0.0156614)
+        (712595,0.0151864) (734887,0.0147258) (757877,0.0142792) (781586,0.0138462) (806036,0.0134262) (831251,0.013019)
+        (857256,0.0126242) (884073,0.0122413) (911730,0.01187) (940252,0.01151) (969666,0.0111609) (1e+06,0.0108224)
+      };
+      \addlegendentry{Salida en R (pasabajas)}
+      % serie 2: Salida en L (pasaaltas) («(f/fc)/sqrt(1+(f/fc) 2)» en 300 puntos)
+      \addplot[color=iuborange, line width=1.4pt, no markers] coordinates {
+        (100,0.00923919) (103.128,0.00952819) (106.354,0.00982624) (109.682,0.0101336) (113.113,0.0104506) (116.651,0.0107775)
+        (120.301,0.0111146) (124.064,0.0114622) (127.945,0.0118208) (131.948,0.0121905) (136.075,0.0125718) (140.332,0.012965)
+        (144.722,0.0133705) (149.25,0.0137887) (153.919,0.01422) (158.734,0.0146647) (163.699,0.0151234) (168.82,0.0155964)
+        (174.102,0.0160842) (179.548,0.0165872) (185.165,0.017106) (190.957,0.0176409) (196.931,0.0181926) (203.092,0.0187615)
+        (209.445,0.0193482) (215.997,0.0199533) (222.754,0.0205772) (229.723,0.0212206) (236.909,0.0218842) (244.32,0.0225684)
+        (251.964,0.0232741) (259.846,0.0240018) (267.975,0.0247521) (276.358,0.025526) (285.003,0.026324) (293.919,0.0271469)
+        (303.114,0.0279954) (312.596,0.0288705) (322.375,0.0297729) (332.46,0.0307034) (342.86,0.031663) (353.586,0.0326524)
+        (364.647,0.0336728) (376.055,0.0347249) (387.819,0.0358098) (399.951,0.0369286) (412.463,0.0380822) (425.366,0.0392717)
+        (438.673,0.0404983) (452.396,0.041763) (466.548,0.0430671) (481.143,0.0444117) (496.195,0.0457982) (511.717,0.0472278)
+        (527.725,0.0487018) (544.234,0.0502215) (561.26,0.0517885) (578.818,0.053404) (596.925,0.0550697) (615.599,0.056787)
+        (634.857,0.0585574) (654.717,0.0603827) (675.198,0.0622645) (696.321,0.0642044) (718.104,0.0662042) (740.568,0.0682658)
+        (763.736,0.070391) (787.628,0.0725816) (812.267,0.0748396) (837.678,0.0771671) (863.883,0.0795661) (890.908,0.0820387)
+        (918.778,0.084587) (947.521,0.0872134) (977.162,0.0899199) (1007.73,0.0927091) (1039.26,0.0955832) (1071.77,0.0985448)
+        (1105.3,0.101596) (1139.87,0.10474) (1175.53,0.107979) (1212.31,0.111316) (1250.23,0.114753) (1289.34,0.118293)
+        (1329.68,0.12194) (1371.27,0.125695) (1414.17,0.129562) (1458.41,0.133544) (1504.03,0.137644) (1551.08,0.141864)
+        (1599.61,0.146209) (1649.65,0.15068) (1701.25,0.155282) (1754.47,0.160017) (1809.36,0.164889) (1865.96,0.169901)
+        (1924.34,0.175055) (1984.54,0.180356) (2046.62,0.185806) (2110.64,0.191409) (2176.67,0.197167) (2244.76,0.203085)
+        (2314.99,0.209164) (2387.41,0.215408) (2462.09,0.22182) (2539.11,0.228402) (2618.55,0.235158) (2700.46,0.242089)
+        (2784.94,0.249199) (2872.06,0.256489) (2961.91,0.263962) (3054.57,0.271619) (3150.12,0.279462) (3248.67,0.287492)
+        (3350.3,0.29571) (3455.11,0.304117) (3563.19,0.312713) (3674.66,0.321498) (3789.62,0.330472) (3908.17,0.339634)
+        (4030.43,0.348982) (4156.51,0.358515) (4286.54,0.368229) (4420.64,0.378123) (4558.93,0.388193) (4701.55,0.398434)
+        (4848.63,0.408841) (5000.31,0.419409) (5156.73,0.430132) (5318.05,0.441003) (5484.42,0.452015) (5655.99,0.463158)
+        (5832.92,0.474425) (6015.4,0.485804) (6203.58,0.497287) (6397.64,0.508861) (6597.78,0.520515) (6804.18,0.532236)
+        (7017.04,0.544012) (7236.55,0.555828) (7462.94,0.567671) (7696.4,0.579526) (7937.17,0.591378) (8185.47,0.603213)
+        (8441.53,0.615013) (8705.61,0.626765) (8977.95,0.638453) (9258.81,0.650061) (9548.46,0.661573) (9847.16,0.672975)
+        (10155.2,0.684251) (10472.9,0.695388) (10800.5,0.706371) (11138.4,0.717188) (11486.8,0.727825) (11846.2,0.738271)
+        (12216.8,0.748514) (12599,0.758545) (12993.1,0.768354) (13399.6,0.777933) (13818.7,0.787274) (14251,0.796372)
+        (14696.8,0.805219) (15156.6,0.813813) (15630.8,0.82215) (16119.7,0.830227) (16624,0.838043) (17144.1,0.845596)
+        (17680.4,0.852888) (18233.5,0.85992) (18803.9,0.866692) (19392.1,0.873208) (19998.8,0.87947) (20624.4,0.885483)
+        (21269.6,0.89125) (21935,0.896778) (22621.2,0.902069) (23328.8,0.907131) (24058.6,0.911969) (24811.3,0.91659)
+        (25587.4,0.920999) (26387.9,0.925203) (27213.4,0.929209) (28064.7,0.933024) (28942.7,0.936653) (29848.1,0.940105)
+        (30781.8,0.943386) (31744.8,0.946502) (32737.9,0.94946) (33762,0.952267) (34818.2,0.954929) (35907.4,0.957453)
+        (37030.7,0.959844) (38189.1,0.962109) (39383.8,0.964253) (40615.9,0.966282) (41886.5,0.968201) (43196.8,0.970017)
+        (44548.1,0.971733) (45941.7,0.973355) (47378.9,0.974887) (48861.1,0.976335) (50389.6,0.977702) (51966,0.978993)
+        (53591.6,0.980211) (55268.1,0.98136) (56997.1,0.982445) (58780.2,0.983468) (60619,0.984433) (62515.3,0.985342)
+        (64471,0.9862) (66487.9,0.987009) (68567.8,0.987771) (70712.8,0.988489) (72925,0.989165) (75206.3,0.989803)
+        (77559,0.990403) (79985.3,0.990969) (82487.5,0.991502) (85067.9,0.992004) (87729.1,0.992476) (90473.6,0.992921)
+        (93303.9,0.993339) (96222.7,0.993734) (99232.9,0.994105) (102337,0.994454) (105539,0.994783) (108840,0.995092)
+        (112245,0.995383) (115756,0.995658) (119378,0.995915) (123112,0.996158) (126964,0.996386) (130935,0.996601)
+        (135031,0.996803) (139256,0.996993) (143612,0.997172) (148105,0.997341) (152738,0.997499) (157516,0.997648)
+        (162444,0.997788) (167525,0.99792) (172766,0.998044) (178171,0.99816) (183744,0.99827) (189492,0.998373)
+        (195420,0.99847) (201534,0.998561) (207838,0.998647) (214340,0.998728) (221045,0.998803) (227960,0.998875)
+        (235092,0.998942) (242446,0.999005) (250031,0.999064) (257852,0.99912) (265919,0.999173) (274238,0.999222)
+        (282817,0.999269) (291664,0.999312) (300788,0.999353) (310198,0.999392) (319902,0.999428) (329909,0.999462)
+        (340230,0.999494) (350873,0.999525) (361850,0.999553) (373170,0.99958) (384844,0.999605) (396883,0.999628)
+        (409298,0.999651) (422103,0.999671) (435307,0.999691) (448925,0.99971) (462969,0.999727) (477452,0.999743)
+        (492388,0.999759) (507792,0.999773) (523677,0.999786) (540059,0.999799) (556954,0.999811) (574377,0.999823)
+        (592346,0.999833) (610876,0.999843) (629986,0.999852) (649694,0.999861) (670019,0.99987) (690979,0.999877)
+        (712595,0.999885) (734887,0.999892) (757877,0.999898) (781586,0.999904) (806036,0.99991) (831251,0.999915)
+        (857256,0.99992) (884073,0.999925) (911730,0.99993) (940252,0.999934) (969666,0.999938) (1e+06,0.999941)
+      };
+      \addlegendentry{Salida en L (pasaaltas)}
+      % línea de referencia en x = 10823
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({axis cs:10823,0}|-{rel axis cs:0,0}) -- ({axis cs:10823,0}|-{rel axis cs:0,1}) node[drotulo, pos=1, anchor=north west] {fc = 10.8 kHz};
+      % línea de referencia en y = 0.707
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({rel axis cs:0,0}|-{axis cs:1,0.707}) -- ({rel axis cs:1,0}|-{axis cs:1,0.707}) node[drotulo, pos=1, anchor=south east] {70.7 \%};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Respuesta en frecuencia de un circuito RL en serie (R = 680 \ensuremath{\Omega}, L = 10 mH) con salida en el resistor (pasabajas) y en la bobina (pasaaltas)}
+\end{figure}
+
+Las curvas tienen exactamente la forma de las del RC de la semana 7, porque la ecuación en función de $f/f_c$ es la misma; lo que cambia es qué elemento entrega cada salida y cómo se calcula $f_c$. La bobina real introduce, sin embargo, un matiz que el modelo ideal no muestra: en el pasaaltas, la tensión en los terminales de la bobina incluye la caída en su resistencia de devanado, así que a frecuencias muy bajas la salida no llega a cero, sino a $R_W/(R + R_W)$. Con la bobina L3 del kit y 680 \ensuremath{\Omega}, ese piso es de $24.6/704.6 \approx 3.5\ \text{\%}$ de la entrada.
+
+En la práctica, los filtros RL se prefieren a los RC en aplicaciones de potencia: una bobina en serie con la carga, un \textit{choke}, deja pasar la corriente continua o de 60 Hz casi sin pérdidas y se opone a los armónicos y a las perturbaciones de alta frecuencia, mientras que un resistor en serie disiparía una potencia inaceptable. En los circuitos de señal, en cambio, dominan los filtros RC, porque los condensadores son más pequeños, más baratos y más cercanos al ideal que las bobinas.
+
+\begin{nota}{Error frecuente:}
+Usar para el RL la fórmula del RC, $f_c = 1/(2\pi R L)$. La comprobación de unidades lo detecta: ohmios divididos entre henrios dan hercios (1/s), mientras que el producto $RL$ no da una frecuencia.
+\end{nota}
+
+\subsubsection{Potencia en circuitos RL y factor de potencia (Bloque 5)}
+
+En un circuito de ca puramente resistivo, la resistencia disipa en forma de calor toda la energía que entrega la fuente. En uno puramente inductivo, el inductor guarda la energía en su campo magnético durante una parte del ciclo y la devuelve a la fuente durante otra, sin conversión neta en calor. Cuando hay resistencia e inductancia, una parte de la energía se almacena y se devuelve alternadamente, y otra se disipa; los valores relativos de resistencia y reactancia determinan cuánta energía se convierte en calor [1]. Para describir ese reparto se usan tres potencias distintas.
+
+La \textbf{potencia real} o activa, $P$, es la que disipa la resistencia, en vatios (W). La \textbf{potencia reactiva}, $Q$, es la que la bobina toma y devuelve en cada ciclo, en voltamperios reactivos (VAR); no representa una pérdida de energía por conversión en calor, pero existe porque en cada instante el inductor está tomando energía de la fuente o devolviéndosela [1]. La \textbf{potencia aparente}, $S$, es el producto de la tensión y la corriente eficaces, en voltamperios (VA), y es la resultante de las otras dos en el \textbf{triángulo de potencia} [1]. El coseno del ángulo de fase es el \textbf{factor de potencia} [1]:
+
+\begin{equation}
+  P = I^{2}R = VI\cos\theta, \qquad Q = I^{2}X_L = VI\sin\theta, \qquad S = VI = \sqrt{P^{2} + Q^{2}}, \qquad FP = \cos\theta = \frac{P}{S}
+\end{equation}
+
+donde $P$ es la potencia real en vatios (W), $Q$ la potencia reactiva en voltamperios reactivos (VAR), $S$ la potencia aparente en voltamperios (VA), $V$ e $I$ la tensión y la corriente eficaces en voltios (V) y amperios (A), $R$ la resistencia y $X_L$ la reactancia inductiva en ohmios (\ensuremath{\Omega}), $\theta$ el ángulo de fase entre la tensión aplicada y la corriente, y $FP$ el factor de potencia (adimensional). A medida que el ángulo de fase aumenta, el factor de potencia disminuye y el circuito es cada vez más reactivo: un factor de potencia menor indica menos potencia real y más potencia reactiva [1].
+
+En el ejemplo de Floyd, un RL en serie con $R = 1.0\ \text{k}\Omega$ y $X_L = 2\ \text{k}\Omega$ alimentado con 10 V tiene $\mathbf{Z} = 2.24 \angle 63.4^\circ\ \text{k}\Omega$, $I = 4.46\ \text{mA}$ y $FP = \cos 63.4^\circ = 0.448$; su potencia real es $P = (10)(4.46)(0.448) \approx 20\ \text{mW}$ [1], la reactiva $Q = (4.46 \times 10^{-3})^2(2000) \approx 39.8\ \text{mVAR}$ y la aparente $S = (10)(4.46) = 44.6\ \text{mVA}$. La tabla aplica las mismas fórmulas al circuito mixto de la unidad anterior, calculando la potencia de cada elemento y comprobando que la suma coincide con la del conjunto.
+
+% --- Tabla 3: Potencias del circuito RL mixto R1 + (R2 ∥ L) con 5 V eficaces a 10 kHz (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=1.246\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.049\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.049\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.656\hsize\linewidth=\hsize\raggedleft\arraybackslash}X}
+\caption{Potencias del circuito RL mixto R1 + (R2 \ensuremath{\parallel} L) con 5 V eficaces a 10 kHz} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Elemento}} & \textcolor{white}{\textbf{Corriente (mA)}} & \textcolor{white}{\textbf{Fórmula}} & \textcolor{white}{\textbf{Potencia}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Elemento}} & \textcolor{white}{\textbf{Corriente (mA)}} & \textcolor{white}{\textbf{Fórmula}} & \textcolor{white}{\textbf{Potencia}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  R1 = 470 \ensuremath{\Omega} & 5.86 & P = I\texttwosuperior{}R1 & 16.1 mW \\
+  \rowcolor{iubfondogris} R2 = 680 \ensuremath{\Omega} & 3.98 & P = I\texttwosuperior{}R2 & 10.8 mW \\
+  L (XL = 628 \ensuremath{\Omega}) & 4.30 & Q = I\texttwosuperior{}XL & 11.6 mVAR \\
+  \rowcolor{iubfondogris} Total real & --- & P1 + P2 & 26.9 mW \\
+  Total aparente & 5.86 & S = VI & 29.3 mVA \\
+  \rowcolor{iubfondogris} Comprobación & --- & \ensuremath{\surd}(P\texttwosuperior{} + Q\texttwosuperior{}) & 29.3 mVA \\
+  Factor de potencia & --- & cos 23.4\textdegree{} = P/S & 0.918 \\
+\end{xltabular}
+
+La tabla muestra que la potencia real total es la suma de las potencias de los resistores, la reactiva es la de la bobina, y ambas se combinan en el triángulo para dar la potencia aparente que entrega la fuente. En las instalaciones eléctricas este reparto tiene consecuencias económicas: los conductores, los transformadores y los generadores deben dimensionarse para la potencia aparente, porque por ellos circula toda la corriente, aunque solo la potencia real produzca trabajo útil. Por eso un factor de potencia bajo obliga a sobredimensionar la instalación, y las empresas de energía suelen penalizarlo. Su corrección, añadiendo condensadores en paralelo con las cargas inductivas, se estudiará con los circuitos RLC.
+
+\begin{nota}{Error frecuente:}
+Calcular la potencia real como $VI$, sin el factor de potencia. En un circuito RL el producto de la tensión y la corriente eficaces es la potencia aparente, en VA, y siempre es mayor que la potencia real, salvo que el circuito sea puramente resistivo.
+\end{nota}
+
+\subsubsection{Medición de inductancia con la constante de tiempo (Bloque 6)}
+
+No siempre se dispone de un medidor LCR, y no todas las bobinas llevan marcado. Floyd describe un método que solo requiere un generador de ondas cuadradas, un osciloscopio, un ohmímetro y un resistor de valor conocido: se coloca la bobina en serie con el resistor, se mide la constante de tiempo del circuito y, conociendo la constante de tiempo y la resistencia, se calcula la inductancia [1]. El método aprovecha que en un RL en serie $\tau = L/R$, así que $L = \tau R$.
+
+El procedimiento consiste en aplicar al circuito una onda cuadrada y observar la tensión en el resistor: cada vez que la onda sube, la bobina adquiere energía y la corriente crece exponencialmente; cada vez que vuelve a cero, la bobina pierde energía y la corriente decae [1]. La frecuencia se ajusta para que la bobina tenga tiempo de adquirir energía por completo durante cada pulso, de modo que el osciloscopio muestre una curva de crecimiento completa [1]; el tiempo para que la tensión en el resistor llegue prácticamente a su valor final es de cinco constantes de tiempo [1]. Hay un detalle esencial: la resistencia de devanado de la bobina no puede ignorarse sin más; debe medirse con el ohmímetro, y el resistor en serie se elige mucho mayor que ella y que la resistencia de salida del generador, para que su influencia sea pequeña [1]. El diagrama resume los pasos.
+
+% --- Figura 3: Procedimiento para medir una inductancia desconocida por su constante de tiempo (diagrama en TikZ con la disposición del PNG) ---
+\begin{figure}[H]
+  \centering
+  \begin{adjustbox}{max width=\linewidth}
+  \begin{tikzpicture}[x=1in, y=1in, font=\small]
+    % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+    \node[dterminal, minimum width=1.377in, minimum height=0.890in] (n0) at (0.689,-0.550) {Medir RW \\ con \\ ohmímetro};  % a
+    \node[dcaja, minimum width=1.363in, minimum height=0.890in] (n1) at (3.462,-0.550) {Montar \\ bobina en \\ serie con R};  % b
+    \node[dcaja, minimum width=1.270in, minimum height=1.100in] (n2) at (6.182,-0.550) {Aplicar \\ onda \\ cuadrada \\ (T/2 > 5\ensuremath{\tau})};  % c
+    \node[dcaja, minimum width=1.270in, minimum height=0.680in] (n3) at (6.182,-1.990) {Medir t al \\ 63 \% de VR};  % d
+    \node[dterminal, minimum width=1.470in, minimum height=0.680in] (n4) at (3.462,-1.990) {L = \ensuremath{\tau} (R + \\ RW + Rg)};  % e
+    % flechas (las de retorno, curvas)
+    \draw[dflecha] (n0) -- (n1);
+    \draw[dflecha] (n1) -- (n2);
+    \draw[dflecha] (n2) -- (n3);
+    \draw[dflecha] (n3) -- (n4);
+    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    \node[drotulo] at (6.182,-1.270) {osciloscopio en R};
+  \end{tikzpicture}
+  \end{adjustbox}
+  \caption{Procedimiento para medir una inductancia desconocida por su constante de tiempo}
+\end{figure}
+
+La constante de tiempo se lee con los cursores del osciloscopio como el intervalo entre el flanco de subida de la onda cuadrada y el instante en que la tensión del resistor alcanza el 63 \% de su valor final. Si es más cómodo medir el instante en que llega al 50 \%, se usa $\tau = t_{50}/\ln 2 \approx t_{50}/0.693$. La inductancia se calcula con toda la resistencia del lazo:
+
+\begin{equation}
+  L = \tau\,(R + R_W + R_g)
+\end{equation}
+
+donde $L$ es la inductancia en henrios (H), $\tau$ la constante de tiempo medida en segundos (s), $R$ la resistencia del resistor en serie, $R_W$ la resistencia de devanado medida con el ohmímetro y $R_g$ la resistencia de salida del generador, típicamente de 50 \ensuremath{\Omega}, todas en ohmios (\ensuremath{\Omega}). Por ejemplo, con un resistor de 10 k\ensuremath{\Omega}, una resistencia de devanado de 85 \ensuremath{\Omega} como la de la bobina de la aplicación de Floyd [1] y 50 \ensuremath{\Omega} del generador, la resistencia total es de 10 135 \ensuremath{\Omega}; si la constante de tiempo medida es de 0.99 \textmu{}s, $L = (0.99 \times 10^{-6})(10\ 135) \approx 10.0\ \text{mH}$. Si se hubiera ignorado la resistencia del generador y la de devanado, el resultado habría sido 9.9 mH, un 1.3 \% menos.
+
+La elección del resistor es un compromiso. Un resistor muy grande hace despreciables $R_W$ y $R_g$, pero reduce la constante de tiempo hasta valores difíciles de leer con precisión: con 10 k\ensuremath{\Omega} y 10 mH, $\tau$ es de apenas 1 \textmu{}s. Un resistor pequeño alarga $\tau$ y facilita la lectura, pero hace que las resistencias parásitas pesen más. Un buen punto de partida es un resistor entre diez y cincuenta veces la resistencia de devanado, con la frecuencia de la onda cuadrada tal que su semiperiodo dure unas diez constantes de tiempo.
+
+\begin{nota}{Nota pedagógica:}
+El mismo montaje sirve para medir capacitancias sustituyendo la bobina por el condensador: entonces $C = \tau/R$. Es una alternativa útil cuando el multímetro no tiene función de capacímetro.
+\end{nota}
+
+\section{Caso de Estudio Aplicado: Identificación de una bobina sin marcado y medición de un circuito RL mixto (Bloque 7)}
+
+\subsection{El problema}
+
+En el almacén del laboratorio aparece una bobina toroidal sin ningún marcado y hay que saber si sirve para las prácticas. Se pide determinar su inductancia por dos métodos independientes, identificar a qué valor estándar corresponde y usarla después en un circuito RL mixto, del que se calcularán y medirán corrientes, tensiones, ángulo y factor de potencia. Se dispone de un generador de funciones, un osciloscopio, un multímetro y resistores de 1 k\ensuremath{\Omega}, 470 \ensuremath{\Omega} y 680 \ensuremath{\Omega}, que el ohmímetro mide en 996 \ensuremath{\Omega}, 468 \ensuremath{\Omega} y 676 \ensuremath{\Omega}. La resistencia de devanado de la bobina, medida con el ohmímetro, es de 12.3 \ensuremath{\Omega}. Las lecturas del osciloscopio que se usan más abajo son valores de ejemplo para ilustrar el procedimiento.
+
+\subsection{Método 1: constante de tiempo}
+
+Se monta la bobina en serie con el resistor de 996 \ensuremath{\Omega} y se aplica una onda cuadrada de 0 V a 5 V y 10 kHz, cuyo semiperiodo de 50 \textmu{}s resulta ser más de diez constantes de tiempo. En el osciloscopio, con la punta sobre el resistor, la tensión alcanza el 63 \% de su valor final 3.12 \textmu{}s después de cada flanco de subida. Con toda la resistencia del lazo, $996 + 12.3 + 50 = 1058.3\ \Omega$, la inductancia es $L = (3.12 \times 10^{-6})(1058.3) \approx 3.30\ \text{mH}$.
+
+\subsection{Método 2: impedancia con señal sinusoidal}
+
+Con el mismo montaje, el generador se cambia a una onda sinusoidal de 10 kHz y 5.00 V eficaces en los bornes del circuito. La corriente se obtiene de la tensión en el resistor, $I = 4.84/996 \approx 4.86\ \text{mA}$, y la tensión en la bobina, medida con la resta de canales, es de 1.01 V. La magnitud de la impedancia de la bobina es $Z_{\mathrm{bob}} = 1.01/4.86 \times 10^{3} \approx 207.8\ \Omega$, y como incluye la resistencia de devanado, la reactancia y la inductancia son:
+
+\begin{equation}
+  X_L = \sqrt{Z_{\mathrm{bob}}^{2} - R_W^{2}} = \sqrt{207.8^{2} - 12.3^{2}} \approx 207.4\ \Omega, \qquad L = \frac{X_L}{2\pi f} = \frac{207.4}{2\pi(10\ 000)} \approx 3.30\ \text{mH}
+\end{equation}
+
+donde $X_L$ es la reactancia inductiva en ohmios (\ensuremath{\Omega}), $Z_{\mathrm{bob}}$ la magnitud de la impedancia medida de la bobina en ohmios, $R_W$ su resistencia de devanado en ohmios, $L$ la inductancia en henrios (H) y $f$ la frecuencia en hercios (Hz). Los dos métodos coinciden en 3.30 mH, que corresponde al valor estándar de 3.3 mH de la serie de multiplicadores de los inductores [2]. A 10 kHz la bobina tiene $Q = 207.4/12.3 \approx 17$, suficiente para tratarla como casi ideal, aunque en el cálculo se incluye $R_W$.
+
+\subsection{Circuito RL mixto con la bobina identificada}
+
+Se monta $R_1 = 468\ \Omega$ en serie con el paralelo de $R_2 = 676\ \Omega$ y la bobina, con 5.00 V eficaces a 10 kHz. La admitancia de la bobina real es $1/(12.3 + j207.3) = 0.285 - j4.807\ \text{mS}$; sumada a $G_2 = 1.479\ \text{mS}$ da $\mathbf{Y}_p = 1.765 - j4.807\ \text{mS}$, y $\mathbf{Z}_p = 195.3 \angle 69.9^\circ = 67.3 + j183.3\ \Omega$. Entonces $\mathbf{Z}_T = 535.3 + j183.3\ \Omega = 565.8 \angle 18.9^\circ\ \Omega$, $I = 8.84\ \text{mA}$, $V_{R1} = 4.14\ \text{V}$, $V_p = 1.73\ \text{V}$, $I_{R2} = 2.55\ \text{mA}$ e $I_{\mathrm{bob}} = 8.31\ \text{mA}$. La potencia real es $P = VI\cos\theta \approx 41.8\ \text{mW}$, la reactiva $Q = I_{\mathrm{bob}}^2 X_L \approx 14.3\ \text{mVAR}$, la aparente $S = 44.2\ \text{mVA}$ y el factor de potencia 0.946.
+
+% --- Tabla 4: Bobina sin marcado y circuito RL mixto a 10 kHz: cálculo con valores medidos y medición (… (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=1.6\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.677\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.492\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.231\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Bobina sin marcado y circuito RL mixto a 10 kHz: cálculo con valores medidos y medición (lecturas de ejemplo)} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{Calculado}} & \textcolor{white}{\textbf{Medido}} & \textcolor{white}{\textbf{Diferencia}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{Calculado}} & \textcolor{white}{\textbf{Medido}} & \textcolor{white}{\textbf{Diferencia}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  L por constante de tiempo & --- & 3.30 mH & --- \\
+  \rowcolor{iubfondogris} L por impedancia & --- & 3.30 mH & 0.0 \% entre métodos \\
+  Mixto: I & 8.84 mA & 8.82 mA & \ensuremath{-}0.2 \% \\
+  \rowcolor{iubfondogris} Mixto: VR1 & 4.14 V & 4.13 V & \ensuremath{-}0.2 \% \\
+  Mixto: Vp & 1.73 V & 1.73 V & 0.0 \% \\
+  \rowcolor{iubfondogris} Mixto: IR2 & 2.55 mA & 2.55 mA & 0.0 \% \\
+  Mixto: Ibob & 8.31 mA & 8.30 mA & \ensuremath{-}0.1 \% \\
+  \rowcolor{iubfondogris} Mixto: \ensuremath{\theta} & 18.9\textdegree{} & 19.1\textdegree{} & 0.2\textdegree{} \\
+  Mixto: FP = cos \ensuremath{\theta} & 0.946 & 0.945 & \ensuremath{-}0.1 \% \\
+\end{xltabular}
+
+\subsection{Conclusiones}
+
+Dos métodos independientes, uno en el dominio del tiempo y otro en el de la frecuencia, dieron la misma inductancia, y eso da confianza en el resultado sin necesidad de un medidor LCR. La bobina quedó identificada como un inductor de 3.3 mH y, montada en el circuito mixto, se comportó como predice el cálculo, con diferencias menores del 0.5 \%. El factor de potencia medido, 0.945, confirma el reparto de potencias: la mayor parte de la potencia que entrega la fuente se disipa en los resistores y una fracción circula como potencia reactiva por la bobina. Con esta práctica se completan los criterios del RA3 que dependen del laboratorio.
+
+\begin{nota}{Nota pedagógica:}
+Medir la misma magnitud por dos caminos distintos es una de las mejores prácticas del laboratorio: si los resultados coinciden, ambos quedan validados; si no, la discrepancia señala un error de montaje, de lectura o de modelo antes de que contamine el resto de las mediciones.
+\end{nota}
+
+\section{Síntesis (Bloque 8)}
+
+Calcular un circuito RL según su conexionado empieza por elegir cómo representar la bobina real. En serie conviene su modelo natural, $R_W + jX_L$; en paralelo, su equivalente $R_p = R_W(1 + Q^2)$ en paralelo con $X_{Lp}$, válido solo a la frecuencia de cálculo. Con el modelo adecuado, los circuitos mixtos se resuelven con el mismo método de la semana 7, con los ángulos de signo opuesto a los del RC: la corriente se retrasa y el circuito se vuelve más inductivo al bajar la frecuencia. Como filtro, el RL tiene su frecuencia de corte en $f_c = R/(2\pi L)$, con la salida del pasabajas en el resistor. Y en términos de energía, \textbf{la potencia real se disipa en las resistencias, la reactiva va y vuelve en la bobina y la aparente las combina}; el factor de potencia, $\cos\theta$, mide qué fracción de lo que entrega la fuente se convierte en trabajo. El caso mostró que una bobina sin marcado puede identificarse con instrumentos básicos, midiendo su constante de tiempo y su impedancia, y que ambos métodos coinciden cuando se incluyen todas las resistencias del lazo. Con eso se completa el RA3 ---calcular y medir circuitos resistivos, inductivos y RL en serie o en paralelo--- antes del examen de la semana 10.
+
+\subsection*{Componente Actitudinal}
+
+\begin{cita}
+Rotular la bobina identificada con su valor medido y devolverla al almacén en su lugar es un gesto pequeño de responsabilidad con el equipo: evita que el próximo grupo repita las mismas mediciones o, peor, use un componente equivocado.
+\end{cita}
+
+\section{Bibliografía (Formato IEEE)}
+
+{\sloppy
+\begin{itemize}[leftmargin=2.6em, labelwidth=2.2em, labelsep=0.4em, align=left]
+  \item[{[1]}] T. L. Floyd, Principios de circuitos eléctricos, 8.\textordfeminine{} ed. México: Pearson Educación, 2007.
+  \item[{[2]}] R. L. Boylestad, Introducción al análisis de circuitos, 10.\textordfeminine{} ed. México: Pearson Educación, 2004.
+  \item[{[3]}] M. F. P. Deorsola y P. Morcelle del Valle, Circuitos eléctricos. Parte 1, 1.\textordfeminine{} ed. La Plata: Editorial de la Universidad de La Plata, 2017.
+\end{itemize}
+}
+
+\end{document}

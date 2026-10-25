@@ -15,21 +15,29 @@ estadisticas:
   pasajes: 35
 bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
-fecha_actualizacion: '2026-09-28'
+fecha_actualizacion: '2026-10-25'
+latex_estado: generado
+latex_archivo: generacion/temarios/IEL04-semana09.tex
+latex_avisos: []
+latex_temario_hash: dedf5cc222c6c89e
+latex_formato: 2
+latex_compilado: '2026-10-25'
+bibliografia_via: juez
+bibliografia_justificacion: El equivalente en paralelo de la bobina real Rp(eq) = RW(Q² + 1) (Floyd §17–6), los RL mixtos, el filtro RL (Floyd cap. 16, §16–8), la potencia y el factor de potencia (Floyd §16–7, Boylestad cap. 19) y τ = L/R están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
+bibliografia_faltantes: []
+bibliografia_fecha: '2026-10-25'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana09.tex
 presentacion_avisos: []
 presentacion_temario_hash: dedf5cc222c6c89e
-presentacion_fecha: '2026-09-28'
-presentacion_diseno: 5
-presentacion_diapositivas: 32
+presentacion_fecha: '2026-10-25'
+presentacion_diseno: 6
+presentacion_diapositivas: 37
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
-bibliografia_via: juez
-bibliografia_justificacion: El equivalente en paralelo de la bobina real Rp(eq) = RW(Q² + 1) (Floyd §17–6), los RL mixtos, el filtro RL (Floyd cap. 16, §16–8), la potencia y el factor de potencia (Floyd §16–7, Boylestad cap. 19) y τ = L/R están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
-bibliografia_faltantes: []
-bibliografia_fecha: '2026-09-28'
+presentacion_elementos: 13
+presentacion_compilada: '2026-10-25'
 ---
 
 # Cálculo y medición de parámetros en circuitos RL según el conexionado: equivalentes serie-paralelo, circuitos mixtos, potencia y medición de inductancia

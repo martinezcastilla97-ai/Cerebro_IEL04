@@ -262,3 +262,90 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - conflictos resueltos a mano: `src/latex_seguro.py` y `src/test_presentaciones.py` de la 1.37 ya traen la corrección de los símbolos ² ª º ¼ ‰ ¬ (prueba A2c), así que se tomaron completos; `src/diseno_iub.py` se tomó de la 1.37 (diseño 6, con logos). Se conservan como edición local `src/correlate.py` y `src/test_correlate_fuentes.py` (CORRELATE sin manuales de banco: la 1.37 no los cambió)
 - `config/framework_iub/ORIGEN.md` actualizado al de la 1.37 (los logos son idénticos); vista nueva enlazada en `wiki/index.md`
 - pruebas: todas pasan salvo las de plantilla limpia (`test_compatibilidad`, `test_replica`: esta copia tiene contenido) y la del manifiesto, que señala las 2 ediciones locales de CORRELATE
+
+## [2026-10-25] /temario IEL04 semana 1
+- RA: IEL04-RA1
+- tema: Condensadores: estructura, comportamiento interno, identificación y tipos
+- 4278 palabras, 7 ecuaciones, 6 tablas, 3 figuras; 35 pasajes de 2 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana01.tex
+
+## [2026-10-25] /temario IEL04 semana 2
+- RA: IEL04-RA1
+- tema: Bobinas o inductores: estructura, comportamiento interno, identificación y tipos
+- 4266 palabras, 6 ecuaciones, 6 tablas, 3 figuras; 35 pasajes de 2 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana02.tex
+
+## [2026-10-25] /temario IEL04 semana 3
+- RA: IEL04-RA1
+- tema: Condensadores y bobinas en serie, en paralelo y mixto: cálculo y medición en circuitos L, C y LC
+- 3763 palabras, 8 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 2 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana03.tex
+
+## [2026-10-25] /temario IEL04 semana 4
+- RA: IEL04-RA2
+- tema: Circuito RC en serie: tipos e identificación de resistores y condensadores, análisis y Ley de Voltajes de Kirchhoff
+- 4007 palabras, 6 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana04.tex
+
+## [2026-10-25] /temario IEL04 semana 6
+- RA: IEL04-RA2
+- tema: Circuito RC en paralelo: análisis y Ley de Corrientes de Kirchhoff
+- 3795 palabras, 5 ecuaciones, 3 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana06.tex
+
+## [2026-10-25] /temario IEL04 semana 7
+- RA: IEL04-RA2
+- tema: Cálculo y medición de parámetros en circuitos RC serie y paralelo: unidades, simbología y nomenclatura
+- 3763 palabras, 5 ecuaciones, 5 tablas, 2 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana07.tex
+
+## [2026-10-25] /temario IEL04 semana 8
+- RA: IEL04-RA3
+- tema: Circuitos RL en serie y en paralelo: tipos e identificación de resistores e inductores, análisis con las leyes de voltajes y corrientes de Kirchhoff
+- 3827 palabras, 7 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana08.tex
+
+## [2026-10-25] /temario IEL04 semana 9
+- RA: IEL04-RA3
+- tema: Cálculo y medición de parámetros en circuitos RL serie y paralelo según el tipo de conexionado
+- 3712 palabras, 6 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana09.tex
+
+## [2026-10-25] /temario IEL04 semana 11
+- RA: IEL04-RA4
+- tema: Circuito RLC en serie: tipos e identificación de resistores, inductores y condensadores, análisis y Ley de Voltajes de Kirchhoff
+- 3775 palabras, 5 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana11.tex
+
+## [2026-10-25] /temario IEL04 semana 12
+- RA: IEL04-RA4
+- tema: Circuito RLC en paralelo: análisis y Ley de Corrientes de Kirchhoff
+- 3753 palabras, 6 ecuaciones, 5 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana12.tex
+
+## [2026-10-25] /temario IEL04 semana 13
+- RA: IEL04-RA4
+- tema: Cálculo y medición de parámetros en circuitos RLC serie y paralelo: unidades, simbología y nomenclatura
+- 3672 palabras, 4 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana13.tex
+
+## [2026-10-25] /correlate-bibliografia IEL04
+- IEL04-semana01: cubierta (juez)
+- IEL04-semana02: vacio_detectado (marcador)
+- IEL04-semana03: cubierta (juez)
+- IEL04-semana04: cubierta (juez)
+- IEL04-semana06: cubierta (juez)
+- IEL04-semana07: vacio_detectado (marcador)
+- IEL04-semana08: cubierta (juez)
+- IEL04-semana09: cubierta (juez)
+- IEL04-semana11: cubierta (juez)
+- IEL04-semana12: cubierta (juez)
+- IEL04-semana13: cubierta (juez)
+
+## [2026-10-25] puesta al día con la estructura 1.37 | IEL04
+- temarios: los 11 se regeneraron con `temario.py --forzar --compilar` desde las secciones ya redactadas (0 llamadas al modelo; el texto no cambia) para tener su versión LaTeX `generacion/temarios/IEL04-semanaNN.tex`; compilan con pdfLaTeX sin errores: 2 limpios y 9 en `latex_estado: revisar` solo por líneas que se salen del margen en las tablas anchas (p. ej. la de 9 columnas de la semana 1, con encabezados recortados); se conservó `fecha_creacion` original
+- CORRELATE-BIBLIOGRAFIA repetida (la regeneración borra sus campos): 9 `cubierta`, 2 `vacio_detectado` (semanas 2 y 7), igual que antes
+- presentaciones: las 11 rehechas con el diseño 6 (logos del Manual de Identidad copiados a `generacion/presentaciones/IEL04/logos/`; las figuras, tablas y ecuaciones salen del `.tex` del temario con `\elementoTemario`), escritas por el asistente sin proveedor `CEREBRO_*`; compiladas con `presentaciones.compilar`, sin errores; 35 a 37 diapositivas
+- las ecuaciones largas se escalan al ancho de su caja (el elemento del temario va en `equation*` y no se achica solo); quedan 5 desbordes pequeños en celdas de tablas (semanas 2 y 11: la primera columna de la tabla 1 de la semana 11 es angosta para «Componente»/«Condensador»), que vienen del cálculo de anchos de columna de la plantilla
+- corrección local en `src/diseno_iub.py` (cierre): docente y contacto en dos líneas; en una sola, el correo quedaba debajo del logo. Queda como edición local frente a la 1.37
+- LINT: 0 errores; avisos L13 (horas y créditos del currículo) y L17 en las 11 semanas: falta la guía de laboratorio (protocolo nuevo GUIA-LABORATORIO; se propondría a partir de la bibliografía, porque no hay manual de banco)

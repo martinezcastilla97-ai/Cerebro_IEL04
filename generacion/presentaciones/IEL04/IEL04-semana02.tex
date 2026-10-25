@@ -2,7 +2,7 @@
 %  IEL04 - Circuitos Eléctricos I
 %  Semana 2: La bobina: inductancia, inducción electromagnética, tipos de núcleo e identificación de inductores
 %  Institución Universitaria de Barranquilla (IUB)
-%  Generada por src/presentaciones.py (diseño IUB 5). Compilador: pdfLaTeX (dos pasadas)
+%  Generada por src/presentaciones.py (diseño IUB 6). Compilador: pdfLaTeX (dos pasadas)
 % =====================================================================
 \documentclass[aspectratio=169,11pt,xcolor={table}]{beamer}
 
@@ -12,8 +12,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish,es-nodecimaldot,es-noshorthands]{babel}
-\usepackage{avant}                       % Sans geométrica (emula Avenir Next)
+\usepackage[scaled=0.95]{helvet}          % Helvetica (Nimbus Sans): la del manual para presentaciones
 \renewcommand{\familydefault}{\sfdefault}
+\newcommand{\fuentetitulo}{\fontfamily{pag}\selectfont}   % URW Gothic (avant), en lugar de Nexa, para titulares
+\usepackage{graphicx}                    % solo para los logos del manual (macros \logoIUB...)
 \renewcommand{\ttdefault}{pcr}           % Monoespaciada para código
 \usepackage{textcomp}
 
@@ -43,6 +45,27 @@
 \definecolor{iubblue}{HTML}{00ADE7}
 \definecolor{iuborange}{HTML}{E39037}
 \definecolor{iubgreen}{HTML}{3B9C6D}
+\definecolor{iubpurple}{HTML}{8E6BBF}
+\definecolor{iubgris}{HTML}{D5DAE3}
+\definecolor{iubgrisoscuro}{HTML}{7C8598}
+\definecolor{iubfondoazul}{HTML}{EBF7FD}
+\definecolor{iubfondonaranja}{HTML}{FDF4EA}
+\definecolor{iubfondoverde}{HTML}{EDF8F2}
+\definecolor{iubfondogris}{HTML}{F4F6F9}
+
+% ---------------------------------------------------------------------
+%  Logos del Manual de Identidad (logos/, junto al .tex). Si falta el
+%  archivo, se escribe la marca como texto y la presentación compila igual.
+%  \logoIUBsimbolo{alto}     símbolo en negativo (sobre #121023)
+%  \logoIUBhorizontal{alto}  horizontal a color (sobre blanco)
+%  \logoIUBamarillo{alto}    horizontal a una tinta, amarillo (sobre #121023)
+% ---------------------------------------------------------------------
+\newcommand{\logoIUBsimbolo}[1]{\IfFileExists{logos/logo_iub_blanco.png}{\includegraphics[height=#1]{logos/logo_iub_blanco.png}}{\textcolor{iubyellow}{\bfseries IUB}}}
+\newcommand{\logoIUBhorizontal}[1]{\IfFileExists{logos/logo_iub_horizontal.png}{\includegraphics[height=#1]{logos/logo_iub_horizontal.png}}{\textcolor{iubnavy}{\bfseries IUB}}}
+\newcommand{\logoIUBamarillo}[1]{\IfFileExists{logos/logo_iub_horizontal_amarillo.png}{\includegraphics[height=#1]{logos/logo_iub_horizontal_amarillo.png}}{\textcolor{iubyellow}{\bfseries\Huge IUB}}}
+
+% Un elemento del temario que no se pudo poner (no debería verse: el código sustituye cada uno por su LaTeX)
+\newcommand{\elementoTemario}[2]{\fcolorbox{iuborange}{white}{\scriptsize\textcolor{iuborange}{[#1 #2 del temario: no disponible]}}}
 
 % ---------------------------------------------------------------------
 %  Configuración de Beamer
@@ -70,10 +93,10 @@
     \useasboundingbox (0,0) rectangle (\paperwidth,1.05cm);
     \fill[iubnavy] (0,0) rectangle (\paperwidth,1.05cm);
     \fill[iubyellow] (0,0) rectangle (\paperwidth,0.05cm);
-    \node[anchor=west, text=iubyellow, font=\large\bfseries]
+    \node[anchor=west, text=iubyellow, font=\fuentetitulo\large\bfseries]
       at (0.6cm,0.55cm) {\strut\insertframetitle};
-    \node[anchor=east, text=iubyellow, font=\footnotesize\bfseries]
-      at ([xshift=-0.6cm]\paperwidth,0.55cm) {IUB};
+    \node[anchor=east, inner sep=0pt]
+      at ([xshift=-0.6cm]\paperwidth,0.55cm) {\logoIUBsimbolo{0.72cm}};
   \end{tikzpicture}}
 
 % ---------- Pie de página ----------
@@ -166,7 +189,19 @@
     font=\scriptsize\bfseries, align=center, inner sep=1pt},
   tag/.style={fill=#1, text=white, font=\scriptsize\bfseries, rounded corners=1mm,
     minimum width=0.7cm, anchor=north west},
+  % los de los diagramas del temario (temario_latex.py), con la misma forma y paleta
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt, text=iubnavy},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt, text=iubnavy},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt, text=iubnavy},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt, text=iubnavy},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
 }
+% Las gráficas del temario (pgfplots), del tamaño del área útil de una diapositiva
+\pgfplotsset{iubejes/.style={width=0.86\linewidth, height=4.3cm, grid=major, grid style={iubgris}, axis lines*=left,
+  axis line style={iubnavy}, tick label style={font=\scriptsize}, label style={font=\scriptsize}, title style={font=\bfseries\scriptsize},
+  legend cell align=left, legend style={draw=none, fill=none, font=\scriptsize, anchor=north, legend columns=-1,
+  /tikz/every even column/.append style={column sep=6pt}}, unbounded coords=jump}}
 
 % ---------------------------------------------------------------------
 %  Diapositiva separadora de bloque
@@ -182,7 +217,7 @@
     at ([xshift=0.8cm,yshift=-2.2cm]current page.north west) {BLOQUE};
   \node[anchor=north west, text=white, font=\bfseries\fontsize{72}{72}\selectfont]
     at ([xshift=0.65cm,yshift=-2.9cm]current page.north west) {#1};
-  \node[anchor=north west, text=iubnavy, font=\bfseries\LARGE,
+  \node[anchor=north west, text=iubnavy, font=\fuentetitulo\bfseries\LARGE,
         text width=9.4cm, align=left]
     at ([xshift=6.2cm,yshift=-2.8cm]current page.north west)
     {\hyphenpenalty=10000\exhyphenpenalty=10000 #2};
@@ -193,8 +228,10 @@
         ([yshift=0.35cm]current page.south east);
   \fill[iubyellow] ([xshift=5.2cm,yshift=0.35cm]current page.south west)
         rectangle ([yshift=0.42cm]current page.south east);
-  \node[anchor=north east, text=iubnavy, font=\small\bfseries]
-    at ([xshift=-0.6cm,yshift=-0.5cm]current page.north east) {IUB · IEL04};
+  \node[anchor=north east, inner sep=0pt]
+    at ([xshift=-0.6cm,yshift=-0.5cm]current page.north east) {\logoIUBhorizontal{0.9cm}};
+  \node[anchor=north east, text=iubnavy, font=\scriptsize\bfseries]
+    at ([xshift=-0.6cm,yshift=-1.55cm]current page.north east) {IEL04};
 \end{tikzpicture}
 \end{frame}}
 
@@ -203,49 +240,46 @@
 % =====================================================================
 
 % ---------------------------------------------------------------------
-%  PORTADA
+%  PORTADA (Manual de Identidad IUB, 3.3.1: panel oscuro con el logo)
 % ---------------------------------------------------------------------
 \begin{frame}[plain]
 \begin{tikzpicture}[remember picture, overlay]
-  % Panel institucional
-  \fill[iubnavy] (current page.north west) rectangle
-        ([xshift=5.6cm]current page.south west);
-  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{54}{54}\selectfont]
-    at ([xshift=0.7cm,yshift=-1.0cm]current page.north west) {IUB};
-  \node[anchor=north west, text=white, font=\footnotesize, text width=4.3cm, align=left]
-    at ([xshift=0.75cm,yshift=-3.0cm]current page.north west)
-    {Institución Universitaria de Barranquilla};
+  % Panel institucional: la esquina inferior derecha redondeada (las demás quedan fuera de la página)
+  \fill[iubnavy, rounded corners=1.6cm] ([xshift=-2cm,yshift=2cm]current page.north west) rectangle
+        ([xshift=6.0cm]current page.south west);
+  \node[anchor=north west, inner sep=0pt]
+    at ([xshift=0.7cm,yshift=-1.3cm]current page.north west) {\logoIUBamarillo{1.15cm}};
   \draw[iubyellow, line width=1.2pt]
-    ([xshift=0.75cm,yshift=-4.25cm]current page.north west) --
-    ([xshift=2.6cm,yshift=-4.25cm]current page.north west);
+    ([xshift=0.75cm,yshift=-3.1cm]current page.north west) --
+    ([xshift=2.6cm,yshift=-3.1cm]current page.north west);
   \node[anchor=north west, text=iubyellow, font=\scriptsize\bfseries,
-        text width=4.3cm, align=left]
-    at ([xshift=0.75cm,yshift=-4.5cm]current page.north west)
+        text width=4.6cm, align=left]
+    at ([xshift=0.75cm,yshift=-3.35cm]current page.north west)
     {Tecnología en Gestión de Sistemas Eléctricos};
-  \node[anchor=south west, text=white, font=\scriptsize, text width=4.3cm, align=left]
+  \node[anchor=south west, text=white, font=\scriptsize, text width=4.6cm, align=left]
     at ([xshift=0.75cm,yshift=0.9cm]current page.south west)
-    {Ing. Sergio Martinez Castilla\\[1pt]\textcolor{iubyellow}{\tiny smartinezc@unibarranquilla.edu.co}};
+    {Ing. Sergio Martinez Castilla\\[1pt]\textcolor{iubyellow}{smartinezc@unibarranquilla.edu.co}};
   % Bloque de título
   \node[anchor=north west, fill=iubblue, text=white, rounded corners=1.5mm,
         font=\scriptsize\bfseries, inner sep=2mm]
-    at ([xshift=6.4cm,yshift=-1.0cm]current page.north west)
+    at ([xshift=6.8cm,yshift=-1.0cm]current page.north west)
     {IEL04 \textperiodcentered{} Semana 2 de 14 \textperiodcentered{} Corte evaluativo 1};
-  \node[anchor=north west, text=iubnavy, font=\small, text width=9.0cm, align=left] (a)
-    at ([xshift=6.4cm,yshift=-1.9cm]current page.north west)
+  \node[anchor=north west, text=iubnavy, font=\small, text width=8.6cm, align=left] (a)
+    at ([xshift=6.8cm,yshift=-1.9cm]current page.north west)
     {Circuitos Eléctricos I};
-  \node[anchor=north west, text=iubnavy, font=\bfseries\fontsize{15}{18}\selectfont,
-        text width=9.0cm, align=left] (t)
+  \node[anchor=north west, text=iubnavy, font=\fuentetitulo\bfseries\fontsize{15}{18}\selectfont,
+        text width=8.6cm, align=left] (t)
     at ([yshift=-0.35cm]a.south west)
     {\hyphenpenalty=10000 La bobina: inductancia, inducción electromagnética, tipos de núcleo e identificación de inductores};
-  % Franjas de la paleta complementaria
-  \fill[iubblue]   ([xshift=6.4cm,yshift=1.1cm]current page.south west)
+  % Franjas de la paleta complementaria (manual, 1.4)
+  \fill[iubblue]   ([xshift=6.8cm,yshift=1.1cm]current page.south west)
     rectangle ++(1.6cm,0.18cm);
-  \fill[iuborange] ([xshift=8.1cm,yshift=1.1cm]current page.south west)
+  \fill[iuborange] ([xshift=8.5cm,yshift=1.1cm]current page.south west)
     rectangle ++(1.6cm,0.18cm);
-  \fill[iubgreen]  ([xshift=9.8cm,yshift=1.1cm]current page.south west)
+  \fill[iubgreen]  ([xshift=10.2cm,yshift=1.1cm]current page.south west)
     rectangle ++(1.6cm,0.18cm);
   \node[anchor=north west, text=iubnavy, font=\scriptsize]
-    at ([xshift=6.4cm,yshift=0.95cm]current page.south west)
+    at ([xshift=6.8cm,yshift=0.95cm]current page.south west)
     {Sesión teórico-práctica \textperiodcentered{} 240 min};
 \end{tikzpicture}
 \end{frame}
@@ -371,24 +405,27 @@
 
 % ---------------------------------------------------------------------
 \begin{frame}{Cadena causal de la autoinducción}
-\centering
-\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
-\begin{tikzpicture}
-  \node[bG, align=center, font=\scriptsize, text width=1.63cm] (n0) at (0.94,3.38) {Corriente por las espiras};
-  \node[bB, align=center, font=\scriptsize, text width=1.35cm] (n1) at (4.52,3.38) {Campo magnético en el núcleo};
-  \node[dec, align=center, font=\tiny, text width=1.45cm, inner sep=1pt] (n2) at (8.46,3.38) {¿Cambia la corriente?};
-  \node[bB, align=center, font=\scriptsize, text width=1.35cm] (n3) at (12.60,2.57) {Tensión inducida (Faraday)};
-  \node[bO, align=center, font=\scriptsize, text width=1.35cm] (n4) at (12.60,0.61) {Oposición al cambio (Lenz)};
-  \node[bG, align=center, font=\scriptsize, text width=1.75cm] (n5) at (12.60,4.19) {Energía almacenada estable};
-  \draw[flecha] (n0) -- (n1);
-  \draw[flecha] (n1) -- (n2);
-  \draw[flecha] (n2) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {sí: di/dt \ensuremath{\neq} 0} (n3);
-  \draw[flecha] (n3) -- (n4);
-  \draw[flecha] (n2) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {no: cd constante} (n5);
+\begin{center}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  \node[dterminal, minimum width=1.377in, minimum height=0.890in] (n0) at (0.689,-1.040) {Corriente \\ por las \\ espiras};
+  \node[dcaja, minimum width=1.177in, minimum height=1.100in] (n1) at (3.316,-1.040) {Campo \\ magnético \\ en el \\ núcleo};
+  \node[ddecision, minimum width=1.905in, minimum height=1.156in] (n2) at (6.207,-1.040) {\textquestiondown{}Cambia la \\ corriente?};
+  \node[dcaja, minimum width=1.177in, minimum height=0.890in] (n3) at (9.244,-1.635) {Tensión \\ inducida \\ (Faraday)};
+  \node[destado, minimum width=1.177in, minimum height=0.890in] (n4) at (9.244,-3.075) {Oposición \\ al cambio \\ (Lenz)};
+  \node[dterminal, minimum width=1.470in, minimum height=0.890in] (n5) at (9.244,-0.445) {Energía \\ almacenada \\ estable};
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) -- (n4);
+  \draw[dflecha] (n2) -- (n5);
+  \node[drotulo] at (7.725,-1.337) {sí: di/dt \ensuremath{\neq} 0};
+  \node[drotulo] at (7.725,-0.743) {no: cd constante};
 \end{tikzpicture}
 \end{adjustbox}
 
-\vspace{1mm}{\scriptsize Cadena causal de la autoinducción: el cambio de corriente induce una tensión que se opone a ese cambio\par}
+{\scriptsize\textbf{Figura 1.} Cadena causal de la autoinducción: el cambio de corriente induce una tensión que se opone a ese cambio\par}
+\end{center}
 \end{frame}
 
 % =====================================================================
@@ -406,28 +443,41 @@
   \item Una bobina de 350 vueltas sobre un núcleo de 1.5 cm de longitud y 0.5 cm de diámetro, con $\mu = 0.25 \times 10^{-3}\ \text{H/m}$, tiene $A = 1.96 \times 10^{-5}\ \text{m}^2$ y $L = (350)^2 (0.25 \times 10^{-3})(1.96 \times 10^{-5}) / 0.015 \approx 40\ \text{mH}$ $[1]$.
 \end{itemize}
   \column{0.4\textwidth}
-\begin{caja}{iubblue}{Ecuación clave}
-\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}L = \frac{N^{2}\,\mu\,A}{l} \\ \mu = \mu_r\,\mu_0 \\ \mu_0 = 4\pi \times 10^{-7}\ \text{H/m}\end{gathered}$\end{adjustbox}
-\end{caja}
+\begin{cardO}{Error frecuente}
+\footnotesize Calcular el área con el diámetro en lugar del radio, o dejar las dimensiones en centímetros.
+\end{cardO}
 \end{columns}
 \end{frame}
 
 % ---------------------------------------------------------------------
+\begin{frame}{Ecuaciones: Estructura de la bobina y definición}
+\begin{cajaplana}{iubblue}
+\centering
+{\large
+\begin{equation*}
+  L = \frac{N^{2}\,\mu\,A}{l}, \qquad \mu = \mu_r\,\mu_0, \qquad \mu_0 = 4\pi \times 10^{-7}\ \text{H/m}
+\end{equation*}
+}
+\end{cajaplana}
+\end{frame}
+
+% ---------------------------------------------------------------------
 \begin{frame}{Efecto del núcleo y del número de vueltas sobre}
-\centering\tiny
+\begin{center}
+{\scriptsize\textbf{Tabla 1.} Efecto del núcleo y del número de vueltas sobre la inductancia (ejemplos de [1] y [2])\par}
+\vspace{1mm}
+\scriptsize
 \renewcommand{\arraystretch}{1.35}
-\rowcolors{2}{iubnavy!6}{white}
 \begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-  \rowcolor{iubnavy}
-  \hd{Bobina} & \hd{N} & \hd{Núcleo} & \hd{\ensuremath{\mu} (H/m)} & \hd{A (m²)} & \hd{l (m)} & \hd{L}\\
-  Solenoide de aire & 100 & Aire (\ensuremath{\mu}r = 1) & 1.257 × 10\ensuremath{^{-}}\ensuremath{^{6}} & 12.57 × 10\ensuremath{^{-}}\ensuremath{^{6}} & 0.100 & 1.58 µH\\
-  Mismo solenoide & 100 & Hierro (\ensuremath{\mu}r = 2000) & 2.51 × 10\ensuremath{^{-}}³ & 12.57 × 10\ensuremath{^{-}}\ensuremath{^{6}} & 0.100 & 3.16 mH\\
-  Bobina con núcleo magnético & 350 & \ensuremath{\mu} = 0.25 × 10\ensuremath{^{-}}³ H/m & 0.25 × 10\ensuremath{^{-}}³ & 1.96 × 10\ensuremath{^{-}}\ensuremath{^{5}} & 0.015 & 40 mH\\
-\end{tabularx}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.230\linewidth}>{\raggedleft\arraybackslash}p{0.058\linewidth}>{\raggedright\arraybackslash}p{0.165\linewidth}>{\raggedright\arraybackslash}p{0.107\linewidth}>{\raggedright\arraybackslash}p{0.107\linewidth}>{\raggedleft\arraybackslash}p{0.058\linewidth}>{\raggedleft\arraybackslash}p{0.066\linewidth}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bobina}} & \textcolor{white}{\textbf{N}} & \textcolor{white}{\textbf{Núcleo}} & \textcolor{white}{\textbf{\ensuremath{\mu} (H/m)}} & \textcolor{white}{\textbf{A (m\texttwosuperior{})}} & \textcolor{white}{\textbf{l (m)}} & \textcolor{white}{\textbf{L}} \\
+Solenoide de aire & 100 & Aire (\ensuremath{\mu}r = 1) & 1.257 \texttimes{} 10\ensuremath{^{-}}\ensuremath{^{6}} & 12.57 \texttimes{} 10\ensuremath{^{-}}\ensuremath{^{6}} & 0.100 & 1.58 \textmu{}H \\
+\rowcolor{iubfondogris} Mismo solenoide & 100 & Hierro (\ensuremath{\mu}r = 2000) & 2.51 \texttimes{} 10\ensuremath{^{-}}\textthreesuperior{} & 12.57 \texttimes{} 10\ensuremath{^{-}}\ensuremath{^{6}} & 0.100 & 3.16 mH \\
+Bobina con núcleo magnético & 350 & \ensuremath{\mu} = 0.25 \texttimes{} 10\ensuremath{^{-}}\textthreesuperior{} H/m & 0.25 \texttimes{} 10\ensuremath{^{-}}\textthreesuperior{} & 1.96 \texttimes{} 10\ensuremath{^{-}}\ensuremath{^{5}} & 0.015 & 40 mH \\
+\bottomrule
+\end{tabular}
 \end{adjustbox}
-\vspace{2mm}
-{\scriptsize Efecto del núcleo y del número de vueltas sobre la inductancia (ejemplos de $[1]$ y $[2]$)\par}
+\end{center}
 \end{frame}
 
 % =====================================================================
@@ -445,20 +495,6 @@
   \item Como en el condensador, la dependencia es cuadrática: duplicar la corriente cuadruplica la energía.
 \end{itemize}
   \column{0.4\textwidth}
-\begin{caja}{iubblue}{Ecuación clave}
-\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle v_{ind} = L\,\frac{di}{dt}$\end{adjustbox}
-\end{caja}
-\end{columns}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{Ecuaciones: Comportamiento interno}
-\begin{columns}[c,onlytextwidth]
-  \column{0.55\textwidth}
-\begin{cajaplana}{iubblue}
-\centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle W = \frac{1}{2} L I^{2}$\end{adjustbox}
-\end{cajaplana}
-  \column{0.42\textwidth}
 \begin{cardO}{Hallazgo contraintuitivo}
 \footnotesize A diferencia del condensador, que en la práctica puede tratarse como ideal, la bobina casi nunca es ideal: su resistencia de devanado se mide con un ohmímetro y debe incluirse en los cálculos cuando no es despreciable frente a las demás resistencias del circuito.
 \end{cardO}
@@ -466,24 +502,154 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
+\begin{frame}{Ecuaciones: Comportamiento interno}
+\begin{cajaplana}{iubblue}
+\centering
+{\large
+\begin{equation*}
+  v_{\mathrm{ind}} = L\,\frac{di}{dt}
+\end{equation*}
+}
+\end{cajaplana}
+\vspace{1mm}
+\begin{cajaplana}{iuborange}
+\centering
+{\large
+\begin{equation*}
+  W = \frac{1}{2} L I^{2}
+\end{equation*}
+}
+\end{cajaplana}
+\end{frame}
+
+% ---------------------------------------------------------------------
 \begin{frame}{{\normalsize Energía almacenada en función de la corriente para bobinas}}
 \begin{columns}[c,onlytextwidth]
   \column{0.62\textwidth}
-\centering
+\begin{center}
+\begin{adjustbox}{max width=\linewidth, max totalheight=4.4cm}
 \begin{tikzpicture}
-  \begin{axis}[width=8.4cm, height=5.7cm, xmin=0, xmax=1, ymin=0, ymax=0.0212,
-      xlabel={Corriente I (A)}, ylabel={Energía W (J)},
-      label style={font=\scriptsize, text=iubnavy}, tick label style={font=\tiny, text=iubnavy},
-      axis line style={iubnavy}, grid=major, grid style={iubnavy!12},
-      legend style={font=\tiny, fill=white}, legend pos=north east]
-    \addplot[line width=1.4pt, iubblue] coordinates {(0,0) (0.013378,8.9484e-07) (0.026756,3.5794e-06) (0.040134,8.0536e-06) (0.053512,1.4318e-05) (0.06689,2.2371e-05) (0.080268,3.2214e-05) (0.093645,4.3847e-05) (0.10702,5.727e-05) (0.1204,7.2482e-05) (0.13378,8.9484e-05) (0.14716,0.00010828) (0.16054,0.00012886) (0.17391,0.00015123) (0.18729,0.00017539) (0.20067,0.00020134) (0.21405,0.00022908) (0.22742,0.00025861) (0.2408,0.00028993) (0.25418,0.00032304) (0.26756,0.00035794) (0.28094,0.00039463) (0.29431,0.0004331) (0.30769,0.00047337) (0.32107,0.00051543) (0.33445,0.00055928) (0.34783,0.00060491) (0.3612,0.00065234) (0.37458,0.00070156) (0.38796,0.00075256) (0.40134,0.00080536) (0.41472,0.00085995) (0.42809,0.00091632) (0.44147,0.00097449) (0.45485,0.0010344) (0.46823,0.0010962) (0.48161,0.0011597) (0.49498,0.001225) (0.50836,0.0012922) (0.52174,0.0013611) (0.53512,0.0014318) (0.54849,0.0015042) (0.56187,0.0015785) (0.57525,0.0016546) (0.58863,0.0017324) (0.60201,0.0018121) (0.61538,0.0018935) (0.62876,0.0019767) (0.64214,0.0020617) (0.65552,0.0021485) (0.6689,0.0022371) (0.68227,0.0023275) (0.69565,0.0024197) (0.70903,0.0025136) (0.72241,0.0026094) (0.73579,0.0027069) (0.74916,0.0028062) (0.76254,0.0029074) (0.77592,0.0030103) (0.7893,0.003115) (0.80268,0.0032214) (0.81605,0.0033297) (0.82943,0.0034398) (0.84281,0.0035516) (0.85619,0.0036653) (0.86957,0.0037807) (0.88294,0.0038979) (0.89632,0.004017) (0.9097,0.0041378) (0.92308,0.0042604) (0.93645,0.0043847) (0.94983,0.0045109) (0.96321,0.0046389) (0.97659,0.0047686) (0.98997,0.0049002) (1,0.005)};
+  \begin{axis}[
+      iubejes,
+      xlabel={Corriente I (A)},
+      ylabel={Energía W (J)},
+      title={Energía almacenada W = LI\texttwosuperior{}/2},
+      legend style={at={(0.5,-0.30)}},
+      xmin=0,
+      xmax=1]
+    \addplot[color=iubblue, line width=1.4pt, no markers] coordinates {
+      (0,0) (0.00334448,5.59278e-08) (0.00668896,2.23711e-07) (0.0100334,5.0335e-07) (0.0133779,8.94845e-07) (0.0167224,1.39819e-06)
+      (0.0200669,2.0134e-06) (0.0234114,2.74046e-06) (0.0267559,3.57938e-06) (0.0301003,4.53015e-06) (0.0334448,5.59278e-06) (0.0367893,6.76726e-06)
+      (0.0401338,8.0536e-06) (0.0434783,9.4518e-06) (0.0468227,1.09618e-05) (0.0501672,1.25838e-05) (0.0535117,1.43175e-05) (0.0568562,1.61631e-05)
+      (0.0602007,1.81206e-05) (0.0635452,2.01899e-05) (0.0668896,2.23711e-05) (0.0702341,2.46642e-05) (0.0735786,2.7069e-05) (0.0769231,2.95858e-05)
+      (0.0802676,3.22144e-05) (0.083612,3.49549e-05) (0.0869565,3.78072e-05) (0.090301,4.07714e-05) (0.0936455,4.38474e-05) (0.09699,4.70353e-05)
+      (0.100334,5.0335e-05) (0.103679,5.37466e-05) (0.107023,5.72701e-05) (0.110368,6.09054e-05) (0.113712,6.46525e-05) (0.117057,6.85115e-05)
+      (0.120401,7.24824e-05) (0.123746,7.65651e-05) (0.12709,8.07597e-05) (0.130435,8.50662e-05) (0.133779,8.94845e-05) (0.137124,9.40146e-05)
+      (0.140468,9.86566e-05) (0.143813,0.00010341) (0.147157,0.000108276) (0.150502,0.000113254) (0.153846,0.000118343) (0.157191,0.000123544)
+      (0.160535,0.000128858) (0.16388,0.000134283) (0.167224,0.000139819) (0.170569,0.000145468) (0.173913,0.000151229) (0.177258,0.000157101)
+      (0.180602,0.000163085) (0.183946,0.000169182) (0.187291,0.00017539) (0.190635,0.000181709) (0.19398,0.000188141) (0.197324,0.000194685)
+      (0.200669,0.00020134) (0.204013,0.000208107) (0.207358,0.000214986) (0.210702,0.000221977) (0.214047,0.00022908) (0.217391,0.000236295)
+      (0.220736,0.000243621) (0.22408,0.00025106) (0.227425,0.00025861) (0.230769,0.000266272) (0.234114,0.000274046) (0.237458,0.000281932)
+      (0.240803,0.00028993) (0.244147,0.000298039) (0.247492,0.000306261) (0.250836,0.000314594) (0.254181,0.000323039) (0.257525,0.000331596)
+      (0.26087,0.000340265) (0.264214,0.000349045) (0.267559,0.000357938) (0.270903,0.000366942) (0.274247,0.000376058) (0.277592,0.000385287)
+      (0.280936,0.000394626) (0.284281,0.000404078) (0.287625,0.000413642) (0.29097,0.000423317) (0.294314,0.000433105) (0.297659,0.000443004)
+      (0.301003,0.000453015) (0.304348,0.000463138) (0.307692,0.000473373) (0.311037,0.000483719) (0.314381,0.000494178) (0.317726,0.000504748)
+      (0.32107,0.00051543) (0.324415,0.000526225) (0.327759,0.00053713) (0.331104,0.000548148) (0.334448,0.000559278) (0.337793,0.000570519)
+      (0.341137,0.000581873) (0.344482,0.000593338) (0.347826,0.000604915) (0.351171,0.000616604) (0.354515,0.000628405) (0.35786,0.000640317)
+      (0.361204,0.000652342) (0.364548,0.000664478) (0.367893,0.000676726) (0.371237,0.000689086) (0.374582,0.000701558) (0.377926,0.000714142)
+      (0.381271,0.000726838) (0.384615,0.000739645) (0.38796,0.000752564) (0.391304,0.000765595) (0.394649,0.000778738) (0.397993,0.000791993)
+      (0.401338,0.00080536) (0.404682,0.000818839) (0.408027,0.000832429) (0.411371,0.000846131) (0.414716,0.000859946) (0.41806,0.000873872)
+      (0.421405,0.00088791) (0.424749,0.000902059) (0.428094,0.000916321) (0.431438,0.000930694) (0.434783,0.00094518) (0.438127,0.000959777)
+      (0.441472,0.000974486) (0.444816,0.000989307) (0.448161,0.00100424) (0.451505,0.00101928) (0.454849,0.00103444) (0.458194,0.00104971)
+      (0.461538,0.00106509) (0.464883,0.00108058) (0.468227,0.00109618) (0.471572,0.0011119) (0.474916,0.00112773) (0.478261,0.00114367)
+      (0.481605,0.00115972) (0.48495,0.00117588) (0.488294,0.00119216) (0.491639,0.00120854) (0.494983,0.00122504) (0.498328,0.00124165)
+      (0.501672,0.00125838) (0.505017,0.00127521) (0.508361,0.00129216) (0.511706,0.00130921) (0.51505,0.00132638) (0.518395,0.00134367)
+      (0.521739,0.00136106) (0.525084,0.00137856) (0.528428,0.00139618) (0.531773,0.00141391) (0.535117,0.00143175) (0.538462,0.0014497)
+      (0.541806,0.00146777) (0.545151,0.00148595) (0.548495,0.00150423) (0.551839,0.00152263) (0.555184,0.00154115) (0.558528,0.00155977)
+      (0.561873,0.00157851) (0.565217,0.00159735) (0.568562,0.00161631) (0.571906,0.00163538) (0.575251,0.00165457) (0.578595,0.00167386)
+      (0.58194,0.00169327) (0.585284,0.00171279) (0.588629,0.00173242) (0.591973,0.00175216) (0.595318,0.00177202) (0.598662,0.00179198)
+      (0.602007,0.00181206) (0.605351,0.00183225) (0.608696,0.00185255) (0.61204,0.00187297) (0.615385,0.00189349) (0.618729,0.00191413)
+      (0.622074,0.00193488) (0.625418,0.00195574) (0.628763,0.00197671) (0.632107,0.0019978) (0.635452,0.00201899) (0.638796,0.0020403)
+      (0.64214,0.00206172) (0.645485,0.00208325) (0.648829,0.0021049) (0.652174,0.00212665) (0.655518,0.00214852) (0.658863,0.0021705)
+      (0.662207,0.00219259) (0.665552,0.0022148) (0.668896,0.00223711) (0.672241,0.00225954) (0.675585,0.00228208) (0.67893,0.00230473)
+      (0.682274,0.00232749) (0.685619,0.00235037) (0.688963,0.00237335) (0.692308,0.00239645) (0.695652,0.00241966) (0.698997,0.00244298)
+      (0.702341,0.00246642) (0.705686,0.00248996) (0.70903,0.00251362) (0.712375,0.00253739) (0.715719,0.00256127) (0.719064,0.00258526)
+      (0.722408,0.00260937) (0.725753,0.00263358) (0.729097,0.00265791) (0.732441,0.00268235) (0.735786,0.0027069) (0.73913,0.00273157)
+      (0.742475,0.00275635) (0.745819,0.00278123) (0.749164,0.00280623) (0.752508,0.00283134) (0.755853,0.00285657) (0.759197,0.0028819)
+      (0.762542,0.00290735) (0.765886,0.00293291) (0.769231,0.00295858) (0.772575,0.00298436) (0.77592,0.00301026) (0.779264,0.00303626)
+      (0.782609,0.00306238) (0.785953,0.00308861) (0.789298,0.00311495) (0.792642,0.00314141) (0.795987,0.00316797) (0.799331,0.00319465)
+      (0.802676,0.00322144) (0.80602,0.00324834) (0.809365,0.00327535) (0.812709,0.00330248) (0.816054,0.00332972) (0.819398,0.00335707)
+      (0.822742,0.00338453) (0.826087,0.0034121) (0.829431,0.00343978) (0.832776,0.00346758) (0.83612,0.00349549) (0.839465,0.00352351)
+      (0.842809,0.00355164) (0.846154,0.00357988) (0.849498,0.00360824) (0.852843,0.0036367) (0.856187,0.00366528) (0.859532,0.00369397)
+      (0.862876,0.00372278) (0.866221,0.00375169) (0.869565,0.00378072) (0.87291,0.00380986) (0.876254,0.00383911) (0.879599,0.00386847)
+      (0.882943,0.00389794) (0.886288,0.00392753) (0.889632,0.00395723) (0.892977,0.00398704) (0.896321,0.00401696) (0.899666,0.00404699)
+      (0.90301,0.00407714) (0.906355,0.00410739) (0.909699,0.00413776) (0.913043,0.00416824) (0.916388,0.00419883) (0.919732,0.00422954)
+      (0.923077,0.00426036) (0.926421,0.00429128) (0.929766,0.00432232) (0.93311,0.00435347) (0.936455,0.00438474) (0.939799,0.00441611)
+      (0.943144,0.0044476) (0.946488,0.0044792) (0.949833,0.00451091) (0.953177,0.00454273) (0.956522,0.00457467) (0.959866,0.00460672)
+      (0.963211,0.00463887) (0.966555,0.00467114) (0.9699,0.00470353) (0.973244,0.00473602) (0.976589,0.00476863) (0.979933,0.00480134)
+      (0.983278,0.00483417) (0.986622,0.00486712) (0.989967,0.00490017) (0.993311,0.00493333) (0.996656,0.00496661) (1,0.005)
+    };
     \addlegendentry{L = 10 mH}
-    \addplot[line width=1.4pt, iuborange] coordinates {(0,0) (0.013378,3.5794e-06) (0.026756,1.4318e-05) (0.040134,3.2214e-05) (0.053512,5.727e-05) (0.06689,8.9484e-05) (0.080268,0.00012886) (0.093645,0.00017539) (0.10702,0.00022908) (0.1204,0.00028993) (0.13378,0.00035794) (0.14716,0.0004331) (0.16054,0.00051543) (0.17391,0.00060491) (0.18729,0.00070156) (0.20067,0.00080536) (0.21405,0.00091632) (0.22742,0.0010344) (0.2408,0.0011597) (0.25418,0.0012922) (0.26756,0.0014318) (0.28094,0.0015785) (0.29431,0.0017324) (0.30769,0.0018935) (0.32107,0.0020617) (0.33445,0.0022371) (0.34783,0.0024197) (0.3612,0.0026094) (0.37458,0.0028062) (0.38796,0.0030103) (0.40134,0.0032214) (0.41472,0.0034398) (0.42809,0.0036653) (0.44147,0.0038979) (0.45485,0.0041378) (0.46823,0.0043847) (0.48161,0.0046389) (0.49498,0.0049002) (0.50836,0.0051686) (0.52174,0.0054442) (0.53512,0.005727) (0.54849,0.0060169) (0.56187,0.006314) (0.57525,0.0066183) (0.58863,0.0069297) (0.60201,0.0072482) (0.61538,0.007574) (0.62876,0.0079068) (0.64214,0.0082469) (0.65552,0.0085941) (0.6689,0.0089484) (0.68227,0.00931) (0.69565,0.0096786) (0.70903,0.010054) (0.72241,0.010437) (0.73579,0.010828) (0.74916,0.011225) (0.76254,0.011629) (0.77592,0.012041) (0.7893,0.01246) (0.80268,0.012886) (0.81605,0.013319) (0.82943,0.013759) (0.84281,0.014207) (0.85619,0.014661) (0.86957,0.015123) (0.88294,0.015592) (0.89632,0.016068) (0.9097,0.016551) (0.92308,0.017041) (0.93645,0.017539) (0.94983,0.018044) (0.96321,0.018555) (0.97659,0.019075) (0.98997,0.019601) (1,0.02)};
+    \addplot[color=iuborange, line width=1.4pt, no markers] coordinates {
+      (0,0) (0.00334448,2.23711e-07) (0.00668896,8.94845e-07) (0.0100334,2.0134e-06) (0.0133779,3.57938e-06) (0.0167224,5.59278e-06)
+      (0.0200669,8.0536e-06) (0.0234114,1.09618e-05) (0.0267559,1.43175e-05) (0.0301003,1.81206e-05) (0.0334448,2.23711e-05) (0.0367893,2.7069e-05)
+      (0.0401338,3.22144e-05) (0.0434783,3.78072e-05) (0.0468227,4.38474e-05) (0.0501672,5.0335e-05) (0.0535117,5.72701e-05) (0.0568562,6.46525e-05)
+      (0.0602007,7.24824e-05) (0.0635452,8.07597e-05) (0.0668896,8.94845e-05) (0.0702341,9.86566e-05) (0.0735786,0.000108276) (0.0769231,0.000118343)
+      (0.0802676,0.000128858) (0.083612,0.000139819) (0.0869565,0.000151229) (0.090301,0.000163085) (0.0936455,0.00017539) (0.09699,0.000188141)
+      (0.100334,0.00020134) (0.103679,0.000214986) (0.107023,0.00022908) (0.110368,0.000243621) (0.113712,0.00025861) (0.117057,0.000274046)
+      (0.120401,0.00028993) (0.123746,0.000306261) (0.12709,0.000323039) (0.130435,0.000340265) (0.133779,0.000357938) (0.137124,0.000376058)
+      (0.140468,0.000394626) (0.143813,0.000413642) (0.147157,0.000433105) (0.150502,0.000453015) (0.153846,0.000473373) (0.157191,0.000494178)
+      (0.160535,0.00051543) (0.16388,0.00053713) (0.167224,0.000559278) (0.170569,0.000581873) (0.173913,0.000604915) (0.177258,0.000628405)
+      (0.180602,0.000652342) (0.183946,0.000676726) (0.187291,0.000701558) (0.190635,0.000726838) (0.19398,0.000752564) (0.197324,0.000778738)
+      (0.200669,0.00080536) (0.204013,0.000832429) (0.207358,0.000859946) (0.210702,0.00088791) (0.214047,0.000916321) (0.217391,0.00094518)
+      (0.220736,0.000974486) (0.22408,0.00100424) (0.227425,0.00103444) (0.230769,0.00106509) (0.234114,0.00109618) (0.237458,0.00112773)
+      (0.240803,0.00115972) (0.244147,0.00119216) (0.247492,0.00122504) (0.250836,0.00125838) (0.254181,0.00129216) (0.257525,0.00132638)
+      (0.26087,0.00136106) (0.264214,0.00139618) (0.267559,0.00143175) (0.270903,0.00146777) (0.274247,0.00150423) (0.277592,0.00154115)
+      (0.280936,0.00157851) (0.284281,0.00161631) (0.287625,0.00165457) (0.29097,0.00169327) (0.294314,0.00173242) (0.297659,0.00177202)
+      (0.301003,0.00181206) (0.304348,0.00185255) (0.307692,0.00189349) (0.311037,0.00193488) (0.314381,0.00197671) (0.317726,0.00201899)
+      (0.32107,0.00206172) (0.324415,0.0021049) (0.327759,0.00214852) (0.331104,0.00219259) (0.334448,0.00223711) (0.337793,0.00228208)
+      (0.341137,0.00232749) (0.344482,0.00237335) (0.347826,0.00241966) (0.351171,0.00246642) (0.354515,0.00251362) (0.35786,0.00256127)
+      (0.361204,0.00260937) (0.364548,0.00265791) (0.367893,0.0027069) (0.371237,0.00275635) (0.374582,0.00280623) (0.377926,0.00285657)
+      (0.381271,0.00290735) (0.384615,0.00295858) (0.38796,0.00301026) (0.391304,0.00306238) (0.394649,0.00311495) (0.397993,0.00316797)
+      (0.401338,0.00322144) (0.404682,0.00327535) (0.408027,0.00332972) (0.411371,0.00338453) (0.414716,0.00343978) (0.41806,0.00349549)
+      (0.421405,0.00355164) (0.424749,0.00360824) (0.428094,0.00366528) (0.431438,0.00372278) (0.434783,0.00378072) (0.438127,0.00383911)
+      (0.441472,0.00389794) (0.444816,0.00395723) (0.448161,0.00401696) (0.451505,0.00407714) (0.454849,0.00413776) (0.458194,0.00419883)
+      (0.461538,0.00426036) (0.464883,0.00432232) (0.468227,0.00438474) (0.471572,0.0044476) (0.474916,0.00451091) (0.478261,0.00457467)
+      (0.481605,0.00463887) (0.48495,0.00470353) (0.488294,0.00476863) (0.491639,0.00483417) (0.494983,0.00490017) (0.498328,0.00496661)
+      (0.501672,0.0050335) (0.505017,0.00510084) (0.508361,0.00516862) (0.511706,0.00523685) (0.51505,0.00530553) (0.518395,0.00537466)
+      (0.521739,0.00544423) (0.525084,0.00551426) (0.528428,0.00558473) (0.531773,0.00565564) (0.535117,0.00572701) (0.538462,0.00579882)
+      (0.541806,0.00587108) (0.545151,0.00594378) (0.548495,0.00601693) (0.551839,0.00609054) (0.555184,0.00616458) (0.558528,0.00623908)
+      (0.561873,0.00631402) (0.565217,0.00638941) (0.568562,0.00646525) (0.571906,0.00654154) (0.575251,0.00661827) (0.578595,0.00669545)
+      (0.58194,0.00677308) (0.585284,0.00685115) (0.588629,0.00692968) (0.591973,0.00700865) (0.595318,0.00708806) (0.598662,0.00716793)
+      (0.602007,0.00724824) (0.605351,0.007329) (0.608696,0.00741021) (0.61204,0.00749186) (0.615385,0.00757396) (0.618729,0.00765651)
+      (0.622074,0.00773951) (0.625418,0.00782296) (0.628763,0.00790685) (0.632107,0.00799119) (0.635452,0.00807597) (0.638796,0.00816121)
+      (0.64214,0.00824689) (0.645485,0.00833302) (0.648829,0.00841959) (0.652174,0.00850662) (0.655518,0.00859409) (0.658863,0.00868201)
+      (0.662207,0.00877037) (0.665552,0.00885919) (0.668896,0.00894845) (0.672241,0.00903815) (0.675585,0.00912831) (0.67893,0.00921891)
+      (0.682274,0.00930996) (0.685619,0.00940146) (0.688963,0.00949341) (0.692308,0.0095858) (0.695652,0.00967864) (0.698997,0.00977193)
+      (0.702341,0.00986566) (0.705686,0.00995984) (0.70903,0.0100545) (0.712375,0.0101496) (0.715719,0.0102451) (0.719064,0.010341)
+      (0.722408,0.0104375) (0.725753,0.0105343) (0.729097,0.0106316) (0.732441,0.0107294) (0.735786,0.0108276) (0.73913,0.0109263)
+      (0.742475,0.0110254) (0.745819,0.0111249) (0.749164,0.0112249) (0.752508,0.0113254) (0.755853,0.0114263) (0.759197,0.0115276)
+      (0.762542,0.0116294) (0.765886,0.0117316) (0.769231,0.0118343) (0.772575,0.0119375) (0.77592,0.012041) (0.779264,0.0121451)
+      (0.782609,0.0122495) (0.785953,0.0123544) (0.789298,0.0124598) (0.792642,0.0125656) (0.795987,0.0126719) (0.799331,0.0127786)
+      (0.802676,0.0128858) (0.80602,0.0129934) (0.809365,0.0131014) (0.812709,0.0132099) (0.816054,0.0133189) (0.819398,0.0134283)
+      (0.822742,0.0135381) (0.826087,0.0136484) (0.829431,0.0137591) (0.832776,0.0138703) (0.83612,0.0139819) (0.839465,0.014094)
+      (0.842809,0.0142066) (0.846154,0.0143195) (0.849498,0.0144329) (0.852843,0.0145468) (0.856187,0.0146611) (0.859532,0.0147759)
+      (0.862876,0.0148911) (0.866221,0.0150068) (0.869565,0.0151229) (0.87291,0.0152394) (0.876254,0.0153564) (0.879599,0.0154739)
+      (0.882943,0.0155918) (0.886288,0.0157101) (0.889632,0.0158289) (0.892977,0.0159481) (0.896321,0.0160678) (0.899666,0.016188)
+      (0.90301,0.0163085) (0.906355,0.0164296) (0.909699,0.016551) (0.913043,0.016673) (0.916388,0.0167953) (0.919732,0.0169182)
+      (0.923077,0.0170414) (0.926421,0.0171651) (0.929766,0.0172893) (0.93311,0.0174139) (0.936455,0.017539) (0.939799,0.0176645)
+      (0.943144,0.0177904) (0.946488,0.0179168) (0.949833,0.0180436) (0.953177,0.0181709) (0.956522,0.0182987) (0.959866,0.0184269)
+      (0.963211,0.0185555) (0.966555,0.0186846) (0.9699,0.0188141) (0.973244,0.0189441) (0.976589,0.0190745) (0.979933,0.0192054)
+      (0.983278,0.0193367) (0.986622,0.0194685) (0.989967,0.0196007) (0.993311,0.0197333) (0.996656,0.0198664) (1,0.02)
+    };
     \addlegendentry{L = 40 mH}
-    \addplot[line width=1pt, dashed, iubnavy!70] coordinates {(0.5,0) (0.5,0.0212)};
-    \addlegendentry{I = 0.5 A}
+    \draw[iubgrisoscuro, dashed, line width=0.9pt] ({axis cs:0.5,0}|-{rel axis cs:0,0}) -- ({axis cs:0.5,0}|-{rel axis cs:0,1}) node[drotulo, pos=1, anchor=north west] {I = 0.5 A};
   \end{axis}
 \end{tikzpicture}
+\end{adjustbox}
+
+{\scriptsize\textbf{Figura 2.} Energía almacenada en función de la corriente para bobinas de 10 mH y 40 mH, con la corriente de 0.5 A marcada\par}
+\end{center}
   \column{0.35\textwidth}
 \begin{caja}{iubblue}{Lectura de la gráfica}
 \footnotesize Como en el condensador, la dependencia es cuadrática: duplicar la corriente cuadruplica la energía.
@@ -514,46 +680,51 @@
 
 % ---------------------------------------------------------------------
 \begin{frame}{Clasificación de los inductores según su ajuste}
-\centering
-\begin{adjustbox}{max width=\linewidth, max totalheight=6.1cm}
-\begin{tikzpicture}
-  \node[bG, align=center, font=\scriptsize, text width=2.73cm] (n0) at (1.49,2.68) {Inductores};
-  \node[bB, align=center, font=\scriptsize, text width=1.38cm] (n1) at (7.10,3.88) {Fijos};
-  \node[bB, align=center, font=\scriptsize, text width=2.51cm] (n2) at (7.10,1.90) {Variables (núcleo deslizante)};
-  \node[bO, align=center, font=\scriptsize, text width=2.14cm] (n3) at (12.41,4.66) {Núcleo de aire};
-  \node[bO, align=center, font=\scriptsize, text width=2.14cm] (n4) at (12.41,2.68) {Núcleo de hierro};
-  \node[bO, align=center, font=\scriptsize, text width=2.14cm] (n5) at (12.41,0.69) {Núcleo de ferrita};
-  \draw[flecha] (n0) -- (n1);
-  \draw[flecha] (n0) -- (n2);
-  \draw[flecha] (n1) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {alta frecuencia} (n3);
-  \draw[flecha] (n1) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {baja frecuencia} (n4);
-  \draw[flecha] (n1) -- (n5);
-  \draw[flecha] (n2) -- node[midway, above, fill=white, font=\tiny, inner sep=1pt] {ajuste por tornillo} (n5);
+\begin{center}
+\begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  \node[dterminal, minimum width=1.470in, minimum height=0.470in] (n0) at (0.735,-1.320) {Inductores};
+  \node[dcaja, minimum width=0.805in, minimum height=0.470in] (n1) at (3.502,-0.725) {Fijos};
+  \node[dcaja, minimum width=1.363in, minimum height=0.890in] (n2) at (3.502,-1.705) {Variables \\ (núcleo \\ deslizante)};
+  \node[destado, minimum width=1.177in, minimum height=0.680in] (n3) at (6.122,-0.340) {Núcleo de \\ aire};
+  \node[destado, minimum width=1.177in, minimum height=0.680in] (n4) at (6.122,-1.320) {Núcleo de \\ hierro};
+  \node[destado, minimum width=1.177in, minimum height=0.680in] (n5) at (6.122,-2.300) {Núcleo de \\ ferrita};
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n0) -- (n2);
+  \draw[dflecha] (n1) -- (n3);
+  \draw[dflecha] (n1) -- (n4);
+  \draw[dflecha] (n1) -- (n5);
+  \draw[dflecha] (n2) -- (n5);
+  \node[drotulo] at (4.812,-0.532) {alta frecuencia};
+  \node[drotulo] at (4.812,-1.022) {baja frecuencia};
+  \node[drotulo] at (4.812,-2.002) {ajuste por tornillo};
 \end{tikzpicture}
 \end{adjustbox}
 
-\vspace{1mm}{\scriptsize Clasificación de los inductores según su ajuste y el material de su núcleo\par}
+{\scriptsize\textbf{Figura 3.} Clasificación de los inductores según su ajuste y el material de su núcleo\par}
+\end{center}
 \end{frame}
 
 % ---------------------------------------------------------------------
 \begin{frame}{{\normalsize Tipos de inductores, valores típicos y aplicaciones}}
-\centering\scriptsize
+\begin{center}
+{\scriptsize\textbf{Tabla 2.} Tipos de inductores, valores típicos y aplicaciones [2]\par}
+\vspace{1mm}
+\small
 \renewcommand{\arraystretch}{1.35}
-\rowcolors{2}{iubnavy!6}{white}
 \begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-  \rowcolor{iubnavy}
-  \hd{Tipo} & \hd{Valores típicos} & \hd{Aplicación típica}\\
-  Bobina de núcleo abierto & 3 mH a 40 mH & filtros pasa bajos, redes de distribución de frecuencias\\
-  Bobina toroidal & 1 mH a 30 mH & choke en líneas de ca, reducción de transitorios y EMI\\
-  Choke de modo común & 0.6 mH a 50 mH & filtros de línea de ca, fuentes conmutadas, cargadores\\
-  Choke de RF & 10 µH a 50 µH & radio, televisión, comunicaciones\\
-  Bobina ajustable de RF & 1 µH a 100 µH & osciladores y circuitos de RF\\
-  Inductor de montaje superficial & 0.01 µH a 100 µH & circuitos miniaturizados en PCB multicapa\\
-\end{tabularx}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.310\linewidth}>{\raggedright\arraybackslash}p{0.165\linewidth}>{\raggedright\arraybackslash}p{0.436\linewidth}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Tipo}} & \textcolor{white}{\textbf{Valores típicos}} & \textcolor{white}{\textbf{Aplicación típica}} \\
+Bobina de núcleo abierto & 3 mH a 40 mH & filtros pasa bajos, redes de distribución de frecuencias \\
+\rowcolor{iubfondogris} Bobina toroidal & 1 mH a 30 mH & choke en líneas de ca, reducción de transitorios y EMI \\
+Choke de modo común & 0.6 mH a 50 mH & filtros de línea de ca, fuentes conmutadas, cargadores \\
+\rowcolor{iubfondogris} Choke de RF & 10 \textmu{}H a 50 \textmu{}H & radio, televisión, comunicaciones \\
+Bobina ajustable de RF & 1 \textmu{}H a 100 \textmu{}H & osciladores y circuitos de RF \\
+\rowcolor{iubfondogris} Inductor de montaje superficial & 0.01 \textmu{}H a 100 \textmu{}H & circuitos miniaturizados en PCB multicapa \\
+\bottomrule
+\end{tabular}
 \end{adjustbox}
-\vspace{2mm}
-{\scriptsize Tipos de inductores, valores típicos y aplicaciones $[2]$\par}
+\end{center}
 \end{frame}
 
 % =====================================================================
@@ -570,20 +741,6 @@
   \item La diferencia es la unidad: el resultado de un inductor se expresa en microhenrios.
 \end{itemize}
   \column{0.4\textwidth}
-\begin{caja}{iubblue}{Ecuación clave}
-\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle L_{n} = (10\,a + b) \times 10^{\,m}\ \mu\text{H}$\end{adjustbox}
-\end{caja}
-\end{columns}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{Ecuaciones: Identificación}
-\begin{columns}[c,onlytextwidth]
-  \column{0.55\textwidth}
-\begin{cajaplana}{iubblue}
-\centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle \begin{gathered}L_{\min} = L_{n}\,(1 - t) \\ L_{\max} = L_{n}\,(1 + t)\end{gathered}$\end{adjustbox}
-\end{cajaplana}
-  \column{0.42\textwidth}
 \begin{cardO}{Nota pedagógica}
 \footnotesize Un buen hábito es comprobar que el valor leído pertenece a la serie estándar.
 \end{cardO}
@@ -591,25 +748,47 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
+\begin{frame}{Ecuaciones: Identificación}
+\begin{cajaplana}{iubblue}
+\centering
+{\large
+\begin{equation*}
+  L_{n} = (10\,a + b) \times 10^{\,m}\ \mu\text{H}
+\end{equation*}
+}
+\end{cajaplana}
+\vspace{1mm}
+\begin{cajaplana}{iuborange}
+\centering
+{\large
+\begin{equation*}
+  L_{\min} = L_{n}\,(1 - t), \qquad L_{\max} = L_{n}\,(1 + t)
+\end{equation*}
+}
+\end{cajaplana}
+\end{frame}
+
+% ---------------------------------------------------------------------
 \begin{frame}{Lectura de marcados frecuentes de inductores}
-\centering\scriptsize
+\begin{center}
+{\scriptsize\textbf{Tabla 3.} Lectura de marcados frecuentes de inductores \textcolor{iuborange}{\textbf{[FUENTE NO CARGADA EN raw/]}}\par}
+\vspace{1mm}
+\scriptsize
 \renewcommand{\arraystretch}{1.35}
-\rowcolors{2}{iubnavy!6}{white}
 \begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-  \rowcolor{iubnavy}
-  \hd{Marcado} & \hd{Valor nominal} & \hd{Tolerancia} & \hd{Observación}\\
-  4R7 & 4.7 µH & no indicada & R marca el punto decimal\\
-  101 & 100 µH & no indicada & montaje superficial o radial\\
-  102J & 1000 µH = 1 mH & ±5 \% & —\\
-  472K & 4700 µH = 4.7 mH & ±10 \% & —\\
-  103 & 10 000 µH = 10 mH & no indicada & mismo código que 10 nF en un condensador\\
-  marrón-negro-rojo-plata & 1000 µH = 1 mH & ±10 \% & inductor moldeado con bandas\\
-  10 mH 0.5 A & 10 mH & según fabricante & corriente nominal impresa\\
-\end{tabularx}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.211\linewidth}>{\raggedright\arraybackslash}p{0.158\linewidth}>{\raggedright\arraybackslash}p{0.150\linewidth}>{\raggedright\arraybackslash}p{0.361\linewidth}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Marcado}} & \textcolor{white}{\textbf{Valor nominal}} & \textcolor{white}{\textbf{Tolerancia}} & \textcolor{white}{\textbf{Observación}} \\
+4R7 & 4.7 \textmu{}H & no indicada & R marca el punto decimal \\
+\rowcolor{iubfondogris} 101 & 100 \textmu{}H & no indicada & montaje superficial o radial \\
+102J & 1000 \textmu{}H = 1 mH & \textpm{}5 \% & --- \\
+\rowcolor{iubfondogris} 472K & 4700 \textmu{}H = 4.7 mH & \textpm{}10 \% & --- \\
+103 & 10 000 \textmu{}H = 10 mH & no indicada & mismo código que 10 nF en un condensador \\
+\rowcolor{iubfondogris} marrón-negro-rojo-plata & 1000 \textmu{}H = 1 mH & \textpm{}10 \% & inductor moldeado con bandas \\
+10 mH 0.5 A & 10 mH & según fabricante & corriente nominal impresa \\
+\bottomrule
+\end{tabular}
 \end{adjustbox}
-\vspace{2mm}
-{\scriptsize Lectura de marcados frecuentes de inductores [fuente no cargada]\par}
+\end{center}
 \end{frame}
 
 % =====================================================================
@@ -635,42 +814,44 @@
 
 % ---------------------------------------------------------------------
 \begin{frame}{Unidades de inductancia y conversiones}
-\centering\scriptsize
+\begin{center}
+{\scriptsize\textbf{Tabla 4.} Unidades de inductancia y conversiones\par}
+\vspace{1mm}
+\scriptsize
 \renewcommand{\arraystretch}{1.35}
-\rowcolors{2}{iubnavy!6}{white}
 \begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-  \rowcolor{iubnavy}
-  \hd{Unidad} & \hd{Símbolo} & \hd{Valor en H} & \hd{Equivalencia práctica} & \hd{Uso típico}\\
-  henrio & H & 1 & 1000 mH & filtros de potencia, reactores\\
-  milihenrio & mH & 10\ensuremath{^{-}}³ & 1000 µH & filtros de línea, bobinas de laboratorio\\
-  microhenrio & µH & 10\ensuremath{^{-}}\ensuremath{^{6}} & 1000 nH & RF, montaje superficial\\
-  nanohenrio & nH & 10\ensuremath{^{-}}\ensuremath{^{9}} & — & pistas y bobinas de muy alta frecuencia\\
-\end{tabularx}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.105\linewidth}>{\raggedright\arraybackslash}p{0.079\linewidth}>{\raggedright\arraybackslash}p{0.105\linewidth}>{\raggedright\arraybackslash}p{0.202\linewidth}>{\raggedright\arraybackslash}p{0.359\linewidth}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Unidad}} & \textcolor{white}{\textbf{Símbolo}} & \textcolor{white}{\textbf{Valor en H}} & \textcolor{white}{\textbf{Equivalencia práctica}} & \textcolor{white}{\textbf{Uso típico}} \\
+henrio & H & 1 & 1000 mH & filtros de potencia, reactores \\
+\rowcolor{iubfondogris} milihenrio & mH & 10\ensuremath{^{-}}\textthreesuperior{} & 1000 \textmu{}H & filtros de línea, bobinas de laboratorio \\
+microhenrio & \textmu{}H & 10\ensuremath{^{-}}\ensuremath{^{6}} & 1000 nH & RF, montaje superficial \\
+\rowcolor{iubfondogris} nanohenrio & nH & 10\ensuremath{^{-}}\ensuremath{^{9}} & --- & pistas y bobinas de muy alta frecuencia \\
+\bottomrule
+\end{tabular}
 \end{adjustbox}
-\vspace{2mm}
-{\scriptsize Unidades de inductancia y conversiones\par}
+\end{center}
 \end{frame}
 
 % ---------------------------------------------------------------------
 \begin{frame}{Símbolos y nomenclatura de los inductores}
-\centering\scriptsize
+\begin{center}
+{\scriptsize\textbf{Tabla 5.} Símbolos y nomenclatura de los inductores\par}
+\vspace{1mm}
+\small
 \renewcommand{\arraystretch}{1.35}
-\rowcolors{2}{iubnavy!6}{white}
 \begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-  \rowcolor{iubnavy}
-  \hd{Elemento} & \hd{Representación} & \hd{Significado}\\
-  Inductor de núcleo de aire & espiras sin líneas adicionales & núcleo no magnético\\
-  Inductor de núcleo de hierro & espiras con dos líneas continuas & núcleo ferromagnético laminado\\
-  Inductor de núcleo de ferrita & espiras con líneas discontinuas & núcleo cerámico magnético\\
-  Inductor variable & símbolo con flecha & núcleo deslizante ajustable\\
-  Designador & L1, L2, L3… & referencia del componente en el plano\\
-  RW o DCR & resistencia de devanado & se dibuja en serie con L en el equivalente\\
-\end{tabularx}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.258\linewidth}>{\raggedright\arraybackslash}p{0.283\linewidth}>{\raggedright\arraybackslash}p{0.369\linewidth}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Elemento}} & \textcolor{white}{\textbf{Representación}} & \textcolor{white}{\textbf{Significado}} \\
+Inductor de núcleo de aire & espiras sin líneas adicionales & núcleo no magnético \\
+\rowcolor{iubfondogris} Inductor de núcleo de hierro & espiras con dos líneas continuas & núcleo ferromagnético laminado \\
+Inductor de núcleo de ferrita & espiras con líneas discontinuas & núcleo cerámico magnético \\
+\rowcolor{iubfondogris} Inductor variable & símbolo con flecha & núcleo deslizante ajustable \\
+Designador & L1, L2, L3\ldots{} & referencia del componente en el plano \\
+\rowcolor{iubfondogris} RW o DCR & resistencia de devanado & se dibuja en serie con L en el equivalente \\
+\bottomrule
+\end{tabular}
 \end{adjustbox}
-\vspace{2mm}
-{\scriptsize Símbolos y nomenclatura de los inductores\par}
+\end{center}
 \end{frame}
 
 % =====================================================================
@@ -688,29 +869,42 @@
   \item L2: 472 son 4.7 mH, con K (±10 \%); el intervalo va de 4.23 mH a 5.17 mH, y 4.62 mH da $e_{\%} = -1.7\ \%$.
 \end{itemize}
   \column{0.4\textwidth}
-\begin{caja}{iubblue}{Ecuación clave}
-\footnotesize \centering\small \begin{adjustbox}{max width=\linewidth}$\displaystyle e_{\%} = \frac{L_{m} - L_{n}}{L_{n}} \times 100$\end{adjustbox}
-\end{caja}
+\begin{cardO}{Nota pedagógica}
+\footnotesize Conviene medir la resistencia de devanado de cada bobina nueva y anotarla en su bolsa o en el inventario: ese dato de referencia es el que permitirá detectar más adelante un corto entre espiras que el ohmímetro, por sí solo, no revela.
+\end{cardO}
 \end{columns}
 \end{frame}
 
 % ---------------------------------------------------------------------
+\begin{frame}{{\normalsize Ecuaciones: Identificación y verificación de las bobinas}}
+\begin{cajaplana}{iubblue}
+\centering
+{\large
+\begin{equation*}
+  e_{\text{\%}} = \frac{L_{m} - L_{n}}{L_{n}} \times 100
+\end{equation*}
+}
+\end{cajaplana}
+\end{frame}
+
+% ---------------------------------------------------------------------
 \begin{frame}{{\normalsize Identificación y verificación de las bobinas del kit}}
-\centering\tiny
+\begin{center}
+{\scriptsize\textbf{Tabla 6.} Identificación y verificación de las bobinas del kit (lecturas de ejemplo)\par}
+\vspace{1mm}
+\scriptsize
 \renewcommand{\arraystretch}{1.35}
-\rowcolors{2}{iubnavy!6}{white}
 \begin{adjustbox}{max width=\linewidth, max totalheight=5.6cm}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-  \rowcolor{iubnavy}
-  \hd{Ref.} & \hd{Marcado} & \hd{Ln} & \hd{Tolerancia} & \hd{Intervalo admisible} & \hd{Lm} & \hd{e (\%)} & \hd{RW medida} & \hd{Aislamiento al núcleo} & \hd{Decisión}\\
-  L1 & 102J & 1 mH & ±5 \% & 0.95 a 1.05 mH & 1.03 mH & +3.0 & 3.2 \ensuremath{\Omega} & no aplica & Acepta\\
-  L2 & 472K & 4.7 mH & ±10 \% & 4.23 a 5.17 mH & 4.62 mH & \ensuremath{-}1.7 & 9.8 \ensuremath{\Omega} & no aplica & Acepta\\
-  L3 & 103K & 10 mH & ±10 \% & 9.0 a 11.0 mH & 10.4 mH & +4.0 & 24.6 \ensuremath{\Omega} & correcto & Acepta\\
-  L4 & 33 mH ±20 \% & 33 mH & ±20 \% & 26.4 a 39.6 mH & 21.5 mH & \ensuremath{-}34.8 & 12.1 \ensuremath{\Omega} & correcto & Rechaza\\
-\end{tabularx}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.042\linewidth}>{\raggedright\arraybackslash}p{0.071\linewidth}>{\raggedleft\arraybackslash}p{0.042\linewidth}>{\raggedright\arraybackslash}p{0.071\linewidth}>{\raggedright\arraybackslash}p{0.125\linewidth}>{\raggedleft\arraybackslash}p{0.047\linewidth}>{\raggedleft\arraybackslash}p{0.042\linewidth}>{\raggedleft\arraybackslash}p{0.065\linewidth}>{\raggedright\arraybackslash}p{0.136\linewidth}>{\raggedright\arraybackslash}p{0.059\linewidth}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Ref.}} & \textcolor{white}{\textbf{Marcado}} & \textcolor{white}{\textbf{Ln}} & \textcolor{white}{\textbf{Tolerancia}} & \textcolor{white}{\textbf{Intervalo admisible}} & \textcolor{white}{\textbf{Lm}} & \textcolor{white}{\textbf{e (\%)}} & \textcolor{white}{\textbf{RW medida}} & \textcolor{white}{\textbf{Aislamiento al núcleo}} & \textcolor{white}{\textbf{Decisión}} \\
+L1 & 102J & 1 mH & \textpm{}5 \% & 0.95 a 1.05 mH & 1.03 mH & +3.0 & 3.2 \ensuremath{\Omega} & no aplica & Acepta \\
+\rowcolor{iubfondogris} L2 & 472K & 4.7 mH & \textpm{}10 \% & 4.23 a 5.17 mH & 4.62 mH & \ensuremath{-}1.7 & 9.8 \ensuremath{\Omega} & no aplica & Acepta \\
+L3 & 103K & 10 mH & \textpm{}10 \% & 9.0 a 11.0 mH & 10.4 mH & +4.0 & 24.6 \ensuremath{\Omega} & correcto & Acepta \\
+\rowcolor{iubfondogris} L4 & 33 mH \textpm{}20 \% & 33 mH & \textpm{}20 \% & 26.4 a 39.6 mH & 21.5 mH & \ensuremath{-}34.8 & 12.1 \ensuremath{\Omega} & correcto & Rechaza \\
+\bottomrule
+\end{tabular}
 \end{adjustbox}
-\vspace{2mm}
-{\scriptsize Identificación y verificación de las bobinas del kit (lecturas de ejemplo)\par}
+\end{center}
 \end{frame}
 
 % =====================================================================
@@ -775,8 +969,10 @@
 \begin{frame}[plain]
 \begin{tikzpicture}[remember picture, overlay]
   \fill[iubnavy] (current page.north west) rectangle (current page.south east);
-  \node[anchor=north west, text=iubyellow, font=\bfseries\fontsize{40}{44}\selectfont]
+  \node[anchor=north west, text=iubyellow, font=\fuentetitulo\bfseries\fontsize{40}{44}\selectfont]
     at ([xshift=1.2cm,yshift=-1.6cm]current page.north west) {\textexclamdown{}Gracias!};
+  \node[anchor=south east, inner sep=0pt]
+    at ([xshift=-0.9cm,yshift=0.75cm]current page.south east) {\logoIUBamarillo{0.95cm}};
   \node[anchor=north west, text=white, font=\normalsize, text width=14cm, align=left]
     at ([xshift=1.2cm,yshift=-3.4cm]current page.north west)
     {IEL04 \textperiodcentered{} Circuitos Eléctricos I};
@@ -786,7 +982,7 @@
     {Próxima sesión \textperiodcentered{} Semana 3: Condensadores y bobinas en serie, en paralelo y mixto: cálculo y medición en circuitos L, C y LC};
   \node[anchor=south west, text=iubyellow, font=\small, align=left]
     at ([xshift=1.2cm,yshift=0.9cm]current page.south west)
-    {Ing. Sergio Martinez Castilla \quad · \quad smartinezc@unibarranquilla.edu.co};
+    {Ing. Sergio Martinez Castilla \\[1pt] smartinezc@unibarranquilla.edu.co};
   \fill[iubblue]   ([xshift=1.2cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
   \fill[iuborange] ([xshift=2.9cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);
   \fill[iubgreen]  ([xshift=4.6cm,yshift=0.55cm]current page.south west) rectangle ++(1.6cm,0.15cm);

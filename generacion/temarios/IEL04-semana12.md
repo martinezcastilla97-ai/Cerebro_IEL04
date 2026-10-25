@@ -15,21 +15,30 @@ estadisticas:
   pasajes: 35
 bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
-fecha_actualizacion: '2026-09-28'
+fecha_actualizacion: '2026-10-25'
+latex_estado: revisar
+latex_archivo: generacion/temarios/IEL04-semana12.tex
+latex_avisos:
+- una línea se sale del margen 19.3 pt (in paragraph at lines 503--503)
+latex_temario_hash: 379688a119f6262f
+latex_formato: 2
+latex_compilado: null
+bibliografia_via: juez
+bibliografia_justificacion: El RLC en paralelo y su resonancia (Floyd §17–4 a §17–6, Boylestad cap. 20), el tanque con bobina real y Rp(eq) = RW(Q² + 1) (Floyd §17–6, Boylestad §20.8) y la corrección del factor de potencia con condensador (Floyd §16–7, Boylestad §19.8) están en los resúmenes.
+bibliografia_faltantes: []
+bibliografia_fecha: '2026-10-25'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana12.tex
 presentacion_avisos: []
 presentacion_temario_hash: 379688a119f6262f
-presentacion_fecha: '2026-09-28'
-presentacion_diseno: 5
-presentacion_diapositivas: 31
+presentacion_fecha: '2026-10-25'
+presentacion_diseno: 6
+presentacion_diapositivas: 37
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
-bibliografia_via: juez
-bibliografia_justificacion: El RLC en paralelo y su resonancia (Floyd §17–4 a §17–6, Boylestad cap. 20), el tanque con bobina real y Rp(eq) = RW(Q² + 1) (Floyd §17–6, Boylestad §20.8) y la corrección del factor de potencia con condensador (Floyd §16–7, Boylestad §19.8) están en los resúmenes.
-bibliografia_faltantes: []
-bibliografia_fecha: '2026-09-28'
+presentacion_elementos: 14
+presentacion_compilada: '2026-10-25'
 ---
 
 # El circuito RLC en paralelo: susceptancias opuestas, ley de corrientes de Kirchhoff, circuito tanque y corrección del factor de potencia

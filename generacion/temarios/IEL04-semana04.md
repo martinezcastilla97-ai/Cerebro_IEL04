@@ -15,21 +15,31 @@ estadisticas:
   pasajes: 35
 bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
-fecha_actualizacion: '2026-09-28'
+fecha_actualizacion: '2026-10-25'
+latex_estado: revisar
+latex_archivo: generacion/temarios/IEL04-semana04.tex
+latex_avisos:
+- una línea se sale del margen 9.6 pt (in paragraph at lines 667--667)
+- una línea se sale del margen 8.3 pt (in paragraph at lines 667--667)
+latex_temario_hash: 1183ad305461ba20
+latex_formato: 2
+latex_compilado: null
 bibliografia_via: juez
 bibliografia_justificacion: El código de colores de resistores (Floyd §2–5), el transitorio RC y τ = RC (Boylestad cap. 10), la reactancia, la impedancia y la LVK del RC en serie (Floyd cap. 15, Boylestad cap. 15) están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
 bibliografia_faltantes: []
-bibliografia_fecha: '2026-09-28'
+bibliografia_fecha: '2026-10-25'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana04.tex
 presentacion_avisos: []
 presentacion_temario_hash: 1183ad305461ba20
-presentacion_fecha: '2026-09-28'
-presentacion_diseno: 5
-presentacion_diapositivas: 33
+presentacion_fecha: '2026-10-25'
+presentacion_diseno: 6
+presentacion_diapositivas: 36
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
+presentacion_elementos: 13
+presentacion_compilada: '2026-10-25'
 ---
 
 # El circuito RC en serie: carga del condensador, reactancia capacitiva, impedancia y ley de voltajes de Kirchhoff

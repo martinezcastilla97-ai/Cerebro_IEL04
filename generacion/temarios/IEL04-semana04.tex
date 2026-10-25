@@ -1,0 +1,699 @@
+% =====================================================================
+%  Temario generado por TEMARIO (src/temario.py + src/temario_latex.py), sin LLM,
+%  a partir de los mismos datos que el .md. Compilar con pdfLaTeX (dos pasadas).
+% =====================================================================
+\documentclass[11pt,letterpaper]{article}
+
+% ---------------------------------------------------------------------
+%  Codificacion, idioma y tipografia
+% ---------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot,es-noshorthands,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage[margin=2.3cm,headheight=14pt]{geometry}
+
+% ---------------------------------------------------------------------
+%  Matematicas y unidades del SI
+% ---------------------------------------------------------------------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={.}, per-mode=symbol}
+
+% ---------------------------------------------------------------------
+%  Tablas profesionales (sin lineas verticales) y flotantes
+% ---------------------------------------------------------------------
+\usepackage[table]{xcolor}
+\usepackage{booktabs,array,multirow,tabularx,xltabular}
+\usepackage{graphicx,float}
+\usepackage[font=small,labelfont={bf,color=iubnavy},labelsep=period]{caption}
+
+% ---------------------------------------------------------------------
+%  Listas, cajas, graficas, diagramas y codigo
+% ---------------------------------------------------------------------
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+% ---------------------------------------------------------------------
+%  Encabezados de pagina y enlaces (hyperref, siempre el ultimo)
+% ---------------------------------------------------------------------
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+% ---------------------------------------------------------------------
+%  Paleta institucional IUB (Manual de Identidad Visual 2025)
+% ---------------------------------------------------------------------
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\definecolor{iubpurple}{HTML}{8E6BBF}
+\definecolor{iubgris}{HTML}{D5DAE3}
+\definecolor{iubgrisoscuro}{HTML}{7C8598}
+\definecolor{iubfondoazul}{HTML}{EBF7FD}
+\definecolor{iubfondonaranja}{HTML}{FDF4EA}
+\definecolor{iubfondoverde}{HTML}{EDF8F2}
+\definecolor{iubfondogris}{HTML}{F4F6F9}
+
+% ---------------------------------------------------------------------
+%  Formato general
+% ---------------------------------------------------------------------
+\setcounter{secnumdepth}{3}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.25}
+\setlist{itemsep=0.15em,topsep=0.3em}
+\setlist[itemize]{label=\textcolor{iubblue}{\small$\blacktriangleright$}}
+
+% ---------------------------------------------------------------------
+%  Encabezado y pie de pagina
+% ---------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{iubnavy}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\textcolor{iubnavy}{\textbf{IUB}\quad IEL04 --- Circuitos Eléctricos I}}
+\fancyhead[R]{\small\textcolor{iubnavy}{Semana 4 de 14}}
+\fancyfoot[C]{\small\textcolor{iubnavy}{\thepage}}
+
+% ---------------------------------------------------------------------
+%  Codigo (listings: el codigo va transliterado a ASCII)
+% ---------------------------------------------------------------------
+\lstset{basicstyle=\ttfamily\small, breaklines=true, columns=fullflexible, keepspaces=true, frame=single,
+  rulecolor=\color{iubgris}, backgroundcolor=\color{iubfondogris}, numbers=left, numberstyle=\tiny\color{iubgrisoscuro},
+  keywordstyle=\color{iubblue}\bfseries, commentstyle=\color{iubgreen}\itshape, stringstyle=\color{iuborange},
+  showstringspaces=false, captionpos=t, aboveskip=0.8em, belowskip=0.8em}
+\renewcommand{\lstlistingname}{Listado}
+
+% ---------------------------------------------------------------------
+%  Cajas: cabecera, notas, alineacion con el RA y cita actitudinal
+% ---------------------------------------------------------------------
+\newtcolorbox{cabecera}{enhanced, colback=iubnavy, colframe=iubnavy, coltext=white, arc=2pt, boxrule=0pt,
+  left=12pt, right=12pt, top=10pt, bottom=10pt, borderline north={3pt}{0pt}{iubyellow}}
+\newtcolorbox{nota}[1]{enhanced, colback=iubfondonaranja, colframe=iuborange, arc=2pt, boxrule=0.6pt, leftrule=3pt,
+  fonttitle=\bfseries\small, coltitle=iuborange, colbacktitle=iubfondonaranja, title={#1}, attach title to upper={\ }}
+\newtcolorbox{alineacion}{enhanced, colback=iubfondoazul, colframe=iubblue, arc=2pt, boxrule=0.6pt, leftrule=3pt}
+\newtcolorbox{cita}{enhanced, colback=iubnavy, colframe=iubnavy, coltext=white, arc=2pt, boxrule=0pt, leftrule=4pt,
+  borderline west={4pt}{0pt}{iubyellow}, fontupper=\itshape}
+
+% ---------------------------------------------------------------------
+%  Estilos de los diagramas (TikZ) y de las graficas (pgfplots)
+% ---------------------------------------------------------------------
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+\pgfplotsset{iubejes/.style={width=0.95\linewidth, height=6.2cm, grid=major, grid style={iubgris}, axis lines*=left,
+  axis line style={iubnavy}, tick label style={font=\small}, label style={font=\small}, title style={font=\bfseries\small},
+  legend cell align=left, legend style={draw=none, fill=none, font=\small, anchor=north, legend columns=-1,
+  /tikz/every even column/.append style={column sep=8pt}}, unbounded coords=jump}}
+
+\hypersetup{pdftitle={El circuito RC en serie: carga del condensador, reactancia capacitiva, impedancia y ley de voltajes de Kirchhoff}, pdfauthor={Institución Universitaria de Barranquilla}}
+
+\begin{document}
+
+\begin{cabecera}
+{\color{iubyellow}\Large\bfseries El circuito RC en serie: carga del condensador, reactancia capacitiva, impedancia y ley de voltajes de Kirchhoff\par}
+\vspace{0.6em}
+\small
+\textbf{\color{iubyellow}Módulos:} IEL04 --- Circuitos Eléctricos I\par
+\textbf{\color{iubyellow}Duración:} 240 minutos (sesión teórico-práctica)\par
+\textbf{\color{iubyellow}Nivel:} Pregrado\par
+\textbf{\color{iubyellow}Semana:} 4 de 14 (corte evaluativo 1)\par
+\textbf{\color{iubyellow}Resultado de aprendizaje del módulo:} IEL04-RA2\par
+\textbf{\color{iubyellow}Trabajo independiente:} 5 h/semana\par
+\end{cabecera}
+
+\section{Metadatos de la Sesión}
+
+\subsection{Continuidad curricular}
+
+Las semanas 1 a 3 estudiaron el condensador y la bobina por separado y en asociaciones, y cerraron el RA1 con el circuito LC. Esta sesión abre el RA2 al combinar el condensador con el resistor en serie, la configuración más usada de la electrónica y de los sistemas eléctricos: temporizadores, filtros, redes de protección y circuitos de disparo. Se estudia primero la respuesta en corriente continua (carga y constante de tiempo) y luego la respuesta sinusoidal (reactancia, impedancia y ángulo de fase), con la ley de voltajes de Kirchhoff aplicada a fasores. La semana 5 es de examen; al volver, la semana 6 trata el circuito RC en paralelo y la ley de corrientes de Kirchhoff.
+
+\begin{enumerate}
+  \item Semana 3: Condensadores y bobinas en serie, en paralelo y mixto: cálculo y medición en circuitos L, C y LC
+  \item \textbf{Presente sesión (semana 4):} Circuito RC en serie: tipos e identificación de resistores y condensadores, análisis y Ley de Voltajes de Kirchhoff
+  \item Semana 5: evaluación (semana de examen)
+\end{enumerate}
+
+\subsection{Prerrequisitos}
+
+\begin{itemize}
+  \item Aplicar la ley de Ohm y la ley de voltajes de Kirchhoff a circuitos resistivos en serie.
+  \item Calcular capacitancias equivalentes y aplicar Q = CV (semanas 1 y 3).
+  \item Leer el código de colores de resistores y el marcado de condensadores.
+  \item Operar con funciones exponenciales, raíz cuadrada y tangente inversa en la calculadora.
+  \item Describir una onda sinusoidal por su amplitud, su frecuencia y su valor eficaz.
+\end{itemize}
+
+\section{Resultados de Aprendizaje}
+
+\begin{alineacion}
+\textbf{RA IEL04-RA2:} Calcular un circuito resistivo, capacitivo y RC, sea en serie o paralelo.
+
+\textbf{Criterios de evaluación:}
+
+\begin{itemize}
+  \item \textbf{CE1} (cognitiva\_conceptual): Identificar los tipos de resistores y capacitores.
+  \item \textbf{CE2} (manipulacion\_fisica): Realizar mediciones en un circuito resistivo y capacitivo.
+  \item \textbf{CE3} (manipulacion\_fisica): Realizar mediciones en un circuito RC.
+\end{itemize}
+
+\textbf{Unidades de competencia de la asignatura:}
+
+\begin{itemize}
+  \item UC2: Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.
+\end{itemize}
+\end{alineacion}
+
+Al finalizar la sesión, el estudiante estará en capacidad de lograr los siguientes resultados, que desarrollan el RA del módulo:
+
+\begin{xltabular}{\linewidth}{>{\raggedright\arraybackslash}p{1.1cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.9cm}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Resultado de aprendizaje}} & \textcolor{white}{\textbf{Nivel (Taxonomía de Bloom)}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Resultado de aprendizaje}} & \textcolor{white}{\textbf{Nivel (Taxonomía de Bloom)}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  RA1 & \textbf{Identificar} los tipos de resistores y condensadores adecuados para un circuito RC a partir de su marcado y sus características. (CE1) & Aplicar \\
+  \rowcolor{iubfondogris} RA2 & \textbf{Calcular} la constante de tiempo y las tensiones de carga y descarga de un circuito RC en serie alimentado con cd. (CE3) & Aplicar \\
+  RA3 & \textbf{Calcular} la reactancia, la impedancia, el ángulo de fase y las tensiones de un circuito RC en serie en ca aplicando la ley de voltajes de Kirchhoff. (CE3) & Analizar \\
+  \rowcolor{iubfondogris} RA4 & \textbf{Medir} las tensiones en el resistor y en el condensador de un circuito RC en serie y verificar la ley de voltajes de Kirchhoff en forma fasorial. (CE2, CE3) & Evaluar \\
+\end{xltabular}
+
+\section{Índice Temporizado (240 minutos)}
+
+\begin{xltabular}{\linewidth}{>{\raggedright\arraybackslash}p{1.4cm}>{\raggedright\arraybackslash}X>{\raggedleft\arraybackslash}p{2.2cm}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bloque}} & \textcolor{white}{\textbf{Contenido}} & \textcolor{white}{\textbf{Duración}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bloque}} & \textcolor{white}{\textbf{Contenido}} & \textcolor{white}{\textbf{Duración}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  1 & El RC como bloque básico de temporización y filtrado; cd frente a ca & 20 min \\
+  \rowcolor{iubfondogris} 2 & Tipos de resistores, código de colores, potencia nominal y elección del condensador & 25 min \\
+  3 & Constante de tiempo \ensuremath{\tau} = RC, curvas exponenciales y régimen transitorio & 35 min \\
+  \rowcolor{iubfondogris} 4 & XC = 1/(2\ensuremath{\pi}fC), dependencia con la frecuencia y desfase de 90\textdegree{} & 30 min \\
+  5 & Z = R \ensuremath{-} jXC, triángulo de impedancia, magnitud y ángulo & 35 min \\
+  \rowcolor{iubfondogris} 6 & Suma fasorial VS = VR + VC, diagrama fasorial y error de la suma aritmética & 35 min \\
+  7 & Medir \ensuremath{\tau} con onda cuadrada y VR, VC, VS con señal sinusoidal; comparar con el cálculo & 45 min \\
+  \rowcolor{iubfondogris} 8 & Síntesis, cierre actitudinal y bibliografía & 15 min \\
+  \midrule
+  \rowcolor{iubfondogris}  & \textbf{Total} & \textbf{240 min} \\
+\end{xltabular}
+
+\section{Desarrollo Teórico}
+
+\subsection{Introducción Conceptual (Bloque 1)}
+
+Un resistor en serie con un condensador es probablemente el circuito más útil que se puede construir con dos componentes. El resistor limita la corriente con que el condensador se carga, y el condensador almacena esa carga; la combinación convierte una magnitud eléctrica en una magnitud de tiempo. Por eso el circuito RC en serie está detrás de temporizadores, retardos de encendido, redes de protección contra transitorios y filtros de señal. Visto en función de la frecuencia, el mismo circuito es un filtro: si la salida se toma en el resistor, deja pasar las frecuencias altas; si se toma en el condensador, las bajas [1].
+
+El análisis tiene dos caras, según cómo se alimente el circuito. Con una fuente de \textbf{corriente continua} que se conecta en un instante dado, el condensador se carga de forma exponencial, a un ritmo que fija la \textbf{constante de tiempo} $\tau = RC$, el producto de la resistencia por la capacitancia [1]. Con una fuente \textbf{sinusoidal}, el condensador presenta una oposición que depende de la frecuencia, la reactancia capacitiva, y las tensiones del resistor y del condensador quedan desfasadas 90\textdegree{}. La ley de voltajes de Kirchhoff sigue valiendo en ambos casos, pero en ca las tensiones se suman como fasores, no como números.
+
+% --- Figura 1: Dos caminos de análisis del circuito RC en serie según el tipo de fuente (diagrama en TikZ con la disposición del PNG) ---
+\begin{figure}[H]
+  \centering
+  \begin{adjustbox}{max width=\linewidth}
+  \begin{tikzpicture}[x=1in, y=1in, font=\small]
+    % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+    \node[dterminal, minimum width=1.563in, minimum height=0.680in] (n0) at (0.781,-1.145) {Circuito RC \\ en serie};  % rc
+    \node[ddecision, minimum width=1.626in, minimum height=1.156in] (n1) at (3.576,-1.145) {\textquestiondown{}Tipo de \\ fuente?};  % t
+    \node[dcaja, minimum width=1.456in, minimum height=0.890in] (n2) at (6.317,-0.445) {Carga \\ exponencial, \\ \ensuremath{\tau} = RC};  % cd
+    \node[dterminal, minimum width=1.563in, minimum height=0.890in] (n3) at (9.027,-0.655) {Medir \ensuremath{\tau} con \\ onda \\ cuadrada};  % mcd
+    \node[dcaja, minimum width=1.270in, minimum height=1.100in] (n4) at (6.317,-1.740) {Reactancia \\ XC e \\ impedancia \\ Z};  % ca
+    \node[destado, minimum width=0.991in, minimum height=0.680in] (n5) at (9.027,-1.740) {LVK con \\ fasores};  % k
+    \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n6) at (9.027,-3.180) {Medir VR, \\ VC y VS};  % mca
+    % flechas (las de retorno, curvas)
+    \draw[dflecha] (n0) -- (n1);
+    \draw[dflecha] (n1) -- (n2);
+    \draw[dflecha] (n1) -- (n4);
+    \draw[dflecha] (n2) -- (n3);
+    \draw[dflecha] (n4) -- (n5);
+    \draw[dflecha] (n5) -- (n6);
+    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    \node[drotulo] at (4.947,-0.795) {cd conmutada};
+    \node[drotulo] at (4.947,-1.442) {sinusoidal};
+  \end{tikzpicture}
+  \end{adjustbox}
+  \caption{Dos caminos de análisis del circuito RC en serie según el tipo de fuente}
+\end{figure}
+
+El diagrama organiza la sesión. Tras repasar cómo se identifican los resistores y condensadores que forman el circuito, se sigue primero la rama de cd, con las curvas de carga y descarga y la constante de tiempo, y luego la rama de ca, que pasa por la reactancia capacitiva, la impedancia con su ángulo de fase y la ley de voltajes de Kirchhoff con fasores. Cada rama termina en una medición de laboratorio: una onda cuadrada del generador permite ver la carga exponencial y medir $\tau$, y una onda sinusoidal permite medir las tensiones del resistor y del condensador y comprobar que no suman aritméticamente la tensión de la fuente.
+
+\begin{nota}{Nota pedagógica:}
+El libro de cátedra de la UNLP no estudia el RC en serie con fuente de tensión: su circuito \guillemotleft{}GC\guillemotright{} es un capacitor alimentado por una fuente de corriente real (conductancia G en paralelo con C), el dual del RL en serie [3]. Su constante de tiempo, C/G, equivale a RC con G = 1/R, así que la respuesta exponencial tiene la misma forma, pero es otro circuito; el RC en serie de esta sesión es el de Floyd y Boylestad.
+\end{nota}
+
+\subsection{Conceptos Clave}
+
+\subsubsection{Resistores y condensadores del circuito RC: tipos e identificación (Bloque 2)}
+
+El primer criterio de evaluación del RA2 pide identificar los tipos de resistores y condensadores, los dos componentes del circuito RC. Los condensadores se estudiaron a fondo en la semana 1; aquí se completa el cuadro con el resistor y se discute qué conviene elegir para cada uno cuando van a formar un circuito RC. Los resistores fijos se fabrican con varias tecnologías: composición de carbón, película de carbón, película metálica y devanado de alambre; en los de película se deposita de manera uniforme una capa resistiva de carbón o de cromo-níquel [1]. Los \textit{chip} resistores son resistores fijos para tecnología de montaje superficial (SMT), cuya ventaja es su tamaño muy pequeño para ensambles compactos [1]. Los resistores devanados se usan como resistores de potencia [1].
+
+Los resistores fijos con tolerancias del 5 \% o del 10 \% se identifican con \textbf{cuatro bandas de color}, situadas siempre cerca de un extremo [1]. Se lee empezando por la banda más cercana a un extremo; si no está claro, por el extremo que no empieza con una banda oro o plata [1]. La primera banda es el primer dígito, la segunda el segundo dígito, la tercera el multiplicador (el número de ceros después del segundo dígito) y la cuarta la tolerancia, por lo general oro o plata [1]. Para valores menores de 10 \ensuremath{\Omega}, la tercera banda es oro (multiplicador 0.1) o plata (0.01): rojo, violeta, oro y plata representa 2.7 \ensuremath{\Omega} con \textpm{}10 \% [1]. Los resistores de montaje superficial usan en cambio un código tipográfico de tres dígitos, con el mismo significado que en los condensadores [1].
+
+% --- Tabla 1: Código de colores para resistores de cuatro bandas [1] (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=0.818\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.727\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.364\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.091\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Código de colores para resistores de cuatro bandas [1]} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Color}} & \textcolor{white}{\textbf{Dígito}} & \textcolor{white}{\textbf{Multiplicador}} & \textcolor{white}{\textbf{Tolerancia}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Color}} & \textcolor{white}{\textbf{Dígito}} & \textcolor{white}{\textbf{Multiplicador}} & \textcolor{white}{\textbf{Tolerancia}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  Negro & 0 & \texttimes{}1 & --- \\
+  \rowcolor{iubfondogris} Marrón & 1 & \texttimes{}10 & --- \\
+  Rojo & 2 & \texttimes{}100 & --- \\
+  \rowcolor{iubfondogris} Naranja & 3 & \texttimes{}1000 & --- \\
+  Amarillo & 4 & \texttimes{}10\ensuremath{^{4}} & --- \\
+  \rowcolor{iubfondogris} Verde & 5 & \texttimes{}10\ensuremath{^{5}} & --- \\
+  Azul & 6 & \texttimes{}10\ensuremath{^{6}} & --- \\
+  \rowcolor{iubfondogris} Violeta & 7 & \texttimes{}10\ensuremath{^{7}} & --- \\
+  Gris & 8 & \texttimes{}10\ensuremath{^{8}} & --- \\
+  \rowcolor{iubfondogris} Blanco & 9 & \texttimes{}10\ensuremath{^{9}} & --- \\
+  Oro & --- & \texttimes{}0.1 & \textpm{}5 \% \\
+  \rowcolor{iubfondogris} Plata & --- & \texttimes{}0.01 & \textpm{}10 \% \\
+\end{xltabular}
+
+La tolerancia define el intervalo del valor real, igual que en los condensadores: un resistor de 100 \ensuremath{\Omega} con \textpm{}5 \% puede valer entre 95 \ensuremath{\Omega} y 105 \ensuremath{\Omega} [1]. Por ejemplo, el resistor que se usará en el caso de estudio lleva marrón, verde, rojo y oro: 1, 5 y dos ceros, es decir, 1500 \ensuremath{\Omega} = 1.5 k\ensuremath{\Omega} con \textpm{}5 \%, entre 1425 \ensuremath{\Omega} y 1575 \ensuremath{\Omega}. El condensador que lo acompaña es el de película marcado 104K de la semana 1: 0.1 \textmu{}F con \textpm{}10 \%.
+
+Al elegir los componentes de un circuito RC importan más cosas que el valor. En el \textbf{resistor}, la potencia nominal debe superar la potencia que disipará, $P = I^2 R$; en un RC de señal, con corrientes de algunos miliamperios, bastan resistores de película de 1/4 W, y la película metálica ofrece mejor tolerancia y menor ruido que el carbón. En el \textbf{condensador}, la tensión nominal debe superar la tensión máxima del circuito; para temporización y filtros de señal se prefieren los de película o cerámicos estables, porque la constante de tiempo depende directamente de $C$, y un electrolítico, con tolerancias de \textpm{}20 \% y fugas altas, introduciría errores grandes. Si el electrolítico es inevitable por el valor, hay que respetar su polaridad y tener en cuenta su fuga.
+
+Los parámetros del circuito RC se escriben siempre con su unidad y con prefijos coherentes, porque en el producto $RC$ se mezclan órdenes de magnitud muy distintos: kiloohmios con microfaradios dan milisegundos, y megaohmios con microfaradios, segundos. Con 1.5 k\ensuremath{\Omega} y 0.1 \textmu{}F, $RC = (1.5 \times 10^3)(0.1 \times 10^{-6}) = 150\ \mu\text{s}$; con 1 M\ensuremath{\Omega} y 10 \textmu{}F, 10 s. Convertir todo a unidades base antes de multiplicar evita el error más frecuente de este tema.
+
+\begin{nota}{Error frecuente:}
+Leer el código de colores desde el extremo equivocado. En un resistor de \textpm{}5 \%, la banda oro de tolerancia siempre queda al final; si la lectura empieza por el oro, se obtiene un valor que no existe en la serie estándar.
+\end{nota}
+
+\subsubsection{Carga y descarga del condensador en un circuito RC en serie con cd (Bloque 3)}
+
+Considérese un resistor $R$ en serie con un condensador $C$ descargado, conectados a una fuente de cd $V_S$ mediante un interruptor. En el instante en que se cierra el interruptor, el condensador no tiene carga y su tensión es cero; toda la tensión de la fuente cae en el resistor, y la corriente inicial es $V_S/R$. A medida que el condensador acumula carga, su tensión crece, la tensión en el resistor disminuye y, con ella, la corriente. El proceso se frena a sí mismo: cuanto más cargado está el condensador, más lentamente se sigue cargando. Por eso la carga no es lineal, sino que sigue una \textbf{curva exponencial}: creciente durante la carga y decreciente durante la descarga [1].
+
+La ley de voltajes de Kirchhoff se cumple en cada instante: $V_S = v_R(t) + v_C(t)$. Al sustituir $v_R = iR$ e $i = C\,dv_C/dt$ se obtiene una ecuación diferencial de primer orden, cuya solución, para un condensador que parte descargado, es:
+
+\begin{equation}
+  v_C(t) = V_S\left(1 - e^{-t/\tau}\right), \qquad i(t) = \frac{V_S}{R}\,e^{-t/\tau}, \qquad \tau = R\,C
+\end{equation}
+
+donde $v_C(t)$ es la tensión en el condensador en voltios (V), $i(t)$ la corriente del circuito en amperios (A), $V_S$ la tensión de la fuente en voltios (V), $R$ la resistencia en ohmios (\ensuremath{\Omega}), $C$ la capacitancia en faradios (F), $t$ el tiempo desde el cierre del interruptor en segundos (s) y $\tau$ la constante de tiempo en segundos (s). La \textbf{constante de tiempo RC} es el intervalo fijo, igual al producto de la resistencia por la capacitancia, que determina la respuesta en el tiempo del circuito RC en serie [1]. El producto de ohmios por faradios da segundos: con 1.5 k\ensuremath{\Omega} y 0.1 \textmu{}F, $\tau = 150\ \mu\text{s}$.
+
+La constante de tiempo tiene una interpretación directa. En cada intervalo de una constante de tiempo, la tensión cambia aproximadamente un 63 \% de la diferencia que falta hasta el valor final: un condensador descargado alcanza el 63 \% de su tensión final en una constante de tiempo, y uno que se descarga cae al 37 \% de su valor inicial en el mismo intervalo [1]. Tras cinco constantes de tiempo el cambio supera el 99 \%, y ese intervalo, llamado \textbf{tiempo transitorio}, se acepta en general como el tiempo necesario para cargar o descargar por completo el condensador [1]. Con $V_S = 5\ \text{V}$ y $\tau = 150\ \mu\text{s}$: $v_C(150\ \mu\text{s}) = 5(1 - e^{-1}) \approx 3.16\ \text{V}$, y a los 750 \textmu{}s el condensador está prácticamente cargado, con 4.97 V.
+
+Si el condensador cargado a $V_0$ se descarga a través del mismo resistor, su tensión decae como $v_C(t) = V_0\,e^{-t/\tau}$, y la corriente cambia de sentido. El libro de cátedra de la UNLP desarrolla este régimen transitorio a partir de la ecuación diferencial y muestra que el cociente entre la característica de la parte reactiva y la de la parte no reactiva tiene dimensión de tiempo: es la constante de tiempo [3]. La gráfica compara la carga desde 0 V y la descarga desde 5 V con los valores del ejemplo.
+
+% --- Figura 2: Carga y descarga del condensador en un circuito RC en serie con VS = 5 V, R = 1.5 kΩ y C … (gráfica en pgfplots con los puntos de su especificación) ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        iubejes,
+        xlabel={Tiempo t (\textmu{}s)},
+        ylabel={Tensión vC (V)},
+        title={Tensión en el condensador de un RC en serie},
+        legend style={at={(0.5,-0.30)}},
+        xmin=0,
+        xmax=750]
+      % serie 1: Carga desde 0 V («Vs*(1-exp(-t/tau))» en 300 puntos)
+      \addplot[color=iubblue, line width=1.4pt, no markers] coordinates {
+        (0,0) (2.50836,0.0829168) (5.01672,0.164459) (7.52508,0.244648) (10.0334,0.323508) (12.5418,0.40106)
+        (15.0502,0.477326) (17.5585,0.552327) (20.0669,0.626084) (22.5753,0.698619) (25.0836,0.76995) (27.592,0.840098)
+        (30.1003,0.909084) (32.6087,0.976925) (35.1171,1.04364) (37.6254,1.10925) (40.1338,1.17377) (42.6421,1.23722)
+        (45.1505,1.29962) (47.6589,1.36099) (50.1672,1.42134) (52.6756,1.48068) (55.1839,1.53904) (57.6923,1.59644)
+        (60.2007,1.65288) (62.709,1.70839) (65.2174,1.76297) (67.7258,1.81665) (70.2341,1.86944) (72.7425,1.92136)
+        (75.2508,1.97241) (77.7592,2.02262) (80.2676,2.072) (82.7759,2.12055) (85.2843,2.1683) (87.7926,2.21526)
+        (90.301,2.26144) (92.8094,2.30686) (95.3177,2.35152) (97.8261,2.39544) (100.334,2.43863) (102.843,2.48111)
+        (105.351,2.52288) (107.86,2.56396) (110.368,2.60436) (112.876,2.64408) (115.385,2.68315) (117.893,2.72157)
+        (120.401,2.75936) (122.91,2.79652) (125.418,2.83306) (127.926,2.86899) (130.435,2.90433) (132.943,2.93908)
+        (135.452,2.97326) (137.96,3.00687) (140.468,3.03992) (142.977,3.07243) (145.485,3.10439) (147.993,3.13583)
+        (150.502,3.16674) (153.01,3.19715) (155.518,3.22704) (158.027,3.25644) (160.535,3.28536) (163.043,3.31379)
+        (165.552,3.34176) (168.06,3.36926) (170.569,3.3963) (173.077,3.42289) (175.585,3.44905) (178.094,3.47477)
+        (180.602,3.50006) (183.11,3.52493) (185.619,3.5494) (188.127,3.57345) (190.635,3.59711) (193.144,3.62037)
+        (195.652,3.64325) (198.161,3.66575) (200.669,3.68788) (203.177,3.70964) (205.686,3.73104) (208.194,3.75208)
+        (210.702,3.77277) (213.211,3.79313) (215.719,3.81314) (218.227,3.83282) (220.736,3.85218) (223.244,3.87121)
+        (225.753,3.88993) (228.261,3.90834) (230.769,3.92644) (233.278,3.94425) (235.786,3.96176) (238.294,3.97897)
+        (240.803,3.9959) (243.311,4.01256) (245.819,4.02893) (248.328,4.04503) (250.836,4.06087) (253.344,4.07645)
+        (255.853,4.09176) (258.361,4.10682) (260.87,4.12163) (263.378,4.1362) (265.886,4.15053) (268.395,4.16461)
+        (270.903,4.17847) (273.411,4.19209) (275.92,4.20549) (278.428,4.21866) (280.936,4.23162) (283.445,4.24436)
+        (285.953,4.25689) (288.462,4.26922) (290.97,4.28134) (293.478,4.29325) (295.987,4.30497) (298.495,4.3165)
+        (301.003,4.32783) (303.512,4.33898) (306.02,4.34994) (308.528,4.36072) (311.037,4.37132) (313.545,4.38175)
+        (316.054,4.392) (318.562,4.40209) (321.07,4.412) (323.579,4.42175) (326.087,4.43134) (328.595,4.44077)
+        (331.104,4.45005) (333.612,4.45917) (336.12,4.46813) (338.629,4.47695) (341.137,4.48563) (343.645,4.49416)
+        (346.154,4.50255) (348.662,4.5108) (351.171,4.51891) (353.679,4.52689) (356.187,4.53473) (358.696,4.54245)
+        (361.204,4.55004) (363.712,4.5575) (366.221,4.56484) (368.729,4.57205) (371.237,4.57915) (373.746,4.58613)
+        (376.254,4.59299) (378.763,4.59974) (381.271,4.60638) (383.779,4.61291) (386.288,4.61933) (388.796,4.62564)
+        (391.304,4.63185) (393.813,4.63795) (396.321,4.64396) (398.829,4.64986) (401.338,4.65567) (403.846,4.66138)
+        (406.355,4.66699) (408.863,4.67252) (411.371,4.67795) (413.88,4.68329) (416.388,4.68854) (418.896,4.6937)
+        (421.405,4.69878) (423.913,4.70378) (426.421,4.70869) (428.93,4.71352) (431.438,4.71827) (433.946,4.72294)
+        (436.455,4.72754) (438.963,4.73206) (441.472,4.7365) (443.98,4.74087) (446.488,4.74517) (448.997,4.74939)
+        (451.505,4.75355) (454.013,4.75764) (456.522,4.76166) (459.03,4.76561) (461.538,4.7695) (464.047,4.77332)
+        (466.555,4.77708) (469.064,4.78077) (471.572,4.78441) (474.08,4.78798) (476.589,4.7915) (479.097,4.79496)
+        (481.605,4.79836) (484.114,4.8017) (486.622,4.80499) (489.13,4.80822) (491.639,4.81141) (494.147,4.81453)
+        (496.656,4.81761) (499.164,4.82063) (501.672,4.82361) (504.181,4.82653) (506.689,4.82941) (509.197,4.83224)
+        (511.706,4.83502) (514.214,4.83776) (516.722,4.84045) (519.231,4.84309) (521.739,4.84569) (524.247,4.84825)
+        (526.756,4.85077) (529.264,4.85324) (531.773,4.85568) (534.281,4.85807) (536.789,4.86043) (539.298,4.86274)
+        (541.806,4.86502) (544.314,4.86725) (546.823,4.86946) (549.331,4.87162) (551.839,4.87375) (554.348,4.87584)
+        (556.856,4.8779) (559.365,4.87993) (561.873,4.88192) (564.381,4.88388) (566.89,4.8858) (569.398,4.8877)
+        (571.906,4.88956) (574.415,4.89139) (576.923,4.89319) (579.431,4.89496) (581.94,4.8967) (584.448,4.89842)
+        (586.957,4.9001) (589.465,4.90176) (591.973,4.90339) (594.482,4.90499) (596.99,4.90657) (599.498,4.90812)
+        (602.007,4.90964) (604.515,4.91114) (607.023,4.91261) (609.532,4.91406) (612.04,4.91549) (614.548,4.91689)
+        (617.057,4.91827) (619.565,4.91962) (622.074,4.92095) (624.582,4.92226) (627.09,4.92355) (629.599,4.92482)
+        (632.107,4.92607) (634.615,4.92729) (637.124,4.9285) (639.632,4.92969) (642.14,4.93085) (644.649,4.932)
+        (647.157,4.93313) (649.666,4.93423) (652.174,4.93533) (654.682,4.9364) (657.191,4.93745) (659.699,4.93849)
+        (662.207,4.93951) (664.716,4.94051) (667.224,4.9415) (669.732,4.94247) (672.241,4.94342) (674.749,4.94436)
+        (677.258,4.94528) (679.766,4.94619) (682.274,4.94708) (684.783,4.94796) (687.291,4.94882) (689.799,4.94967)
+        (692.308,4.95051) (694.816,4.95133) (697.324,4.95214) (699.833,4.95293) (702.341,4.95371) (704.849,4.95448)
+        (707.358,4.95523) (709.866,4.95598) (712.375,4.95671) (714.883,4.95742) (717.391,4.95813) (719.9,4.95882)
+        (722.408,4.95951) (724.916,4.96018) (727.425,4.96084) (729.933,4.96149) (732.441,4.96213) (734.95,4.96275)
+        (737.458,4.96337) (739.967,4.96398) (742.475,4.96458) (744.983,4.96516) (747.492,4.96574) (750,4.96631)
+      };
+      \addlegendentry{Carga desde 0 V}
+      % serie 2: Descarga desde 5 V («Vs*exp(-t/tau)» en 300 puntos)
+      \addplot[color=iuborange, line width=1.4pt, no markers] coordinates {
+        (0,5) (2.50836,4.91708) (5.01672,4.83554) (7.52508,4.75535) (10.0334,4.67649) (12.5418,4.59894)
+        (15.0502,4.52267) (17.5585,4.44767) (20.0669,4.37392) (22.5753,4.30138) (25.0836,4.23005) (27.592,4.1599)
+        (30.1003,4.09092) (32.6087,4.02308) (35.1171,3.95636) (37.6254,3.89075) (40.1338,3.82623) (42.6421,3.76278)
+        (45.1505,3.70038) (47.6589,3.63901) (50.1672,3.57866) (52.6756,3.51932) (55.1839,3.46096) (57.6923,3.40356)
+        (60.2007,3.34712) (62.709,3.29161) (65.2174,3.23703) (67.7258,3.18335) (70.2341,3.13056) (72.7425,3.07864)
+        (75.2508,3.02759) (77.7592,2.97738) (80.2676,2.928) (82.7759,2.87945) (85.2843,2.8317) (87.7926,2.78474)
+        (90.301,2.73856) (92.8094,2.69314) (95.3177,2.64848) (97.8261,2.60456) (100.334,2.56137) (102.843,2.51889)
+        (105.351,2.47712) (107.86,2.43604) (110.368,2.39564) (112.876,2.35592) (115.385,2.31685) (117.893,2.27843)
+        (120.401,2.24064) (122.91,2.20348) (125.418,2.16694) (127.926,2.13101) (130.435,2.09567) (132.943,2.06092)
+        (135.452,2.02674) (137.96,1.99313) (140.468,1.96008) (142.977,1.92757) (145.485,1.89561) (147.993,1.86417)
+        (150.502,1.83326) (153.01,1.80285) (155.518,1.77296) (158.027,1.74356) (160.535,1.71464) (163.043,1.68621)
+        (165.552,1.65824) (168.06,1.63074) (170.569,1.6037) (173.077,1.57711) (175.585,1.55095) (178.094,1.52523)
+        (180.602,1.49994) (183.11,1.47507) (185.619,1.4506) (188.127,1.42655) (190.635,1.40289) (193.144,1.37963)
+        (195.652,1.35675) (198.161,1.33425) (200.669,1.31212) (203.177,1.29036) (205.686,1.26896) (208.194,1.24792)
+        (210.702,1.22723) (213.211,1.20687) (215.719,1.18686) (218.227,1.16718) (220.736,1.14782) (223.244,1.12879)
+        (225.753,1.11007) (228.261,1.09166) (230.769,1.07356) (233.278,1.05575) (235.786,1.03824) (238.294,1.02103)
+        (240.803,1.0041) (243.311,0.987444) (245.819,0.971069) (248.328,0.954965) (250.836,0.939129) (253.344,0.923555)
+        (255.853,0.908239) (258.361,0.893177) (260.87,0.878365) (263.378,0.863799) (265.886,0.849475) (268.395,0.835387)
+        (270.903,0.821534) (273.411,0.80791) (275.92,0.794512) (278.428,0.781336) (280.936,0.768379) (283.445,0.755637)
+        (285.953,0.743106) (288.462,0.730783) (290.97,0.718664) (293.478,0.706746) (295.987,0.695026) (298.495,0.6835)
+        (301.003,0.672165) (303.512,0.661018) (306.02,0.650057) (308.528,0.639276) (311.037,0.628675) (313.545,0.61825)
+        (316.054,0.607997) (318.562,0.597914) (321.07,0.587999) (323.579,0.578248) (326.087,0.568659) (328.595,0.559228)
+        (331.104,0.549954) (333.612,0.540834) (336.12,0.531865) (338.629,0.523045) (341.137,0.514371) (343.645,0.505841)
+        (346.154,0.497453) (348.662,0.489203) (351.171,0.481091) (353.679,0.473113) (356.187,0.465267) (358.696,0.457551)
+        (361.204,0.449963) (363.712,0.442502) (366.221,0.435163) (368.729,0.427947) (371.237,0.42085) (373.746,0.413871)
+        (376.254,0.407008) (378.763,0.400258) (381.271,0.39362) (383.779,0.387093) (386.288,0.380674) (388.796,0.374361)
+        (391.304,0.368153) (393.813,0.362047) (396.321,0.356043) (398.829,0.350139) (401.338,0.344333) (403.846,0.338622)
+        (406.355,0.333007) (408.863,0.327484) (411.371,0.322054) (413.88,0.316713) (416.388,0.311461) (418.896,0.306296)
+        (421.405,0.301216) (423.913,0.296221) (426.421,0.291309) (428.93,0.286478) (431.438,0.281727) (433.946,0.277055)
+        (436.455,0.272461) (438.963,0.267942) (441.472,0.263499) (443.98,0.259129) (446.488,0.254832) (448.997,0.250606)
+        (451.505,0.24645) (454.013,0.242363) (456.522,0.238344) (459.03,0.234391) (461.538,0.230504) (464.047,0.226682)
+        (466.555,0.222923) (469.064,0.219226) (471.572,0.21559) (474.08,0.212015) (476.589,0.208499) (479.097,0.205042)
+        (481.605,0.201641) (484.114,0.198298) (486.622,0.195009) (489.13,0.191775) (491.639,0.188595) (494.147,0.185467)
+        (496.656,0.182392) (499.164,0.179367) (501.672,0.176392) (504.181,0.173467) (506.689,0.170591) (509.197,0.167762)
+        (511.706,0.16498) (514.214,0.162244) (516.722,0.159553) (519.231,0.156907) (521.739,0.154305) (524.247,0.151746)
+        (526.756,0.14923) (529.264,0.146755) (531.773,0.144321) (534.281,0.141928) (536.789,0.139574) (539.298,0.13726)
+        (541.806,0.134984) (544.314,0.132745) (546.823,0.130544) (549.331,0.128379) (551.839,0.12625) (554.348,0.124156)
+        (556.856,0.122097) (559.365,0.120073) (561.873,0.118081) (564.381,0.116123) (566.89,0.114197) (569.398,0.112304)
+        (571.906,0.110441) (574.415,0.10861) (576.923,0.106809) (579.431,0.105037) (581.94,0.103296) (584.448,0.101583)
+        (586.957,0.099898) (589.465,0.0982414) (591.973,0.0966122) (594.482,0.09501) (596.99,0.0934344) (599.498,0.091885)
+        (602.007,0.0903612) (604.515,0.0888627) (607.023,0.0873891) (609.532,0.0859399) (612.04,0.0845147) (614.548,0.0831132)
+        (617.057,0.0817349) (619.565,0.0803794) (622.074,0.0790465) (624.582,0.0777356) (627.09,0.0764465) (629.599,0.0751788)
+        (632.107,0.073932) (634.615,0.072706) (637.124,0.0715003) (639.632,0.0703146) (642.14,0.0691485) (644.649,0.0680018)
+        (647.157,0.0668741) (649.666,0.0657651) (652.174,0.0646745) (654.682,0.063602) (657.191,0.0625473) (659.699,0.06151)
+        (662.207,0.06049) (664.716,0.0594868) (667.224,0.0585003) (669.732,0.0575302) (672.241,0.0565762) (674.749,0.0556379)
+        (677.258,0.0547153) (679.766,0.0538079) (682.274,0.0529156) (684.783,0.0520381) (687.291,0.0511751) (689.799,0.0503265)
+        (692.308,0.0494919) (694.816,0.0486711) (697.324,0.047864) (699.833,0.0470703) (702.341,0.0462897) (704.849,0.045522)
+        (707.358,0.0447671) (709.866,0.0440247) (712.375,0.0432947) (714.883,0.0425767) (717.391,0.0418706) (719.9,0.0411763)
+        (722.408,0.0404934) (724.916,0.0398219) (727.425,0.0391615) (729.933,0.0385121) (732.441,0.0378734) (734.95,0.0372454)
+        (737.458,0.0366277) (739.967,0.0360203) (742.475,0.035423) (744.983,0.0348355) (747.492,0.0342578) (750,0.0336897)
+      };
+      \addlegendentry{Descarga desde 5 V}
+      % línea de referencia en x = 150
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({axis cs:150,0}|-{rel axis cs:0,0}) -- ({axis cs:150,0}|-{rel axis cs:0,1}) node[drotulo, pos=1, anchor=north west] {t = \ensuremath{\tau}};
+      % línea de referencia en y = 3.16
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({rel axis cs:0,0}|-{axis cs:0,3.16}) -- ({rel axis cs:1,0}|-{axis cs:0,3.16}) node[drotulo, pos=1, anchor=south east] {63 \% de VS};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Carga y descarga del condensador en un circuito RC en serie con VS = 5 V, R = 1.5 k\ensuremath{\Omega} y C = 0.1 \textmu{}F (\ensuremath{\tau} = 150 \textmu{}s)}
+\end{figure}
+
+La gráfica muestra la simetría entre ambos procesos: en $t = \tau$ la curva de carga ha subido al 63 \% de 5 V, 3.16 V, y la de descarga ha bajado al 37 \%, 1.84 V; las dos curvas se cruzan cerca de $t = 0.69\tau$, cuando ambas valen la mitad de $V_S$. A partir de $5\tau$, es decir, 750 \textmu{}s, ninguna de las dos cambia de manera apreciable. En el laboratorio, este comportamiento se observa con una onda cuadrada cuyo semiperiodo sea mayor que cinco constantes de tiempo.
+
+\begin{nota}{Hallazgo contraintuitivo:}
+La constante de tiempo no depende de la tensión de la fuente: con 5 V o con 50 V el condensador tarda lo mismo en llegar al 63 \% de su valor final. Lo único que cambia es el valor final.
+\end{nota}
+
+\subsubsection{Reactancia capacitiva y respuesta sinusoidal del condensador (Bloque 4)}
+
+Cuando la fuente es sinusoidal, el condensador nunca termina de cargarse: la tensión de la fuente cambia sin cesar y el condensador se carga y se descarga continuamente, alternando la polaridad. Su corriente, según $i = C\,dv/dt$, es proporcional a la rapidez con que cambia su tensión, y esa rapidez es máxima en los cruces por cero de la onda seno y nula en sus picos. Por eso la corriente es máxima cuando la tensión es cero, y cero cuando la tensión es máxima: en un condensador, \textbf{la corriente siempre adelanta 90\textdegree{} a la tensión} [1].
+
+La oposición del condensador a la corriente sinusoidal, expresada en ohmios, se llama \textbf{reactancia capacitiva} y se simboliza $X_C$ [1]. Para deducirla se parte de $i = C\,dv/dt$: la rapidez de cambio de la tensión está directamente relacionada con la frecuencia, de modo que una onda de mayor frecuencia tiene una pendiente más pronunciada en los cruces por cero y produce una corriente mayor para la misma amplitud de tensión [1]. Una capacitancia mayor también exige más corriente para el mismo cambio de tensión. Ambas dependencias dan una reactancia inversamente proporcional a la frecuencia y a la capacitancia:
+
+\begin{equation}
+  X_C = \frac{1}{2\pi f C}
+\end{equation}
+
+donde $X_C$ es la reactancia capacitiva en ohmios (\ensuremath{\Omega}), $f$ la frecuencia de la señal en hercios (Hz) y $C$ la capacitancia en faradios (F). El factor $2\pi$ aparece porque la derivada de la onda seno se escribe con la frecuencia angular $\omega = 2\pi f$. Para el condensador de 0.1 \textmu{}F del ejemplo, a 1 kHz, $X_C = 1/(2\pi \times 1000 \times 0.1 \times 10^{-6}) \approx 1592\ \Omega$; a 100 Hz, la reactancia sube a 15.9 k\ensuremath{\Omega}, y a 10 kHz baja a 159 \ensuremath{\Omega}. Con la reactancia, la ley de Ohm vale en magnitudes eficaces: $V_C = I X_C$.
+
+Los dos extremos de la fórmula enlazan con lo ya estudiado. Cuando $f \to 0$, la reactancia tiende a infinito: en cd, una vez cargado, el condensador bloquea la corriente y se comporta como un circuito abierto. Cuando la frecuencia es muy alta, la reactancia tiende a cero y el condensador se comporta casi como un cortocircuito. Entre ambos extremos, la reactancia cambia en proporción inversa a la frecuencia, como muestra la gráfica.
+
+% --- Figura 3: Reactancia capacitiva de un condensador de 0.1 µF en función de la frecuencia, comparada … (gráfica en pgfplots con los puntos de su especificación) ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        iubejes,
+        xlabel={Frecuencia f (Hz)},
+        ylabel={Reactancia XC (\ensuremath{\Omega})},
+        title={Reactancia capacitiva XC = 1/(2\ensuremath{\pi}fC), C = 0.1 \textmu{}F},
+        legend style={at={(0.5,-0.30)}},
+        xmode=log,
+        xmin=200,
+        xmax=10000]
+      % serie 1: XC («1/(2*pi*f*C)» en 300 puntos)
+      \addplot[color=iubblue, line width=1.4pt, no markers] coordinates {
+        (200,7957.75) (202.634,7854.31) (205.303,7752.21) (208.006,7651.45) (210.746,7551.99) (213.521,7453.83)
+        (216.333,7356.94) (219.182,7261.31) (222.069,7166.92) (224.993,7073.76) (227.956,6981.82) (230.958,6891.06)
+        (234,6801.49) (237.082,6713.08) (240.204,6625.82) (243.368,6539.7) (246.573,6454.69) (249.82,6370.79)
+        (253.11,6287.98) (256.443,6206.24) (259.821,6125.57) (263.242,6045.95) (266.709,5967.36) (270.222,5889.79)
+        (273.78,5813.24) (277.386,5737.67) (281.039,5663.09) (284.74,5589.48) (288.49,5516.83) (292.289,5445.12)
+        (296.139,5374.34) (300.039,5304.48) (303.99,5235.53) (307.994,5167.48) (312.05,5100.31) (316.159,5034.01)
+        (320.323,4968.58) (324.542,4903.99) (328.816,4840.25) (333.146,4777.33) (337.534,4715.23) (341.979,4653.94)
+        (346.482,4593.45) (351.046,4533.74) (355.669,4474.81) (360.353,4416.64) (365.098,4359.23) (369.907,4302.57)
+        (374.778,4246.64) (379.714,4191.44) (384.715,4136.96) (389.781,4083.19) (394.914,4030.11) (400.115,3977.73)
+        (405.385,3926.02) (410.724,3874.99) (416.133,3824.62) (421.613,3774.91) (427.165,3725.84) (432.791,3677.41)
+        (438.491,3629.61) (444.266,3582.43) (450.116,3535.86) (456.044,3489.9) (462.05,3444.54) (468.135,3399.76)
+        (474.3,3355.57) (480.547,3311.96) (486.875,3268.91) (493.287,3226.41) (499.784,3184.48) (506.366,3143.08)
+        (513.034,3102.23) (519.791,3061.9) (526.636,3022.1) (533.572,2982.82) (540.599,2944.05) (547.718,2905.78)
+        (554.932,2868.01) (562.24,2830.73) (569.645,2793.93) (577.147,2757.62) (584.747,2721.77) (592.448,2686.39)
+        (600.251,2651.47) (608.156,2617.01) (616.165,2582.99) (624.28,2549.42) (632.501,2516.28) (640.831,2483.57)
+        (649.27,2451.29) (657.821,2419.43) (666.484,2387.98) (675.262,2356.94) (684.155,2326.3) (693.165,2296.06)
+        (702.294,2266.22) (711.543,2236.76) (720.913,2207.68) (730.407,2178.99) (740.027,2150.66) (749.773,2122.71)
+        (759.647,2095.12) (769.651,2067.88) (779.787,2041) (790.057,2014.47) (800.461,1988.29) (811.003,1962.45)
+        (821.684,1936.94) (832.505,1911.76) (843.469,1886.91) (854.577,1862.38) (865.832,1838.17) (877.234,1814.28)
+        (888.787,1790.7) (900.492,1767.42) (912.351,1744.45) (924.367,1721.77) (936.54,1699.39) (948.874,1677.3)
+        (961.371,1655.5) (974.032,1633.98) (986.859,1612.74) (999.856,1591.78) (1013.02,1571.09) (1026.36,1550.67)
+        (1039.88,1530.51) (1053.58,1510.62) (1067.45,1490.98) (1081.51,1471.6) (1095.75,1452.47) (1110.18,1433.59)
+        (1124.8,1414.96) (1139.62,1396.56) (1154.63,1378.41) (1169.83,1360.49) (1185.24,1342.81) (1200.85,1325.36)
+        (1216.66,1308.13) (1232.69,1291.12) (1248.92,1274.34) (1265.37,1257.78) (1282.03,1241.43) (1298.92,1225.29)
+        (1316.02,1209.36) (1333.35,1193.64) (1350.91,1178.13) (1368.7,1162.81) (1386.73,1147.7) (1404.99,1132.78)
+        (1423.5,1118.06) (1442.24,1103.52) (1461.24,1089.18) (1480.48,1075.02) (1499.98,1061.05) (1519.73,1047.26)
+        (1539.75,1033.64) (1560.02,1020.21) (1580.57,1006.95) (1601.38,993.858) (1622.47,980.94) (1643.84,968.189)
+        (1665.49,955.604) (1687.42,943.183) (1709.65,930.923) (1732.16,918.822) (1754.97,906.879) (1778.09,895.091)
+        (1801.5,883.456) (1825.23,871.972) (1849.27,860.638) (1873.62,849.451) (1898.3,838.41) (1923.3,827.512)
+        (1948.62,816.755) (1974.29,806.139) (2000.29,795.66) (2026.63,785.318) (2053.32,775.11) (2080.36,765.034)
+        (2107.76,755.09) (2135.52,745.275) (2163.64,735.588) (2192.14,726.026) (2221.01,716.589) (2250.26,707.274)
+        (2279.89,698.081) (2309.92,689.007) (2340.34,680.051) (2371.16,671.211) (2402.39,662.487) (2434.03,653.875)
+        (2466.08,645.376) (2498.56,636.987) (2531.46,628.707) (2564.8,620.535) (2598.58,612.469) (2632.8,604.508)
+        (2667.48,596.65) (2702.61,588.895) (2738.2,581.24) (2774.26,573.685) (2810.79,566.228) (2847.81,558.867)
+        (2885.32,551.603) (2923.32,544.433) (2961.81,537.356) (3000.82,530.371) (3040.34,523.477) (3080.38,516.673)
+        (3120.95,509.957) (3162.05,503.328) (3203.69,496.786) (3245.88,490.328) (3288.63,483.955) (3331.94,477.664)
+        (3375.82,471.455) (3420.28,465.327) (3465.32,459.279) (3510.96,453.309) (3557.2,447.416) (3604.05,441.601)
+        (3651.51,435.861) (3699.6,430.195) (3748.32,424.603) (3797.69,419.084) (3847.7,413.636) (3898.37,408.26)
+        (3949.71,402.953) (4001.73,397.715) (4054.43,392.546) (4107.83,387.443) (4161.93,382.407) (4216.74,377.436)
+        (4272.27,372.53) (4328.53,367.688) (4385.54,362.908) (4443.3,358.191) (4501.81,353.535) (4561.1,348.94)
+        (4621.17,344.404) (4682.03,339.927) (4743.69,335.509) (4806.16,331.148) (4869.46,326.843) (4933.58,322.595)
+        (4998.56,318.402) (5064.39,314.263) (5131.08,310.178) (5198.66,306.146) (5267.12,302.167) (5336.49,298.239)
+        (5406.77,294.362) (5477.97,290.536) (5550.12,286.76) (5623.21,283.032) (5697.27,279.353) (5772.3,275.722)
+        (5848.32,272.138) (5925.34,268.601) (6003.37,265.109) (6082.43,261.663) (6162.54,258.262) (6243.7,254.905)
+        (6325.92,251.592) (6409.23,248.321) (6493.64,245.094) (6579.16,241.908) (6665.81,238.763) (6753.59,235.66)
+        (6842.53,232.597) (6932.65,229.573) (7023.95,226.589) (7116.45,223.644) (7210.17,220.737) (7305.13,217.867)
+        (7401.33,215.035) (7498.81,212.24) (7597.56,209.482) (7697.62,206.759) (7799,204.071) (7901.71,201.418)
+        (8005.77,198.8) (8111.2,196.216) (8218.02,193.666) (8326.25,191.148) (8435.91,188.664) (8547,186.211)
+        (8659.57,183.791) (8773.61,181.402) (8889.15,179.044) (9006.22,176.717) (9124.83,174.42) (9245,172.152)
+        (9366.75,169.915) (9490.11,167.706) (9615.09,165.526) (9741.72,163.375) (9870.02,161.251) (10000,159.155)
+      };
+      \addlegendentry{XC}
+      % línea de referencia en y = 1500
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({rel axis cs:0,0}|-{axis cs:1,1500}) -- ({rel axis cs:1,0}|-{axis cs:1,1500}) node[drotulo, pos=1, anchor=south east] {R = 1.5 k\ensuremath{\Omega}};
+      % línea de referencia en x = 1061
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({axis cs:1061,0}|-{rel axis cs:0,0}) -- ({axis cs:1061,0}|-{rel axis cs:0,1}) node[drotulo, pos=1, anchor=north west] {XC = R (1.06 kHz)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Reactancia capacitiva de un condensador de 0.1 \textmu{}F en función de la frecuencia, comparada con la resistencia de 1.5 k\ensuremath{\Omega} del circuito}
+\end{figure}
+
+La línea horizontal marca la resistencia de 1.5 k\ensuremath{\Omega} con la que el condensador formará el circuito RC. Por debajo de unos 1.06 kHz la reactancia supera a la resistencia y el condensador domina el comportamiento del circuito; por encima, domina el resistor. La frecuencia en la que ambas oposiciones son iguales, $f = 1/(2\pi R C)$, será clave en la próxima unidad, porque allí el ángulo de fase del circuito vale exactamente \ensuremath{-}45\textdegree{}. A 1 kHz, la frecuencia elegida para el caso de estudio, la reactancia (1592 \ensuremath{\Omega}) y la resistencia son parecidas, y ninguno de los dos elementos oculta al otro en las mediciones.
+
+Conviene distinguir la reactancia de la resistencia, aunque ambas se midan en ohmios. La resistencia disipa energía en forma de calor; la reactancia no disipa: el condensador toma energía durante un cuarto de ciclo y la devuelve en el siguiente. Por eso la reactancia no puede medirse con el ohmímetro, que aplica cd, sino que se calcula a partir de $f$ y $C$, o se obtiene del cociente entre las tensiones y la corriente eficaces medidas con señal sinusoidal.
+
+\begin{nota}{Error frecuente:}
+Usar la frecuencia en kilohercios y la capacitancia en microfaradios sin convertirlas. En $X_C = 1/(2\pi f C)$, $f$ va en hercios y $C$ en faradios; con otras unidades el resultado sale errado en un factor de mil o de un millón.
+\end{nota}
+
+\subsubsection{Impedancia y ángulo de fase del circuito RC en serie (Bloque 5)}
+
+En un circuito puramente resistivo, la oposición total a la corriente es la resistencia; en uno puramente capacitivo, la reactancia capacitiva. En el circuito RC en serie intervienen ambas, y su efecto combinado se llama \textbf{impedancia}, simbolizada $Z$ [1]. La impedancia no es la suma aritmética de $R$ y $X_C$, porque sus efectos están desfasados 90\textdegree{}: la tensión en el condensador se retrasa 90\textdegree{} respecto a la corriente, y por tanto respecto a la tensión en el resistor [1]. Para sumarlas se usan números complejos: la reactancia capacitiva se escribe $-jX_C$, un fasor a \ensuremath{-}90\textdegree{} de la resistencia, y la impedancia total es la suma fasorial de ambas [1]:
+
+\begin{equation}
+  \mathbf{Z} = R - jX_C = \sqrt{R^{2} + X_C^{2}}\ \angle -\tan^{-1}\!\left(\frac{X_C}{R}\right)
+\end{equation}
+
+donde $\mathbf{Z}$ es la impedancia fasorial en ohmios (\ensuremath{\Omega}), $R$ la resistencia en ohmios (\ensuremath{\Omega}), $X_C$ la reactancia capacitiva en ohmios (\ensuremath{\Omega}) y $j$ la unidad imaginaria, que indica un desfase de +90\textdegree{} (y $-j$, de \ensuremath{-}90\textdegree{}). La primera forma es la rectangular y la segunda la polar, con magnitud y ángulo [1]. Si se reubican los fasores $R$ y $-jX_C$, forman un triángulo rectángulo, el \textbf{triángulo de impedancia}: los catetos son $R$ y $X_C$, la hipotenusa es $Z$, y el ángulo $\theta$ entre $R$ y $Z$ es el ángulo de fase del circuito, la diferencia de fase entre la tensión aplicada y la corriente [1].
+
+La magnitud se obtiene por el teorema de Pitágoras y el ángulo con la tangente inversa [1]:
+
+\begin{equation}
+  Z = \sqrt{R^{2} + X_C^{2}}, \qquad \theta = -\tan^{-1}\!\left(\frac{X_C}{R}\right)
+\end{equation}
+
+donde $Z$ es la magnitud de la impedancia en ohmios (\ensuremath{\Omega}) y $\theta$ el ángulo de fase en grados (\textdegree{}). El signo negativo indica que la tensión de la fuente se retrasa respecto a la corriente, o, lo que es lo mismo, que la corriente adelanta a la tensión. Con $R = 56\ \Omega$ y $X_C = 100\ \Omega$, $\mathbf{Z} = 56 - j100\ \Omega = 115\ \angle -60.8^\circ\ \Omega$ [1]. Con el circuito del caso de estudio, $R = 1.5\ \text{k}\Omega$ y $X_C = 1592\ \Omega$ a 1 kHz: $Z = \sqrt{1500^2 + 1592^2} \approx 2187\ \Omega$ y $\theta = -\tan^{-1}(1592/1500) \approx -46.7^\circ$.
+
+Como $X_C$ depende de la frecuencia, la impedancia y el ángulo de fase también dependen de ella. A frecuencias bajas domina la reactancia: $Z$ es grande y $\theta$ se acerca a \ensuremath{-}90\textdegree{}, un circuito casi capacitivo. A frecuencias altas domina la resistencia: $Z$ tiende a $R$ y $\theta$ a 0\textdegree{}, un circuito casi resistivo. En la frecuencia en la que $X_C = R$, el ángulo vale exactamente \ensuremath{-}45\textdegree{} y $Z = R\sqrt{2}$. La tabla lo muestra para $R = 1.5\ \text{k}\Omega$ y $C = 0.1\ \mu\text{F}$.
+
+% --- Tabla 2: Impedancia y ángulo de fase de un RC en serie (R = 1.5 kΩ, C = 0.1 µF) en función de la f… (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=0.87\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.87\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.761\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.761\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.738\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Impedancia y ángulo de fase de un RC en serie (R = 1.5 k\ensuremath{\Omega}, C = 0.1 \textmu{}F) en función de la frecuencia} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{XC (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Z (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{\ensuremath{\theta} (\textdegree{})}} & \textcolor{white}{\textbf{Comportamiento}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{XC (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Z (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{\ensuremath{\theta} (\textdegree{})}} & \textcolor{white}{\textbf{Comportamiento}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  200 & 7958 & 8098 & \ensuremath{-}79.3 & casi capacitivo \\
+  \rowcolor{iubfondogris} 500 & 3183 & 3519 & \ensuremath{-}64.8 & predomina C \\
+  1000 & 1592 & 2187 & \ensuremath{-}46.7 & equilibrado \\
+  \rowcolor{iubfondogris} 1061 & 1500 & 2121 & \ensuremath{-}45.0 & XC = R \\
+  2000 & 796 & 1698 & \ensuremath{-}27.9 & predomina R \\
+  \rowcolor{iubfondogris} 10 000 & 159 & 1508 & \ensuremath{-}6.1 & casi resistivo \\
+\end{xltabular}
+
+La tabla confirma que el ángulo recorre todo el intervalo de 0\textdegree{} a \ensuremath{-}90\textdegree{} según la relación entre $X_C$ y $R$, y que la magnitud de la impedancia nunca baja de $R$: el condensador solo puede añadir oposición al circuito. Este comportamiento es la base de los filtros RC y de las redes de adelanto y retraso de fase, que se estudian más adelante en el curso.
+
+\begin{nota}{Error frecuente:}
+Calcular la impedancia como $R + X_C$. Con los valores del caso daría 3092 \ensuremath{\Omega}, un 41 \% más que el valor correcto de 2187 \ensuremath{\Omega}. La suma aritmética solo sería válida si ambas oposiciones estuvieran en fase, y en el circuito RC nunca lo están.
+\end{nota}
+
+\subsubsection{Ley de voltajes de Kirchhoff en el circuito RC en serie (Bloque 6)}
+
+La ley de voltajes de Kirchhoff establece que la suma de las caídas de tensión alrededor de una trayectoria cerrada es igual a la tensión aplicada [1]. En el circuito RC en serie con cd se cumple en cada instante, $v_R + v_C = V_S$ [1]. Con una fuente sinusoidal también se cumple, pero con una condición que cambia el cálculo: como $V_R$ y $V_C$ no están en fase, deben sumarse como \textbf{cantidades fasoriales}, con $V_C$ retrasada 90\textdegree{} respecto a $V_R$ [1]. La corriente es la misma en todo el circuito en serie, así que se toma como referencia a 0\textdegree{}; la tensión en el resistor está en fase con ella, y la del condensador, 90\textdegree{} atrás.
+
+\begin{equation}
+  \mathbf{V}_S = \mathbf{V}_R + \mathbf{V}_C = V_R - jV_C, \qquad V_S = \sqrt{V_R^{2} + V_C^{2}}, \qquad \theta = -\tan^{-1}\!\left(\frac{V_C}{V_R}\right)
+\end{equation}
+
+donde $\mathbf{V}_S$, $\mathbf{V}_R$ y $\mathbf{V}_C$ son los fasores de la tensión de la fuente, del resistor y del condensador en voltios (V), $V_S$, $V_R$ y $V_C$ sus magnitudes eficaces en voltios (V) y $\theta$ el ángulo de la tensión de la fuente respecto a la corriente en grados (\textdegree{}). Las tres tensiones forman un triángulo rectángulo semejante al de impedancia, porque cada una es la corriente multiplicada por su oposición correspondiente: $V_R = IR$, $V_C = IX_C$ y $V_S = IZ$, de acuerdo con la ley de Ohm en forma fasorial, $\mathbf{V} = \mathbf{I}\mathbf{Z}$ [1].
+
+El procedimiento de análisis de un RC en serie queda así: calcular $X_C$ a la frecuencia de trabajo; obtener $Z$ y $\theta$; calcular la corriente $I = V_S / Z$; calcular $V_R = IR$ y $V_C = IX_C$; y verificar con la LVK fasorial. Con el circuito del caso ($R = 1.5\ \text{k}\Omega$, $C = 0.1\ \mu\text{F}$) alimentado con 5 V eficaces a 1 kHz: $Z = 2187\ \Omega$, $I = 5 / 2187 \approx 2.29\ \text{mA}$, $V_R = (2.29 \times 10^{-3})(1500) \approx 3.43\ \text{V}$ y $V_C = (2.29 \times 10^{-3})(1592) \approx 3.64\ \text{V}$. La verificación da $\sqrt{3.43^2 + 3.64^2} \approx 5.00\ \text{V}$, y el ángulo, $-\tan^{-1}(3.64/3.43) \approx -46.7^\circ$, coincide con el de la impedancia.
+
+% --- Tabla 3: Tensiones de un RC en serie (R = 1.5 kΩ, C = 0.1 µF, VS = 5 V eficaces) a dos frecuencias (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=1.468\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.766\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.766\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Tensiones de un RC en serie (R = 1.5 k\ensuremath{\Omega}, C = 0.1 \textmu{}F, VS = 5 V eficaces) a dos frecuencias} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{f = 1 kHz}} & \textcolor{white}{\textbf{f = 2 kHz}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{f = 1 kHz}} & \textcolor{white}{\textbf{f = 2 kHz}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  XC (\ensuremath{\Omega}) & 1592 & 796 \\
+  \rowcolor{iubfondogris} Z (\ensuremath{\Omega}) & 2187 & 1698 \\
+  I (mA) & 2.29 & 2.94 \\
+  \rowcolor{iubfondogris} VR (V) & 3.43 \ensuremath{\angle} 0\textdegree{} & 4.42 \ensuremath{\angle} 0\textdegree{} \\
+  VC (V) & 3.64 \ensuremath{\angle} \ensuremath{-}90\textdegree{} & 2.34 \ensuremath{\angle} \ensuremath{-}90\textdegree{} \\
+  \rowcolor{iubfondogris} VR + VC aritmética (V) & 7.07 & 6.76 \\
+  \ensuremath{\surd}(VR\texttwosuperior{} + VC\texttwosuperior{}) (V) & 5.00 & 5.00 \\
+  \rowcolor{iubfondogris} \ensuremath{\theta} (\textdegree{}) & \ensuremath{-}46.7 & \ensuremath{-}27.9 \\
+\end{xltabular}
+
+La tabla contiene el hallazgo central de la sesión. Si se miden por separado las tensiones del resistor y del condensador con un voltímetro, su suma aritmética da 7.07 V, bastante más que los 5 V de la fuente. No es un error de medición ni una violación de la ley de Kirchhoff: el voltímetro mide magnitudes eficaces y no ve el desfase de 90\textdegree{} entre ambas tensiones, que alcanzan su máximo en instantes distintos. La suma correcta es la fasorial, y da exactamente la tensión de la fuente. Al duplicar la frecuencia, la reactancia se reduce a la mitad, la tensión se desplaza del condensador al resistor y el ángulo se acerca a cero, pero la suma fasorial sigue siendo 5 V.
+
+El diagrama fasorial que se dibuja en el laboratorio sigue estas convenciones: la corriente sobre el eje horizontal como referencia; $V_R$ sobre el mismo eje, porque está en fase con ella; $V_C$ hacia abajo, a \ensuremath{-}90\textdegree{}; y $V_S$ como la hipotenusa que cierra el triángulo. La longitud de cada fasor es su valor eficaz y el ángulo entre $V_S$ y el eje horizontal es $\theta$.
+
+\begin{nota}{Error frecuente:}
+Concluir que el circuito \guillemotleft{}no cumple Kirchhoff\guillemotright{} porque las lecturas del voltímetro no suman la tensión de la fuente. En ca, la ley de voltajes se verifica con la suma fasorial: se elevan al cuadrado las tensiones del resistor y del condensador, se suman y se extrae la raíz.
+\end{nota}
+
+\section{Caso de Estudio Aplicado: Medición de un circuito RC en serie en el laboratorio: constante de tiempo y verificación de la LVK (Bloque 7)}
+
+\subsection{Descripción del montaje}
+
+Se monta en el protoboard un circuito RC en serie con un resistor de película marcado marrón-verde-rojo-oro (1.5 k\ensuremath{\Omega} \textpm{}5 \%) y el condensador de película C2 del kit de la semana 1, marcado 104K, cuyo valor medido fue 97.8 nF. El condensador se conecta del lado de tierra, de modo que el canal 2 del osciloscopio mide directamente $v_C$ y el canal 1 mide la tensión de la fuente; la tensión del resistor se obtiene con la función de resta del osciloscopio (CH1 \ensuremath{-} CH2), porque las dos puntas comparten la misma tierra y no pueden conectarse en los extremos del resistor. Antes de montar, el ohmímetro da 1492 \ensuremath{\Omega} para el resistor. Las lecturas del osciloscopio y del multímetro que se usan más abajo son valores de ejemplo para ilustrar el procedimiento.
+
+\subsection{Parte 1: constante de tiempo con onda cuadrada}
+
+Para ver la carga y la descarga completas, el semiperiodo de la onda cuadrada debe durar más de cinco constantes de tiempo, el tiempo transitorio [1]. Con $\tau$ cerca de 150 \textmu{}s, cinco constantes son 750 \textmu{}s, así que se elige una onda cuadrada de 0 V a 5 V y 500 Hz (semiperiodo de 1 ms). El mismo método de aplicar una onda cuadrada y medir la respuesta exponencial se usa para determinar la constante de tiempo de un circuito con un elemento de valor desconocido [1]. El valor esperado con los componentes medidos es:
+
+\begin{equation}
+  \tau = R\,C = (1492\ \Omega)(97.8 \times 10^{-9}\ \text{F}) \approx 145.9\ \mu\text{s}
+\end{equation}
+
+donde $\tau$ es la constante de tiempo en segundos (s), $R$ la resistencia medida en ohmios (\ensuremath{\Omega}) y $C$ la capacitancia medida en faradios (F). Con los valores nominales se habría esperado 150 \textmu{}s. En el osciloscopio, con los cursores de tiempo, se mide el intervalo entre el flanco de subida de la onda cuadrada y el instante en que $v_C$ alcanza el 63 \% de 5 V, es decir, 3.16 V: la lectura es de 147 \textmu{}s, un 0.8 \% por encima del valor calculado.
+
+\subsection{Parte 2: tensiones con señal sinusoidal y ley de voltajes de Kirchhoff}
+
+El generador se ajusta a una onda sinusoidal de 1 kHz y 5.00 V eficaces, verificada primero con el osciloscopio, como recomienda la práctica de localización de fallas [1]. Con los valores medidos, $X_C = 1/(2\pi \times 1000 \times 97.8 \times 10^{-9}) \approx 1627\ \Omega$, $Z = \sqrt{1492^2 + 1627^2} \approx 2208\ \Omega$, $I = 5 / 2208 \approx 2.26\ \text{mA}$, $V_R \approx 3.38\ \text{V}$, $V_C \approx 3.69\ \text{V}$ y $\theta = -\tan^{-1}(1627/1492) \approx -47.5^\circ$. Con el multímetro de verdadero valor eficaz se miden $V_R$ (flotante, entre los extremos del resistor) y $V_C$. El desfase se mide en el osciloscopio como el retardo $\Delta t$ entre la tensión de la fuente y la del resistor, que está en fase con la corriente, y se convierte a grados con $\theta = 360^\circ \times \Delta t / T$.
+
+% --- Tabla 4: Valores calculados y medidos del circuito RC en serie (lecturas de ejemplo) (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=0.991\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.462\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.377\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.604\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.566\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Valores calculados y medidos del circuito RC en serie (lecturas de ejemplo)} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{Calculado con valores medidos}} & \textcolor{white}{\textbf{Medido}} & \textcolor{white}{\textbf{Instrumento}} & \textcolor{white}{\textbf{Diferencia}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Magnitud}} & \textcolor{white}{\textbf{Calculado con valores medidos}} & \textcolor{white}{\textbf{Medido}} & \textcolor{white}{\textbf{Instrumento}} & \textcolor{white}{\textbf{Diferencia}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  \ensuremath{\tau} & 145.9 \textmu{}s & 147 \textmu{}s & osciloscopio (cursores) & +0.8 \% \\
+  \rowcolor{iubfondogris} VR & 3.38 V & 3.36 V & multímetro verdadero valor eficaz & \ensuremath{-}0.6 \% \\
+  VC & 3.69 V & 3.70 V & multímetro verdadero valor eficaz & +0.3 \% \\
+  \rowcolor{iubfondogris} VR + VC (aritmética) & 7.07 V & 7.06 V & --- & --- \\
+  \ensuremath{\surd}(VR\texttwosuperior{} + VC\texttwosuperior{}) & 5.00 V & 5.00 V & --- & 0.0 \% \\
+  \rowcolor{iubfondogris} \ensuremath{\Delta}t entre VS y VR & 132 \textmu{}s & 130 \textmu{}s & osciloscopio & \ensuremath{-}1.5 \% \\
+  \ensuremath{\theta} & \ensuremath{-}47.5\textdegree{} & \ensuremath{-}46.8\textdegree{} & calculado de \ensuremath{\Delta}t & 0.7\textdegree{} \\
+\end{xltabular}
+
+\subsection{Análisis de resultados}
+
+Las mediciones confirman las dos caras del circuito. En cd, la constante de tiempo medida coincide con el producto $RC$ de los valores medidos con una diferencia menor del 1 \%, que se explica por la resolución de los cursores y por la resistencia interna del generador (típicamente 50 \ensuremath{\Omega}), que se suma a $R$. En ca, las tensiones individuales suman aritméticamente 7.06 V, pero su suma fasorial reproduce los 5.00 V de la fuente, y el desfase medido, \ensuremath{-}46.8\textdegree{}, confirma que la corriente adelanta a la tensión de la fuente casi el ángulo calculado. La ley de voltajes de Kirchhoff se cumple, siempre que se aplique a fasores.
+
+La práctica cubre los criterios del RA2 que dependen del laboratorio: identificar el resistor y el condensador por su marcado y verificarlos antes del montaje, medir tensiones en un circuito resistivo y capacitivo, y medir un circuito RC. También deja un procedimiento reutilizable en la semana 6, cuando el mismo resistor y el mismo condensador se conecten en paralelo y la magnitud que se reparta sea la corriente.
+
+\begin{nota}{Advertencia de seguridad:}
+No se debe conectar la tierra de las dos puntas del osciloscopio en puntos distintos del circuito: ambas están unidas a la tierra del instrumento y a la del generador, y conectarlas en los extremos del resistor lo cortocircuita. La tensión flotante del resistor se mide con la resta de canales o con el multímetro.
+\end{nota}
+
+\section{Síntesis (Bloque 8)}
+
+El circuito RC en serie se entiende a partir de dos preguntas: cómo se alimenta y qué magnitud comparten sus elementos. Como están en serie, comparten la corriente, y la ley de voltajes de Kirchhoff reparte la tensión de la fuente entre el resistor y el condensador. Con \textbf{cd conmutada}, ese reparto cambia en el tiempo: el condensador se carga exponencialmente, alcanza el 63 \% de la tensión final en una constante de tiempo $\tau = RC$ y se considera cargado tras $5\tau$. Con \textbf{ca sinusoidal}, el reparto es permanente pero desfasado: el condensador opone una reactancia $X_C = 1/(2\pi f C)$ que cae con la frecuencia, la impedancia es la suma fasorial $Z = \sqrt{R^2 + X_C^2}$ y el ángulo de fase recorre de \ensuremath{-}90\textdegree{} a 0\textdegree{} según domine el condensador o el resistor. El caso de laboratorio convirtió esa teoría en un criterio verificable: la constante de tiempo medida con onda cuadrada coincide con el producto $RC$ de los valores medidos, y las tensiones del resistor y del condensador suman aritméticamente más que la fuente, pero su \textbf{suma fasorial} la reproduce exactamente. Esa comprobación es la esencia del RA2 en el circuito en serie. La semana 6, tras el examen, aplica el mismo análisis al circuito RC en paralelo, donde lo común es la tensión y lo que se suma fasorialmente es la corriente.
+
+\subsection*{Componente Actitudinal}
+
+\begin{cita}
+Llegar puntual y con los valores medidos del kit permite al equipo completar las dos partes de la práctica; y discutir en grupo por qué las tensiones \guillemotleft{}no suman\guillemotright{} evita que alguien corrija a mano unos datos que en realidad eran correctos.
+\end{cita}
+
+\section{Bibliografía (Formato IEEE)}
+
+{\sloppy
+\begin{itemize}[leftmargin=2.6em, labelwidth=2.2em, labelsep=0.4em, align=left]
+  \item[{[1]}] T. L. Floyd, Principios de circuitos eléctricos, 8.\textordfeminine{} ed. México: Pearson Educación, 2007.
+  \item[{[2]}] R. L. Boylestad, Introducción al análisis de circuitos, 10.\textordfeminine{} ed. México: Pearson Educación, 2004.
+  \item[{[3]}] M. F. P. Deorsola y P. Morcelle del Valle, Circuitos eléctricos. Parte 1, 1.\textordfeminine{} ed. La Plata: Editorial de la Universidad de La Plata, 2017.
+\end{itemize}
+}
+
+\end{document}
