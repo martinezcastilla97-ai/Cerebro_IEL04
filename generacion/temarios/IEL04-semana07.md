@@ -15,12 +15,12 @@ estadisticas:
   pasajes: 35
 bibliografia_estado: vacio_detectado
 fecha_creacion: '2026-09-28'
-fecha_actualizacion: '2026-10-25'
+fecha_actualizacion: '2026-10-27'
 latex_estado: revisar
 latex_archivo: generacion/temarios/IEL04-semana07.tex
 latex_avisos:
-- una línea se sale del margen 14.1 pt (in paragraph at lines 543--543)
-- una línea se sale del margen 2.1 pt (in paragraph at lines 591--591)
+- una línea se sale del margen 14.1 pt (in paragraph at lines 545--545)
+- una línea se sale del margen 2.1 pt (in paragraph at lines 593--593)
 latex_temario_hash: d7d85eb67c0207df
 latex_formato: 2
 latex_compilado: null
@@ -30,19 +30,19 @@ bibliografia_faltantes:
 - 'El **generador de funciones** también forma parte del circuito: tiene una resistencia interna, típicamente de 50 Ω, en serie con su salida [FUENTE NO CARGADA EN raw/]. Si el circuito tiene una impedan'
 - '**Tabla 3.** Efectos de los instrumentos en las mediciones de circuitos RC (puntas ×1 y ×10: [1]; generador, multímetro y tierras: [FUENTE NO CARGADA EN raw/])'
 - '[4] Manuales del generador de funciones, del multímetro digital y del osciloscopio del laboratorio (resistencia de salida, ancho de banda y referencia de tierra); no están cargados en el wiki. [FUENTE'
-bibliografia_fecha: '2026-10-25'
+bibliografia_fecha: '2026-10-27'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana07.tex
 presentacion_avisos: []
 presentacion_temario_hash: d7d85eb67c0207df
-presentacion_fecha: '2026-10-25'
-presentacion_diseno: 6
+presentacion_fecha: '2026-10-27'
+presentacion_diseno: 7
 presentacion_diapositivas: 36
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
 presentacion_elementos: 12
-presentacion_compilada: '2026-10-25'
+presentacion_compilada: '2026-10-27'
 ---
 
 # Cálculo y medición de parámetros en circuitos RC en serie, en paralelo y mixtos: método, filtros, instrumentos y nomenclatura

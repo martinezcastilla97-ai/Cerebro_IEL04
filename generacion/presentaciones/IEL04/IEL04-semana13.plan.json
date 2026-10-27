@@ -2,7 +2,7 @@
  "formato": 2,
  "temario_hash": "c118b5b149f5d329",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "partes": {
   "apertura": {
    "huella": "3e09f39f072ee349",
@@ -18,7 +18,7 @@
    ]
   },
   "bloque-01": {
-   "huella": "b6ebd1581a58e8be",
+   "huella": "e1ce790734c01066",
    "diapositivas": [
     {
      "titulo": "Del análisis a la caracterización de un circuito RLC",
@@ -61,7 +61,7 @@
    ]
   },
   "bloque-04": {
-   "huella": "3722b4255ef57360",
+   "huella": "6040b0fabd46e715",
    "diapositivas": [
     {
      "titulo": "Filtros resonantes pasabanda y rechazabanda",
@@ -69,7 +69,7 @@
     },
     {
      "titulo": "Ecuaciones: Filtros resonantes pasabanda y rechazabanda",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{2}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.47\\linewidth}\n\\elementoTemario{ecuacion}{2}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Respuesta de un RLC en serie",
@@ -78,7 +78,7 @@
    ]
   },
   "bloque-05": {
-   "huella": "7eb04bab9c5f44e1",
+   "huella": "9e175befbcd6c58a",
    "diapositivas": [
     {
      "titulo": "Métodos para medir la resonancia, el ancho de banda",
@@ -116,7 +116,7 @@
     },
     {
      "titulo": "Ecuaciones: Caracterización de un filtro pasabanda RLC",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{4}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.83\\linewidth}\n\\elementoTemario{ecuacion}{4}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Caracterización del filtro pasabanda RLC en serie del kit",

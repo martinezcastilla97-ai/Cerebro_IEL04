@@ -2,7 +2,7 @@
  "formato": 2,
  "temario_hash": "cf45b1d9dd8300a8",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "partes": {
   "apertura": {
    "huella": "9c52d2840f5b1b98",
@@ -18,7 +18,7 @@
    ]
   },
   "bloque-01": {
-   "huella": "e94abebea3bcb4d4",
+   "huella": "195c5c569ed750d8",
    "diapositivas": [
     {
      "titulo": "Por qué asociar condensadores y bobinas",
@@ -48,7 +48,7 @@
    ]
   },
   "bloque-03": {
-   "huella": "b12edfed93514b4f",
+   "huella": "f61b5ce68b2a2261",
    "diapositivas": [
     {
      "titulo": "Condensadores en paralelo y asociaciones mixtas",
@@ -73,7 +73,7 @@
     },
     {
      "titulo": "Ecuaciones: Bobinas en serie, en paralelo y mixtas",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{4}\n\\end{cajaplana}\n\\vspace{1mm}\n\\begin{cajaplana}{iuborange}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{5}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{4}\n\\end{cajaplana}\n\\vspace{1mm}\n\\begin{cajaplana}{iuborange}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.40\\linewidth}\n\\elementoTemario{ecuacion}{5}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Reglas de asociación de bobinas con ejemplos numéricos",
@@ -82,7 +82,7 @@
    ]
   },
   "bloque-05": {
-   "huella": "94932690f553ddd2",
+   "huella": "f73759e4a95d4067",
    "diapositivas": [
     {
      "titulo": "El circuito LC y su frecuencia de resonancia",

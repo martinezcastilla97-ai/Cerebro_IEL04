@@ -52,16 +52,18 @@
 % ---------------------------------------------------------------------
 \definecolor{iubnavy}{HTML}{121023}
 \definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubblue}{HTML}{00ADE7}
 \definecolor{iuborange}{HTML}{E39037}
 \definecolor{iubgreen}{HTML}{3B9C6D}
-\definecolor{iubpurple}{HTML}{8E6BBF}
-\definecolor{iubgris}{HTML}{D5DAE3}
-\definecolor{iubgrisoscuro}{HTML}{7C8598}
-\definecolor{iubfondoazul}{HTML}{EBF7FD}
-\definecolor{iubfondonaranja}{HTML}{FDF4EA}
-\definecolor{iubfondoverde}{HTML}{EDF8F2}
-\definecolor{iubfondogris}{HTML}{F4F6F9}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\pgfplotsset{cycle list={{iubblue, mark=*},{iuborange, mark=square*},{iubgreen, mark=triangle*},{iubnavy, mark=diamond*},{iubyellow, mark=pentagon*}}}
 
 % ---------------------------------------------------------------------
 %  Formato general
@@ -240,7 +242,7 @@ Esa oposición tiene consecuencias visibles en cualquier sistema eléctrico. La 
     \draw[dflecha] (n2) -- (n3);
     \draw[dflecha] (n3) -- (n4);
     \draw[dflecha] (n2) -- (n5);
-    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    % rotulos de las flechas (donde no caen sobre un nodo)
     \node[drotulo] at (7.725,-1.337) {sí: di/dt \ensuremath{\neq} 0};
     \node[drotulo] at (7.725,-0.743) {no: cd constante};
   \end{tikzpicture}
@@ -474,7 +476,7 @@ Los inductores se fabrican en una gran diversidad de formas y tamaños, pero cae
     \draw[dflecha] (n1) -- (n4);
     \draw[dflecha] (n1) -- (n5);
     \draw[dflecha] (n2) -- (n5);
-    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    % rotulos de las flechas (donde no caen sobre un nodo)
     \node[drotulo] at (4.812,-0.532) {alta frecuencia};
     \node[drotulo] at (4.812,-1.022) {baja frecuencia};
     \node[drotulo] at (4.812,-2.002) {ajuste por tornillo};

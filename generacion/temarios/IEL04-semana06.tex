@@ -52,16 +52,18 @@
 % ---------------------------------------------------------------------
 \definecolor{iubnavy}{HTML}{121023}
 \definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubblue}{HTML}{00ADE7}
 \definecolor{iuborange}{HTML}{E39037}
 \definecolor{iubgreen}{HTML}{3B9C6D}
-\definecolor{iubpurple}{HTML}{8E6BBF}
-\definecolor{iubgris}{HTML}{D5DAE3}
-\definecolor{iubgrisoscuro}{HTML}{7C8598}
-\definecolor{iubfondoazul}{HTML}{EBF7FD}
-\definecolor{iubfondonaranja}{HTML}{FDF4EA}
-\definecolor{iubfondoverde}{HTML}{EDF8F2}
-\definecolor{iubfondogris}{HTML}{F4F6F9}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\pgfplotsset{cycle list={{iubblue, mark=*},{iuborange, mark=square*},{iubgreen, mark=triangle*},{iubnavy, mark=diamond*},{iubyellow, mark=pentagon*}}}
 
 % ---------------------------------------------------------------------
 %  Formato general
@@ -239,7 +241,7 @@ Esta configuración es tan frecuente como la serie. Un condensador en paralelo c
     \draw[dflecha] (n1) -- (n3);
     \draw[dflecha] (n2) -- (n3);
     \draw[dflecha] (n3) -- (n4);
-    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    % rotulos de las flechas (donde no caen sobre un nodo)
     \node[drotulo] at (1.516,-0.797) {rama R};
     \node[drotulo] at (2.626,-0.797) {rama C};
   \end{tikzpicture}
@@ -324,7 +326,7 @@ Una vez obtenida la admitancia, la impedancia es su recíproca, $\mathbf{Z} = 1/
     \draw[dflecha] (n2) -- (n4);
     \draw[dflecha] (n3) -- (n4);
     \draw[dflecha] (n4) -- (n5);
-    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    % rotulos de las flechas (donde no caen sobre un nodo)
     \node[drotulo] at (4.325,-0.532) {0\textdegree{}};
     \node[drotulo] at (4.325,-0.917) {+90\textdegree{}};
   \end{tikzpicture}

@@ -2,7 +2,7 @@
 %  IEL04 - Circuitos Eléctricos I
 %  Semana 9: Cálculo y medición de parámetros en circuitos RL según el conexionado: equivalentes serie-paralelo, circuitos mixtos, potencia y medición de inductancia
 %  Institución Universitaria de Barranquilla (IUB)
-%  Generada por src/presentaciones.py (diseño IUB 6). Compilador: pdfLaTeX (dos pasadas)
+%  Generada por src/presentaciones.py (diseño IUB 7). Compilador: pdfLaTeX (dos pasadas)
 % =====================================================================
 \documentclass[aspectratio=169,11pt,xcolor={table}]{beamer}
 
@@ -39,19 +39,20 @@
 % ---------------------------------------------------------------------
 %  Paleta institucional IUB (Manual de Identidad Visual 2025)
 % ---------------------------------------------------------------------
-\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubnavy}{HTML}{121023}
 \definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubblue}{HTML}{00ADE7}
 \definecolor{iuborange}{HTML}{E39037}
 \definecolor{iubgreen}{HTML}{3B9C6D}
-\definecolor{iubpurple}{HTML}{8E6BBF}
-\definecolor{iubgris}{HTML}{D5DAE3}
-\definecolor{iubgrisoscuro}{HTML}{7C8598}
-\definecolor{iubfondoazul}{HTML}{EBF7FD}
-\definecolor{iubfondonaranja}{HTML}{FDF4EA}
-\definecolor{iubfondoverde}{HTML}{EDF8F2}
-\definecolor{iubfondogris}{HTML}{F4F6F9}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\pgfplotsset{cycle list={{iubblue, mark=*},{iuborange, mark=square*},{iubgreen, mark=triangle*},{iubnavy, mark=diamond*},{iubyellow, mark=pentagon*}}}
 
 % ---------------------------------------------------------------------
 %  Logos del Manual de Identidad (logos/, junto al .tex). Si falta el
@@ -452,7 +453,7 @@
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.20\linewidth}
 {\large
 \begin{equation*}
   R_p = R_W\,(1 + Q^{2}), \qquad X_{Lp} = X_L\,\frac{1 + Q^{2}}{Q^{2}}, \qquad Q = \frac{X_L}{R_W}
@@ -564,7 +565,7 @@ IR2 & 3.98 mA & +23.9\textdegree{} & en fase con Vp \\
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{2.00\linewidth}
 {\large
 \begin{equation*}
   f_c = \frac{R}{2\pi L}, \qquad \frac{V_{\mathrm{sal}}}{V_{\mathrm{ent}}}\bigg|_{\text{salida}\ en\ R} = \frac{1}{\sqrt{1 + (f/f_c)^{2}}}, \qquad \frac{V_{\mathrm{sal}}}{V_{\mathrm{ent}}}\bigg|_{\text{salida}\ en\ L} = \frac{f/f_c}{\sqrt{1 + (f/f_c)^{2}}}
@@ -737,7 +738,7 @@ IR2 & 3.98 mA & +23.9\textdegree{} & en fase con Vp \\
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.20\linewidth}
 {\large
 \begin{equation*}
   P = I^{2}R = VI\cos\theta, \qquad Q = I^{2}X_L = VI\sin\theta, \qquad S = VI = \sqrt{P^{2} + Q^{2}}, \qquad FP = \cos\theta = \frac{P}{S}
@@ -852,7 +853,7 @@ Factor de potencia & --- & cos 23.4\textdegree{} = P/S & 0.918 \\
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{2.00\linewidth}
 {\large
 \begin{equation*}
   X_L = \sqrt{Z_{\mathrm{bob}}^{2} - R_W^{2}} = \sqrt{207.8^{2} - 12.3^{2}} \approx 207.4\ \Omega, \qquad L = \frac{X_L}{2\pi f} = \frac{207.4}{2\pi(10\ 000)} \approx 3.30\ \text{mH}

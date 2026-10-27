@@ -2,7 +2,7 @@
  "formato": 2,
  "temario_hash": "d7d85eb67c0207df",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "partes": {
   "apertura": {
    "huella": "21cf7041c9a8b0a1",
@@ -18,7 +18,7 @@
    ]
   },
   "bloque-01": {
-   "huella": "b2cb8f20fecbc801",
+   "huella": "17125d9ffc361611",
    "diapositivas": [
     {
      "titulo": "Un solo método para todos los circuitos RC",
@@ -39,7 +39,7 @@
     },
     {
      "titulo": "Ecuaciones: Método general de cálculo con impedancias",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{1}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.27\\linewidth}\n\\elementoTemario{ecuacion}{1}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Método general aplicado al RC en serie de la semana 4",
@@ -65,7 +65,7 @@
    ]
   },
   "bloque-04": {
-   "huella": "79cff1d2b7a2980f",
+   "huella": "bf3d21f7ee961e5d",
    "diapositivas": [
     {
      "titulo": "El circuito RC como filtro",
@@ -73,7 +73,7 @@
     },
     {
      "titulo": "Ecuaciones: El circuito RC como filtro",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{3}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{2.00\\linewidth}\n\\elementoTemario{ecuacion}{3}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Respuesta en frecuencia de un filtro RC pasabajas",
@@ -120,7 +120,7 @@
     },
     {
      "titulo": "Ecuaciones: Cálculo y medición de un circuito RC mixto",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{5}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.30\\linewidth}\n\\elementoTemario{ecuacion}{5}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Circuito RC mixto R1 + (R2 \\ensuremath{\\parallel} C) a 1 kHz",

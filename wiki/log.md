@@ -362,3 +362,82 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - respaldo en /home/user/Cerebro_IEL04/memory_store/respaldos/estructura-20261027-014533
 - conflicto `src/diseno_iub.py`: se tomó el de la 1.38 (diseño 7) y se volvió a aplicar la corrección local del cierre (docente y contacto en dos líneas, para que el correo no quede bajo el logo); se conservan como edición local `src/correlate.py` y `src/test_correlate_fuentes.py`. El paquete se comprobó contra su propio manifiesto (68 archivos) y no trae rutas fuera de la plantilla
 - pruebas: todas pasan salvo las de plantilla limpia (`test_compatibilidad`, `test_replica`) y la del manifiesto (señala las 3 ediciones locales)
+
+## [2026-10-27] /temario IEL04 semana 1
+- RA: IEL04-RA1
+- tema: Condensadores: estructura, comportamiento interno, identificación y tipos
+- 4278 palabras, 7 ecuaciones, 6 tablas, 3 figuras; 35 pasajes de 2 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana01.tex
+
+## [2026-10-27] /temario IEL04 semana 2
+- RA: IEL04-RA1
+- tema: Bobinas o inductores: estructura, comportamiento interno, identificación y tipos
+- 4266 palabras, 6 ecuaciones, 6 tablas, 3 figuras; 35 pasajes de 2 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana02.tex
+
+## [2026-10-27] /temario IEL04 semana 3
+- RA: IEL04-RA1
+- tema: Condensadores y bobinas en serie, en paralelo y mixto: cálculo y medición en circuitos L, C y LC
+- 3763 palabras, 8 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 2 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana03.tex
+
+## [2026-10-27] /temario IEL04 semana 4
+- RA: IEL04-RA2
+- tema: Circuito RC en serie: tipos e identificación de resistores y condensadores, análisis y Ley de Voltajes de Kirchhoff
+- 4007 palabras, 6 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana04.tex
+
+## [2026-10-27] /temario IEL04 semana 6
+- RA: IEL04-RA2
+- tema: Circuito RC en paralelo: análisis y Ley de Corrientes de Kirchhoff
+- 3795 palabras, 5 ecuaciones, 3 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana06.tex
+
+## [2026-10-27] /temario IEL04 semana 7
+- RA: IEL04-RA2
+- tema: Cálculo y medición de parámetros en circuitos RC serie y paralelo: unidades, simbología y nomenclatura
+- 3763 palabras, 5 ecuaciones, 5 tablas, 2 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana07.tex
+
+## [2026-10-27] /temario IEL04 semana 8
+- RA: IEL04-RA3
+- tema: Circuitos RL en serie y en paralelo: tipos e identificación de resistores e inductores, análisis con las leyes de voltajes y corrientes de Kirchhoff
+- 3827 palabras, 7 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana08.tex
+
+## [2026-10-27] /temario IEL04 semana 9
+- RA: IEL04-RA3
+- tema: Cálculo y medición de parámetros en circuitos RL serie y paralelo según el tipo de conexionado
+- 3712 palabras, 6 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana09.tex
+
+## [2026-10-27] /temario IEL04 semana 11
+- RA: IEL04-RA4
+- tema: Circuito RLC en serie: tipos e identificación de resistores, inductores y condensadores, análisis y Ley de Voltajes de Kirchhoff
+- 3775 palabras, 5 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana11.tex
+
+## [2026-10-27] /temario IEL04 semana 12
+- RA: IEL04-RA4
+- tema: Circuito RLC en paralelo: análisis y Ley de Corrientes de Kirchhoff
+- 3753 palabras, 6 ecuaciones, 5 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana12.tex
+
+## [2026-10-27] /temario IEL04 semana 13
+- RA: IEL04-RA4
+- tema: Cálculo y medición de parámetros en circuitos RLC serie y paralelo: unidades, simbología y nomenclatura
+- 3672 palabras, 4 ecuaciones, 4 tablas, 3 figuras; 35 pasajes de 3 fuente(s) cargada(s)
+- LaTeX en paralelo: generacion/temarios/IEL04-semana13.tex
+
+## [2026-10-27] /correlate-bibliografia IEL04
+- IEL04-semana01: cubierta (juez)
+- IEL04-semana02: vacio_detectado (marcador)
+- IEL04-semana03: cubierta (juez)
+- IEL04-semana04: cubierta (juez)
+- IEL04-semana06: cubierta (juez)
+- IEL04-semana07: vacio_detectado (marcador)
+- IEL04-semana08: cubierta (juez)
+- IEL04-semana09: cubierta (juez)
+- IEL04-semana11: cubierta (juez)
+- IEL04-semana12: cubierta (juez)
+- IEL04-semana13: cubierta (juez)

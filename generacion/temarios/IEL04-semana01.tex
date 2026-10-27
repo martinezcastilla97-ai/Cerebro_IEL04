@@ -52,16 +52,18 @@
 % ---------------------------------------------------------------------
 \definecolor{iubnavy}{HTML}{121023}
 \definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubblue}{HTML}{00ADE7}
 \definecolor{iuborange}{HTML}{E39037}
 \definecolor{iubgreen}{HTML}{3B9C6D}
-\definecolor{iubpurple}{HTML}{8E6BBF}
-\definecolor{iubgris}{HTML}{D5DAE3}
-\definecolor{iubgrisoscuro}{HTML}{7C8598}
-\definecolor{iubfondoazul}{HTML}{EBF7FD}
-\definecolor{iubfondonaranja}{HTML}{FDF4EA}
-\definecolor{iubfondoverde}{HTML}{EDF8F2}
-\definecolor{iubfondogris}{HTML}{F4F6F9}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\pgfplotsset{cycle list={{iubblue, mark=*},{iuborange, mark=square*},{iubgreen, mark=triangle*},{iubnavy, mark=diamond*},{iubyellow, mark=pentagon*}}}
 
 % ---------------------------------------------------------------------
 %  Formato general
@@ -240,7 +242,7 @@ En la gestión de sistemas eléctricos, el condensador aparece en escalas muy di
     \draw[dflecha] (n3) to[bend right=24] (n4);
     \draw[dflecha] (n4) -- (n5);
     \draw[dflecha] (n4) to[bend right=31] (n3);
-    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    % rotulos de las flechas (donde no caen sobre un nodo)
     \node[drotulo] at (2.289,-0.550) {V};
     \node[drotulo] at (2.289,-2.407) {sí};
     \node[drotulo] at (5.253,-2.844) {no: conserva carga};
@@ -480,7 +482,7 @@ Igual que los resistores, los condensadores se agrupan en dos grandes categoría
     \draw[dflecha] (n0) -- (n3);
     \draw[dflecha] (n1) -- (n4);
     \draw[dflecha] (n2) -- (n5);
-    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    % rotulos de las flechas (donde no caen sobre un nodo)
     \node[drotulo] at (2.091,-1.975) {según dieléctrico};
     \node[drotulo] at (3.964,-1.975) {según óxido};
   \end{tikzpicture}

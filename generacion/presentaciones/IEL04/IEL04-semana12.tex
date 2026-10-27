@@ -2,7 +2,7 @@
 %  IEL04 - Circuitos Eléctricos I
 %  Semana 12: El circuito RLC en paralelo: susceptancias opuestas, ley de corrientes de Kirchhoff, circuito tanque y corrección del factor de potencia
 %  Institución Universitaria de Barranquilla (IUB)
-%  Generada por src/presentaciones.py (diseño IUB 6). Compilador: pdfLaTeX (dos pasadas)
+%  Generada por src/presentaciones.py (diseño IUB 7). Compilador: pdfLaTeX (dos pasadas)
 % =====================================================================
 \documentclass[aspectratio=169,11pt,xcolor={table}]{beamer}
 
@@ -39,19 +39,20 @@
 % ---------------------------------------------------------------------
 %  Paleta institucional IUB (Manual de Identidad Visual 2025)
 % ---------------------------------------------------------------------
-\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubnavy}{HTML}{121023}
 \definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubblue}{HTML}{00ADE7}
 \definecolor{iuborange}{HTML}{E39037}
 \definecolor{iubgreen}{HTML}{3B9C6D}
-\definecolor{iubpurple}{HTML}{8E6BBF}
-\definecolor{iubgris}{HTML}{D5DAE3}
-\definecolor{iubgrisoscuro}{HTML}{7C8598}
-\definecolor{iubfondoazul}{HTML}{EBF7FD}
-\definecolor{iubfondonaranja}{HTML}{FDF4EA}
-\definecolor{iubfondoverde}{HTML}{EDF8F2}
-\definecolor{iubfondogris}{HTML}{F4F6F9}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\pgfplotsset{cycle list={{iubblue, mark=*},{iuborange, mark=square*},{iubgreen, mark=triangle*},{iubnavy, mark=diamond*},{iubyellow, mark=pentagon*}}}
 
 % ---------------------------------------------------------------------
 %  Logos del Manual de Identidad (logos/, junto al .tex). Si falta el
@@ -456,7 +457,7 @@
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.40\linewidth}
 {\large
 \begin{equation*}
   \mathbf{Y} = G + j(B_C - B_L) = \sqrt{G^{2} + (B_C - B_L)^{2}}\ \angle \tan^{-1}\!\left(\frac{B_C - B_L}{G}\right), \qquad \mathbf{Z} = \frac{1}{\mathbf{Y}}
@@ -514,7 +515,7 @@
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.50\linewidth}
 {\large
 \begin{equation*}
   \mathbf{I}_T = I_R + j(I_C - I_L), \qquad I_T = \sqrt{I_R^{2} + (I_C - I_L)^{2}}, \qquad \theta = \tan^{-1}\!\left(\frac{I_C - I_L}{I_R}\right)
@@ -739,7 +740,7 @@
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.27\linewidth}
 {\large
 \begin{equation*}
   Q = \frac{X_L}{R_W}, \qquad L_{\mathrm{eq}} = L\left(\frac{Q^{2} + 1}{Q^{2}}\right), \qquad R_{p(eq)} = R_W\,(Q^{2} + 1)
@@ -850,7 +851,7 @@ Corriente de línea & 14.3 A & 10.5 A & \ensuremath{-}26 \% \\
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.23\linewidth}
 {\large
 \begin{equation*}
   I_T = V_S\sqrt{\left(\frac{1}{R} + \frac{R_W}{R_W^{2} + X_L^{2}}\right)^{2} + \left(2\pi f C - \frac{X_L}{R_W^{2} + X_L^{2}}\right)^{2}}

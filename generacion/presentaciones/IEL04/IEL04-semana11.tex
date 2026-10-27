@@ -2,7 +2,7 @@
 %  IEL04 - Circuitos Eléctricos I
 %  Semana 11: El circuito RLC en serie: reactancias opuestas, ley de voltajes de Kirchhoff y resonancia en serie
 %  Institución Universitaria de Barranquilla (IUB)
-%  Generada por src/presentaciones.py (diseño IUB 6). Compilador: pdfLaTeX (dos pasadas)
+%  Generada por src/presentaciones.py (diseño IUB 7). Compilador: pdfLaTeX (dos pasadas)
 % =====================================================================
 \documentclass[aspectratio=169,11pt,xcolor={table}]{beamer}
 
@@ -39,19 +39,20 @@
 % ---------------------------------------------------------------------
 %  Paleta institucional IUB (Manual de Identidad Visual 2025)
 % ---------------------------------------------------------------------
-\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubnavy}{HTML}{121023}
 \definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubblue}{HTML}{00ADE7}
 \definecolor{iuborange}{HTML}{E39037}
 \definecolor{iubgreen}{HTML}{3B9C6D}
-\definecolor{iubpurple}{HTML}{8E6BBF}
-\definecolor{iubgris}{HTML}{D5DAE3}
-\definecolor{iubgrisoscuro}{HTML}{7C8598}
-\definecolor{iubfondoazul}{HTML}{EBF7FD}
-\definecolor{iubfondonaranja}{HTML}{FDF4EA}
-\definecolor{iubfondoverde}{HTML}{EDF8F2}
-\definecolor{iubfondogris}{HTML}{F4F6F9}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\pgfplotsset{cycle list={{iubblue, mark=*},{iuborange, mark=square*},{iubgreen, mark=triangle*},{iubnavy, mark=diamond*},{iubyellow, mark=pentagon*}}}
 
 % ---------------------------------------------------------------------
 %  Logos del Manual de Identidad (logos/, junto al .tex). Si falta el
@@ -493,7 +494,7 @@ Condensador & mica, cerámico, película, electrolítico & valor, tolerancia, te
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.20\linewidth}
 {\large
 \begin{equation*}
   \mathbf{Z} = R + jX_L - jX_C = \sqrt{R^{2} + (X_L - X_C)^{2}}\ \angle \tan^{-1}\!\left(\frac{X_L - X_C}{R}\right)
@@ -719,7 +720,7 @@ Condensador & mica, cerámico, película, electrolítico & valor, tolerancia, te
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.50\linewidth}
 {\large
 \begin{equation*}
   \mathbf{V}_S = V_R + j(V_L - V_C), \qquad V_S = \sqrt{V_R^{2} + (V_L - V_C)^{2}}, \qquad \theta = \tan^{-1}\!\left(\frac{V_L - V_C}{V_R}\right)
@@ -944,7 +945,7 @@ Condensador & mica, cerámico, película, electrolítico & valor, tolerancia, te
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.40\linewidth}
 {\large
 \begin{equation*}
   P = I^{2}R, \qquad Q = Q_L - Q_C = I^{2}(X_L - X_C), \qquad S = V_S I = \sqrt{P^{2} + Q^{2}}, \qquad FP = \cos\theta = \frac{P}{S}
@@ -1004,7 +1005,7 @@ FP = P/S & 0.564 en adelanto & 1.000 & 0.208 en atraso \\
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.80\linewidth}
 {\large
 \begin{equation*}
   f_r = \frac{1}{2\pi\sqrt{(10.4 \times 10^{-3})(97.8 \times 10^{-9})}} \approx 4.99\ \text{kHz}, \qquad Q = \frac{X_L}{R} = \frac{326.1}{124.1} \approx 2.63

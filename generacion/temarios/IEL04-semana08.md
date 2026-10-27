@@ -15,30 +15,30 @@ estadisticas:
   pasajes: 35
 bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
-fecha_actualizacion: '2026-10-25'
+fecha_actualizacion: '2026-10-27'
 latex_estado: revisar
 latex_archivo: generacion/temarios/IEL04-semana08.tex
 latex_avisos:
-- una línea se sale del margen 6.6 pt (in paragraph at lines 653--653)
+- una línea se sale del margen 6.6 pt (in paragraph at lines 655--655)
 latex_temario_hash: efd5d71cab75822d
 latex_formato: 2
 latex_compilado: null
 bibliografia_via: juez
 bibliografia_justificacion: La constante L/R, la reactancia inductiva y los circuitos RL en serie y en paralelo con LVK y LCK están en los resúmenes (Floyd caps. 13 y 16, Boylestad caps. 12 y 15, Deorsola §2.4 y §6.2); la bobina con resistencia de devanado se trata como un RL en serie.
 bibliografia_faltantes: []
-bibliografia_fecha: '2026-10-25'
+bibliografia_fecha: '2026-10-27'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana08.tex
 presentacion_avisos: []
 presentacion_temario_hash: efd5d71cab75822d
-presentacion_fecha: '2026-10-25'
-presentacion_diseno: 6
+presentacion_fecha: '2026-10-27'
+presentacion_diseno: 7
 presentacion_diapositivas: 35
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
 presentacion_elementos: 14
-presentacion_compilada: '2026-10-25'
+presentacion_compilada: '2026-10-27'
 ---
 
 # Circuitos RL en serie y en paralelo: reactancia inductiva, impedancia y leyes de Kirchhoff con la bobina real

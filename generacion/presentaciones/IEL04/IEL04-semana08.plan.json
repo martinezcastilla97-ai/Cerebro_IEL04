@@ -2,7 +2,7 @@
  "formato": 2,
  "temario_hash": "efd5d71cab75822d",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "partes": {
   "apertura": {
    "huella": "50345de0c5f7400b",
@@ -18,7 +18,7 @@
    ]
   },
   "bloque-01": {
-   "huella": "4f9e2a2ce8ce7374",
+   "huella": "a58c56aa57922cfc",
    "diapositivas": [
     {
      "titulo": "De los circuitos RC a los circuitos RL",
@@ -44,7 +44,7 @@
    ]
   },
   "bloque-03": {
-   "huella": "ca4f72bf357be660",
+   "huella": "41fbd7dc3df1b05e",
    "diapositivas": [
     {
      "titulo": "Respuesta del circuito RL en serie con cd",
@@ -52,7 +52,7 @@
     },
     {
      "titulo": "Ecuaciones: Respuesta del circuito RL en serie con cd",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{1}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.20\\linewidth}\n\\elementoTemario{ecuacion}{1}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Crecimiento y caída de la corriente en un RL en serie con VS",
@@ -61,7 +61,7 @@
    ]
   },
   "bloque-04": {
-   "huella": "f3eeab62a668bc99",
+   "huella": "047d58343f8c2f78",
    "diapositivas": [
     {
      "titulo": "Reactancia inductiva y respuesta sinusoidal de la bobina",

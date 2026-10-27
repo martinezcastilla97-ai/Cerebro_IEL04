@@ -52,16 +52,18 @@
 % ---------------------------------------------------------------------
 \definecolor{iubnavy}{HTML}{121023}
 \definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubblue}{HTML}{00ADE7}
 \definecolor{iuborange}{HTML}{E39037}
 \definecolor{iubgreen}{HTML}{3B9C6D}
-\definecolor{iubpurple}{HTML}{8E6BBF}
-\definecolor{iubgris}{HTML}{D5DAE3}
-\definecolor{iubgrisoscuro}{HTML}{7C8598}
-\definecolor{iubfondoazul}{HTML}{EBF7FD}
-\definecolor{iubfondonaranja}{HTML}{FDF4EA}
-\definecolor{iubfondoverde}{HTML}{EDF8F2}
-\definecolor{iubfondogris}{HTML}{F4F6F9}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\pgfplotsset{cycle list={{iubblue, mark=*},{iuborange, mark=square*},{iubgreen, mark=triangle*},{iubnavy, mark=diamond*},{iubyellow, mark=pentagon*}}}
 
 % ---------------------------------------------------------------------
 %  Formato general
@@ -241,7 +243,7 @@ Las reglas de asociación no son arbitrarias: salen de la física de cada elemen
     \draw[dflecha] (n2) -- (n3);
     \draw[dflecha] (n3) -- (n4);
     \draw[dflecha] (n4) -- (n5);
-    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    % rotulos de las flechas (donde no caen sobre un nodo)
     \node[drotulo] at (5.031,-0.690) {serie, paralelo, mixto};
     \node[drotulo] at (5.031,-1.232) {serie, paralelo, mixto};
     \node[drotulo] at (5.031,-2.760) {LCR y osciloscopio};
@@ -330,7 +332,7 @@ Una \textbf{asociación mixta} combina grupos en serie y grupos en paralelo. No 
     \draw[dflecha] (n2) -- (n3);
     \draw[dflecha] (n3) -- (n4);
     \draw[dflecha] (n3) to[bend right=31] (n1);
-    % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+    % rotulos de las flechas (donde no caen sobre un nodo)
     \node[drotulo] at (5.120,-2.228) {sí};
     \node[drotulo] at (5.078,-0.813) {no: repetir};
   \end{tikzpicture}

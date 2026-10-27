@@ -2,7 +2,7 @@
  "formato": 2,
  "temario_hash": "314cbaf8d2a883a0",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "partes": {
   "apertura": {
    "huella": "c3820ada0e26d787",
@@ -18,7 +18,7 @@
    ]
   },
   "bloque-01": {
-   "huella": "1fd111b1b51a7b5a",
+   "huella": "da1a4a3fb438b0e5",
    "diapositivas": [
     {
      "titulo": "Por qué estudiar la bobina",
@@ -48,7 +48,7 @@
    ]
   },
   "bloque-03": {
-   "huella": "e666ab5122dd0788",
+   "huella": "b948199ad888b5cd",
    "diapositivas": [
     {
      "titulo": "Comportamiento interno",
@@ -65,7 +65,7 @@
    ]
   },
   "bloque-04": {
-   "huella": "b213c297298f4ddb",
+   "huella": "b15d8735bc057f7e",
    "diapositivas": [
     {
      "titulo": "Tipos de inductores según su núcleo y su construcción",

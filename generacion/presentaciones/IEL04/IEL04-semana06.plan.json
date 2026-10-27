@@ -2,7 +2,7 @@
  "formato": 2,
  "temario_hash": "779ac30c85636f33",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "partes": {
   "apertura": {
    "huella": "c59f9b43f2a52cf3",
@@ -18,7 +18,7 @@
    ]
   },
   "bloque-01": {
-   "huella": "2676ebce0670ae4a",
+   "huella": "f93cff0910ebaf99",
    "diapositivas": [
     {
      "titulo": "Del circuito en serie al circuito en paralelo",
@@ -48,7 +48,7 @@
    ]
   },
   "bloque-03": {
-   "huella": "4abec719dee8c50e",
+   "huella": "f1e2c44f73743754",
    "diapositivas": [
     {
      "titulo": "Conductancia, susceptancia capacitiva y admitancia",
@@ -56,7 +56,7 @@
     },
     {
      "titulo": "Ecuaciones: Conductancia, susceptancia capacitiva",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{2}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.33\\linewidth}\n\\elementoTemario{ecuacion}{2}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Procedimiento de cálculo de un circuito RC en paralelo",
@@ -65,7 +65,7 @@
    ]
   },
   "bloque-04": {
-   "huella": "ec31ee2023b1b4e0",
+   "huella": "a0b982207cc0e607",
    "diapositivas": [
     {
      "titulo": "Ley de corrientes de Kirchhoff en el circuito RC en paralelo",
@@ -73,7 +73,7 @@
     },
     {
      "titulo": "Ecuaciones: Ley de corrientes de Kirchhoff en el circuito",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{3}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.27\\linewidth}\n\\elementoTemario{ecuacion}{3}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Corrientes de rama y corriente total de un RC en paralelo",
@@ -90,7 +90,7 @@
     },
     {
      "titulo": "Ecuaciones: Descarga de un condensador a través",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{4}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.33\\linewidth}\n\\elementoTemario{ecuacion}{4}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     }
    ]
   },
@@ -116,7 +116,7 @@
     },
     {
      "titulo": "Ecuaciones: Medición de un circuito RC en paralelo",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{5}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.87\\linewidth}\n\\elementoTemario{ecuacion}{5}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Valores calculados y medidos del circuito RC en paralelo a 1",

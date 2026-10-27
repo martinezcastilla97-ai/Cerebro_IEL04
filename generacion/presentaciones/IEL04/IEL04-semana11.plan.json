@@ -2,7 +2,7 @@
  "formato": 2,
  "temario_hash": "61d3a91769c32fb1",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "partes": {
   "apertura": {
    "huella": "504208c08bbe122e",
@@ -18,7 +18,7 @@
    ]
   },
   "bloque-01": {
-   "huella": "dc300c472071dd4b",
+   "huella": "3ef3f636324a8213",
    "diapositivas": [
     {
      "titulo": "Tres elementos en serie: cuando las reactancias se oponen",
@@ -44,7 +44,7 @@
    ]
   },
   "bloque-03": {
-   "huella": "13c98a3012fce3cb",
+   "huella": "d2eab26322f351f4",
    "diapositivas": [
     {
      "titulo": "Impedancia del circuito RLC en serie",
@@ -52,7 +52,7 @@
     },
     {
      "titulo": "Ecuaciones: Impedancia del circuito RLC en serie",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{1}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.20\\linewidth}\n\\elementoTemario{ecuacion}{1}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Reactancias XL y XC y magnitud de la impedancia de un RLC",
@@ -69,7 +69,7 @@
     },
     {
      "titulo": "Ecuaciones: Ley de voltajes de Kirchhoff en el circuito",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{2}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.50\\linewidth}\n\\elementoTemario{ecuacion}{2}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Tensiones de un RLC en serie",
@@ -78,7 +78,7 @@
    ]
   },
   "bloque-05": {
-   "huella": "770e2a66aa49fabe",
+   "huella": "320142403a71fd65",
    "diapositivas": [
     {
      "titulo": "Resonancia en serie",
@@ -103,7 +103,7 @@
     },
     {
      "titulo": "Ecuaciones: Potencia y factor de potencia en el circuito",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{4}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.40\\linewidth}\n\\elementoTemario{ecuacion}{4}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Potencias de un RLC en serie",
@@ -120,7 +120,7 @@
     },
     {
      "titulo": "Ecuaciones: Medición de un circuito RLC en serie",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{5}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.80\\linewidth}\n\\elementoTemario{ecuacion}{5}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "RLC en serie con los componentes del kit",

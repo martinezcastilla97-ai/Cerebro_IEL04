@@ -15,29 +15,29 @@ estadisticas:
   pasajes: 35
 bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
-fecha_actualizacion: '2026-10-25'
+fecha_actualizacion: '2026-10-27'
 latex_estado: generado
 latex_archivo: generacion/temarios/IEL04-semana03.tex
 latex_avisos: []
 latex_temario_hash: cf45b1d9dd8300a8
 latex_formato: 2
-latex_compilado: '2026-10-25'
+latex_compilado: '2026-10-27'
 bibliografia_via: juez
 bibliografia_justificacion: Las asociaciones en serie, paralelo y mixtas de condensadores y bobinas (Floyd §12–3, §12–4, §13–3; Boylestad §10.13, §12.12) y la resonancia LC (Floyd cap. 17, Boylestad cap. 20) están en los resúmenes, y el caso aplica esas relaciones con lecturas declaradas de ejemplo.
 bibliografia_faltantes: []
-bibliografia_fecha: '2026-10-25'
+bibliografia_fecha: '2026-10-27'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana03.tex
 presentacion_avisos: []
 presentacion_temario_hash: cf45b1d9dd8300a8
-presentacion_fecha: '2026-10-25'
-presentacion_diseno: 6
+presentacion_fecha: '2026-10-27'
+presentacion_diseno: 7
 presentacion_diapositivas: 36
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
 presentacion_elementos: 15
-presentacion_compilada: '2026-10-25'
+presentacion_compilada: '2026-10-27'
 ---
 
 # Asociaciones de condensadores y bobinas en serie, en paralelo y mixtas: cálculo y medición en circuitos L, C y LC

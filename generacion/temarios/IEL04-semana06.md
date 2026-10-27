@@ -15,32 +15,32 @@ estadisticas:
   pasajes: 35
 bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
-fecha_actualizacion: '2026-10-25'
+fecha_actualizacion: '2026-10-27'
 latex_estado: revisar
 latex_archivo: generacion/temarios/IEL04-semana06.tex
 latex_avisos:
-- una línea se sale del margen 3.9 pt (in paragraph at lines 252--253)
-- una línea se sale del margen 8.3 pt (in paragraph at lines 589--589)
-- una línea se sale del margen 6.4 pt (in paragraph at lines 589--589)
+- una línea se sale del margen 3.9 pt (in paragraph at lines 254--255)
+- una línea se sale del margen 8.3 pt (in paragraph at lines 591--591)
+- una línea se sale del margen 6.4 pt (in paragraph at lines 591--591)
 latex_temario_hash: 779ac30c85636f33
 latex_formato: 2
 latex_compilado: null
 bibliografia_via: juez
 bibliografia_justificacion: Impedancia, admitancia, susceptancia y LCK del RC en paralelo (Floyd cap. 15, Boylestad cap. 15), la descarga RC (Boylestad cap. 10) y la comparación serie-paralelo están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
 bibliografia_faltantes: []
-bibliografia_fecha: '2026-10-25'
+bibliografia_fecha: '2026-10-27'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana06.tex
 presentacion_avisos: []
 presentacion_temario_hash: 779ac30c85636f33
-presentacion_fecha: '2026-10-25'
-presentacion_diseno: 6
+presentacion_fecha: '2026-10-27'
+presentacion_diseno: 7
 presentacion_diapositivas: 35
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
 presentacion_elementos: 11
-presentacion_compilada: '2026-10-25'
+presentacion_compilada: '2026-10-27'
 ---
 
 # El circuito RC en paralelo: admitancia, reparto de corrientes y ley de corrientes de Kirchhoff

@@ -2,7 +2,7 @@
  "formato": 2,
  "temario_hash": "379688a119f6262f",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "partes": {
   "apertura": {
    "huella": "b445a11b18f7af01",
@@ -18,7 +18,7 @@
    ]
   },
   "bloque-01": {
-   "huella": "87e80b0867665c4c",
+   "huella": "57b58cf6f7b43908",
    "diapositivas": [
     {
      "titulo": "Tres elementos en paralelo: cuando las corrientes se oponen",
@@ -39,7 +39,7 @@
     },
     {
      "titulo": "Ecuaciones: Admitancia e impedancia del circuito RLC",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{1}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.40\\linewidth}\n\\elementoTemario{ecuacion}{1}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Admitancia e impedancia de un RLC en paralelo ideal",
@@ -56,7 +56,7 @@
     },
     {
      "titulo": "Ecuaciones: Ley de corrientes de Kirchhoff en el circuito",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{2}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.50\\linewidth}\n\\elementoTemario{ecuacion}{2}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Corrientes de un RLC en paralelo ideal",
@@ -65,7 +65,7 @@
    ]
   },
   "bloque-04": {
-   "huella": "33b5563839dc9231",
+   "huella": "c5dfb59b70a8f7aa",
    "diapositivas": [
     {
      "titulo": "Resonancia en paralelo: impedancia máxima y corriente mínima",
@@ -90,7 +90,7 @@
     },
     {
      "titulo": "Ecuaciones: El circuito tanque con bobina real",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{4}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.27\\linewidth}\n\\elementoTemario{ecuacion}{4}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Efecto de la resistencia de devanado en un tanque con L",
@@ -116,7 +116,7 @@
    ]
   },
   "bloque-07": {
-   "huella": "3afe6087886a6481",
+   "huella": "3c4db8df32c7ed3c",
    "diapositivas": [
     {
      "titulo": "Medición de un circuito RLC en paralelo antes, en y después",
@@ -124,7 +124,7 @@
     },
     {
      "titulo": "Ecuaciones: Medición de un circuito RLC en paralelo",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{6}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.23\\linewidth}\n\\elementoTemario{ecuacion}{6}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Corriente total prevista del RLC en paralelo con la bobina",

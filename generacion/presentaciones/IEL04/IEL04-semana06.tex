@@ -2,7 +2,7 @@
 %  IEL04 - Circuitos Eléctricos I
 %  Semana 6: El circuito RC en paralelo: admitancia, reparto de corrientes y ley de corrientes de Kirchhoff
 %  Institución Universitaria de Barranquilla (IUB)
-%  Generada por src/presentaciones.py (diseño IUB 6). Compilador: pdfLaTeX (dos pasadas)
+%  Generada por src/presentaciones.py (diseño IUB 7). Compilador: pdfLaTeX (dos pasadas)
 % =====================================================================
 \documentclass[aspectratio=169,11pt,xcolor={table}]{beamer}
 
@@ -39,19 +39,20 @@
 % ---------------------------------------------------------------------
 %  Paleta institucional IUB (Manual de Identidad Visual 2025)
 % ---------------------------------------------------------------------
-\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubnavy}{HTML}{121023}
 \definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubblue}{HTML}{00ADE7}
 \definecolor{iuborange}{HTML}{E39037}
 \definecolor{iubgreen}{HTML}{3B9C6D}
-\definecolor{iubpurple}{HTML}{8E6BBF}
-\definecolor{iubgris}{HTML}{D5DAE3}
-\definecolor{iubgrisoscuro}{HTML}{7C8598}
-\definecolor{iubfondoazul}{HTML}{EBF7FD}
-\definecolor{iubfondonaranja}{HTML}{FDF4EA}
-\definecolor{iubfondoverde}{HTML}{EDF8F2}
-\definecolor{iubfondogris}{HTML}{F4F6F9}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\pgfplotsset{cycle list={{iubblue, mark=*},{iuborange, mark=square*},{iubgreen, mark=triangle*},{iubnavy, mark=diamond*},{iubyellow, mark=pentagon*}}}
 
 % ---------------------------------------------------------------------
 %  Logos del Manual de Identidad (logos/, junto al .tex). Si falta el
@@ -510,7 +511,7 @@
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.33\linewidth}
 {\large
 \begin{equation*}
   G = \frac{1}{R}, \qquad B_C = \frac{1}{X_C} = 2\pi f C, \qquad \mathbf{Y} = G + jB_C = \sqrt{G^{2} + B_C^{2}}\ \angle \tan^{-1}\!\left(\frac{B_C}{G}\right)
@@ -572,7 +573,7 @@
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.27\linewidth}
 {\large
 \begin{equation*}
   \mathbf{I}_T = \mathbf{I}_R + \mathbf{I}_C = I_R + jI_C, \qquad I_T = \sqrt{I_R^{2} + I_C^{2}}, \qquad \theta = \tan^{-1}\!\left(\frac{I_C}{I_R}\right)
@@ -746,7 +747,7 @@
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.33\linewidth}
 {\large
 \begin{equation*}
   v_C(t) = V_0\,e^{-t/(RC)}, \qquad t_{\mathrm{seg}} = R\,C\,\ln\!\left(\frac{V_0}{V_{\mathrm{seg}}}\right)
@@ -848,7 +849,7 @@ A frecuencias bajas & casi capacitivo & casi resistivo \\
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.87\linewidth}
 {\large
 \begin{equation*}
   I_T = \sqrt{I_R^{2} + I_C^{2}} = \sqrt{(3.35)^2 + (3.07)^2}\ \text{mA} \approx 4.55\ \text{mA}, \qquad \theta = \tan^{-1}\!\left(\frac{3.07}{3.35}\right) \approx 42.5^\circ

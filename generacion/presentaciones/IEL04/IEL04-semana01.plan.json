@@ -2,7 +2,7 @@
  "formato": 2,
  "temario_hash": "4aa40113fc2d922d",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "partes": {
   "apertura": {
    "huella": "2b242e5024e819ce",
@@ -18,7 +18,7 @@
    ]
   },
   "bloque-01": {
-   "huella": "9080d56102beef00",
+   "huella": "9e07b8ddfa6b2eaf",
    "diapositivas": [
     {
      "titulo": "Por qué estudiar el condensador",
@@ -48,7 +48,7 @@
    ]
   },
   "bloque-03": {
-   "huella": "954393413ff03e93",
+   "huella": "c2c1eee1737a87dd",
    "diapositivas": [
     {
      "titulo": "Comportamiento interno",
@@ -65,7 +65,7 @@
    ]
   },
   "bloque-04": {
-   "huella": "07d037847628c0ae",
+   "huella": "550d31cb29f8d2aa",
    "diapositivas": [
     {
      "titulo": "Tipos de condensadores según su dieléctrico y construcción",

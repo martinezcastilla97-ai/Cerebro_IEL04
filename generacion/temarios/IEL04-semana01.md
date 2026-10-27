@@ -15,35 +15,35 @@ estadisticas:
   pasajes: 35
 bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
-fecha_actualizacion: '2026-10-25'
+fecha_actualizacion: '2026-10-27'
 latex_estado: revisar
 latex_archivo: generacion/temarios/IEL04-semana01.tex
 latex_avisos:
-- una línea se sale del margen 16.9 pt (in paragraph at lines 519--519)
-- una línea se sale del margen 7.3 pt (in paragraph at lines 661--661)
-- una línea se sale del margen 16.1 pt (in paragraph at lines 661--661)
-- una línea se sale del margen 12.2 pt (in paragraph at lines 661--661)
-- una línea se sale del margen 4.1 pt (in paragraph at lines 661--661)
-- una línea se sale del margen 5.3 pt (in paragraph at lines 661--661)
+- una línea se sale del margen 16.9 pt (in paragraph at lines 521--521)
+- una línea se sale del margen 7.3 pt (in paragraph at lines 663--663)
+- una línea se sale del margen 16.1 pt (in paragraph at lines 663--663)
+- una línea se sale del margen 12.2 pt (in paragraph at lines 663--663)
+- una línea se sale del margen 4.1 pt (in paragraph at lines 663--663)
+- una línea se sale del margen 5.3 pt (in paragraph at lines 663--663)
 latex_temario_hash: 4aa40113fc2d922d
 latex_formato: 2
 latex_compilado: null
 bibliografia_via: juez
 bibliografia_justificacion: Estructura, capacitancia, rigidez dieléctrica y energía (Floyd cap. 12, Boylestad §10.4 y §10.14), tipos y rotulado con letras de tolerancia J y K y voltaje de trabajo (Floyd §12–2 y apéndice C, Boylestad §10.6) están en los resúmenes; el caso usa lecturas declaradas de ejemplo.
 bibliografia_faltantes: []
-bibliografia_fecha: '2026-10-25'
+bibliografia_fecha: '2026-10-27'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana01.tex
 presentacion_avisos: []
 presentacion_temario_hash: 4aa40113fc2d922d
-presentacion_fecha: '2026-10-25'
-presentacion_diseno: 6
+presentacion_fecha: '2026-10-27'
+presentacion_diseno: 7
 presentacion_diapositivas: 36
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
 presentacion_elementos: 16
-presentacion_compilada: '2026-10-25'
+presentacion_compilada: '2026-10-27'
 ---
 
 # El condensador: estructura, capacitancia, tipos e identificación de componentes comerciales

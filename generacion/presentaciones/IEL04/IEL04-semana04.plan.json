@@ -2,7 +2,7 @@
  "formato": 2,
  "temario_hash": "1183ad305461ba20",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "partes": {
   "apertura": {
    "huella": "801d5284b6c7919b",
@@ -18,7 +18,7 @@
    ]
   },
   "bloque-01": {
-   "huella": "23da7e2557ef95e6",
+   "huella": "28b472c75b8595ce",
    "diapositivas": [
     {
      "titulo": "Por qué el circuito RC en serie",
@@ -44,7 +44,7 @@
    ]
   },
   "bloque-03": {
-   "huella": "f05bcc0acc20fcbd",
+   "huella": "1f325af904d34060",
    "diapositivas": [
     {
      "titulo": "Carga y descarga del condensador en un circuito RC en serie",
@@ -52,7 +52,7 @@
     },
     {
      "titulo": "Ecuaciones: Carga y descarga del condensador",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{1}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.23\\linewidth}\n\\elementoTemario{ecuacion}{1}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Carga y descarga del condensador en un circuito RC en serie",
@@ -61,7 +61,7 @@
    ]
   },
   "bloque-04": {
-   "huella": "09010282b81bd05a",
+   "huella": "f8896fe4b88685c8",
    "diapositivas": [
     {
      "titulo": "Reactancia capacitiva y respuesta sinusoidal del condensador",
@@ -103,7 +103,7 @@
     },
     {
      "titulo": "Ecuaciones: Ley de voltajes de Kirchhoff en el circuito RC",
-     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.6\\linewidth}\n\\elementoTemario{ecuacion}{5}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.30\\linewidth}\n\\elementoTemario{ecuacion}{5}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
     },
     {
      "titulo": "Tensiones de un RC en serie",

@@ -2,7 +2,7 @@
 %  IEL04 - Circuitos Eléctricos I
 %  Semana 7: Cálculo y medición de parámetros en circuitos RC en serie, en paralelo y mixtos: método, filtros, instrumentos y nomenclatura
 %  Institución Universitaria de Barranquilla (IUB)
-%  Generada por src/presentaciones.py (diseño IUB 6). Compilador: pdfLaTeX (dos pasadas)
+%  Generada por src/presentaciones.py (diseño IUB 7). Compilador: pdfLaTeX (dos pasadas)
 % =====================================================================
 \documentclass[aspectratio=169,11pt,xcolor={table}]{beamer}
 
@@ -39,19 +39,20 @@
 % ---------------------------------------------------------------------
 %  Paleta institucional IUB (Manual de Identidad Visual 2025)
 % ---------------------------------------------------------------------
-\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubnavy}{HTML}{121023}
 \definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubblue}{HTML}{00ADE7}
 \definecolor{iuborange}{HTML}{E39037}
 \definecolor{iubgreen}{HTML}{3B9C6D}
-\definecolor{iubpurple}{HTML}{8E6BBF}
-\definecolor{iubgris}{HTML}{D5DAE3}
-\definecolor{iubgrisoscuro}{HTML}{7C8598}
-\definecolor{iubfondoazul}{HTML}{EBF7FD}
-\definecolor{iubfondonaranja}{HTML}{FDF4EA}
-\definecolor{iubfondoverde}{HTML}{EDF8F2}
-\definecolor{iubfondogris}{HTML}{F4F6F9}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\pgfplotsset{cycle list={{iubblue, mark=*},{iuborange, mark=square*},{iubgreen, mark=triangle*},{iubnavy, mark=diamond*},{iubyellow, mark=pentagon*}}}
 
 % ---------------------------------------------------------------------
 %  Logos del Manual de Identidad (logos/, junto al .tex). Si falta el
@@ -452,7 +453,7 @@
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.27\linewidth}
 {\large
 \begin{equation*}
   \mathbf{Z} = R + jX = Z\angle\theta, \qquad Z = \sqrt{R^{2} + X^{2}},\ \ \theta = \tan^{-1}\!\left(\frac{X}{R}\right), \qquad R = Z\cos\theta,\ \ X = Z\sin\theta
@@ -568,7 +569,7 @@ IR2 & 1.87 mA & \ensuremath{-}20.7\textdegree{} & en fase con Vp \\
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{2.00\linewidth}
 {\large
 \begin{equation*}
   f_c = \frac{1}{2\pi R C}, \qquad \frac{V_{\mathrm{sal}}}{V_{\mathrm{ent}}}\bigg|_{\mathrm{pasabajas}} = \frac{1}{\sqrt{1 + (f/f_c)^{2}}}, \qquad \frac{V_{\mathrm{sal}}}{V_{\mathrm{ent}}}\bigg|_{\mathrm{pasaaltas}} = \frac{f/f_c}{\sqrt{1 + (f/f_c)^{2}}}
@@ -859,7 +860,7 @@ Tensión y corriente eficaces & V, I & voltio (V), amperio (A) & mV, mA & magnit
 \begin{cajaplana}{iubblue}
 \centering
 \begin{adjustbox}{max width=\linewidth}
-\begin{minipage}{1.6\linewidth}
+\begin{minipage}{1.30\linewidth}
 {\large
 \begin{equation*}
   \mathbf{Z}_T = 996 + (811 - j743) = 1807 - j743\ \Omega = 1954 \angle -22.4^\circ\ \Omega

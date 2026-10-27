@@ -15,33 +15,33 @@ estadisticas:
   pasajes: 35
 bibliografia_estado: cubierta
 fecha_creacion: '2026-09-28'
-fecha_actualizacion: '2026-10-25'
+fecha_actualizacion: '2026-10-27'
 latex_estado: revisar
 latex_archivo: generacion/temarios/IEL04-semana13.tex
 latex_avisos:
-- una línea se sale del margen 7.1 pt (in paragraph at lines 553--553)
-- una línea se sale del margen 9.4 pt (in paragraph at lines 553--553)
-- una línea se sale del margen 11.2 pt (in paragraph at lines 599--599)
-- una línea se sale del margen 12.6 pt (in paragraph at lines 599--599)
+- una línea se sale del margen 7.1 pt (in paragraph at lines 555--555)
+- una línea se sale del margen 9.4 pt (in paragraph at lines 555--555)
+- una línea se sale del margen 11.2 pt (in paragraph at lines 601--601)
+- una línea se sale del margen 12.6 pt (in paragraph at lines 601--601)
 latex_temario_hash: c118b5b149f5d329
 latex_formato: 2
 latex_compilado: null
 bibliografia_via: juez
 bibliografia_justificacion: La comparación serie-paralelo, el tanque real (Floyd §17–6), el ancho de banda y Q (Floyd §17–8, Boylestad cap. 20), los filtros pasabanda y rechazabanda (Floyd §18–3 y §18–4, Boylestad §23.7 y §23.8) y la nomenclatura (Deorsola apéndice A) están en los resúmenes.
 bibliografia_faltantes: []
-bibliografia_fecha: '2026-10-25'
+bibliografia_fecha: '2026-10-27'
 presentacion_estado: generada
 presentacion_archivo: generacion/presentaciones/IEL04/IEL04-semana13.tex
 presentacion_avisos: []
 presentacion_temario_hash: c118b5b149f5d329
-presentacion_fecha: '2026-10-25'
-presentacion_diseno: 6
+presentacion_fecha: '2026-10-27'
+presentacion_diseno: 7
 presentacion_diapositivas: 37
 presentacion_docente: Ing. Sergio Martinez Castilla
 presentacion_programa: Tecnología en Gestión de Sistemas Eléctricos
 presentacion_contacto: smartinezc@unibarranquilla.edu.co
 presentacion_elementos: 11
-presentacion_compilada: '2026-10-25'
+presentacion_compilada: '2026-10-27'
 ---
 
 # Cálculo y medición de parámetros en circuitos RLC en serie, en paralelo y mixtos: filtros resonantes, frecuencia de resonancia, ancho de banda y nomenclatura
