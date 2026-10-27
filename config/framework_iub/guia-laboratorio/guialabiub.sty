@@ -1,0 +1,266 @@
+% =====================================================================
+%  guialabiub.sty
+%  Estilo para Guías de Laboratorio — Institución Universitaria de
+%  Barranquilla (IUB). Clon en LaTeX de "Plantilla guias de laboratorio.docx".
+%
+%  Compilar con pdfLaTeX (+ biber para la bibliografía).
+%  Paquetes de fuentes necesarios: carlito (Calibri) y helvet/psnfss.
+%
+%  Medidas tomadas directamente del .docx:
+%    - Papel carta (21,59 x 27,94 cm), márgenes de 3 cm en los 4 lados.
+%    - Encabezado a 1,25 cm del borde superior; pie a 1,25 cm del inferior.
+%    - Texto: Calibri 12 pt, interlineado sencillo, justificado,
+%      sin sangría ni espacio entre párrafos.
+%    - Numeración "Página X de Y": Helvetica 8 pt (números en negrita 9 pt).
+%    - Banner de encabezado, banner de pie y marca de agua como imágenes
+%      a sangre (full bleed) en posiciones absolutas.
+% =====================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{guialabiub}[2026/10/24 v1.0 Guias de laboratorio IUB]
+
+% ---------------------------------------------------------------------
+%  Opciones del paquete
+%    sinmarca  -> desactiva la marca de agua
+%    borrador  -> muestra el marco del área de texto (para ajustes)
+%    ieee      -> referencias en estilo IEEE (por defecto)
+%    apa       -> referencias en estilo APA 7
+% ---------------------------------------------------------------------
+\newif\if@iub@marca  \@iub@marcatrue
+\newif\if@iub@borrador \@iub@borradorfalse
+\newcommand{\iub@estilobib}{ieee}
+\DeclareOption{sinmarca}{\@iub@marcafalse}
+\DeclareOption{borrador}{\@iub@borradortrue}
+\DeclareOption{ieee}{\renewcommand{\iub@estilobib}{ieee}}
+\DeclareOption{apa}{\renewcommand{\iub@estilobib}{apa}}
+\newcommand{\iub@ieee}{ieee}
+\ProcessOptions\relax
+
+% ---------------------------------------------------------------------
+%  Motor y paquetes base
+% ---------------------------------------------------------------------
+\RequirePackage{iftex}
+\ifPDFTeX\else
+  \PackageWarningNoLine{guialabiub}{Esta plantilla está pensada para pdfLaTeX}
+\fi
+
+% Codificación y lenguaje (pdfLaTeX)
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[
+  spanish,
+  es-nodecimaldot,   % no cambia el punto decimal en matemáticas
+  es-noshorthands,   % evita conflictos de < > " con TikZ/otros paquetes
+  es-tabla           % "Tabla" en lugar de "Cuadro"
+]{babel}
+
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{calc}
+\RequirePackage{array}
+\RequirePackage{tabularx}
+\RequirePackage{booktabs}
+\RequirePackage{multirow}
+\RequirePackage{float}
+\RequirePackage{amsmath,amssymb,mathtools}
+\RequirePackage{siunitx}
+\RequirePackage{eso-pic}
+\RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+\RequirePackage{titlesec}
+\RequirePackage{enumitem}
+\RequirePackage{ragged2e}
+
+% Ruta por defecto de las imágenes institucionales
+\graphicspath{{img/}{./}}
+
+% ---------------------------------------------------------------------
+%  Geometría de página (idéntica al .docx)
+%    pgMar = 1701 twips = 3,0 cm ; header/footer = 709 twips = 1,25 cm
+% ---------------------------------------------------------------------
+\RequirePackage[
+  letterpaper,
+  margin     = 3cm,
+  headheight = 15pt,     % alto de la línea "Página X de Y"
+  headsep    = 1.45cm,   % línea base del encabezado a ~1,55 cm del borde
+  footskip   = 1.75cm,
+  showframe  = false
+]{geometry}
+\if@iub@borrador\geometry{showframe}\fi
+
+% ---------------------------------------------------------------------
+%  Tipografía (pdfLaTeX)
+%  Calibri (docDefaults: minorHAnsi = Calibri, 12 pt). pdfLaTeX no puede
+%  usar fuentes TrueType del sistema, así que se usa Carlito: un clon de
+%  Calibri con las mismas métricas (misma paginación que el Word).
+%  Helvetica (phv, URW Nimbus Sans) para la numeración de página.
+% ---------------------------------------------------------------------
+\RequirePackage[sfdefault, lining]{carlito}
+\renewcommand{\familydefault}{\sfdefault}
+\newcommand{\iubhelvetica}{\fontfamily{phv}\selectfont}
+
+% Ajuste fino de espaciado/justificación (equivalente al de Word)
+\RequirePackage[final]{microtype}
+
+% Interlineado sencillo de Word con Calibri = 1,2207 x tamaño
+\renewcommand\normalsize{%
+  \@setfontsize\normalsize{12pt}{14.65pt}%
+  \abovedisplayskip 6pt plus 2pt minus 2pt
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip 0pt plus 2pt
+  \belowdisplayshortskip 4pt plus 2pt minus 2pt}
+\normalsize
+
+% Párrafos: justificados, sin sangría, sin espacio adicional
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\JustifyingParindent}{0pt}  % ragged2e guarda su propia sangría
+\justifying
+% Word no divide palabras con guiones: se desactiva la partición silábica
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\emergencystretch=1.5em
+
+% Color del texto (en el .docx es "Texto/Fondo 1"; aquí negro)
+\definecolor{iubtexto}{HTML}{000000}
+\AtBeginDocument{\color{iubtexto}}
+
+% ---------------------------------------------------------------------
+%  Fondo de página: marca de agua + banner superior + banner inferior
+%  Posiciones calculadas a partir de las anclas EMU del .docx
+% ---------------------------------------------------------------------
+% Marca de agua: 750 pt x 970,5 pt, centrada en la página, detrás del texto
+\newcommand{\iub@marca}{%
+  \if@iub@marca
+    \put(\LenToUnit{.5\paperwidth},\LenToUnit{.5\paperheight}){%
+      \makebox(0,0){\includegraphics[width=750bp,height=970.5bp]{marca-agua}}}%
+  \fi}
+
+% Banner de encabezado: 21,90 x 3,05 cm, a sangre en la esquina superior
+\newcommand{\iub@banner@sup}{%
+  \put(\LenToUnit{-0.06cm},\LenToUnit{\paperheight+0.097cm}){%
+    \makebox(0,0)[lt]{\includegraphics[width=21.896cm,height=3.046cm]{encabezado}}}}
+
+% Banner de pie: 21,62 x 3,36 cm, a sangre en la esquina inferior
+\newcommand{\iub@banner@inf}{%
+  \put(\LenToUnit{-0.05cm},\LenToUnit{0.05cm}){%
+    \makebox(0,0)[lb]{\includegraphics[width=21.622cm,height=3.363cm]{pie-pagina}}}}
+
+\AddToShipoutPictureBG{\iub@marca\iub@banner@sup\iub@banner@inf}
+
+% ---------------------------------------------------------------------
+%  Encabezado y pie (fancyhdr) — "Página X de Y" alineado a la derecha
+% ---------------------------------------------------------------------
+\newcommand{\iub@numpagina}{%
+  {\iubhelvetica\fontsize{8pt}{9.5pt}\selectfont
+   Página~{\fontsize{9pt}{9.5pt}\selectfont\bfseries\thepage}
+   de~{\fontsize{9pt}{9.5pt}\selectfont\bfseries\pageref*{LastPage}}}}
+
+\fancypagestyle{guiaiub}{%
+  \fancyhf{}%
+  \fancyhead[R]{\iub@numpagina}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}}
+% El .docx usa el mismo encabezado en todas las páginas (sin titlePg)
+\fancypagestyle{plain}{\pagestyle{guiaiub}}
+\pagestyle{guiaiub}
+
+
+% ---------------------------------------------------------------------
+%  Tabla de datos de la guía (Facultad / Módulo / Docente)
+%  Estilo "Tabla con cuadrícula": bordes sencillos 0,5 pt,
+%  márgenes de celda 0,19 cm; columnas 1,99 cm y 13,58 cm (tblGrid).
+% ---------------------------------------------------------------------
+\newcommand{\iub@facultad}{}
+\newcommand{\iub@modulo}{}
+\newcommand{\iub@docente}{}
+\newcommand{\facultad}[1]{\renewcommand{\iub@facultad}{#1}}
+\newcommand{\modulo}[1]{\renewcommand{\iub@modulo}{#1}}
+\newcommand{\docente}[1]{\renewcommand{\iub@docente}{#1}}
+
+\newcommand{\datosguia}{%
+  \begingroup
+  \setlength{\tabcolsep}{0.19cm}%
+  \setlength{\arrayrulewidth}{0.5pt}%
+  \renewcommand{\arraystretch}{1}%
+  \noindent
+  \begin{tabular}{|>{\bfseries\raggedright\arraybackslash}p{1.993cm-2\tabcolsep}
+                  |>{\justifying\arraybackslash}p{13.580cm-2\tabcolsep-3\arrayrulewidth}|}
+    \hline
+    Facultad: & \iub@facultad \\ \hline
+    Módulo:   & \iub@modulo   \\ \hline
+    Docente:  & \iub@docente  \\ \hline
+  \end{tabular}\par
+  \endgroup}
+
+% ---------------------------------------------------------------------
+%  Secciones: lista numerada "1." en negrita, 12 pt
+%  (Párrafo de lista: número en 0 cm, texto en 0,635 cm)
+%  Antes de cada sección: una línea en blanco (como en el .docx)
+% ---------------------------------------------------------------------
+\setcounter{secnumdepth}{2}
+\renewcommand{\thesection}{\arabic{section}}
+
+\titleformat{\section}[hang]
+  {\normalfont\normalsize\bfseries\raggedright}
+  {\makebox[0.635cm][l]{\thesection.}}{0pt}{}
+\titlespacing*{\section}{0pt}{\baselineskip}{0pt}
+
+% Subsecciones (no aparecen en el .docx, se añaden por coherencia)
+\titleformat{\subsection}[hang]
+  {\normalfont\normalsize\bfseries\raggedright}
+  {\makebox[1.0cm][l]{\thesubsection.}}{0pt}{}
+\titlespacing*{\subsection}{0.635cm}{\baselineskip}{0pt}
+
+% ---------------------------------------------------------------------
+%  Listas
+%  Viñetas del procedimiento: sangría izq. 1,88 cm, francesa 0,635 cm
+%  (viñeta en 1,25 cm), sin espacio entre elementos.
+% ---------------------------------------------------------------------
+\setlist{nosep}
+\setlist[itemize,1]{label=\textbullet, leftmargin=1.884cm,
+                    labelwidth=0.635cm, labelsep=0pt, align=left}
+\setlist[enumerate,1]{label=\arabic*., leftmargin=1.884cm,
+                      labelwidth=0.635cm, labelsep=0pt, align=left}
+
+% Entorno semántico para los pasos del procedimiento
+\newenvironment{pasos}{\itemize}{\enditemize}
+
+% ---------------------------------------------------------------------
+%  Utilidades
+% ---------------------------------------------------------------------
+% Línea en blanco equivalente a un párrafo vacío de Word
+\newcommand{\lineablanco}{\par\vspace{\baselineskip}}
+
+% Figuras y tablas con nombres en español
+\RequirePackage{caption}
+\captionsetup{font=normalsize, labelfont=bf, labelsep=period}
+\captionsetup[figure]{name=Figura}
+\captionsetup[table]{name=Tabla}
+
+% ---------------------------------------------------------------------
+%  Bibliografía: biblatex + biber, con archivo .bib externo
+%  En el .tex:  \addbibresource{referencias.bib}
+%  Citar con \cite{clave}; imprimir con \bibliografia
+% ---------------------------------------------------------------------
+\RequirePackage[autostyle]{csquotes}
+\ifx\iub@estilobib\iub@ieee
+  % IEEE: referencias numeradas [1] en orden de aparición
+  \PassOptionsToPackage{style=ieee, sorting=none}{biblatex}
+\else
+  % APA 7: autor-año, orden alfabético
+  \PassOptionsToPackage{style=apa}{biblatex}
+\fi
+\RequirePackage[backend=biber, urldate=long]{biblatex}
+% Formato de la lista: mismo cuerpo de texto (Calibri 12 pt, sencillo),
+% sin espacio extra entre entradas, como un párrafo de Word.
+\setlength{\bibitemsep}{0pt}
+\setlength{\bibparsep}{0pt}
+\renewcommand*{\bibfont}{\normalfont\normalsize\raggedright}
+% Imprime la lista bajo la sección "Bibliografía" sin título adicional
+\newcommand{\bibliografia}{\printbibliography[heading=none]}
+
+% Enlaces (se carga al final, como recomienda hyperref)
+\RequirePackage[hidelinks, pdfusetitle]{hyperref}
+\urlstyle{same}   % URLs y DOI en la misma fuente del texto
+
+\endinput

@@ -1,0 +1,145 @@
+{
+ "formato": 2,
+ "temario_hash": "1183ad305461ba20",
+ "modelo": "gpt-4o",
+ "fecha": "2026-10-27",
+ "partes": {
+  "apertura": {
+   "huella": "801d5284b6c7919b",
+   "diapositivas": [
+    {
+     "titulo": "Punto de partida de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 3: Condensadores y bobinas en serie, en paralelo y mixto\n  \\item \\textbf{Semana 4: Circuito RC en serie: tipos e identificación de resistores y condensadores, análisis y Ley de Voltajes de Kirchhoff}\n  \\item Semana 5: evaluación\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Aplicar la ley de Ohm y la ley de voltajes de Kirchhoff a circuitos\n  \\item Calcular capacitancias equivalentes y aplicar Q = CV (semanas 1 y 3)\n  \\item Leer el código de colores de resistores y el marcado de condensadores\n  \\item Operar con funciones exponenciales, raíz cuadrada y tangente inversa\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Resultados de aprendizaje",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.45\\textwidth}\n\\begin{caja}{iubnavy}{IEL04-RA2}\n\\footnotesize Calcular un circuito resistivo, capacitivo y RC, sea en serie o paralelo.\n\\end{caja}\n\\vspace{1mm}\n\\begin{cajaplana}{iubblue}\n\\scriptsize \\textbf{CE1.} Identificar los tipos de resistores y capacitores.\\\\[2pt]\n\\textbf{CE2.} Realizar mediciones en un circuito resistivo y capacitivo.\\\\[2pt]\n\\textbf{CE3.} Realizar mediciones en un circuito RC.\n\\end{cajaplana}\n  \\column{0.52\\textwidth}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r0) at (1.25,0.00) {Identificar los tipos de resistores y condensadores adecuados para un circuito RC a partir de su marcado y sus características.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Aplicar};\n  \\node[box, fill=iuborange, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular la constante de tiempo y las tensiones de carga y descarga de un circuito RC en serie alimentado con cd.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Aplicar};\n  \\node[box, fill=iubgreen, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r2) at (1.25,-2.90) {Calcular la reactancia, la impedancia, el ángulo de fase y las tensiones de un circuito RC en serie en ca aplicando la ley de voltajes de Kirchhoff.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Analizar};\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r3) at (1.25,-4.35) {Medir las tensiones en el resistor y en el condensador de un circuito RC en serie y verificar la ley de voltajes de Kirchhoff en forma fasorial.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};\n  \\draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);\n  \\draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);\n  \\draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);\n\\end{tikzpicture}\n\\end{adjustbox}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-01": {
+   "huella": "28b472c75b8595ce",
+   "diapositivas": [
+    {
+     "titulo": "Por qué el circuito RC en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Un resistor en serie con un condensador es probablemente el circuito más útil que se puede construir con dos componentes.\n  \\item El análisis tiene dos caras, según cómo se alimente el circuito.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize El libro de cátedra de la UNLP no estudia el RC en serie con fuente de tensión: su circuito «GC» es un capacitor alimentado por una fuente de corriente real (conductancia G en paralelo con C), el dual del RL en serie $[3]$.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Dos caminos de análisis del circuito RC en serie según",
+     "cuerpo": "\\elementoTemario{figura}{1}"
+    }
+   ]
+  },
+  "bloque-02": {
+   "huella": "a4534a71fad45e2a",
+   "diapositivas": [
+    {
+     "titulo": "Resistores y condensadores del circuito RC",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Los resistores fijos con tolerancias del 5 \\% o del 10 \\% se identifican con \\textbf{cuatro bandas de color}, situadas siempre cerca de un extremo $[1]$.\n  \\item Al elegir los componentes de un circuito RC importan más cosas que el valor.\n  \\item Con 1.5 k\\ensuremath{\\Omega} y 0.1 µF, $RC = (1.5 \\times 10^3)(0.1 \\times 10^{-6}) = 150\\ \\mu\\text{s}$; con 1 M\\ensuremath{\\Omega} y 10 µF, 10 s.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Leer el código de colores desde el extremo equivocado.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Código de colores para resistores de cuatro bandas",
+     "cuerpo": "\\elementoTemario{tabla}{1}"
+    }
+   ]
+  },
+  "bloque-03": {
+   "huella": "1f325af904d34060",
+   "diapositivas": [
+    {
+     "titulo": "Carga y descarga del condensador en un circuito RC en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Considérese un resistor $R$ en serie con un condensador $C$ descargado, conectados a una fuente de cd $V_S$ mediante un interruptor.\n  \\item La ley de voltajes de Kirchhoff se cumple en cada instante: $V_S = v_R(t) + v_C(t)$.\n  \\item La constante de tiempo tiene una interpretación directa.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Hallazgo contraintuitivo}\n\\footnotesize La constante de tiempo no depende de la tensión de la fuente: con 5 V o con 50 V el condensador tarda lo mismo en llegar al 63 \\% de su valor final.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Carga y descarga del condensador",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.23\\linewidth}\n\\elementoTemario{ecuacion}{1}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Carga y descarga del condensador en un circuito RC en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.62\\textwidth}\n\\elementoTemario{figura}{2}\n  \\column{0.35\\textwidth}\n\\begin{caja}{iubblue}{Lectura de la gráfica}\n\\footnotesize A partir de $5\\tau$, es decir, 750 µs, ninguna de las dos cambia de manera apreciable.\n\\end{caja}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-04": {
+   "huella": "f8896fe4b88685c8",
+   "diapositivas": [
+    {
+     "titulo": "Reactancia capacitiva y respuesta sinusoidal del condensador",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item La oposición del condensador a la corriente sinusoidal, expresada en ohmios, se llama \\textbf{reactancia capacitiva} y se simboliza $X_C$ $[1]$.\n  \\item Los dos extremos de la fórmula enlazan con lo ya estudiado.\n  \\item La línea horizontal marca la resistencia de 1.5 k\\ensuremath{\\Omega} con la que el condensador formará el circuito RC.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Usar la frecuencia en kilohercios y la capacitancia en microfaradios sin convertirlas.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Reactancia capacitiva y respuesta sinusoidal",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{2}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Reactancia capacitiva de un condensador de 0.1 µF en función",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.62\\textwidth}\n\\elementoTemario{figura}{3}\n  \\column{0.35\\textwidth}\n\\begin{caja}{iubblue}{Lectura de la gráfica}\n\\footnotesize La línea horizontal marca la resistencia de 1.5 k\\ensuremath{\\Omega} con la que el condensador formará el circuito RC.\n\\end{caja}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-05": {
+   "huella": "acfdb293abd985ea",
+   "diapositivas": [
+    {
+     "titulo": "Impedancia y ángulo de fase del circuito RC en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item En un circuito puramente resistivo, la oposición total a la corriente es la resistencia; en uno puramente capacitivo, la reactancia capacitiva.\n  \\item Como $X_C$ depende de la frecuencia, la impedancia y el ángulo de fase también dependen de ella.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Calcular la impedancia como $R + X_C$.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Impedancia y ángulo de fase del circuito RC",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{3}\n\\end{cajaplana}\n\\vspace{1mm}\n\\begin{cajaplana}{iuborange}\n\\centering\n\\elementoTemario{ecuacion}{4}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Impedancia y ángulo de fase de un RC en serie",
+     "cuerpo": "\\elementoTemario{tabla}{2}"
+    }
+   ]
+  },
+  "bloque-06": {
+   "huella": "5e06278de8dd67bc",
+   "diapositivas": [
+    {
+     "titulo": "Ley de voltajes de Kirchhoff en el circuito RC en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item En el circuito RC en serie con cd se cumple en cada instante, $v_R + v_C = V_S$ $[1]$.\n  \\item Con el circuito del caso ($R = 1.5\\ \\text{k}\\Omega$, $C = 0.1\\ \\mu\\text{F}$) alimentado con 5 V eficaces a 1 kHz: $Z = 2187\\ \\Omega$, $I = 5 / 2187 \\approx 2.29\\ \\text{mA}$, $V_R = (2.29 \\times 10^{-3})(1500) \\approx 3.43\\ \\text{V}$ y $V_C = (2.29 \\times 10^{-3})(1592) \\approx 3.64\\ \\text{V}$.\n  \\item La longitud de cada fasor es su valor eficaz y el ángulo entre $V_S$ y el eje horizontal es $\\theta$.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Concluir que el circuito «no cumple Kirchhoff» porque las lecturas del voltímetro no suman la tensión de la fuente.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Ley de voltajes de Kirchhoff en el circuito RC",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.30\\linewidth}\n\\elementoTemario{ecuacion}{5}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Tensiones de un RC en serie",
+     "cuerpo": "\\elementoTemario{tabla}{3}"
+    }
+   ]
+  },
+  "bloque-07": {
+   "huella": "57a2822cbab051ae",
+   "diapositivas": [
+    {
+     "titulo": "Medición de un circuito RC en serie en el laboratorio",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Para ver la carga y la descarga completas, el semiperiodo de la onda cuadrada debe durar más de cinco constantes de tiempo, el tiempo transitorio $[1]$.\n  \\item Con los valores medidos, $X_C = 1/(2\\pi \\times 1000 \\times 97.8 \\times 10^{-9}) \\approx 1627\\ \\Omega$, $Z = \\sqrt{1492^2 + 1627^2} \\approx 2208\\ \\Omega$, $I = 5 / 2208 \\approx 2.26\\ \\text{mA}$, $V_R \\approx 3.38\\ \\text{V}$, $V_C \\approx 3.69\\ \\text{V}$ y $\\theta = -\\tan^{-1}(1627/1492) \\approx -47.5^\\circ$.\n  \\item Las mediciones confirman las dos caras del circuito.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Advertencia de seguridad}\n\\footnotesize La tensión flotante del resistor se mide con la resta de canales o con el multímetro.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Medición de un circuito RC en serie",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{6}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Valores calculados y medidos del circuito RC en serie",
+     "cuerpo": "\\elementoTemario{tabla}{4}"
+    }
+   ]
+  },
+  "bloque-08": {
+   "huella": "a07915bdd9ede8ee",
+   "diapositivas": [
+    {
+     "titulo": "Síntesis de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Resistores y condensadores del circuito RC}\n\\scriptsize Tipos de resistores, código de colores, potencia nominal y elección del condensador\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Carga y descarga del condensador}\n\\scriptsize Constante de tiempo \\ensuremath{\\tau} = RC, curvas exponenciales y régimen transitorio\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Reactancia capacitiva y respuesta}\n\\scriptsize XC = 1/(2\\ensuremath{\\pi}fC), dependencia con la frecuencia y desfase de 90°\n\\end{cardG}\n\\end{columns}\n\\vspace{2mm}\n\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Impedancia y ángulo de fase del circuito}\n\\scriptsize Z = R \\ensuremath{-} jXC, triángulo de impedancia, magnitud y ángulo\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Ley de voltajes de Kirchhoff}\n\\scriptsize Suma fasorial VS = VR + VC, diagrama fasorial y error de la suma aritmética\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Medición de un circuito RC en serie}\n\\scriptsize Medir \\ensuremath{\\tau} con onda cuadrada y VR, VC, VS con señal sinusoidal; comparar con el cálculo\n\\end{cardG}\n\\end{columns}"
+    },
+    {
+     "titulo": "Reflexión para llevar",
+     "cuerpo": "\\centering\n\\begin{tikzpicture}\n  \\node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\\normalsize] (c) at (0,0) {\\itshape «Llegar puntual y con los valores medidos del kit permite al equipo completar las dos partes de la práctica; y discutir en grupo por qué las tensiones «no suman» evita que alguien corrija a mano unos datos que en realidad eran correctos.»};\n  \\node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\\scriptsize\\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};\n\\end{tikzpicture}"
+    }
+   ]
+  }
+ }
+}

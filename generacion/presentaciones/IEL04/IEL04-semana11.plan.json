@@ -1,0 +1,145 @@
+{
+ "formato": 2,
+ "temario_hash": "61d3a91769c32fb1",
+ "modelo": "gpt-4o",
+ "fecha": "2026-10-27",
+ "partes": {
+  "apertura": {
+   "huella": "504208c08bbe122e",
+   "diapositivas": [
+    {
+     "titulo": "Punto de partida de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 10: evaluación\n  \\item \\textbf{Semana 11: Circuito RLC en serie: tipos e identificación de resistores, inductores y condensadores, análisis y Ley de Voltajes de Kirchhoff}\n  \\item Semana 12: Circuito RLC en paralelo\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular la reactancia capacitiva y la inductiva a una frecuencia dada\n  \\item Aplicar la ley de voltajes de Kirchhoff con fasores en circuitos RC\n  \\item Calcular la frecuencia de resonancia de un circuito LC (semana 3)\n  \\item Calcular potencia activa, reactiva y aparente y factor de potencia\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Resultados de aprendizaje",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.45\\textwidth}\n\\begin{caja}{iubnavy}{IEL04-RA4}\n\\footnotesize Calcular un circuito resistivo, inductivo, capacitivo y RLC, sea en serie o paralelo.\n\\end{caja}\n\\vspace{1mm}\n\\begin{cajaplana}{iubblue}\n\\scriptsize \\textbf{CE1.} Identificar los tipos de resistores, inductores y capacitores.\\\\[2pt]\n\\textbf{CE2.} Realizar mediciones en un circuito resistivo, inductivo y capacitivo.\\\\[2pt]\n\\textbf{CE3.} Realizar mediciones en un circuito RLC.\n\\end{cajaplana}\n  \\column{0.52\\textwidth}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r0) at (1.25,0.00) {Identificar el resistor, la bobina y el condensador de un circuito RLC y verificar sus valores, incluida la resistencia de devanado.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Aplicar};\n  \\node[box, fill=iuborange, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular la impedancia, el ángulo de fase y el carácter inductivo o capacitivo de un circuito RLC en serie a una frecuencia dada.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Aplicar};\n  \\node[box, fill=iubgreen, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r2) at (1.25,-2.90) {Analizar las tensiones de un circuito RLC en serie con la ley de voltajes de Kirchhoff y explicar la resonancia en serie.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Analizar};\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r3) at (1.25,-4.35) {Medir las tensiones en el resistor, la bobina y el condensador de un RLC en serie a varias frecuencias y verificar la resonancia.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};\n  \\draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);\n  \\draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);\n  \\draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);\n\\end{tikzpicture}\n\\end{adjustbox}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-01": {
+   "huella": "3ef3f636324a8213",
+   "diapositivas": [
+    {
+     "titulo": "Tres elementos en serie: cuando las reactancias se oponen",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Hasta la semana 9, cada circuito de corriente alterna tuvo un solo elemento reactivo: un condensador que adelantaba la corriente o una bobina que la retrasaba.\n  \\item En un receptor de radio, un circuito RLC en serie selecciona una emisora entre muchas porque a una sola frecuencia su impedancia es mínima.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Conviene tener a mano ese resultado para compararlo con el de esta sesión.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Del análisis del circuito RLC en serie a su medición",
+     "cuerpo": "\\elementoTemario{figura}{1}"
+    }
+   ]
+  },
+  "bloque-02": {
+   "huella": "fa9a1dd86e13f7e2",
+   "diapositivas": [
+    {
+     "titulo": "Resistores, inductores y condensadores del circuito RLC",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Para el caso de esta sesión se reutilizan dos componentes ya verificados y se agrega uno nuevo.\n  \\item La elección de un resistor de solo 100 \\ensuremath{\\Omega} no es casual.\n  \\item La tensión de trabajo del condensador también se comprueba antes de montar.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Advertencia de seguridad}\n\\footnotesize En un circuito RLC en serie cerca de la resonancia, la tensión en el condensador y en la bobina puede ser mucho mayor que la de la fuente.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Tipos de componentes del circuito RLC, qué se identifica",
+     "cuerpo": "\\elementoTemario{tabla}{1}"
+    }
+   ]
+  },
+  "bloque-03": {
+   "huella": "d2eab26322f351f4",
+   "diapositivas": [
+    {
+     "titulo": "Impedancia del circuito RLC en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item En un circuito RLC en serie, la misma corriente atraviesa los tres elementos.\n  \\item A la izquierda, la impedancia sigue de cerca a $X_C$; a la derecha, a $X_L$.\n  \\item En la práctica, la resistencia $R$ de la fórmula no es solo la del resistor.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Sumar las magnitudes de las reactancias, $X_L + X_C$, como si ambas fueran del mismo tipo.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Impedancia del circuito RLC en serie",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.20\\linewidth}\n\\elementoTemario{ecuacion}{1}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Reactancias XL y XC y magnitud de la impedancia de un RLC",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.62\\textwidth}\n\\elementoTemario{figura}{2}\n  \\column{0.35\\textwidth}\n\\begin{caja}{iubblue}{Lectura de la gráfica}\n\\footnotesize La gráfica muestra por qué la resonancia es un punto especial: la curva de impedancia tiene forma de V, con su mínimo exactamente donde se cruzan las curvas de $X_L$ y $X_C$.\n\\end{caja}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-04": {
+   "huella": "e46047d3d9aa613e",
+   "diapositivas": [
+    {
+     "titulo": "Ley de voltajes de Kirchhoff en el circuito RLC en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Con la corriente común como referencia, la tensión del resistor está a 0°, la de la bobina a +90° y la del condensador a \\ensuremath{-}90°.\n  \\item No viola ninguna ley: cada una es grande, pero como están en oposición, su efecto neto es pequeño.\n  \\item La fila de la resonancia es la más reveladora.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Advertencia de seguridad}\n\\footnotesize Un circuito RLC en serie alimentado a su frecuencia de resonancia puede desarrollar en el condensador y en la bobina tensiones muchas veces mayores que la de la fuente.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Ley de voltajes de Kirchhoff en el circuito",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.50\\linewidth}\n\\elementoTemario{ecuacion}{2}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Tensiones de un RLC en serie",
+     "cuerpo": "\\elementoTemario{tabla}{2}"
+    }
+   ]
+  },
+  "bloque-05": {
+   "huella": "320142403a71fd65",
+   "diapositivas": [
+    {
+     "titulo": "Resonancia en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item En el circuito en serie, la resonancia ocurre cuando $X_L = X_C$.\n  \\item Con $L = 10\\ \\text{mH}$, $C = 0.1\\ \\mu\\text{F}$ y $V_S = 2\\ \\text{V}$: $f_r = 5.03\\ \\text{kHz}$ y $X_L = 316\\ \\Omega$.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Creer que en la resonancia la corriente es infinita porque la reactancia total es cero.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Resonancia en serie",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{3}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Corriente de un RLC en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.62\\textwidth}\n\\elementoTemario{figura}{3}\n  \\column{0.35\\textwidth}\n\\begin{caja}{iubblue}{Lectura de la gráfica}\n\\footnotesize Las dos curvas tienen el máximo en la misma frecuencia, porque $f_r$ solo depende de $L$ y $C$; la resistencia decide la altura y la anchura del pico.\n\\end{caja}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-06": {
+   "huella": "a270ac3a7c472501",
+   "diapositivas": [
+    {
+     "titulo": "Potencia y factor de potencia en el circuito RLC en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item La columna de la resonancia resume lo más importante de la sesión en términos de energía.\n  \\item Esta compensación es la base de la \\textbf{corrección del factor de potencia} en las instalaciones eléctricas.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Hallazgo contraintuitivo}\n\\footnotesize Un factor de potencia igual a 1 no significa que la bobina y el condensador estén inactivos.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Potencia y factor de potencia en el circuito",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.40\\linewidth}\n\\elementoTemario{ecuacion}{4}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Potencias de un RLC en serie",
+     "cuerpo": "\\elementoTemario{tabla}{3}"
+    }
+   ]
+  },
+  "bloque-07": {
+   "huella": "e1a51bfb747cee5f",
+   "diapositivas": [
+    {
+     "titulo": "Medición de un circuito RLC en serie antes, en y después",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item El generador entrega una onda sinusoidal ajustada a 2.00 V eficaces en los bornes del circuito, lo que elimina el efecto de su resistencia interna.\n  \\item La ley de voltajes de Kirchhoff queda entonces como $V_S = V_R + I R_W = 1.60 + 0.40 = 2.00\\ \\text{V}$: toda la tensión de la fuente se reparte entre las dos resistencias del lazo.\n  \\item En las otras dos frecuencias la verificación es la de la unidad sobre la LVK, con el ángulo real de la bobina.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize La forma más sencilla de localizar la resonancia en el laboratorio no es buscar que $V_L$ y $V_C$ sean iguales, sino buscar el máximo de la tensión en el resistor, que es proporcional a la corriente, o el instante en que la tensión del resistor y la de la fuente quedan en fase en el osciloscopio.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Medición de un circuito RLC en serie",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.80\\linewidth}\n\\elementoTemario{ecuacion}{5}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "RLC en serie con los componentes del kit",
+     "cuerpo": "\\elementoTemario{tabla}{4}"
+    }
+   ]
+  },
+  "bloque-08": {
+   "huella": "c970146ff60deaf2",
+   "diapositivas": [
+    {
+     "titulo": "Síntesis de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Resistores, inductores y condensadores}\n\\scriptsize Identificación y verificación de los tres componentes y elección de valores\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Impedancia del circuito RLC en serie}\n\\scriptsize Z = R + j(XL \\ensuremath{-} XC), reactancia total y carácter inductivo o capacitivo\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Ley de voltajes de Kirchhoff}\n\\scriptsize VS = VR + j(VL \\ensuremath{-} VC): tensiones reactivas en oposición y mayores que la fuente\n\\end{cardG}\n\\end{columns}\n\\vspace{2mm}\n\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Resonancia en serie}\n\\scriptsize fr, Z = R, curva de corriente, Q = XL/R y ancho de banda\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Potencia y factor de potencia}\n\\scriptsize Potencias reactivas que se compensan, FP unitario en resonancia\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Medición de un circuito RLC en serie}\n\\scriptsize Con el kit: 100 \\ensuremath{\\Omega}, bobina de 10.4 mH y condensador de 97.8 nF a 3 kHz, fr y 8 kHz\n\\end{cardG}\n\\end{columns}"
+    },
+    {
+     "titulo": "Reflexión para llevar",
+     "cuerpo": "\\centering\n\\begin{tikzpicture}\n  \\node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\\normalsize] (c) at (0,0) {\\itshape «Revisar en equipo la tensión nominal del condensador antes de buscar la resonancia es responsabilidad compartida: en un RLC en serie, la tensión que aparece en sus bornes no la decide la fuente, sino el factor de calidad del circuito.»};\n  \\node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\\scriptsize\\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};\n\\end{tikzpicture}"
+    }
+   ]
+  }
+ }
+}

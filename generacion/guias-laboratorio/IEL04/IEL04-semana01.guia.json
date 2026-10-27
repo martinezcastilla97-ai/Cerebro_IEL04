@@ -1,0 +1,564 @@
+{
+ "formato": 3,
+ "huella": "5899d06855da8f91",
+ "modelo": "gpt-4o",
+ "fecha": "2026-10-27",
+ "guia": {
+  "titulo": "Identificación y medición de la capacitancia de condensadores comerciales",
+  "introduccion": "Esta práctica lleva al banco el contenido de la sesión teórica de la semana 1, «El condensador: estructura, capacitancia, tipos e identificación de componentes comerciales», y reproduce su caso de estudio: identificar por su marcado los cinco condensadores del kit del grupo, calcular el intervalo que admite su tolerancia, medir su capacitancia real y decidir si cada uno puede usarse en las prácticas siguientes. No hay un manual de laboratorio asignado a este resultado de aprendizaje, por lo que la práctica se propone a partir de la bibliografía cargada: el texto de Floyd describe la verificación de un condensador con un medidor LCR o con la función de capacitancia del multímetro [1], y Boylestad, los esquemas de rotulado de los condensadores pequeños y las letras de tolerancia [2]. La práctica desarrolla los criterios de medición del RA IEL04-RA1 en circuitos capacitivos y deja registradas las capacitancias reales de los condensadores que formarán, con las bobinas de la semana 2, los circuitos LC de la semana 3.",
+  "objetivo_general": "Verificar experimentalmente la capacitancia de condensadores comerciales a partir de su marcado y de la medición con instrumentos.",
+  "objetivos_especificos": [
+   {
+    "enunciado": "Identificar el tipo, el valor nominal, la tolerancia y la tensión de trabajo de cinco condensadores a partir de su marcado.",
+    "criterios": [
+     "CE1"
+    ]
+   },
+   {
+    "enunciado": "Medir la capacitancia de cada condensador con el medidor LCR y con el multímetro, y calcular su desviación respecto del valor nominal.",
+    "criterios": [
+     "CE2"
+    ]
+   },
+   {
+    "enunciado": "Registrar la capacitancia real de los condensadores C2 y C3, que formarán el circuito LC de la semana 3, y estimar con ella su frecuencia de resonancia.",
+    "criterios": [
+     "CE3"
+    ]
+   }
+  ],
+  "materiales": [
+   {
+    "nombre": "Kit de condensadores del grupo",
+    "especificacion": "C1 223J, C2 104K 100V, C3 472K, C4 470 µF 25 V, C5 100 µF 16 V",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Medidor LCR",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Multímetro digital con función de capacitancia",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Resistencia de descarga",
+    "especificacion": "1 kΩ",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Cables con pinzas de cocodrilo aisladas",
+    "especificacion": "",
+    "cantidad": 4
+   },
+   {
+    "nombre": "Lupa o lente de aumento para leer el marcado",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Gafas de seguridad",
+    "especificacion": "",
+    "cantidad": 3
+   }
+  ],
+  "procedimiento_introduccion": "La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en grupos de tres estudiantes, con tres roles que rotan entre etapas: quien monta y opera el circuito, quien mide y quien registra y verifica los cálculos. Antes de energizar cualquier montaje, el docente o el monitor revisa la conexión. Cada etapa abre con su diagrama de flujo, que muestra la secuencia y las comprobaciones de un vistazo, y sigue con sus pasos numerados; cada paso indica cuánto dura, qué debe observarse para saber que salió bien y qué hacer si no. Los valores numéricos de la sesión teórica sirven de referencia: las lecturas propias del grupo se registran en las tablas de la sección de análisis.",
+  "etapas": [
+   {
+    "titulo": "Preparación e identificación",
+    "pasos": [
+     {
+      "texto": "Revisar que el kit contenga los cinco condensadores y que el medidor LCR y el multímetro enciendan y tengan batería suficiente.",
+      "duracion_min": 5,
+      "seguridad": "",
+      "verificacion": "Los dos instrumentos deben mostrar lectura estable con las puntas abiertas; si no, solicitar otro instrumento.",
+      "recurso": null
+     },
+     {
+      "texto": "Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 kΩ sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales.",
+      "duracion_min": 3,
+      "seguridad": "No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.",
+      "verificacion": "La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente.",
+      "recurso": {
+       "tipo": "circuito",
+       "leyenda": "Descarga del condensador a través de una resistencia, con el voltímetro en paralelo",
+       "circuito": "\\draw (0,0) to[C, l=$C$] (0,3) -- (3,3) to[R, l=$1~\\text{k}\\Omega$] (3,0) -- (0,0); \\draw (3,3) -- (5,3) to[voltmeter] (5,0) -- (3,0);",
+       "ecuacion": "",
+       "donde": "",
+       "grafica": null
+      }
+     },
+     {
+      "texto": "Leer el marcado de cada condensador y anotar en la tabla de registro su tipo, su valor nominal (convertido a nF o µF), su tolerancia y su tensión de trabajo, usando el código de tres dígitos y las letras J (±5 %) y K (±10 %) [2].",
+      "duracion_min": 15,
+      "seguridad": "",
+      "verificacion": "Para C1 debe obtenerse 22 nF ±5 %; si el valor no coincide, repasar la regla del tercer dígito como número de ceros en pF.",
+      "recurso": null
+     },
+     {
+      "texto": "Calcular para cada condensador el intervalo admisible $C_{\\min} = C_n(1-t)$ a $C_{\\max} = C_n(1+t)$.",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "Para C1 el intervalo es de 20,9 nF a 23,1 nF; si el resultado difiere, revisar la conversión de unidades.",
+      "recurso": null
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Revisar kit e instrumentos",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Descargar condensadores",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Leer marcado y tolerancia",
+       "forma": "caja"
+      },
+      {
+       "id": "a3",
+       "texto": "Calcular intervalo admisible",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Valores coherentes?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "a3",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a3",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a2",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Medición de la capacitancia",
+    "pasos": [
+     {
+      "texto": "Ajustar el medidor LCR en la función de capacitancia y conectar C1 entre sus terminales; anotar la lectura en la misma unidad del valor nominal [1].",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "La lectura debe estabilizarse en pocos segundos; si oscila, revisar el contacto de las pinzas.",
+      "recurso": null
+     },
+     {
+      "texto": "Repetir la medición con C2 y C3 y anotar las lecturas.",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "Las lecturas deben estar en el orden de magnitud del nominal (nF); una lectura nula o en pF indica un contacto abierto.",
+      "recurso": null
+     },
+     {
+      "texto": "Medir C4 y C5 conectando el terminal positivo del electrolítico al terminal positivo del instrumento [2].",
+      "duracion_min": 10,
+      "seguridad": "Respetar la polaridad de los electrolíticos y no superar su tensión de trabajo.",
+      "verificacion": "Comprobar la marca de polaridad antes de conectar; si el instrumento indica sobrecarga, revisar la escala.",
+      "recurso": null
+     },
+     {
+      "texto": "Medir de nuevo los cinco condensadores con la función de capacitancia del multímetro y anotar ambas lecturas.",
+      "duracion_min": 12,
+      "seguridad": "",
+      "verificacion": "Las dos lecturas de un mismo condensador deben diferir menos que la tolerancia; si no, repetir la medición con el LCR.",
+      "recurso": null
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Configurar LCR en capacitancia",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Medir C1, C2 y C3",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Medir C4 y C5 con polaridad",
+       "forma": "caja"
+      },
+      {
+       "id": "a3",
+       "texto": "Repetir con el multímetro",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Lecturas estables?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "a3",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a3",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a1",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Decisión y registro para el circuito LC",
+    "pasos": [
+     {
+      "texto": "Calcular la desviación $e_{\\%} = (C_m - C_n)/C_n \\times 100$ de cada condensador y decidir si se acepta (|e| no supera la tolerancia).",
+      "duracion_min": 12,
+      "seguridad": "",
+      "verificacion": "Un condensador fuera de su intervalo se rechaza y se marca; se informa al docente para reponerlo.",
+      "recurso": {
+       "tipo": "ecuacion",
+       "leyenda": "Desviación relativa del valor medido respecto del nominal:",
+       "circuito": "",
+       "ecuacion": "e_{\\%} = \\frac{C_m - C_n}{C_n} \\times 100",
+       "donde": "$e_{\\%}$ es la desviación en porcentaje, $C_m$ la capacitancia medida y $C_n$ la nominal, en la misma unidad (nF o µF).",
+       "grafica": null
+      }
+     },
+     {
+      "texto": "Rotular C2 y C3 con su capacitancia medida y calcular con ella y con L = 10 mH la frecuencia de resonancia $f_r = 1/(2\\pi\\sqrt{LC})$ que se medirá en la semana 3.",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "Con los valores nominales se obtiene unos 5,03 kHz para C2; un resultado muy distinto indica un error de unidades.",
+      "recurso": {
+       "tipo": "ecuacion",
+       "leyenda": "Frecuencia de resonancia del circuito LC:",
+       "circuito": "",
+       "ecuacion": "f_r = \\frac{1}{2\\pi\\sqrt{L C}}",
+       "donde": "$f_r$ en hercios (Hz), $L$ en henrios (H) y $C$ en faradios (F).",
+       "grafica": null
+      }
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Calcular desviación porcentual",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Decidir aceptación",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Rotular C2 y C3",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Dentro de tolerancia?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Componente al kit",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a0",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Desmontaje y cierre",
+    "pasos": [
+     {
+      "texto": "Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard.",
+      "duracion_min": 3,
+      "seguridad": "Desenergizar siempre antes de retirar componentes.",
+      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente.",
+      "recurso": null
+     },
+     {
+      "texto": "Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo.",
+      "duracion_min": 4,
+      "seguridad": "",
+      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado.",
+      "recurso": null
+     },
+     {
+      "texto": "Revisar con el docente las tablas de registro antes de abandonar el banco.",
+      "duracion_min": 3,
+      "seguridad": "",
+      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento.",
+      "recurso": null
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Desenergizar el montaje",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Descargar y retirar componentes",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Revisar tablas con el docente",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Tablas completas?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la práctica",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a2",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   }
+  ],
+  "cuestiones": [
+   "¿Qué condensadores quedaron fuera de su intervalo de tolerancia y qué explicación física ofrece la sesión teórica para cada caso?",
+   "¿En cuánto difieren las lecturas del medidor LCR y del multímetro para un mismo condensador, y cuál de los dos instrumentos es más adecuado para valores de pocos nanofaradios?",
+   "¿Por qué el rótulo «104» corresponde a 100 nF y no a 104 pF?",
+   "Con la capacitancia medida de C2, ¿cuánto cambia la frecuencia de resonancia prevista respecto de la calculada con el valor nominal?"
+  ],
+  "analisis": [
+   "Completar la tabla de identificación con el valor nominal, la tolerancia, el intervalo admisible, las dos lecturas y la desviación porcentual de cada condensador, usando la misma unidad del valor nominal en cada fila.",
+   "Representar en un gráfico de barras la desviación porcentual de cada condensador junto con su tolerancia, de modo que se vea de un vistazo cuáles se aceptan; discutir si las desviaciones observadas son coherentes con el tipo de dieléctrico, como describe la sesión teórica."
+  ],
+  "tablas_registro": [
+   {
+    "leyenda": "Identificación y medición de los condensadores del kit",
+    "columnas": [
+     "Ref.",
+     "Marcado",
+     "Cn (nF o µF)",
+     "Tolerancia (%)",
+     "Cm LCR (nF o µF)",
+     "Cm multímetro (nF o µF)",
+     "e (%)"
+    ],
+    "filas": 5
+   },
+   {
+    "leyenda": "Frecuencia de resonancia prevista para la semana 3",
+    "columnas": [
+     "Condensador",
+     "C medida (nF)",
+     "L supuesta (mH)",
+     "fr con nominales (kHz)",
+     "fr con medida (kHz)"
+    ],
+    "filas": 2
+   }
+  ],
+  "conclusiones": "Contrastar el valor medido de cada condensador con su intervalo de tolerancia y justificar la decisión de aceptarlo o rechazarlo; explicar las desviaciones con los mecanismos vistos en la sesión (envejecimiento del dieléctrico, secado del electrolito, rotulado incorrecto) y relacionar la práctica con el criterio de medición en circuitos capacitivos del RA.",
+  "preguntas_conclusion": [
+   "¿Qué condensador mostró la mayor desviación y qué la explica?",
+   "¿Por qué conviene usar en los cálculos de las semanas siguientes los valores medidos y no los nominales?",
+   "¿Qué precaución resultó indispensable al medir los electrolíticos?"
+  ],
+  "seguridad": [
+   "Trabajar con el circuito desenergizado mientras se conecta o modifica el montaje; energizar solo después de la revisión del docente.",
+   "Descargar los condensadores con una resistencia antes de manipularlos o medirlos, y respetar la polaridad de los electrolíticos: conectado con la polaridad invertida, un electrolítico puede explotar y provocar lesiones [1].",
+   "Usar gafas de seguridad al medir y manipular los electrolíticos C4 y C5.",
+   "Sujetar los condensadores con pinzas aisladas al descargarlos y no doblar en exceso sus terminales."
+  ],
+  "referencias_cargadas": [
+   {
+    "tipo": "book",
+    "autores": [
+     "Floyd, Thomas L."
+    ],
+    "titulo": "Principios de circuitos eléctricos",
+    "editorial": "Pearson Educación",
+    "anio": "2007",
+    "edicion": "8.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Boylestad, Robert L."
+    ],
+    "titulo": "Introducción al análisis de circuitos",
+    "editorial": "Pearson Educación",
+    "anio": "2004",
+    "edicion": "10.ª",
+    "url": ""
+   }
+  ],
+  "referencias_externas": [],
+  "base_bibliografica": [
+   1,
+   2
+  ]
+ }
+}

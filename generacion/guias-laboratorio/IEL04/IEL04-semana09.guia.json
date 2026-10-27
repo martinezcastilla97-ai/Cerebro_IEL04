@@ -1,0 +1,568 @@
+{
+ "formato": 3,
+ "huella": "d490291b6ea86673",
+ "modelo": "gpt-4o",
+ "fecha": "2026-10-27",
+ "guia": {
+  "titulo": "Identificación de una bobina por su constante de tiempo y su impedancia, y medición de un circuito RL mixto",
+  "introduccion": "La práctica cierra el RA IEL04-RA3 y corresponde a la sesión teórica de la semana 9, «Cálculo y medición de parámetros en circuitos RL según el conexionado». Reproduce su caso de estudio: determinar la inductancia de una bobina sin marcado por dos métodos independientes —su constante de tiempo con una onda cuadrada y su impedancia con una señal sinusoidal—, identificar a qué valor estándar corresponde y usarla en un circuito RL mixto, del que se miden la corriente, las tensiones y el factor de potencia. No hay un manual de laboratorio asignado, por lo que la práctica se propone a partir de la bibliografía cargada: Floyd trata la constante de tiempo L/R, la potencia en circuitos RL y los circuitos RL en serie-paralelo [1], Boylestad los transitorios R-L y los valores estándar de inductores [2] y Deorsola el régimen transitorio del circuito RL [3].",
+  "objetivo_general": "Determinar experimentalmente la inductancia de una bobina por dos métodos y verificar el cálculo de un circuito RL mixto.",
+  "objetivos_especificos": [
+   {
+    "enunciado": "Identificar el valor estándar de una bobina sin marcado a partir de sus mediciones.",
+    "criterios": [
+     "CE1"
+    ]
+   },
+   {
+    "enunciado": "Medir la constante de tiempo y la impedancia de la bobina en un circuito resistivo e inductivo.",
+    "criterios": [
+     "CE2"
+    ]
+   },
+   {
+    "enunciado": "Medir corrientes, tensiones, ángulo y factor de potencia en un circuito RL mixto y compararlos con el cálculo.",
+    "criterios": [
+     "CE3"
+    ]
+   }
+  ],
+  "materiales": [
+   {
+    "nombre": "Bobina toroidal sin marcado",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Resistor",
+    "especificacion": "1 kΩ (medido 996 Ω en la sesión)",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Resistor R1",
+    "especificacion": "470 Ω",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Resistor R2",
+    "especificacion": "680 Ω",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Resistor sensor de corriente",
+    "especificacion": "10 Ω",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Generador de funciones",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Osciloscopio de dos canales con puntas ×10",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Multímetro digital de verdadero valor eficaz",
+    "especificacion": "",
+    "cantidad": 2
+   },
+   {
+    "nombre": "Medidor LCR",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Protoboard",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Cables de conexión",
+    "especificacion": "",
+    "cantidad": 12
+   }
+  ],
+  "procedimiento_introduccion": "La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en grupos de tres estudiantes, con tres roles que rotan entre etapas: quien monta y opera el circuito, quien mide y quien registra y verifica los cálculos. Antes de energizar cualquier montaje, el docente o el monitor revisa la conexión. Cada etapa abre con su diagrama de flujo, que muestra la secuencia y las comprobaciones de un vistazo, y sigue con sus pasos numerados; cada paso indica cuánto dura, qué debe observarse para saber que salió bien y qué hacer si no. Los valores numéricos de la sesión teórica sirven de referencia: las lecturas propias del grupo se registran en las tablas de la sección de análisis.",
+  "etapas": [
+   {
+    "titulo": "Método 1: constante de tiempo",
+    "pasos": [
+     {
+      "texto": "Medir con el ohmímetro la resistencia de devanado de la bobina y la del resistor de 1 kΩ.",
+      "duracion_min": 5,
+      "seguridad": "",
+      "verificacion": "La resistencia de devanado debe ser de pocos ohmios; una lectura infinita indica devanado abierto.",
+      "recurso": null
+     },
+     {
+      "texto": "Montar la bobina en serie con el resistor de 1 kΩ y aplicar una onda cuadrada de 0 V a 5 V y 10 kHz.",
+      "duracion_min": 6,
+      "seguridad": "Montar con el generador apagado.",
+      "verificacion": "El docente revisa el montaje antes de energizar.",
+      "recurso": {
+       "tipo": "circuito",
+       "leyenda": "Medición de la constante de tiempo: bobina en serie con el resistor y el canal 2 sobre el resistor",
+       "circuito": "\\draw (0,0) to[V, l=$v_s$] (0,3) to[L, l=$L$] (4,3) to[R, l=$R$] (4,0) -- (0,0); \\draw (4,3) -- (6,3) to[voltmeter, l=CH2] (6,0) -- (4,0); \\draw (0,0) node[ground]{};",
+       "ecuacion": "",
+       "donde": "",
+       "grafica": null
+      }
+     },
+     {
+      "texto": "Con la punta del canal 2 sobre el resistor, medir con los cursores el tiempo en que la tensión alcanza el 63 % de su valor final y calcular $L = \\tau (R + R_W)$ [1].",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "El semiperiodo de 50 µs debe superar con holgura cinco constantes de tiempo; si la curva no llega a la meseta, reducir la frecuencia.",
+      "recurso": {
+       "tipo": "ecuacion",
+       "leyenda": "Inductancia a partir de la constante de tiempo:",
+       "circuito": "",
+       "ecuacion": "L = \\tau \\,(R + R_W)",
+       "donde": "$L$ en henrios (H), $\\tau$ en segundos (s), $R$ y $R_W$ en ohmios (Ω).",
+       "grafica": null
+      }
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Medir RW y R",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Montar y aplicar onda cuadrada",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Medir τ y calcular L",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Curva completa?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a1",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Método 2: impedancia",
+    "pasos": [
+     {
+      "texto": "Ajustar el generador a una onda sinusoidal de 10 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 5,00 V eficaces.",
+      "duracion_min": 6,
+      "seguridad": "",
+      "verificacion": "El multímetro debe indicar 5,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado.",
+      "recurso": null
+     },
+     {
+      "texto": "Medir la tensión en el resistor para obtener la corriente y la tensión en la bobina con la resta de canales del osciloscopio.",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "Debe obtenerse una corriente cercana a 4,86 mA; si la resta de canales da ruido, verificar que ambos canales tengan la misma escala.",
+      "recurso": null
+     },
+     {
+      "texto": "Calcular $Z_{bob} = V_{bob}/I$, $X_L = \\sqrt{Z_{bob}^2 - R_W^2}$ y $L = X_L/(2\\pi f)$, y compararla con la del método 1; identificar el valor estándar más cercano [2].",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "Los dos métodos deben coincidir a pocos por ciento; si no, repetir la medición de τ.",
+      "recurso": {
+       "tipo": "ecuacion",
+       "leyenda": "Inductancia a partir de la impedancia de la bobina:",
+       "circuito": "",
+       "ecuacion": "X_L = \\sqrt{Z_{bob}^2 - R_W^2}, \\qquad L = \\frac{X_L}{2\\pi f}",
+       "donde": "$Z_{bob}$, $X_L$ y $R_W$ en ohmios (Ω), $f$ en Hz y $L$ en H.",
+       "grafica": null
+      }
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Ajustar 10 kHz y 5 V",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Medir VR y Vbob",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Calcular L",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Métodos coinciden?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a1",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Circuito RL mixto",
+    "pasos": [
+     {
+      "texto": "Montar R1 en serie con el paralelo de R2 y la bobina identificada, con el resistor sensor en serie del lado de tierra, y predecir la corriente, las tensiones y el ángulo con los valores medidos.",
+      "duracion_min": 12,
+      "seguridad": "Montar con el generador apagado.",
+      "verificacion": "La corriente esperada es de unos 8,8 mA con un factor de potencia cercano a 0,95.",
+      "recurso": null
+     },
+     {
+      "texto": "Medir la corriente total, $V_{R1}$, la tensión del paralelo y las corrientes de rama con el multímetro de verdadero valor eficaz.",
+      "duracion_min": 15,
+      "seguridad": "Insertar el amperímetro solo con el circuito desenergizado.",
+      "verificacion": "Las lecturas deben estar a menos del 2 % de la predicción.",
+      "recurso": null
+     },
+     {
+      "texto": "Medir el desfase de la corriente total con el osciloscopio y calcular el factor de potencia $FP = \\cos\\theta$ y la potencia real $P = V I \\cos\\theta$ [1].",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "El ángulo debe estar cerca de 19° de atraso.",
+      "recurso": null
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Montar circuito mixto",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Medir tensiones y corrientes",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Medir desfase y calcular FP",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Coincide con la predicción?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a1",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Desmontaje y cierre",
+    "pasos": [
+     {
+      "texto": "Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard.",
+      "duracion_min": 3,
+      "seguridad": "Desenergizar siempre antes de retirar componentes.",
+      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente.",
+      "recurso": null
+     },
+     {
+      "texto": "Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo.",
+      "duracion_min": 4,
+      "seguridad": "",
+      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado.",
+      "recurso": null
+     },
+     {
+      "texto": "Revisar con el docente las tablas de registro antes de abandonar el banco.",
+      "duracion_min": 3,
+      "seguridad": "",
+      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento.",
+      "recurso": null
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Desenergizar el montaje",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Descargar y retirar componentes",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Revisar tablas con el docente",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Tablas completas?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la práctica",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a2",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   }
+  ],
+  "cuestiones": [
+   "¿Por qué dos métodos independientes, uno en el dominio del tiempo y otro en el de la frecuencia, dan confianza en el valor de la inductancia?",
+   "¿Qué error se cometería al calcular L con la constante de tiempo usando solo la resistencia del resistor y no la de devanado?",
+   "¿A qué valor estándar corresponde la bobina y con qué criterio se eligió?",
+   "¿Qué significa el factor de potencia medido del circuito mixto y cómo podría corregirse?"
+  ],
+  "analisis": [
+   "Calcular la inductancia por los dos métodos, con su diferencia porcentual, e identificar el valor estándar más cercano de la serie de inductores.",
+   "Presentar en la tabla del circuito mixto la predicción, la medición y la diferencia de cada magnitud, y calcular el factor de potencia y las potencias real, reactiva y aparente con las lecturas."
+  ],
+  "tablas_registro": [
+   {
+    "leyenda": "Inductancia de la bobina sin marcado",
+    "columnas": [
+     "Método",
+     "Magnitud medida",
+     "Valor medido",
+     "L calculada (mH)",
+     "Diferencia entre métodos (%)"
+    ],
+    "filas": 2
+   },
+   {
+    "leyenda": "Circuito RL mixto a 10 kHz",
+    "columnas": [
+     "Magnitud",
+     "Calculado",
+     "Medido",
+     "Unidad",
+     "Diferencia (%)"
+    ],
+    "filas": 7
+   }
+  ],
+  "conclusiones": "Concluir qué inductancia tiene la bobina y a qué valor estándar corresponde, apoyándose en la concordancia de los dos métodos, y si el circuito mixto se comporta como predice el cálculo; relacionar la práctica con los criterios de medición en circuitos resistivos, inductivos y RL del RA.",
+  "preguntas_conclusion": [
+   "¿Qué método resultó más preciso y por qué?",
+   "¿Qué aprendieron sobre la medición de inductancia sin un medidor LCR?",
+   "¿Hubo algún resultado inesperado en el circuito mixto?"
+  ],
+  "seguridad": [
+   "Conectar las tierras de las dos puntas del osciloscopio a un mismo nodo de referencia: unirlas a nodos distintos cortocircuita el elemento que queda entre ellas.",
+   "Insertar el amperímetro en serie con la rama solo con el circuito desenergizado y con el instrumento en la función y la escala de corriente; nunca conectarlo en paralelo con la fuente.",
+   "No interrumpir bruscamente la corriente de la bobina con el circuito energizado.",
+   "Desenergizar antes de pasar del montaje de los métodos 1 y 2 al circuito mixto."
+  ],
+  "referencias_cargadas": [
+   {
+    "tipo": "book",
+    "autores": [
+     "Floyd, Thomas L."
+    ],
+    "titulo": "Principios de circuitos eléctricos",
+    "editorial": "Pearson Educación",
+    "anio": "2007",
+    "edicion": "8.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Boylestad, Robert L."
+    ],
+    "titulo": "Introducción al análisis de circuitos",
+    "editorial": "Pearson Educación",
+    "anio": "2004",
+    "edicion": "10.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Deorsola, M. F. P.",
+     "Morcelle del Valle, P."
+    ],
+    "titulo": "Circuitos eléctricos. Parte 1",
+    "editorial": "Editorial de la Universidad de La Plata",
+    "anio": "2017",
+    "edicion": "1.ª",
+    "url": ""
+   }
+  ],
+  "referencias_externas": [],
+  "base_bibliografica": [
+   1,
+   2,
+   3
+  ]
+ }
+}

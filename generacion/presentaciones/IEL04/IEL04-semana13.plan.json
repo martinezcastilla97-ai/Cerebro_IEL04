@@ -1,0 +1,141 @@
+{
+ "formato": 2,
+ "temario_hash": "c118b5b149f5d329",
+ "modelo": "gpt-4o",
+ "fecha": "2026-10-27",
+ "partes": {
+  "apertura": {
+   "huella": "3e09f39f072ee349",
+   "diapositivas": [
+    {
+     "titulo": "Punto de partida de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 12: Circuito RLC en paralelo\n  \\item \\textbf{Semana 13: Cálculo y medición de parámetros en circuitos RLC serie y paralelo: unidades, simbología y nomenclatura}\n  \\item Semana 14: evaluación\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular impedancia, corrientes y tensiones de circuitos RLC en serie\n  \\item Calcular la frecuencia de resonancia, el factor de calidad y el ancho\n  \\item Convertir una bobina real a su equivalente en paralelo\n  \\item Aplicar el método general de análisis fasorial (semana 7)\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Resultados de aprendizaje",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.45\\textwidth}\n\\begin{caja}{iubnavy}{IEL04-RA4}\n\\footnotesize Calcular un circuito resistivo, inductivo, capacitivo y RLC, sea en serie o paralelo.\n\\end{caja}\n\\vspace{1mm}\n\\begin{cajaplana}{iubblue}\n\\scriptsize \\textbf{CE1.} Identificar los tipos de resistores, inductores y capacitores.\\\\[2pt]\n\\textbf{CE2.} Realizar mediciones en un circuito resistivo, inductivo y capacitivo.\\\\[2pt]\n\\textbf{CE3.} Realizar mediciones en un circuito RLC.\n\\end{cajaplana}\n  \\column{0.52\\textwidth}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r0) at (1.25,0.00) {Identificar los componentes de un circuito RLC y los parámetros que caracterizan cada tipo de conexión.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Aplicar};\n  \\node[box, fill=iuborange, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular la respuesta de circuitos RLC mixtos y de filtros resonantes pasabanda y rechazabanda.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Aplicar};\n  \\node[box, fill=iubgreen, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r2) at (1.25,-2.90) {Diferenciar los parámetros de los circuitos RLC en serie y en paralelo con sus unidades, simbología y nomenclatura.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Analizar};\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r3) at (1.25,-4.35) {Medir la frecuencia de resonancia, las frecuencias de corte, el ancho de banda y el factor de calidad de un filtro RLC y evaluar la concordancia con el cálculo.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};\n  \\draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);\n  \\draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);\n  \\draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);\n\\end{tikzpicture}\n\\end{adjustbox}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-01": {
+   "huella": "e1ce790734c01066",
+   "diapositivas": [
+    {
+     "titulo": "Del análisis a la caracterización de un circuito RLC",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Al llegar a la última sesión del curso, el estudiante sabe calcular la impedancia de cualquier combinación de resistores, bobinas y condensadores a una frecuencia dada.\n  \\item Del lado de la medición, reúne los métodos para localizar la resonancia y las frecuencias de corte con el generador y el osciloscopio.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Esta sesión es también un repaso para la evaluación final de la semana 14.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Caracterización de un circuito RLC",
+     "cuerpo": "\\elementoTemario{figura}{1}"
+    }
+   ]
+  },
+  "bloque-02": {
+   "huella": "f9fadd21d6c25d1c",
+   "diapositivas": [
+    {
+     "titulo": "Comparación sistemática de los circuitos RLC en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Esta dualidad no es una curiosidad matemática; es la mejor herramienta para no confundir las fórmulas.\n  \\item La diferencia más importante está en qué ocurre en la resonancia.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Para decidir con rapidez si un circuito es inductivo o capacitivo, conviene preguntar qué elemento «manda» a esa frecuencia: en serie manda el de mayor reactancia; en paralelo, el de menor reactancia, porque es el que conduce más corriente.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Comparación de los circuitos RLC en serie y en paralelo",
+     "cuerpo": "\\elementoTemario{tabla}{1}"
+    }
+   ]
+  },
+  "bloque-03": {
+   "huella": "76ae45fe217e4b69",
+   "diapositivas": [
+    {
+     "titulo": "Circuitos RLC mixtos",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Un circuito RLC mixto muy frecuente es un resistor $R_1$ en serie con un circuito tanque, con la salida tomada en el tanque.\n  \\item Con $R_1 = 1\\ \\text{k}\\Omega$, la bobina L3 (10.4 mH y 24.6 \\ensuremath{\\Omega}) y el condensador C2 (97.8 nF), a tres frecuencias.\n  \\item El circuito es un \\textbf{pasabanda} construido con un tanque en paralelo, el dual del pasabanda en serie que se caracteriza en el caso de estudio.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Calcular el divisor de tensión con magnitudes, $Z_p/(R_1 + Z_p)$, sumando $R_1$ a la magnitud de $\\mathbf{Z}_p$.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Circuitos RLC mixtos",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{1}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Circuito mixto R1 + tanque real",
+     "cuerpo": "\\elementoTemario{tabla}{2}"
+    }
+   ]
+  },
+  "bloque-04": {
+   "huella": "6040b0fabd46e715",
+   "diapositivas": [
+    {
+     "titulo": "Filtros resonantes pasabanda y rechazabanda",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item El ancho de banda se mide entre las dos frecuencias de corte, en las que la salida del pasabanda cae al 70.7 \\% de su máximo.\n  \\item Con $R = 100\\ \\Omega$, $L = 10\\ \\text{mH}$ y $C = 0.1\\ \\mu\\text{F}$: $f_r = 5033\\ \\text{Hz}$ y $R/(4\\pi L) = 795.8\\ \\text{Hz}$, de modo que $f_1 = \\sqrt{5033^2 + 795.8^2} - 795.8 \\approx 4300\\ \\text{Hz}$ y $f_2 \\approx 5891\\ \\text{Hz}$.\n  \\item Las dos curvas son complementarias: donde una tiene su máximo, la otra tiene su mínimo, y ambas se cruzan en las frecuencias de corte, a 0.707.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Suponer que la frecuencia de resonancia está en el punto medio aritmético entre $f_1$ y $f_2$.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Filtros resonantes pasabanda y rechazabanda",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.47\\linewidth}\n\\elementoTemario{ecuacion}{2}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Respuesta de un RLC en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.62\\textwidth}\n\\elementoTemario{figura}{2}\n  \\column{0.35\\textwidth}\n\\begin{caja}{iubblue}{Lectura de la gráfica}\n\\footnotesize Las dos curvas son complementarias: donde una tiene su máximo, la otra tiene su mínimo, y ambas se cruzan en las frecuencias de corte, a 0.707.\n\\end{caja}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-05": {
+   "huella": "9e175befbcd6c58a",
+   "diapositivas": [
+    {
+     "titulo": "Métodos para medir la resonancia, el ancho de banda",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Caracterizar un circuito resonante en el laboratorio consiste en obtener tres números: la frecuencia de resonancia, el ancho de banda y el factor de calidad.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize La relación de media potencia se entiende mejor con el nombre: en $f_1$ y $f_2$ la tensión es el 70.7 \\% de la máxima, pero la potencia que recibe la resistencia es la mitad, porque $0.707^2 = 0.5$.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Métodos para medir la resonancia, el ancho",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{3}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Procedimiento para medir la frecuencia",
+     "cuerpo": "\\elementoTemario{figura}{3}"
+    }
+   ]
+  },
+  "bloque-06": {
+   "huella": "00e4a0b26086ac58",
+   "diapositivas": [
+    {
+     "titulo": "Parámetros, unidades, simbología y nomenclatura",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Esta unidad reúne en un solo cuadro todas las magnitudes que han aparecido desde la semana 1.\n  \\item Dos coincidencias de nombre deben manejarse con cuidado.\n  \\item En la \\textbf{simbología} de los planos, el resistor lleva el designador R, la bobina L y el condensador C, cada uno seguido de un número correlativo.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Escribir la potencia reactiva en vatios o la aparente en VAR.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Parámetros de los circuitos R, L, C, RC, RL y RLC",
+     "cuerpo": "\\elementoTemario{tabla}{3}"
+    }
+   ]
+  },
+  "bloque-07": {
+   "huella": "2e9fc30d46e91be5",
+   "diapositivas": [
+    {
+     "titulo": "Caracterización de un filtro pasabanda RLC en serie",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Los tres se verifican de nuevo antes del montaje, con lo que se cubre el criterio CE1.\n  \\item La resistencia total del lazo es $R = 99.5 + 24.6 = 124.1\\ \\Omega$.\n  \\item El caso también muestra la importancia de fijar la tensión en los bornes del circuito.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize La columna del cálculo ideal no es un error que haya que ocultar: comparar las tres columnas —ideal, con valores medidos y medición— es la forma más clara de mostrar qué parte de la diferencia se debe a la tolerancia de los componentes, cuál al modelo y cuál a los instrumentos.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Caracterización de un filtro pasabanda RLC",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.83\\linewidth}\n\\elementoTemario{ecuacion}{4}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Caracterización del filtro pasabanda RLC en serie del kit",
+     "cuerpo": "\\elementoTemario{tabla}{4}"
+    }
+   ]
+  },
+  "bloque-08": {
+   "huella": "cf8211b8cb1a15ad",
+   "diapositivas": [
+    {
+     "titulo": "Síntesis de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Comparación sistemática de los circuitos}\n\\scriptsize Magnitud común, ley de Kirchhoff, resonancia, Q y comportamiento en frecuencia\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Circuitos RLC mixtos}\n\\scriptsize Reducción del tanque real y tensión de salida en función de la frecuencia\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Filtros resonantes pasabanda}\n\\scriptsize Frecuencias de corte, ancho de banda y respuesta de los filtros RLC en serie\n\\end{cardG}\n\\end{columns}\n\\vspace{2mm}\n\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Métodos para medir la resonancia, el ancho}\n\\scriptsize Barrido de frecuencia, criterio de fase, puntos de 70.7 \\% y Q = fr/AB\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Parámetros, unidades, simbología}\n\\scriptsize Cuadro final de magnitudes del curso: R, L, C, X, B, Z, Y, fr, Q, AB, P, Q, S y FP\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Caracterización de un filtro pasabanda RLC}\n\\scriptsize Medir fr, f1, f2, AB y Q del filtro formado con 100 \\ensuremath{\\Omega}, L3 y C2 y compararlos con el cálculo\n\\end{cardG}\n\\end{columns}"
+    },
+    {
+     "titulo": "Reflexión para llevar",
+     "cuerpo": "\\centering\n\\begin{tikzpicture}\n  \\node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\\normalsize] (c) at (0,0) {\\itshape «Al cerrar el curso, devolver el kit verificado, rotulado y completo, con un registro de los valores medidos, es la última muestra de responsabilidad con el equipo: el grupo del próximo semestre empezará su trabajo sobre los datos que este grupo deja.»};\n  \\node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\\scriptsize\\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};\n\\end{tikzpicture}"
+    }
+   ]
+  }
+ }
+}

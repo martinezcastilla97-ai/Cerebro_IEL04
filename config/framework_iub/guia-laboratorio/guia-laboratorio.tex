@@ -1,0 +1,96 @@
+% =====================================================================
+%  Guía de Laboratorio — Institución Universitaria de Barranquilla (IUB)
+%  Plantilla en LaTeX clonada de "Plantilla guias de laboratorio.docx"
+%
+%  Compilar con:  pdflatex -> biber -> pdflatex -> pdflatex
+%  (En Overleaf: compilador pdfLaTeX; biber se ejecuta solo.)
+%
+%  Estructura de archivos:
+%    guia-laboratorio.tex
+%    guialabiub.sty
+%    referencias.bib
+%    img/encabezado.png   img/pie-pagina.png   img/marca-agua.jpg
+% =====================================================================
+\documentclass[12pt]{article}
+
+% Opciones: [sinmarca] quita la marca de agua; [borrador] muestra márgenes
+%           [ieee] referencias IEEE (por defecto); [apa] referencias APA 7
+\usepackage{guialabiub}
+
+% --------------------------- Bibliografía ----------------------------
+\addbibresource{referencias.bib}
+
+% --------------------------- Datos de la guía -------------------------
+\facultad{}
+\modulo{}
+\docente{}
+
+\begin{document}
+
+\datosguia
+\lineablanco
+
+% ---------------------------------------------------------------------
+\section{Objetivos}
+Describa los objetivos generales de la práctica de laboratorio. ¿Qué
+habilidades o conceptos se espera que los estudiantes aprendan o apliquen
+durante la práctica?
+
+% ---------------------------------------------------------------------
+\section{Materiales y Equipos}
+Enumere todos los materiales y equipos necesarios para llevar a cabo la
+práctica de laboratorio. Asegúrese de incluir cualquier equipo
+especializado, reactivos químicos, instrumentos de medición, etc.
+
+% ---------------------------------------------------------------------
+\section{Procedimiento}
+Detalle paso a paso el procedimiento que los estudiantes deben seguir
+durante la práctica de laboratorio. Es importante que cada paso sea claro
+y conciso, indicando cualquier medida de seguridad relevante y los tiempos
+aproximados necesarios para cada etapa.
+\lineablanco
+\begin{pasos}
+  \item Paso 1:
+  \item Paso 2:
+  \item Paso 3:
+\end{pasos}
+
+% ---------------------------------------------------------------------
+\section{Cuestiones a Resolver}
+Incluya preguntas o problemas que los estudiantes deben resolver como
+parte de la práctica de laboratorio. Estas preguntas pueden estar
+relacionadas con los resultados esperados, la interpretación de datos, el
+análisis de errores, etc.
+
+% ---------------------------------------------------------------------
+\section{Análisis de Resultados}
+Instrucciones sobre cómo los estudiantes deben analizar y presentar los
+resultados obtenidos durante la práctica de laboratorio. Esto puede
+incluir la preparación de tablas, gráficos, interpretación de datos y
+conclusiones.
+
+% ---------------------------------------------------------------------
+\section{Conclusiones}
+Pida a los estudiantes que resuman las conclusiones principales de la
+práctica de laboratorio. ¿Qué aprendieron? ¿Hubo algún resultado
+inesperado?
+
+% ---------------------------------------------------------------------
+\section{Recomendaciones de Seguridad}
+Recuerde a los estudiantes cualquier medida de seguridad relevante que
+deban seguir durante la práctica de laboratorio. Esto puede incluir el uso
+de equipos de protección personal, manejo seguro de reactivos químicos,
+etc.
+
+% ---------------------------------------------------------------------
+\section{Bibliografía}
+Incluya una lista de referencias o fuentes consultadas para la
+preparación de la guía de laboratorio. Esto puede incluir libros de texto,
+artículos científicos o cualquier otra fuente relevante.
+
+% Cite las fuentes en el texto con \cite{clave}. \nocite{*} incluye todas
+% las entradas del .bib aunque no se citen; elimínelo si solo quiere las citadas.
+\nocite{*}
+\bibliografia
+
+\end{document}

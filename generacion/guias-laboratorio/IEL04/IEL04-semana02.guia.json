@@ -1,0 +1,463 @@
+{
+ "formato": 3,
+ "huella": "30922502c5a9c849",
+ "modelo": "gpt-4o",
+ "fecha": "2026-10-27",
+ "guia": {
+  "titulo": "Identificación y verificación de bobinas: inductancia, resistencia de devanado y aislamiento",
+  "introduccion": "La práctica corresponde a la sesión teórica de la semana 2, «La bobina: inductancia, inducción electromagnética, tipos de núcleo e identificación de inductores», y reproduce su caso de estudio: verificar las cuatro bobinas del kit del grupo midiendo su inductancia, su resistencia de devanado y, en las de núcleo metálico, su aislamiento respecto del núcleo. No hay un manual de laboratorio asignado al RA IEL04-RA1, así que la práctica se propone a partir de la bibliografía cargada: Boylestad indica que un devanado abierto se detecta con el ohmímetro, que marca una resistencia infinita, y describe los valores estándar y las tolerancias de los inductores [2]; Floyd presenta la construcción y los tipos de inductores [1]. Las bobinas aceptadas, con su inductancia y su resistencia de devanado medidas, se usarán en los circuitos LC de la semana 3 y en los circuitos RL y RLC del resto del semestre.",
+  "objetivo_general": "Verificar experimentalmente el estado de las bobinas del kit mediante la medición de su inductancia, su resistencia de devanado y su aislamiento.",
+  "objetivos_especificos": [
+   {
+    "enunciado": "Identificar el tipo de núcleo, el valor nominal y la tolerancia de cuatro bobinas a partir de su marcado.",
+    "criterios": [
+     "CE1"
+    ]
+   },
+   {
+    "enunciado": "Medir la inductancia con el medidor LCR y la resistencia de devanado con el ohmímetro, y comprobar el aislamiento entre devanado y núcleo.",
+    "criterios": [
+     "CE2"
+    ]
+   },
+   {
+    "enunciado": "Registrar la inductancia y la resistencia de devanado de la bobina L3, que formará el circuito LC de la semana 3, y estimar su factor de calidad a la frecuencia de resonancia prevista.",
+    "criterios": [
+     "CE3"
+    ]
+   }
+  ],
+  "materiales": [
+   {
+    "nombre": "Kit de bobinas del grupo",
+    "especificacion": "L1 102J, L2 472K, L3 103K (núcleo de ferrita), L4 33 mH ±20 % (toroidal)",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Medidor LCR",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Multímetro digital (ohmímetro)",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Cables con pinzas de cocodrilo aisladas",
+    "especificacion": "",
+    "cantidad": 4
+   },
+   {
+    "nombre": "Lupa o lente de aumento para leer el marcado",
+    "especificacion": "",
+    "cantidad": 1
+   }
+  ],
+  "procedimiento_introduccion": "La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en grupos de tres estudiantes, con tres roles que rotan entre etapas: quien monta y opera el circuito, quien mide y quien registra y verifica los cálculos. Antes de energizar cualquier montaje, el docente o el monitor revisa la conexión. Cada etapa abre con su diagrama de flujo, que muestra la secuencia y las comprobaciones de un vistazo, y sigue con sus pasos numerados; cada paso indica cuánto dura, qué debe observarse para saber que salió bien y qué hacer si no. Los valores numéricos de la sesión teórica sirven de referencia: las lecturas propias del grupo se registran en las tablas de la sección de análisis.",
+  "etapas": [
+   {
+    "titulo": "Preparación e identificación",
+    "pasos": [
+     {
+      "texto": "Verificar que las bobinas estén desconectadas de cualquier circuito y que el medidor LCR y el ohmímetro funcionen.",
+      "duracion_min": 5,
+      "seguridad": "",
+      "verificacion": "Con las puntas del ohmímetro unidas, la lectura debe ser cercana a 0 Ω; si no, anotar ese valor para restarlo después.",
+      "recurso": null
+     },
+     {
+      "texto": "Leer el marcado de cada bobina, convertir su valor nominal a mH (el código de tres dígitos se expresa en µH) y anotar la tolerancia y el tipo de núcleo [FUENTE NO CARGADA EN raw/].",
+      "duracion_min": 15,
+      "seguridad": "",
+      "verificacion": "Para L1 (102J) debe obtenerse 1 mH ±5 %; si el valor difiere, revisar que la base del código sea el microhenrio.",
+      "recurso": null
+     },
+     {
+      "texto": "Calcular el intervalo admisible de inductancia de cada bobina a partir de su tolerancia.",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "Para L2 (472K) el intervalo es de 4,23 mH a 5,17 mH.",
+      "recurso": null
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Revisar instrumentos",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Leer marcado y núcleo",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Calcular intervalo admisible",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Valores coherentes?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a1",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Medición de continuidad, resistencia y aislamiento",
+    "pasos": [
+     {
+      "texto": "Medir con el ohmímetro la resistencia de devanado de cada bobina y anotarla [2].",
+      "duracion_min": 12,
+      "seguridad": "",
+      "verificacion": "Una lectura infinita indica devanado abierto y la bobina se rechaza; una lectura de pocos ohmios es normal.",
+      "recurso": {
+       "tipo": "circuito",
+       "leyenda": "Medición de la resistencia de devanado con el ohmímetro (bobina desconectada)",
+       "circuito": "\\draw (0,0) to[L, l=$L$] (0,3) -- (3,3) to[ohmmeter] (3,0) -- (0,0);",
+       "ecuacion": "",
+       "donde": "",
+       "grafica": null
+      }
+     },
+     {
+      "texto": "En L3 y L4, medir la resistencia entre un terminal del devanado y el núcleo o la carcasa metálica.",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "Debe leerse una resistencia muy alta (circuito abierto); una lectura cercana a 0 Ω indica un corto al núcleo.",
+      "recurso": null
+     },
+     {
+      "texto": "Comparar la resistencia de devanado medida con la de la hoja de datos cuando se conoce (25 Ω para L3 y 18 Ω para L4).",
+      "duracion_min": 6,
+      "seguridad": "",
+      "verificacion": "Una resistencia claramente menor que la de la hoja sugiere espiras en corto y obliga a confirmar con la inductancia.",
+      "recurso": null
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Medir resistencia de devanado",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Medir aislamiento al núcleo",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Comparar con hoja de datos",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Continuidad y aislamiento?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a0",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Medición de la inductancia y decisión",
+    "pasos": [
+     {
+      "texto": "Configurar el medidor LCR en la función de inductancia, medir cada bobina y anotar la lectura en mH.",
+      "duracion_min": 15,
+      "seguridad": "",
+      "verificacion": "La lectura debe estar en el orden del nominal; si es mucho menor, sospechar espiras en corto.",
+      "recurso": null
+     },
+     {
+      "texto": "Calcular la desviación $e_{\\%} = (L_m - L_n)/L_n \\times 100$ y decidir: la bobina se acepta si |e| no supera la tolerancia, tiene continuidad y está aislada del núcleo.",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "Una bobina con resistencia y con inductancia bajas a la vez se rechaza: ambas mediciones confirman el corto entre espiras.",
+      "recurso": {
+       "tipo": "ecuacion",
+       "leyenda": "Desviación relativa de la inductancia:",
+       "circuito": "",
+       "ecuacion": "e_{\\%} = \\frac{L_m - L_n}{L_n} \\times 100",
+       "donde": "$L_m$ es la inductancia medida y $L_n$ la nominal, ambas en mH; $e_{\\%}$ en porcentaje.",
+       "grafica": null
+      }
+     },
+     {
+      "texto": "Rotular L3 con su inductancia y su resistencia de devanado medidas y calcular su factor de calidad $Q = 2\\pi f L / R_W$ a 5 kHz, la resonancia prevista con C2.",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "Con 10 mH y 25 Ω se obtiene Q del orden de 12 a 13; un valor muy distinto indica un error de unidades.",
+      "recurso": {
+       "tipo": "ecuacion",
+       "leyenda": "Factor de calidad de la bobina a la frecuencia $f$:",
+       "circuito": "",
+       "ecuacion": "Q = \\frac{2\\pi f L}{R_W}",
+       "donde": "$Q$ es adimensional, $f$ la frecuencia en Hz, $L$ la inductancia en H y $R_W$ la resistencia de devanado en Ω.",
+       "grafica": null
+      }
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Medir inductancia con LCR",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Calcular desviación",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Decidir aceptación",
+       "forma": "caja"
+      },
+      {
+       "id": "a3",
+       "texto": "Rotular L3 y calcular Q",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Bobina aceptada?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Bobina al kit",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "a3",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a3",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a0",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Desmontaje y cierre",
+    "pasos": [
+     {
+      "texto": "Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo.",
+      "duracion_min": 4,
+      "seguridad": "",
+      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado.",
+      "recurso": null
+     },
+     {
+      "texto": "Revisar con el docente las tablas de registro antes de abandonar el banco.",
+      "duracion_min": 3,
+      "seguridad": "",
+      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento.",
+      "recurso": null
+     }
+    ],
+    "diagrama": null
+   }
+  ],
+  "cuestiones": [
+   "¿Por qué el ohmímetro por sí solo no basta para detectar un corto entre unas pocas espiras?",
+   "Si la inductancia es proporcional al cuadrado del número de vueltas, ¿qué fracción de las espiras habría perdido una bobina cuya inductancia cayó al 65 % de su valor?",
+   "¿Qué papel tendrá la resistencia de devanado medida en los circuitos inductivos y LC de las semanas siguientes?",
+   "¿Qué diferencias se observaron entre las bobinas de núcleo de aire o ferrita y la toroidal?"
+  ],
+  "analisis": [
+   "Completar la tabla de verificación con el valor nominal, el intervalo admisible, la inductancia medida, la desviación, la resistencia de devanado y el resultado del aislamiento de cada bobina, y justificar la decisión de aceptación de cada una combinando las mediciones.",
+   "Calcular el factor de calidad de L3 a 5 kHz con su inductancia y su resistencia de devanado medidas, y comentar qué indica ese valor sobre lo cerca que estará la bobina real de comportarse como una inductancia ideal en el circuito LC."
+  ],
+  "tablas_registro": [
+   {
+    "leyenda": "Verificación de las bobinas del kit",
+    "columnas": [
+     "Ref.",
+     "Ln (mH)",
+     "Intervalo (mH)",
+     "Lm (mH)",
+     "e (%)",
+     "RW medida (Ω)",
+     "Aislamiento"
+    ],
+    "filas": 4
+   }
+  ],
+  "conclusiones": "Concluir, para cada bobina, si es apta para las prácticas siguientes, apoyando la decisión en la combinación de la inductancia, la resistencia de devanado y el aislamiento; explicar por qué una sola medición puede no ser concluyente y relacionar la práctica con los criterios de medición del RA en circuitos inductivos.",
+  "preguntas_conclusion": [
+   "¿Qué bobina fue rechazada y qué mediciones lo demostraron?",
+   "¿Qué valor de la bobina L3 se usará en adelante y por qué?",
+   "¿Qué limitación del ohmímetro quedó en evidencia?"
+  ],
+  "seguridad": [
+   "Medir siempre con las bobinas desconectadas de cualquier fuente: el ohmímetro y el medidor LCR no deben conectarse a un circuito energizado.",
+   "No desconectar bruscamente una bobina por la que circula corriente: la tensión inducida al interrumpirla puede producir una chispa entre los contactos.",
+   "Manipular con cuidado las bobinas toroidales y de ferrita: el núcleo es frágil y una fisura altera la inductancia."
+  ],
+  "referencias_cargadas": [
+   {
+    "tipo": "book",
+    "autores": [
+     "Floyd, Thomas L."
+    ],
+    "titulo": "Principios de circuitos eléctricos",
+    "editorial": "Pearson Educación",
+    "anio": "2007",
+    "edicion": "8.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Boylestad, Robert L."
+    ],
+    "titulo": "Introducción al análisis de circuitos",
+    "editorial": "Pearson Educación",
+    "anio": "2004",
+    "edicion": "10.ª",
+    "url": ""
+   }
+  ],
+  "referencias_externas": [
+   {
+    "tipo": "manual",
+    "autores": [],
+    "titulo": "Hoja de datos del fabricante de los inductores del kit de laboratorio (código de colores y código de tres dígitos)",
+    "editorial": "",
+    "anio": "",
+    "edicion": "",
+    "url": ""
+   }
+  ],
+  "base_bibliografica": [
+   1,
+   2
+  ]
+ }
+}

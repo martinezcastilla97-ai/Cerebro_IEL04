@@ -1,0 +1,633 @@
+% =====================================================================
+%  Temario generado por TEMARIO (src/temario.py + src/temario_latex.py), sin LLM,
+%  a partir de los mismos datos que el .md. Compilar con pdfLaTeX (dos pasadas).
+% =====================================================================
+\documentclass[11pt,letterpaper]{article}
+
+% ---------------------------------------------------------------------
+%  Codificacion, idioma y tipografia
+% ---------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot,es-noshorthands,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage[margin=2.3cm,headheight=14pt]{geometry}
+
+% ---------------------------------------------------------------------
+%  Matematicas y unidades del SI
+% ---------------------------------------------------------------------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={.}, per-mode=symbol}
+
+% ---------------------------------------------------------------------
+%  Tablas profesionales (sin lineas verticales) y flotantes
+% ---------------------------------------------------------------------
+\usepackage[table]{xcolor}
+\usepackage{booktabs,array,multirow,tabularx,xltabular}
+\usepackage{graphicx,float}
+\usepackage[font=small,labelfont={bf,color=iubnavy},labelsep=period]{caption}
+
+% ---------------------------------------------------------------------
+%  Listas, cajas, graficas, diagramas y codigo
+% ---------------------------------------------------------------------
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+% ---------------------------------------------------------------------
+%  Encabezados de pagina y enlaces (hyperref, siempre el ultimo)
+% ---------------------------------------------------------------------
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+% ---------------------------------------------------------------------
+%  Paleta institucional IUB (Manual de Identidad Visual 2025)
+% ---------------------------------------------------------------------
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\pgfplotsset{cycle list={{iubblue, mark=*},{iuborange, mark=square*},{iubgreen, mark=triangle*},{iubnavy, mark=diamond*},{iubyellow, mark=pentagon*}}}
+
+% ---------------------------------------------------------------------
+%  Formato general
+% ---------------------------------------------------------------------
+\setcounter{secnumdepth}{3}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.25}
+\setlist{itemsep=0.15em,topsep=0.3em}
+\setlist[itemize]{label=\textcolor{iubblue}{\small$\blacktriangleright$}}
+
+% ---------------------------------------------------------------------
+%  Encabezado y pie de pagina
+% ---------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{iubnavy}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\textcolor{iubnavy}{\textbf{IUB}\quad IEL04 --- Circuitos Eléctricos I}}
+\fancyhead[R]{\small\textcolor{iubnavy}{Semana 13 de 14}}
+\fancyfoot[C]{\small\textcolor{iubnavy}{\thepage}}
+
+% ---------------------------------------------------------------------
+%  Codigo (listings: el codigo va transliterado a ASCII)
+% ---------------------------------------------------------------------
+\lstset{basicstyle=\ttfamily\small, breaklines=true, columns=fullflexible, keepspaces=true, frame=single,
+  rulecolor=\color{iubgris}, backgroundcolor=\color{iubfondogris}, numbers=left, numberstyle=\tiny\color{iubgrisoscuro},
+  keywordstyle=\color{iubblue}\bfseries, commentstyle=\color{iubgreen}\itshape, stringstyle=\color{iuborange},
+  showstringspaces=false, captionpos=t, aboveskip=0.8em, belowskip=0.8em}
+\renewcommand{\lstlistingname}{Listado}
+
+% ---------------------------------------------------------------------
+%  Cajas: cabecera, notas, alineacion con el RA y cita actitudinal
+% ---------------------------------------------------------------------
+\newtcolorbox{cabecera}{enhanced, colback=iubnavy, colframe=iubnavy, coltext=white, arc=2pt, boxrule=0pt,
+  left=12pt, right=12pt, top=10pt, bottom=10pt, borderline north={3pt}{0pt}{iubyellow}}
+\newtcolorbox{nota}[1]{enhanced, colback=iubfondonaranja, colframe=iuborange, arc=2pt, boxrule=0.6pt, leftrule=3pt,
+  fonttitle=\bfseries\small, coltitle=iuborange, colbacktitle=iubfondonaranja, title={#1}, attach title to upper={\ }}
+\newtcolorbox{alineacion}{enhanced, colback=iubfondoazul, colframe=iubblue, arc=2pt, boxrule=0.6pt, leftrule=3pt}
+\newtcolorbox{cita}{enhanced, colback=iubnavy, colframe=iubnavy, coltext=white, arc=2pt, boxrule=0pt, leftrule=4pt,
+  borderline west={4pt}{0pt}{iubyellow}, fontupper=\itshape}
+
+% ---------------------------------------------------------------------
+%  Estilos de los diagramas (TikZ) y de las graficas (pgfplots)
+% ---------------------------------------------------------------------
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+\pgfplotsset{iubejes/.style={width=0.95\linewidth, height=6.2cm, grid=major, grid style={iubgris}, axis lines*=left,
+  axis line style={iubnavy}, tick label style={font=\small}, label style={font=\small}, title style={font=\bfseries\small},
+  legend cell align=left, legend style={draw=none, fill=none, font=\small, anchor=north, legend columns=-1,
+  /tikz/every even column/.append style={column sep=8pt}}, unbounded coords=jump}}
+
+\hypersetup{pdftitle={Cálculo y medición de parámetros en circuitos RLC en serie, en paralelo y mixtos: filtros resonantes, frecuencia de resonancia, ancho de banda y nomenclatura}, pdfauthor={Institución Universitaria de Barranquilla}}
+
+\begin{document}
+
+\begin{cabecera}
+{\color{iubyellow}\Large\bfseries Cálculo y medición de parámetros en circuitos RLC en serie, en paralelo y mixtos: filtros resonantes, frecuencia de resonancia, ancho de banda y nomenclatura\par}
+\vspace{0.6em}
+\small
+\textbf{\color{iubyellow}Módulos:} IEL04 --- Circuitos Eléctricos I\par
+\textbf{\color{iubyellow}Duración:} 240 minutos (sesión teórico-práctica)\par
+\textbf{\color{iubyellow}Nivel:} Pregrado\par
+\textbf{\color{iubyellow}Semana:} 13 de 14 (corte evaluativo 3)\par
+\textbf{\color{iubyellow}Resultado de aprendizaje del módulo:} IEL04-RA4\par
+\textbf{\color{iubyellow}Trabajo independiente:} 5 h/semana\par
+\end{cabecera}
+
+\section{Metadatos de la Sesión}
+
+\subsection{Continuidad curricular}
+
+Las semanas 11 y 12 analizaron el circuito RLC en serie y en paralelo, con sus leyes de Kirchhoff y sus resonancias, y aplicaron la compensación de reactancias a la corrección del factor de potencia. Esta última sesión del curso cierra el RA4 y, con él, el semestre: compara de forma sistemática ambas conexiones, resuelve un circuito RLC mixto, presenta los filtros resonantes pasabanda y rechazabanda, organiza los métodos para medir la frecuencia de resonancia, el ancho de banda y el factor de calidad, y reúne en un cuadro los parámetros, unidades, símbolos y nomenclatura de todo el curso. La semana 14 es la evaluación final.
+
+\begin{enumerate}
+  \item Semana 12: Circuito RLC en paralelo: análisis y Ley de Corrientes de Kirchhoff
+  \item \textbf{Presente sesión (semana 13):} Cálculo y medición de parámetros en circuitos RLC serie y paralelo: unidades, simbología y nomenclatura
+  \item Semana 14: evaluación (semana de examen)
+\end{enumerate}
+
+\subsection{Prerrequisitos}
+
+\begin{itemize}
+  \item Calcular impedancia, corrientes y tensiones de circuitos RLC en serie y en paralelo (semanas 11 y 12).
+  \item Calcular la frecuencia de resonancia, el factor de calidad y el ancho de banda de un circuito resonante.
+  \item Convertir una bobina real a su equivalente en paralelo (semanas 9 y 12).
+  \item Aplicar el método general de análisis fasorial (semana 7).
+  \item Medir amplitudes y desfases con el osciloscopio y barrer frecuencias con el generador.
+\end{itemize}
+
+\section{Resultados de Aprendizaje}
+
+\begin{alineacion}
+\textbf{RA IEL04-RA4:} Calcular un circuito resistivo, inductivo, capacitivo y RLC, sea en serie o paralelo.
+
+\textbf{Criterios de evaluación:}
+
+\begin{itemize}
+  \item \textbf{CE1} (cognitiva\_conceptual): Identificar los tipos de resistores, inductores y capacitores.
+  \item \textbf{CE2} (manipulacion\_fisica): Realizar mediciones en un circuito resistivo, inductivo y capacitivo.
+  \item \textbf{CE3} (manipulacion\_fisica): Realizar mediciones en un circuito RLC.
+\end{itemize}
+
+\textbf{Unidades de competencia de la asignatura:}
+
+\begin{itemize}
+  \item UC2: Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.
+\end{itemize}
+\end{alineacion}
+
+Al finalizar la sesión, el estudiante estará en capacidad de lograr los siguientes resultados, que desarrollan el RA del módulo:
+
+\begin{xltabular}{\linewidth}{>{\raggedright\arraybackslash}p{1.1cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.9cm}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Resultado de aprendizaje}} & \textcolor{white}{\textbf{Nivel (Taxonomía de Bloom)}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Resultado de aprendizaje}} & \textcolor{white}{\textbf{Nivel (Taxonomía de Bloom)}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  RA1 & \textbf{Identificar} los componentes de un circuito RLC y los parámetros que caracterizan cada tipo de conexión. (CE1) & Aplicar \\
+  \rowcolor{iubfondogris} RA2 & \textbf{Calcular} la respuesta de circuitos RLC mixtos y de filtros resonantes pasabanda y rechazabanda. (CE3) & Aplicar \\
+  RA3 & \textbf{Diferenciar} los parámetros de los circuitos RLC en serie y en paralelo con sus unidades, simbología y nomenclatura. (CE3) & Analizar \\
+  \rowcolor{iubfondogris} RA4 & \textbf{Medir} la frecuencia de resonancia, las frecuencias de corte, el ancho de banda y el factor de calidad de un filtro RLC y evaluar la concordancia con el cálculo. (CE2, CE3) & Evaluar \\
+\end{xltabular}
+
+\section{Índice Temporizado (240 minutos)}
+
+\begin{xltabular}{\linewidth}{>{\raggedright\arraybackslash}p{1.4cm}>{\raggedright\arraybackslash}X>{\raggedleft\arraybackslash}p{2.2cm}}
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bloque}} & \textcolor{white}{\textbf{Contenido}} & \textcolor{white}{\textbf{Duración}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Bloque}} & \textcolor{white}{\textbf{Contenido}} & \textcolor{white}{\textbf{Duración}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  1 & Qué parámetros definen un circuito RLC y cómo se obtienen por cálculo y por medición & 20 min \\
+  \rowcolor{iubfondogris} 2 & Magnitud común, ley de Kirchhoff, resonancia, Q y comportamiento en frecuencia & 30 min \\
+  3 & Reducción del tanque real y tensión de salida en función de la frecuencia & 35 min \\
+  \rowcolor{iubfondogris} 4 & Frecuencias de corte, ancho de banda y respuesta de los filtros RLC en serie & 35 min \\
+  5 & Barrido de frecuencia, criterio de fase, puntos de 70.7 \% y Q = fr/AB & 30 min \\
+  \rowcolor{iubfondogris} 6 & Cuadro final de magnitudes del curso: R, L, C, X, B, Z, Y, fr, Q, AB, P, Q, S y FP & 25 min \\
+  7 & Medir fr, f1, f2, AB y Q del filtro formado con 100 \ensuremath{\Omega}, L3 y C2 y compararlos con el cálculo & 50 min \\
+  \rowcolor{iubfondogris} 8 & Síntesis, cierre actitudinal y bibliografía & 15 min \\
+  \midrule
+  \rowcolor{iubfondogris}  & \textbf{Total} & \textbf{240 min} \\
+\end{xltabular}
+
+\section{Desarrollo Teórico}
+
+\subsection{Introducción Conceptual (Bloque 1)}
+
+Al llegar a la última sesión del curso, el estudiante sabe calcular la impedancia de cualquier combinación de resistores, bobinas y condensadores a una frecuencia dada. En el trabajo técnico, sin embargo, la pregunta suele ser otra: no qué corriente hay a 3 kHz, sino \textbf{cómo se comporta el circuito en todo un intervalo de frecuencias}, y con qué números se describe ese comportamiento. Para los circuitos RLC, esos números son pocos y muy informativos: la frecuencia de resonancia, el factor de calidad, el ancho de banda con sus dos frecuencias de corte y la impedancia en la resonancia. Con ellos se especifica un filtro, se sintoniza un oscilador o se verifica que un banco de condensadores no resuene con una armónica de la red.
+
+Esta sesión organiza esos parámetros desde dos lados: el cálculo y la medición. Del lado del cálculo, compara de forma sistemática las conexiones en serie y en paralelo, resuelve un circuito mixto y presenta los filtros resonantes, cuya respuesta se describe con la frecuencia central y el ancho de banda [1]. Del lado de la medición, reúne los métodos para localizar la resonancia y las frecuencias de corte con el generador y el osciloscopio. Un filtro rechazabanda, por ejemplo, deja pasar todas las frecuencias excepto las que quedan dentro de cierta banda de rechazo [1], y se caracteriza con los mismos números que un pasabanda. El diagrama muestra cómo se encadenan cálculo y medición.
+
+% --- Figura 1: Caracterización de un circuito RLC: del cálculo de sus parámetros a su verificación en el… (diagrama en TikZ con la disposición del PNG) ---
+\begin{figure}[H]
+  \centering
+  \begin{adjustbox}{max width=\linewidth}
+  \begin{tikzpicture}[x=1in, y=1in, font=\small]
+    % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+    \node[dterminal, minimum width=1.563in, minimum height=0.890in] (n0) at (0.781,-0.445) {Identificar \\ R, L, RW y \\ C};  % a
+    \node[dcaja, minimum width=1.084in, minimum height=0.680in] (n1) at (2.771,-0.445) {Tipo de \\ conexión};  % b
+    \node[dcaja, minimum width=1.270in, minimum height=0.680in] (n2) at (4.615,-0.445) {Calcular \\ fr, Q y AB};  % c
+    \node[dcaja, minimum width=1.270in, minimum height=0.680in] (n3) at (4.615,-1.885) {Barrer la \\ frecuencia};  % d
+    \node[destado, minimum width=1.177in, minimum height=0.680in] (n4) at (2.771,-1.885) {Medir fr, \\ f1 y f2};  % e
+    \node[dterminal, minimum width=1.563in, minimum height=0.890in] (n5) at (0.781,-1.885) {Comparar y \\ explicar \\ diferencias};  % f
+    % flechas (las de retorno, curvas)
+    \draw[dflecha] (n0) -- (n1);
+    \draw[dflecha] (n1) -- (n2);
+    \draw[dflecha] (n2) -- (n3);
+    \draw[dflecha] (n3) -- (n4);
+    \draw[dflecha] (n4) -- (n5);
+  \end{tikzpicture}
+  \end{adjustbox}
+  \caption{Caracterización de un circuito RLC: del cálculo de sus parámetros a su verificación en el laboratorio}
+\end{figure}
+
+El diagrama es, en esencia, el procedimiento que el curso ha repetido desde la semana 1: identificar y verificar los componentes, calcular, medir y explicar las diferencias. Lo nuevo es que ahora la medición no se hace a una sola frecuencia sino barriendo un intervalo, y que la comparación se hace sobre parámetros ---frecuencia de resonancia, ancho de banda y factor de calidad--- que resumen toda una curva. El caso final caracteriza un filtro pasabanda construido con la bobina y el condensador del kit, los mismos componentes que se han usado desde la semana 3.
+
+\begin{nota}{Nota pedagógica:}
+Esta sesión es también un repaso para la evaluación final de la semana 14. El cuadro de parámetros y unidades de la unidad 6 reúne las magnitudes de todo el curso y conviene usarlo como guía de estudio.
+\end{nota}
+
+\subsection{Conceptos Clave}
+
+\subsubsection{Comparación sistemática de los circuitos RLC en serie y en paralelo (Bloque 2)}
+
+Los circuitos RLC en serie y en paralelo son duales: casi cada resultado de uno se obtiene del otro intercambiando tensión y corriente, impedancia y admitancia, resistencia y conductancia, y mínimo y máximo. Esta dualidad no es una curiosidad matemática; es la mejor herramienta para no confundir las fórmulas. En serie, la magnitud común es la corriente, las reactancias se restan y la ley que reparte es la de voltajes; en paralelo, la común es la tensión, las susceptancias se restan y la ley que reparte es la de corrientes. En ambos casos la resonancia ocurre cuando $X_L = X_C$, y, para un circuito ideal, la frecuencia se determina con la misma fórmula [1].
+
+La diferencia más importante está en qué ocurre en la resonancia. En serie, la impedancia es mínima e igual a la resistencia, y la corriente es máxima; en paralelo, la impedancia es máxima ---idealmente infinita, en la práctica máxima en la frecuencia de resonancia [1]--- y la corriente de la fuente es mínima. Esa diferencia define sus usos: el RLC en serie deja pasar la corriente de una sola frecuencia; el paralelo, conectado a través de una línea, presenta una impedancia alta a una sola frecuencia. La tabla reúne las comparaciones con los resultados de las semanas 11 y 12, obtenidos con la misma bobina de 10.4 mH y el mismo condensador de 97.8 nF.
+
+% --- Tabla 1: Comparación de los circuitos RLC en serie y en paralelo (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=0.839\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.017\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.144\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Comparación de los circuitos RLC en serie y en paralelo} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Característica}} & \textcolor{white}{\textbf{RLC en serie (semana 11)}} & \textcolor{white}{\textbf{RLC en paralelo (semana 12)}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Característica}} & \textcolor{white}{\textbf{RLC en serie (semana 11)}} & \textcolor{white}{\textbf{RLC en paralelo (semana 12)}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  Magnitud común & corriente & tensión \\
+  \rowcolor{iubfondogris} Suma natural & Z = R + j(XL \ensuremath{-} XC) & Y = G + j(BC \ensuremath{-} BL) \\
+  Ley de Kirchhoff que reparte & LVK: VS = VR + j(VL \ensuremath{-} VC) & LCK: IT = IR + j(IC \ensuremath{-} IL) \\
+  \rowcolor{iubfondogris} Por debajo de fr & capacitivo & inductivo \\
+  Por encima de fr & inductivo & capacitivo \\
+  \rowcolor{iubfondogris} En la resonancia & Z mínima = R; I máxima & Z máxima = Rp; I mínima \\
+  Magnitud que se multiplica por Q & tensiones en L y C: Q\textperiodcentered{}VS & corrientes en L y C: Q\textperiodcentered{}IT \\
+  \rowcolor{iubfondogris} Factor de calidad & Q = XL / R & Q = R / XL \\
+  Una R mayor & reduce Q & aumenta Q \\
+  \rowcolor{iubfondogris} Efecto de RW de la bobina & se suma a R & equivale a RW(Q\texttwosuperior{} + 1) en paralelo \\
+  Resonancia medida con el kit & 4.97 kHz & 4.96 kHz \\
+  \rowcolor{iubfondogris} Uso típico & filtro pasabanda en serie, compensación & circuito tanque, rechazo de banda, compensación de FP \\
+\end{xltabular}
+
+La tabla contiene una regla práctica para el factor de calidad que a menudo se olvida: en serie, una resistencia \textbf{pequeña} hace el circuito más selectivo, porque limita menos la corriente en la resonancia; en paralelo, una resistencia \textbf{grande} lo hace más selectivo, porque deriva menos corriente. En los dos casos, la resistencia de devanado de la bobina empeora el factor de calidad, pero por caminos distintos: en serie se suma directamente a $R$, y en paralelo aparece como una resistencia equivalente $R_W(Q^2 + 1)$ que se combina con la del circuito.
+
+La última fila de mediciones confirma que la frecuencia de resonancia depende solo de $L$ y $C$ y no de la conexión: con los mismos componentes, el circuito en serie resonó en 4.97 kHz y el paralelo en 4.96 kHz, prácticamente la misma frecuencia que el circuito tanque de la semana 3. La pequeña diferencia del paralelo se explica por el desplazamiento que produce la resistencia de devanado cuando se define la resonancia por la fase de la corriente total, analizado en la semana 12.
+
+\begin{nota}{Nota pedagógica:}
+Para decidir con rapidez si un circuito es inductivo o capacitivo, conviene preguntar qué elemento \guillemotleft{}manda\guillemotright{} a esa frecuencia: en serie manda el de mayor reactancia; en paralelo, el de menor reactancia, porque es el que conduce más corriente.
+\end{nota}
+
+\subsubsection{Circuitos RLC mixtos: resistor en serie con un circuito tanque (Bloque 3)}
+
+Un circuito RLC mixto muy frecuente es un resistor $R_1$ en serie con un circuito tanque, con la salida tomada en el tanque. Es el esquema de muchas etapas sintonizadas: el resistor representa la resistencia de salida de la etapa anterior, y el tanque selecciona la frecuencia que pasa a la siguiente. Floyd dedica una sección al análisis de circuitos RLC en serie-paralelo, con el mismo procedimiento de reducción que los circuitos RC y RL [1]: se reduce primero el tanque, incluyendo la resistencia de devanado de la bobina, y después se aplica el divisor de tensión fasorial entre $R_1$ y el tanque.
+
+\begin{equation}
+  \mathbf{Z}_p = \frac{1}{j2\pi f C + \dfrac{1}{R_W + j2\pi f L}}, \qquad \frac{\mathbf{V}_{\mathrm{sal}}}{\mathbf{V}_S} = \frac{\mathbf{Z}_p}{R_1 + \mathbf{Z}_p}
+\end{equation}
+
+donde $\mathbf{Z}_p$ es la impedancia del tanque real en ohmios (\ensuremath{\Omega}), $f$ la frecuencia en hercios (Hz), $C$ la capacitancia en faradios (F), $L$ la inductancia en henrios (H), $R_W$ la resistencia de devanado en ohmios, $R_1$ la resistencia en serie en ohmios, y $\mathbf{V}_{\mathrm{sal}}/\mathbf{V}_S$ la relación fasorial entre la tensión de salida en el tanque y la de la fuente (adimensional). En la resonancia, la impedancia del tanque no ideal es simplemente su resistencia equivalente en paralelo [1], $R_W(Q^2 + 1)$, y la relación se vuelve real.
+
+Con $R_1 = 1\ \text{k}\Omega$, la bobina L3 (10.4 mH y 24.6 \ensuremath{\Omega}) y el condensador C2 (97.8 nF), a tres frecuencias. En la resonancia (4976 Hz), el tanque presenta $Z_p = 4349\ \Omega$, resistivo, y la salida es $4349/(1000 + 4349) \approx 0.813$ veces la entrada. A 3 kHz, la admitancia de la bobina es $1/(24.6 + j196.0) = 0.630 - j5.022\ \text{mS}$ y la del condensador $+j1.844\ \text{mS}$; sumadas dan $0.630 - j3.179\ \text{mS}$, de modo que $\mathbf{Z}_p = 60.0 + j302.7\ \Omega = 308.6 \angle 78.8^\circ\ \Omega$, inductiva. La impedancia total es $1060.0 + j302.7\ \Omega$, de magnitud 1102 \ensuremath{\Omega}, y la salida cae a $308.6/1102 \approx 0.280$. A 8 kHz el tanque es capacitivo, con $\mathbf{Z}_p = 332.4 \angle -88.3^\circ\ \Omega$, y la salida es 0.313.
+
+% --- Tabla 2: Circuito mixto R1 + tanque real (R1 = 1 kΩ, L = 10.4 mH, RW = 24.6 Ω, C = 97.8 nF), salid… (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=0.794\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.19\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.667\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.635\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.714\hsize\linewidth=\hsize\raggedleft\arraybackslash}X}
+\caption{Circuito mixto R1 + tanque real (R1 = 1 k\ensuremath{\Omega}, L = 10.4 mH, RW = 24.6 \ensuremath{\Omega}, C = 97.8 nF), salida en el tanque} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{Zp (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Carácter del tanque}} & \textcolor{white}{\textbf{ZT (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Vsal/VS}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{f (Hz)}} & \textcolor{white}{\textbf{Zp (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Carácter del tanque}} & \textcolor{white}{\textbf{ZT (\ensuremath{\Omega})}} & \textcolor{white}{\textbf{Vsal/VS}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  3000 & 308.6 \ensuremath{\angle} 78.8\textdegree{} & inductivo & 1102 & 0.280 \\
+  \rowcolor{iubfondogris} 4976 (fr) & 4349 \ensuremath{\angle} 0\textdegree{} & resistivo & 5349 & 0.813 \\
+  8000 & 332.4 \ensuremath{\angle} \ensuremath{-}88.3\textdegree{} & capacitivo & 1063 & 0.313 \\
+\end{xltabular}
+
+La tabla muestra el comportamiento de filtro del conjunto: fuera de la resonancia, el tanque tiene una impedancia pequeña frente a $R_1$ y \guillemotleft{}se come\guillemotright{} la señal; en la resonancia, su impedancia sube hasta 4.35 k\ensuremath{\Omega} y casi toda la tensión llega a la salida. El circuito es un \textbf{pasabanda} construido con un tanque en paralelo, el dual del pasabanda en serie que se caracteriza en el caso de estudio. La salida máxima no llega a 1 porque la resistencia equivalente del tanque real es finita: con una bobina ideal sería 1, y con una bobina peor, menos de 0.813.
+
+La elección de $R_1$ también afecta a la selectividad: para el tanque, $R_1$ aparece en paralelo con su resistencia equivalente cuando se mira desde la salida, y un $R_1$ pequeño reduce el factor de calidad del conjunto y ensancha la banda. Esa es la razón por la que los tanques sintonizados se alimentan desde fuentes de alta impedancia, como la salida de un transistor, y no desde fuentes de tensión ideales.
+
+\begin{nota}{Error frecuente:}
+Calcular el divisor de tensión con magnitudes, $Z_p/(R_1 + Z_p)$, sumando $R_1$ a la magnitud de $\mathbf{Z}_p$. A 3 kHz daría $308.6/1308.6 = 0.236$ en lugar de 0.280. La suma del denominador se hace con la forma rectangular de $\mathbf{Z}_p$.
+\end{nota}
+
+\subsubsection{Filtros resonantes pasabanda y rechazabanda (Bloque 4)}
+
+Un circuito RLC en serie con la salida tomada en el resistor es un \textbf{filtro pasabanda}: en la resonancia la corriente es máxima y la tensión en el resistor también, de modo que la salida tiene su máximo en la frecuencia de resonancia, que en este contexto se llama frecuencia central [1]. Si la salida se toma, en cambio, sobre la bobina y el condensador juntos, el circuito es un \textbf{filtro rechazabanda}: en la resonancia sus tensiones se cancelan y la salida es mínima. Un filtro rechazabanda es, en esencia, lo opuesto de un pasabanda: deja pasar todas las frecuencias excepto las que quedan dentro de cierta banda de rechazo [1]. Una trampa de ondas, que elimina una frecuencia indeseada, es un filtro rechazabanda [1].
+
+El factor de calidad y la frecuencia resonante determinan el ancho de banda: un $Q$ alto produce un ancho de banda pequeño y uno bajo, un ancho de banda grande, según $AB = f_0/Q$ [1]. El ancho de banda se mide entre las dos frecuencias de corte, en las que la salida del pasabanda cae al 70.7 \% de su máximo. Para el RLC en serie, esas frecuencias pueden calcularse de forma exacta:
+
+\begin{equation}
+  f_{1,2} = \sqrt{f_r^{2} + \left(\frac{R}{4\pi L}\right)^{2}} \mp \frac{R}{4\pi L}, \qquad AB = f_2 - f_1 = \frac{R}{2\pi L} = \frac{f_r}{Q}, \qquad f_1 f_2 = f_r^{2}
+\end{equation}
+
+donde $f_1$ y $f_2$ son las frecuencias de corte inferior y superior en hercios (Hz), $f_r$ la frecuencia de resonancia en hercios, $R$ la resistencia total del lazo en ohmios (\ensuremath{\Omega}), $L$ la inductancia en henrios (H), $AB$ el ancho de banda en hercios y $Q$ el factor de calidad (adimensional). La última relación dice que la frecuencia de resonancia es la media geométrica de las de corte: la curva es simétrica en escala logarítmica, no en escala lineal, y $f_r$ queda algo más cerca de $f_1$ que de $f_2$.
+
+Con $R = 100\ \Omega$, $L = 10\ \text{mH}$ y $C = 0.1\ \mu\text{F}$: $f_r = 5033\ \text{Hz}$ y $R/(4\pi L) = 795.8\ \text{Hz}$, de modo que $f_1 = \sqrt{5033^2 + 795.8^2} - 795.8 \approx 4300\ \text{Hz}$ y $f_2 \approx 5891\ \text{Hz}$. El ancho de banda es de 1592 Hz, igual a $f_r/Q = 5033/3.16$, y $f_1 f_2 \approx 25.3 \times 10^6\ \text{Hz}^2 = f_r^2$. La gráfica muestra las dos salidas posibles del mismo circuito.
+
+% --- Figura 2: Respuesta de un RLC en serie (R = 100 Ω, L = 10 mH, C = 0.1 µF) como pasabanda (salida en… (gráfica en pgfplots con los puntos de su especificación) ---
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        iubejes,
+        xlabel={Frecuencia f (Hz)},
+        ylabel={Vsal / Vent},
+        title={Filtros resonantes pasabanda y rechazabanda},
+        legend style={at={(0.5,-0.30)}},
+        xmode=log,
+        xmin=1000,
+        xmax=25000]
+      % serie 1: Pasabanda (salida en R) («R/sqrt(R 2 + (2*pi*f*L - 1/(2*pi*f*C)) 2)» en 300 puntos)
+      \addplot[color=iubblue, line width=1.4pt, no markers] coordinates {
+        (1000,0.0652748) (1010.82,0.0660371) (1021.76,0.0668095) (1032.82,0.0675923) (1044,0.0683856) (1055.3,0.0691897)
+        (1066.72,0.0700046) (1078.27,0.0708307) (1089.94,0.0716681) (1101.74,0.072517) (1113.66,0.0733777) (1125.72,0.0742503)
+        (1137.9,0.0751351) (1150.22,0.0760323) (1162.67,0.0769421) (1175.25,0.0778649) (1187.97,0.0788007) (1200.83,0.07975)
+        (1213.83,0.080713) (1226.97,0.0816899) (1240.25,0.082681) (1253.67,0.0836866) (1267.24,0.0847071) (1280.95,0.0857426)
+        (1294.82,0.0867936) (1308.83,0.0878603) (1323,0.0889431) (1337.32,0.0900424) (1351.79,0.0911584) (1366.43,0.0922916)
+        (1381.22,0.0934423) (1396.17,0.0946109) (1411.28,0.0957979) (1426.55,0.0970035) (1441.99,0.0982284) (1457.6,0.0994729)
+        (1473.38,0.100737) (1489.32,0.102022) (1505.44,0.103329) (1521.74,0.104656) (1538.21,0.106006) (1554.86,0.107378)
+        (1571.69,0.108774) (1588.7,0.110193) (1605.89,0.111636) (1623.28,0.113105) (1640.85,0.114599) (1658.61,0.116119)
+        (1676.56,0.117667) (1694.7,0.119242) (1713.05,0.120845) (1731.59,0.122478) (1750.33,0.12414) (1769.28,0.125834)
+        (1788.43,0.127559) (1807.78,0.129317) (1827.35,0.131108) (1847.13,0.132934) (1867.12,0.134795) (1887.33,0.136693)
+        (1907.76,0.138629) (1928.41,0.140604) (1949.28,0.142618) (1970.38,0.144674) (1991.7,0.146773) (2013.26,0.148915)
+        (2035.05,0.151103) (2057.08,0.153337) (2079.34,0.15562) (2101.85,0.157953) (2124.6,0.160338) (2147.59,0.162776)
+        (2170.84,0.16527) (2194.34,0.16782) (2218.09,0.17043) (2242.09,0.173102) (2266.36,0.175837) (2290.89,0.178638)
+        (2315.69,0.181507) (2340.75,0.184448) (2366.09,0.187462) (2391.7,0.190553) (2417.58,0.193723) (2443.75,0.196977)
+        (2470.2,0.200316) (2496.94,0.203745) (2523.96,0.207268) (2551.28,0.210888) (2578.9,0.214609) (2606.81,0.218436)
+        (2635.02,0.222373) (2663.54,0.226426) (2692.37,0.230599) (2721.52,0.234898) (2750.97,0.239329) (2780.75,0.243898)
+        (2810.85,0.248611) (2841.27,0.253475) (2872.02,0.258498) (2903.11,0.263687) (2934.53,0.269052) (2966.29,0.2746)
+        (2998.4,0.280341) (3030.85,0.286285) (3063.66,0.292443) (3096.82,0.298826) (3130.33,0.305447) (3164.22,0.312318)
+        (3198.46,0.319453) (3233.08,0.326868) (3268.08,0.334577) (3303.45,0.342599) (3339.2,0.35095) (3375.35,0.359651)
+        (3411.88,0.368722) (3448.81,0.378184) (3486.14,0.388063) (3523.87,0.398381) (3562.01,0.409167) (3600.57,0.420448)
+        (3639.54,0.432255) (3678.93,0.444619) (3718.75,0.457572) (3759,0.471151) (3799.69,0.485391) (3840.81,0.500329)
+        (3882.38,0.516004) (3924.41,0.532452) (3966.88,0.549711) (4009.82,0.567815) (4053.22,0.586798) (4097.09,0.606684)
+        (4141.43,0.627491) (4186.26,0.649228) (4231.57,0.671884) (4277.37,0.69543) (4323.67,0.719812) (4370.47,0.744938)
+        (4417.77,0.770676) (4465.59,0.796844) (4513.92,0.823199) (4562.78,0.849431) (4612.16,0.875157) (4662.08,0.899922)
+        (4712.54,0.923202) (4763.55,0.944425) (4815.11,0.962989) (4867.23,0.978305) (4919.91,0.98984) (4973.16,0.997158)
+        (5026.99,0.999972) (5081.4,0.998167) (5136.4,0.991817) (5191.99,0.981174) (5248.19,0.966644) (5304.99,0.948742)
+        (5362.41,0.928051) (5420.45,0.905172) (5479.12,0.880685) (5538.42,0.855129) (5598.37,0.828972) (5658.96,0.802615)
+        (5720.21,0.776383) (5782.13,0.750533) (5844.71,0.72526) (5907.97,0.700706) (5971.92,0.676971) (6036.56,0.654116)
+        (6101.89,0.632177) (6167.94,0.611166) (6234.7,0.591079) (6302.18,0.5719) (6370.39,0.553606) (6439.34,0.536164)
+        (6509.04,0.519542) (6579.49,0.503701) (6650.71,0.488605) (6722.69,0.474215) (6795.45,0.460494) (6869.01,0.447407)
+        (6943.35,0.434916) (7018.51,0.42299) (7094.47,0.411597) (7171.26,0.400705) (7248.88,0.390286) (7327.34,0.380313)
+        (7406.65,0.370762) (7486.81,0.361607) (7567.85,0.352827) (7649.76,0.344401) (7732.56,0.336308) (7816.25,0.328532)
+        (7900.85,0.321054) (7986.37,0.313859) (8072.81,0.306931) (8160.19,0.300257) (8248.51,0.293822) (8337.79,0.287616)
+        (8428.03,0.281626) (8519.25,0.275841) (8611.46,0.270252) (8704.67,0.264848) (8798.89,0.259621) (8894.12,0.254562)
+        (8990.39,0.249664) (9087.7,0.244918) (9186.06,0.240318) (9285.49,0.235858) (9385.99,0.231531) (9487.58,0.22733)
+        (9590.27,0.223252) (9694.07,0.219289) (9799,0.215439) (9905.06,0.211695) (10012.3,0.208053) (10120.6,0.204509)
+        (10230.2,0.20106) (10340.9,0.197701) (10452.8,0.194429) (10566,0.191241) (10680.3,0.188133) (10795.9,0.185102)
+        (10912.8,0.182146) (11030.9,0.179261) (11150.3,0.176445) (11271,0.173696) (11393,0.17101) (11516.3,0.168387)
+        (11640.9,0.165824) (11766.9,0.163318) (11894.3,0.160868) (12023,0.158472) (12153.2,0.156127) (12284.7,0.153834)
+        (12417.7,0.151589) (12552.1,0.149391) (12687.9,0.147238) (12825.3,0.14513) (12964.1,0.143065) (13104.4,0.141042)
+        (13246.2,0.139059) (13389.6,0.137115) (13534.5,0.135208) (13681,0.133339) (13829.1,0.131505) (13978.8,0.129707)
+        (14130.1,0.127942) (14283,0.126209) (14437.6,0.124509) (14593.9,0.12284) (14751.8,0.1212) (14911.5,0.119591)
+        (15072.9,0.118009) (15236,0.116456) (15401,0.11493) (15567.7,0.11343) (15736.1,0.111956) (15906.5,0.110507)
+        (16078.6,0.109083) (16252.7,0.107682) (16428.6,0.106305) (16606.4,0.10495) (16786.1,0.103618) (16967.8,0.102307)
+        (17151.5,0.101017) (17337.1,0.0997483) (17524.8,0.0984995) (17714.5,0.0972704) (17906.2,0.0960605) (18100,0.0948695)
+        (18295.9,0.0936969) (18493.9,0.0925423) (18694.1,0.0914053) (18896.4,0.0902855) (19101,0.0891827) (19307.7,0.0880963)
+        (19516.7,0.087026) (19727.9,0.0859717) (19941.5,0.0849328) (20157.3,0.083909) (20375.5,0.0829002) (20596,0.0819059)
+        (20818.9,0.0809259) (21044.3,0.0799599) (21272,0.0790077) (21502.3,0.0780689) (21735,0.0771433) (21970.3,0.0762306)
+        (22208.1,0.0753307) (22448.4,0.0744432) (22691.4,0.0735679) (22937,0.0727047) (23185.3,0.0718532) (23436.2,0.0710133)
+        (23689.9,0.0701848) (23946.3,0.0693674) (24205.5,0.068561) (24467.5,0.0677653) (24732.3,0.0669802) (25000,0.0662055)
+      };
+      \addlegendentry{Pasabanda (salida en R)}
+      % serie 2: Rechazabanda (salida en L y C) («abs(2*pi*f*L - 1/(2*pi*f*C))/sqrt(R 2 + (2*pi*f*L - 1/(2*pi*f*C)) 2)» en 300 puntos)
+      \addplot[color=iuborange, line width=1.4pt, no markers] coordinates {
+        (1000,0.997867) (1010.82,0.997817) (1021.76,0.997766) (1032.82,0.997713) (1044,0.997659) (1055.3,0.997604)
+        (1066.72,0.997547) (1078.27,0.997488) (1089.94,0.997429) (1101.74,0.997367) (1113.66,0.997304) (1125.72,0.99724)
+        (1137.9,0.997173) (1150.22,0.997105) (1162.67,0.997036) (1175.25,0.996964) (1187.97,0.99689) (1200.83,0.996815)
+        (1213.83,0.996737) (1226.97,0.996658) (1240.25,0.996576) (1253.67,0.996492) (1267.24,0.996406) (1280.95,0.996317)
+        (1294.82,0.996226) (1308.83,0.996133) (1323,0.996037) (1337.32,0.995938) (1351.79,0.995836) (1366.43,0.995732)
+        (1381.22,0.995625) (1396.17,0.995514) (1411.28,0.995401) (1426.55,0.995284) (1441.99,0.995164) (1457.6,0.99504)
+        (1473.38,0.994913) (1489.32,0.994782) (1505.44,0.994647) (1521.74,0.994508) (1538.21,0.994365) (1554.86,0.994218)
+        (1571.69,0.994067) (1588.7,0.99391) (1605.89,0.993749) (1623.28,0.993583) (1640.85,0.993412) (1658.61,0.993235)
+        (1676.56,0.993053) (1694.7,0.992865) (1713.05,0.992671) (1731.59,0.992471) (1750.33,0.992265) (1769.28,0.992051)
+        (1788.43,0.991831) (1807.78,0.991603) (1827.35,0.991368) (1847.13,0.991125) (1867.12,0.990873) (1887.33,0.990613)
+        (1907.76,0.990344) (1928.41,0.990066) (1949.28,0.989778) (1970.38,0.989479) (1991.7,0.98917) (2013.26,0.98885)
+        (2035.05,0.988518) (2057.08,0.988174) (2079.34,0.987817) (2101.85,0.987447) (2124.6,0.987062) (2147.59,0.986663)
+        (2170.84,0.986248) (2194.34,0.985818) (2218.09,0.98537) (2242.09,0.984904) (2266.36,0.984419) (2290.89,0.983915)
+        (2315.69,0.98339) (2340.75,0.982842) (2366.09,0.982272) (2391.7,0.981677) (2417.58,0.981056) (2443.75,0.980408)
+        (2470.2,0.979731) (2496.94,0.979024) (2523.96,0.978284) (2551.28,0.97751) (2578.9,0.9767) (2606.81,0.975851)
+        (2635.02,0.974962) (2663.54,0.974028) (2692.37,0.973049) (2721.52,0.97202) (2750.97,0.970939) (2780.75,0.969801)
+        (2810.85,0.968604) (2841.27,0.967342) (2872.02,0.966012) (2903.11,0.964608) (2934.53,0.963126) (2966.29,0.961559)
+        (2998.4,0.959901) (3030.85,0.958145) (3063.66,0.956283) (3096.82,0.954308) (3130.33,0.952209) (3164.22,0.949978)
+        (3198.46,0.947602) (3233.08,0.94507) (3268.08,0.942368) (3303.45,0.939482) (3339.2,0.936394) (3375.35,0.933087)
+        (3411.88,0.92954) (3448.81,0.92573) (3486.14,0.921633) (3523.87,0.91722) (3562.01,0.912459) (3600.57,0.907316)
+        (3639.54,0.901751) (3678.93,0.89572) (3718.75,0.889172) (3759,0.882052) (3799.69,0.874297) (3840.81,0.865835)
+        (3882.38,0.856586) (3924.41,0.84646) (3966.88,0.835355) (4009.82,0.823156) (4053.22,0.809734) (4097.09,0.794943)
+        (4141.43,0.778623) (4186.26,0.760594) (4231.57,0.740657) (4277.37,0.718593) (4323.67,0.694169) (4370.47,0.667134)
+        (4417.77,0.637227) (4465.59,0.604185) (4513.92,0.567753) (4562.78,0.527699) (4612.16,0.483838) (4662.08,0.436051)
+        (4712.54,0.384314) (4763.55,0.328728) (4815.11,0.269542) (4867.23,0.207168) (4919.91,0.142189) (4973.16,0.0753364)
+        (5026.99,0.0074623) (5081.4,0.0605141) (5136.4,0.127667) (5191.99,0.193124) (5248.19,0.256124) (5304.99,0.31605)
+        (5362.41,0.372452) (5420.45,0.425046) (5479.12,0.473702) (5538.42,0.518416) (5598.37,0.55929) (5658.96,0.596497)
+        (5720.21,0.630261) (5782.13,0.660833) (5844.71,0.688476) (5907.97,0.71345) (5971.92,0.73601) (6036.56,0.756394)
+        (6101.89,0.774824) (6167.94,0.791503) (6234.7,0.806614) (6302.18,0.820323) (6370.39,0.832779) (6439.34,0.844114)
+        (6509.04,0.854445) (6579.49,0.863878) (6650.71,0.872505) (6722.69,0.880409) (6795.45,0.887663) (6869.01,0.894331)
+        (6943.35,0.900471) (7018.51,0.906134) (7094.47,0.911366) (7171.26,0.916207) (7248.88,0.920694) (7327.34,0.924858)
+        (7406.65,0.928728) (7486.81,0.932331) (7567.85,0.935689) (7649.76,0.938823) (7732.56,0.941752) (7816.25,0.944493)
+        (7900.85,0.947061) (7986.37,0.94947) (8072.81,0.951732) (8160.19,0.953858) (8248.51,0.95586) (8337.79,0.957746)
+        (8428.03,0.959524) (8519.25,0.961203) (8611.46,0.96279) (8704.67,0.96429) (8798.89,0.965711) (8894.12,0.967056)
+        (8990.39,0.968333) (9087.7,0.969544) (9186.06,0.970694) (9285.49,0.971788) (9385.99,0.972828) (9487.58,0.973818)
+        (9590.27,0.974761) (9694.07,0.97566) (9799,0.976517) (9905.06,0.977336) (10012.3,0.978118) (10120.6,0.978865)
+        (10230.2,0.979579) (10340.9,0.980262) (10452.8,0.980917) (10566,0.981543) (10680.3,0.982144) (10795.9,0.982719)
+        (10912.8,0.983272) (11030.9,0.983802) (11150.3,0.984311) (11271,0.984799) (11393,0.985269) (11516.3,0.985721)
+        (11640.9,0.986155) (11766.9,0.986573) (11894.3,0.986976) (12023,0.987364) (12153.2,0.987737) (12284.7,0.988097)
+        (12417.7,0.988444) (12552.1,0.988778) (12687.9,0.989101) (12825.3,0.989413) (12964.1,0.989713) (13104.4,0.990004)
+        (13246.2,0.990284) (13389.6,0.990555) (13534.5,0.990817) (13681,0.99107) (13829.1,0.991315) (13978.8,0.991552)
+        (14130.1,0.991782) (14283,0.992004) (14437.6,0.992218) (14593.9,0.992427) (14751.8,0.992628) (14911.5,0.992823)
+        (15072.9,0.993012) (15236,0.993196) (15401,0.993374) (15567.7,0.993546) (15736.1,0.993713) (15906.5,0.993875)
+        (16078.6,0.994033) (16252.7,0.994185) (16428.6,0.994334) (16606.4,0.994477) (16786.1,0.994617) (16967.8,0.994753)
+        (17151.5,0.994885) (17337.1,0.995013) (17524.8,0.995137) (17714.5,0.995258) (17906.2,0.995375) (18100,0.99549)
+        (18295.9,0.995601) (18493.9,0.995709) (18694.1,0.995814) (18896.4,0.995916) (19101,0.996015) (19307.7,0.996112)
+        (19516.7,0.996206) (19727.9,0.996298) (19941.5,0.996387) (20157.3,0.996473) (20375.5,0.996558) (20596,0.99664)
+        (20818.9,0.99672) (21044.3,0.996798) (21272,0.996874) (21502.3,0.996948) (21735,0.99702) (21970.3,0.99709)
+        (22208.1,0.997159) (22448.4,0.997225) (22691.4,0.99729) (22937,0.997354) (23185.3,0.997415) (23436.2,0.997475)
+        (23689.9,0.997534) (23946.3,0.997591) (24205.5,0.997647) (24467.5,0.997701) (24732.3,0.997754) (25000,0.997806)
+      };
+      \addlegendentry{Rechazabanda (salida en L y C)}
+      % línea de referencia en y = 0.707
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({rel axis cs:0,0}|-{axis cs:1,0.707}) -- ({rel axis cs:1,0}|-{axis cs:1,0.707}) node[drotulo, pos=1, anchor=south east] {70.7 \%};
+      % línea de referencia en x = 4300
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({axis cs:4300,0}|-{rel axis cs:0,0}) -- ({axis cs:4300,0}|-{rel axis cs:0,1}) node[drotulo, pos=1, anchor=north west] {f1};
+      % línea de referencia en x = 5891
+      \draw[iubgrisoscuro, dashed, line width=0.9pt] ({axis cs:5891,0}|-{rel axis cs:0,0}) -- ({axis cs:5891,0}|-{rel axis cs:0,1}) node[drotulo, pos=1, anchor=north west] {f2};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Respuesta de un RLC en serie (R = 100 \ensuremath{\Omega}, L = 10 mH, C = 0.1 \textmu{}F) como pasabanda (salida en R) y como rechazabanda (salida en L y C)}
+\end{figure}
+
+Las dos curvas son complementarias: donde una tiene su máximo, la otra tiene su mínimo, y ambas se cruzan en las frecuencias de corte, a 0.707. El pasabanda deja pasar la banda de 4.3 kHz a 5.9 kHz y atenúa el resto; el rechazabanda elimina esa misma banda y deja pasar las demás. Con una bobina real, ni el máximo del pasabanda llega a 1 ni el mínimo del rechazabanda llega a 0, porque la resistencia de devanado consume parte de la tensión en la resonancia, como se verá en el caso de estudio. En filtros de potencia, como los de armónicos de las instalaciones industriales, se usa esta misma idea: un RLC en serie sintonizado a la quinta armónica, 300 Hz en una red de 60 Hz, conectado en paralelo con la carga, ofrece a esa corriente un camino de impedancia mínima y la desvía de la red.
+
+\begin{nota}{Error frecuente:}
+Suponer que la frecuencia de resonancia está en el punto medio aritmético entre $f_1$ y $f_2$. Es su media geométrica: con $f_1 = 4300$ Hz y $f_2 = 5891$ Hz, la media aritmética daría 5096 Hz, un 1.3 \% por encima de la resonancia real.
+\end{nota}
+
+\subsubsection{Métodos para medir la resonancia, el ancho de banda y el factor de calidad (Bloque 5)}
+
+Caracterizar un circuito resonante en el laboratorio consiste en obtener tres números: la frecuencia de resonancia, el ancho de banda y el factor de calidad. Los tres se miden con un generador de funciones y un osciloscopio, barriendo la frecuencia y observando la salida. El ancho de banda es el intervalo entre las frecuencias de banda, también llamadas de corte o de media potencia [2], y esas frecuencias son los puntos de la curva de resonancia en los que la corriente o la tensión valen 0.707 de su valor de pico [2]. El diagrama ordena el procedimiento.
+
+% --- Figura 3: Procedimiento para medir la frecuencia de resonancia, las frecuencias de corte, el ancho … (diagrama en TikZ con la disposición del PNG) ---
+\begin{figure}[H]
+  \centering
+  \begin{adjustbox}{max width=\linewidth}
+  \begin{tikzpicture}[x=1in, y=1in, font=\small]
+    % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+    \node[dterminal, minimum width=1.563in, minimum height=0.680in] (n0) at (0.781,-0.445) {Fijar VS en \\ los bornes};  % a
+    \node[dcaja, minimum width=1.270in, minimum height=0.890in] (n1) at (2.818,-0.445) {Barrer f y \\ hallar el \\ pico};  % b
+    \node[dcaja, minimum width=1.363in, minimum height=0.680in] (n2) at (4.755,-0.445) {Afinar fr \\ por fase 0\textdegree{}};  % c
+    \node[dcaja, minimum width=1.363in, minimum height=0.890in] (n3) at (4.755,-1.885) {Buscar 70.7 \\ \% a cada \\ lado};  % d
+    \node[destado, minimum width=0.991in, minimum height=0.680in] (n4) at (2.818,-1.885) {f1 y f2 \\ medidas};  % e
+    \node[dterminal, minimum width=1.377in, minimum height=0.890in] (n5) at (0.781,-1.885) {AB = f2 \ensuremath{-} \\ f1, Q = \\ fr/AB};  % f
+    % flechas (las de retorno, curvas)
+    \draw[dflecha] (n0) -- (n1);
+    \draw[dflecha] (n1) -- (n2);
+    \draw[dflecha] (n2) -- (n3);
+    \draw[dflecha] (n3) -- (n4);
+    \draw[dflecha] (n4) -- (n5);
+  \end{tikzpicture}
+  \end{adjustbox}
+  \caption{Procedimiento para medir la frecuencia de resonancia, las frecuencias de corte, el ancho de banda y el factor de calidad}
+\end{figure}
+
+El primer paso es fijar la tensión de entrada en los bornes del circuito, no en el dial del generador. Cerca de la resonancia de un circuito en serie la impedancia cae mucho y la resistencia interna del generador, de unos 50 \ensuremath{\Omega}, hace bajar la tensión aplicada; si no se corrige a cada frecuencia, la curva medida resulta más baja y más ancha de lo que es. El segundo paso es barrer la frecuencia y localizar el máximo de la salida: en un pasabanda en serie, la tensión en el resistor; en un tanque, la tensión en el tanque. El pico de amplitud es plano y cuesta localizarlo con precisión, así que el tercer paso lo afina por \textbf{fase}: en la resonancia, la corriente queda en fase con la tensión de la fuente, y en el osciloscopio el retardo entre la tensión de la fuente y la del resistor se hace cero. Con el modo X-Y, la figura de Lissajous se convierte en una recta.
+
+El cuarto paso busca, a cada lado de la resonancia, la frecuencia en la que la salida cae al 70.7 \% de su máximo: son $f_1$ y $f_2$. Con ellas se calculan los parámetros restantes:
+
+\begin{equation}
+  AB = f_2 - f_1, \qquad Q = \frac{f_r}{AB}, \qquad f_r \approx \sqrt{f_1 f_2}
+\end{equation}
+
+donde $AB$ es el ancho de banda en hercios (Hz), $f_1$ y $f_2$ las frecuencias de corte medidas en hercios, $f_r$ la frecuencia de resonancia en hercios y $Q$ el factor de calidad (adimensional). La tercera relación sirve de comprobación: si la frecuencia de resonancia medida no coincide con la media geométrica de las de corte, alguna de las tres lecturas está mal. En un circuito en serie hay un segundo camino para $Q$: medir la tensión en el condensador en la resonancia, que vale $Q$ veces la tensión de la fuente, como se hizo en la semana 11.
+
+Dos precauciones completan el método. La primera es la carga de los instrumentos: la punta del osciloscopio se conecta en paralelo con el punto medido y, en un tanque de alta impedancia, su capacitancia de entrada se suma a la del condensador y baja la frecuencia de resonancia; con una punta \texttimes{}10 el efecto es pequeño. La segunda es la resolución: cerca de las frecuencias de corte la salida cambia rápidamente con la frecuencia, así que conviene tomar varios puntos alrededor de cada una e interpolar. Un buen registro de laboratorio incluye la curva completa, no solo los tres números, porque su forma revela problemas ---asimetrías, picos secundarios--- que los parámetros no muestran.
+
+\begin{nota}{Nota pedagógica:}
+La relación de media potencia se entiende mejor con el nombre: en $f_1$ y $f_2$ la tensión es el 70.7 \% de la máxima, pero la potencia que recibe la resistencia es la mitad, porque $0.707^2 = 0.5$.
+\end{nota}
+
+\subsubsection{Parámetros, unidades, simbología y nomenclatura de los circuitos RLC (Bloque 6)}
+
+El contenido procedimental de los cuatro RA del curso termina con la misma frase: diferenciar los parámetros del circuito identificando unidades de medida, múltiplos y submúltiplos, simbología y nomenclatura. Esta unidad reúne en un solo cuadro todas las magnitudes que han aparecido desde la semana 1. Conviene leerlo por familias. Los \textbf{parámetros de los elementos} son tres: resistencia, inductancia y capacitancia, en ohmios, henrios y faradios. Las \textbf{oposiciones a la corriente alterna} se miden en ohmios ---reactancias e impedancia--- y sus \textbf{recíprocos} en siemens ---conductancia, susceptancias y admitancia---. Las \textbf{magnitudes de la resonancia} son la frecuencia de resonancia, el factor de calidad y el ancho de banda. Y las \textbf{potencias} se distinguen por su unidad: vatios para la real, voltamperios reactivos para la reactiva y voltamperios para la aparente.
+
+% --- Tabla 3: Parámetros de los circuitos R, L, C, RC, RL y RLC: símbolo, unidad, submúltiplos habitual… (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=1.214\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.437\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.311\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.583\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.455\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Parámetros de los circuitos R, L, C, RC, RL y RLC: símbolo, unidad, submúltiplos habituales y definición} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Parámetro}} & \textcolor{white}{\textbf{Símbolo}} & \textcolor{white}{\textbf{Unidad}} & \textcolor{white}{\textbf{Habituales}} & \textcolor{white}{\textbf{Definición o fórmula}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Parámetro}} & \textcolor{white}{\textbf{Símbolo}} & \textcolor{white}{\textbf{Unidad}} & \textcolor{white}{\textbf{Habituales}} & \textcolor{white}{\textbf{Definición o fórmula}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  Resistencia & R & ohmio (\ensuremath{\Omega}) & k\ensuremath{\Omega}, M\ensuremath{\Omega} & V/I en el resistor \\
+  \rowcolor{iubfondogris} Inductancia & L & henrio (H) & \textmu{}H, mH & v = L di/dt \\
+  Resistencia de devanado & RW & ohmio (\ensuremath{\Omega}) & \ensuremath{\Omega} & medida con ohmímetro \\
+  \rowcolor{iubfondogris} Capacitancia & C & faradio (F) & pF, nF, \textmu{}F & Q/V \\
+  Reactancia inductiva & XL & ohmio (\ensuremath{\Omega}) & \ensuremath{\Omega}, k\ensuremath{\Omega} & 2\ensuremath{\pi}fL \\
+  \rowcolor{iubfondogris} Reactancia capacitiva & XC & ohmio (\ensuremath{\Omega}) & \ensuremath{\Omega}, k\ensuremath{\Omega} & 1/(2\ensuremath{\pi}fC) \\
+  Impedancia & Z, Z\ensuremath{\angle}\ensuremath{\theta} & ohmio (\ensuremath{\Omega}) & \ensuremath{\Omega}, k\ensuremath{\Omega} & R + j(XL \ensuremath{-} XC) en serie \\
+  \rowcolor{iubfondogris} Conductancia & G & siemens (S) & mS, \textmu{}S & 1/R \\
+  Susceptancias & BL, BC & siemens (S) & mS & 1/XL, 1/XC \\
+  \rowcolor{iubfondogris} Admitancia & Y, Y\ensuremath{\angle}\ensuremath{\theta} & siemens (S) & mS & G + j(BC \ensuremath{-} BL) en paralelo \\
+  Constante de tiempo & \ensuremath{\tau} & segundo (s) & \textmu{}s, ms & RC o L/R \\
+  \rowcolor{iubfondogris} Frecuencia de resonancia & fr & hercio (Hz) & kHz, MHz & 1/(2\ensuremath{\pi}\ensuremath{\surd}LC) \\
+  Factor de calidad & Q & adimensional & --- & XL/R (serie), R/XL (paralelo) \\
+  \rowcolor{iubfondogris} Ancho de banda & AB & hercio (Hz) & kHz & f2 \ensuremath{-} f1 = fr/Q \\
+  Potencia real & P & vatio (W) & mW, kW & I\texttwosuperior{}R = VI cos \ensuremath{\theta} \\
+  \rowcolor{iubfondogris} Potencia reactiva & Q & voltamperio reactivo (VAR) & mVAR, kVAR & I\texttwosuperior{}X = VI sen \ensuremath{\theta} \\
+  Potencia aparente & S & voltamperio (VA) & mVA, kVA & VI \\
+  \rowcolor{iubfondogris} Factor de potencia & FP & adimensional & --- & cos \ensuremath{\theta} = P/S \\
+\end{xltabular}
+
+Dos coincidencias de nombre deben manejarse con cuidado. La letra $Q$ designa tanto el factor de calidad, adimensional, como la potencia reactiva, en VAR, y además la carga eléctrica, en culombios; el contexto y la unidad las distinguen. Y la letra $C$ es a la vez el símbolo de la capacitancia y el de la unidad de carga, el culombio. Floyd define el factor de calidad de una bobina como la razón entre la potencia reactiva en el inductor y la potencia real en su resistencia de devanado [1], lo que une ambas \guillemotleft{}Q\guillemotright{} en una sola definición: $Q = Q_L/P_{R_W} = X_L/R_W$. Con la bobina L3 del kit a 10 kHz, por ejemplo, $Q = 653.5/24.6 \approx 26.6$.
+
+En la \textbf{notación}, el curso ha seguido la convención de Floyd: letras rectas en negrita para los fasores, que tienen magnitud y ángulo ($\mathbf{V}$, $\mathbf{I}$, $\mathbf{Z}$, $\mathbf{Y}$), y cursivas simples para sus magnitudes. La letra $j$ representa un giro de +90\textdegree{}: las reactancias inductivas y las susceptancias capacitivas llevan $+j$, y las reactancias capacitivas y las susceptancias inductivas, $-j$. Los subíndices indican el elemento ($V_R$, $I_C$, $X_L$), la condición ($f_r$, $Z_r$), el total ($I_T$, $Z_T$) o el equivalente ($R_{p(eq)}$, $L_{\mathrm{eq}}$).
+
+En la \textbf{simbología} de los planos, el resistor lleva el designador R, la bobina L y el condensador C, cada uno seguido de un número correlativo. La bobina se dibuja con sus espiras y, si el núcleo es magnético, con líneas paralelas continuas (hierro) o discontinuas (ferrita); el condensador con dos placas, una curva si es polarizado. Las fuentes sinusoidales se anotan con su valor eficaz y su frecuencia, y en los informes conviene escribir junto a cada componente su valor medido, incluida la resistencia de devanado de las bobinas, que en este curso ha explicado buena parte de las diferencias entre cálculo y medición.
+
+\begin{nota}{Error frecuente:}
+Escribir la potencia reactiva en vatios o la aparente en VAR. Cada potencia tiene su unidad precisamente para que no se confundan: W para la real, VAR para la reactiva y VA para la aparente.
+\end{nota}
+
+\section{Caso de Estudio Aplicado: Caracterización de un filtro pasabanda RLC en serie con el kit (Bloque 7)}
+
+\subsection{El filtro y su predicción}
+
+Se construye un filtro pasabanda con los componentes que el curso ha usado desde la semana 3: el resistor de 100 \ensuremath{\Omega} (medido 99.5 \ensuremath{\Omega}), la bobina L3 (10.4 mH y 24.6 \ensuremath{\Omega} de resistencia de devanado) y el condensador C2 (97.8 nF), en serie, con la salida tomada en el resistor. Los tres se verifican de nuevo antes del montaje, con lo que se cubre el criterio CE1. La tarea es caracterizar el filtro ---frecuencia central, frecuencias de corte, ancho de banda y factor de calidad--- y comparar la medición con el cálculo. Las lecturas del osciloscopio que se usan más abajo son valores de ejemplo para ilustrar el procedimiento.
+
+La resistencia total del lazo es $R = 99.5 + 24.6 = 124.1\ \Omega$. Con los valores medidos, $f_r = 4990\ \text{Hz}$ y $X_L = 326.1\ \Omega$ en la resonancia, así que $Q = 326.1/124.1 \approx 2.63$. El término $R/(4\pi L) = 124.1/(4\pi \times 0.0104) \approx 949.6\ \text{Hz}$, y las frecuencias de corte son:
+
+\begin{equation}
+  f_{1,2} = \sqrt{4990^{2} + 949.6^{2}} \mp 949.6 \approx 5080 \mp 950\ \text{Hz} \ \Rightarrow\ f_1 \approx 4130\ \text{Hz},\ \ f_2 \approx 6029\ \text{Hz}
+\end{equation}
+
+donde $f_1$ y $f_2$ son las frecuencias de corte inferior y superior en hercios (Hz), calculadas con la frecuencia de resonancia de 4990 Hz y el término $R/(4\pi L)$ de 949.6 Hz. El ancho de banda previsto es $6029 - 4130 = 1899\ \text{Hz}$, igual a $f_r/Q$. La salida no llega a la tensión de la fuente ni siquiera en la resonancia: con 2.00 V de entrada, la tensión máxima en el resistor es $2.00 \times 99.5/124.1 \approx 1.60\ \text{V}$, porque la resistencia de devanado se queda con el resto. Las frecuencias de corte son aquellas en las que la salida cae a $0.707 \times 1.60 \approx 1.13\ \text{V}$.
+
+\subsection{Medición}
+
+Se sigue el procedimiento de la unidad anterior: tensión de entrada fijada en 2.00 V eficaces en los bornes del circuito y reajustada a cada frecuencia; barrido para localizar el máximo de la tensión en el resistor; afinado de la resonancia por fase, buscando que la tensión del resistor quede en fase con la de la fuente; y búsqueda, a cada lado, de las frecuencias en las que la salida cae a 1.13 V, tomando varios puntos alrededor de cada una.
+
+% --- Tabla 4: Caracterización del filtro pasabanda RLC en serie del kit (lecturas de ejemplo) (xltabular: se parte entre páginas repitiendo el encabezado) ---
+\begin{xltabular}{\linewidth}{>{\hsize=0.556\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.496\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.453\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=0.342\hsize\linewidth=\hsize\raggedleft\arraybackslash}X>{\hsize=1.153\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\caption{Caracterización del filtro pasabanda RLC en serie del kit (lecturas de ejemplo)} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Parámetro}} & \textcolor{white}{\textbf{Ideal nominal (R = 100 \ensuremath{\Omega}, sin RW)}} & \textcolor{white}{\textbf{Cálculo con valores medidos y RW}} & \textcolor{white}{\textbf{Medido}} & \textcolor{white}{\textbf{Diferencia con el cálculo}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{Parámetro}} & \textcolor{white}{\textbf{Ideal nominal (R = 100 \ensuremath{\Omega}, sin RW)}} & \textcolor{white}{\textbf{Cálculo con valores medidos y RW}} & \textcolor{white}{\textbf{Medido}} & \textcolor{white}{\textbf{Diferencia con el cálculo}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  fr & 5033 Hz & 4990 Hz & 4970 Hz & \ensuremath{-}0.4 \% \\
+  \rowcolor{iubfondogris} Vsal máxima & 2.00 V & 1.60 V & 1.59 V & \ensuremath{-}0.6 \% \\
+  f1 & 4300 Hz & 4130 Hz & 4120 Hz & \ensuremath{-}0.2 \% \\
+  \rowcolor{iubfondogris} f2 & 5891 Hz & 6029 Hz & 6050 Hz & +0.3 \% \\
+  AB = f2 \ensuremath{-} f1 & 1592 Hz & 1899 Hz & 1930 Hz & +1.6 \% \\
+  \rowcolor{iubfondogris} Q = fr/AB & 3.16 & 2.63 & 2.58 & \ensuremath{-}1.9 \% \\
+  \ensuremath{\surd}(f1\textperiodcentered{}f2) & 5033 Hz & 4990 Hz & 4993 Hz & comprobación \\
+\end{xltabular}
+
+\subsection{Análisis y conclusiones}
+
+La medición coincide con el cálculo que usa los valores medidos y la resistencia de devanado, con diferencias menores del 2 \%, y la comprobación $\sqrt{f_1 f_2} = 4993\ \text{Hz}$ confirma que las tres frecuencias medidas son coherentes entre sí. El cálculo ideal con valores nominales, en cambio, se aparta mucho: prevé una salida máxima de 2 V que el filtro nunca da, un ancho de banda un 16 \% más estrecho y un factor de calidad un 20 \% mayor. La diferencia no está en los instrumentos, sino en el modelo: los 24.6 \ensuremath{\Omega} de la bobina son una quinta parte de la resistencia del lazo. El pequeño ensanchamiento restante de la banda medida se atribuye a la capacitancia de las puntas y a la resolución de la lectura cerca de las frecuencias de corte.
+
+El caso también muestra la importancia de fijar la tensión en los bornes del circuito. Si se hubiera dejado fija en el dial del generador, su resistencia interna de 50 \ensuremath{\Omega} se habría sumado al lazo: la resistencia efectiva sería de 174 \ensuremath{\Omega}, el factor de calidad bajaría a 1.9 y el ancho de banda aparente subiría a unos 2.7 kHz. Con esta práctica se cierran los criterios del RA4 y del curso: identificar los componentes, medir circuitos resistivos, inductivos y capacitivos, y medir un circuito RLC, justificando cada diferencia entre la teoría y la medición.
+
+\begin{nota}{Nota pedagógica:}
+La columna del cálculo ideal no es un error que haya que ocultar: comparar las tres columnas ---ideal, con valores medidos y medición--- es la forma más clara de mostrar qué parte de la diferencia se debe a la tolerancia de los componentes, cuál al modelo y cuál a los instrumentos.
+\end{nota}
+
+\section{Síntesis (Bloque 8)}
+
+Un circuito RLC se describe con pocos números: la frecuencia de resonancia, que depende solo de $L$ y $C$; el factor de calidad, que en serie vale $X_L/R$ y en paralelo $R/X_L$; y el ancho de banda, $AB = f_r/Q$, limitado por dos frecuencias de corte cuya media geométrica es la resonancia. Con ellos se especifica un filtro pasabanda o rechazabanda, se entiende un circuito mixto con un tanque y se decide cómo medir. La comparación sistemática entre serie y paralelo deja una regla de fondo: \textbf{son duales}, y casi cada resultado de uno se obtiene del otro intercambiando tensión y corriente, impedancia y admitancia, mínimo y máximo. El caso final cerró el hilo que empezó en la semana 1 con la identificación de un condensador: los mismos componentes del kit, verificados, formaron un filtro cuya caracterización coincidió con el cálculo dentro del 2 \%, siempre que el modelo incluyera la resistencia de devanado y la tensión se midiera en los bornes del circuito. Ese es el aprendizaje que resume el curso y los cuatro resultados de aprendizaje: calcular circuitos resistivos, capacitivos, inductivos, RC, RL y RLC en serie y en paralelo, medirlos con criterio y explicar cada diferencia con una causa física concreta, usando con precisión sus unidades y su nomenclatura.
+
+\subsection*{Componente Actitudinal}
+
+\begin{cita}
+Al cerrar el curso, devolver el kit verificado, rotulado y completo, con un registro de los valores medidos, es la última muestra de responsabilidad con el equipo: el grupo del próximo semestre empezará su trabajo sobre los datos que este grupo deja.
+\end{cita}
+
+\section{Bibliografía (Formato IEEE)}
+
+{\sloppy
+\begin{itemize}[leftmargin=2.6em, labelwidth=2.2em, labelsep=0.4em, align=left]
+  \item[{[1]}] T. L. Floyd, Principios de circuitos eléctricos, 8.\textordfeminine{} ed. México: Pearson Educación, 2007.
+  \item[{[2]}] R. L. Boylestad, Introducción al análisis de circuitos, 10.\textordfeminine{} ed. México: Pearson Educación, 2004.
+  \item[{[3]}] M. F. P. Deorsola y P. Morcelle del Valle, Circuitos eléctricos. Parte 1, 1.\textordfeminine{} ed. La Plata: Editorial de la Universidad de La Plata, 2017.
+\end{itemize}
+}
+
+\end{document}

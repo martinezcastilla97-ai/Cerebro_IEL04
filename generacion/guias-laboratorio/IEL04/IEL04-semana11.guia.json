@@ -1,0 +1,572 @@
+{
+ "formato": 3,
+ "huella": "5d69ee774a90ff69",
+ "modelo": "gpt-4o",
+ "fecha": "2026-10-27",
+ "guia": {
+  "titulo": "Circuito RLC en serie: tensiones antes, en y después de la resonancia y ley de voltajes de Kirchhoff",
+  "introduccion": "La práctica corresponde a la sesión teórica de la semana 11, «El circuito RLC en serie: reactancias opuestas, ley de voltajes de Kirchhoff y resonancia en serie», y reproduce su caso de estudio: con el resistor de 100 Ω, la bobina L3 y el condensador C2 del kit en serie, alimentados con 2,00 V eficaces, se miden la corriente y las tensiones a 3 kHz, en la resonancia y a 8 kHz, y se verifica la ley de voltajes de Kirchhoff con la bobina real. No hay un manual de laboratorio asignado al RA IEL04-RA4, por lo que la práctica se propone a partir de la bibliografía cargada: Floyd trata la impedancia, el análisis y la resonancia de los circuitos RLC en serie [1], Boylestad el circuito resonante en serie y el factor de calidad [2] y Deorsola las leyes de Kirchhoff con fasores [3].",
+  "objetivo_general": "Verificar experimentalmente el comportamiento de un circuito RLC en serie antes, en y después de su frecuencia de resonancia.",
+  "objetivos_especificos": [
+   {
+    "enunciado": "Identificar y verificar con instrumentos el resistor, la bobina y el condensador del circuito.",
+    "criterios": [
+     "CE1"
+    ]
+   },
+   {
+    "enunciado": "Medir la corriente y las tensiones del resistor, la bobina y el condensador a tres frecuencias.",
+    "criterios": [
+     "CE2"
+    ]
+   },
+   {
+    "enunciado": "Localizar experimentalmente la frecuencia de resonancia del circuito RLC en serie y verificar en ella la ley de voltajes de Kirchhoff con la bobina real.",
+    "criterios": [
+     "CE3"
+    ]
+   }
+  ],
+  "materiales": [
+   {
+    "nombre": "Resistor",
+    "especificacion": "100 Ω (medido 99,5 Ω en la sesión)",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Bobina L3 del kit",
+    "especificacion": "103K, 10,4 mH y 24,6 Ω medidos",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Condensador C2 del kit",
+    "especificacion": "104K, 97,8 nF medidos",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Generador de funciones",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Osciloscopio de dos canales con puntas ×10",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Multímetro digital de verdadero valor eficaz",
+    "especificacion": "",
+    "cantidad": 2
+   },
+   {
+    "nombre": "Medidor LCR",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Protoboard",
+    "especificacion": "",
+    "cantidad": 1
+   },
+   {
+    "nombre": "Cables de conexión",
+    "especificacion": "",
+    "cantidad": 12
+   },
+   {
+    "nombre": "Resistencia de descarga",
+    "especificacion": "1 kΩ",
+    "cantidad": 1
+   }
+  ],
+  "procedimiento_introduccion": "La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en grupos de tres estudiantes, con tres roles que rotan entre etapas: quien monta y opera el circuito, quien mide y quien registra y verifica los cálculos. Antes de energizar cualquier montaje, el docente o el monitor revisa la conexión. Cada etapa abre con su diagrama de flujo, que muestra la secuencia y las comprobaciones de un vistazo, y sigue con sus pasos numerados; cada paso indica cuánto dura, qué debe observarse para saber que salió bien y qué hacer si no. Los valores numéricos de la sesión teórica sirven de referencia: las lecturas propias del grupo se registran en las tablas de la sección de análisis.",
+  "etapas": [
+   {
+    "titulo": "Preparación y predicción",
+    "pasos": [
+     {
+      "texto": "Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 kΩ sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales.",
+      "duracion_min": 3,
+      "seguridad": "No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.",
+      "verificacion": "La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente.",
+      "recurso": null
+     },
+     {
+      "texto": "Verificar el resistor con el ohmímetro, la bobina L3 con el medidor LCR y el ohmímetro (10,4 mH y 24,6 Ω esperados) y el condensador C2 con el medidor LCR (97,8 nF esperados).",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "Si algún valor difiere más que su tolerancia del registrado, anotar el nuevo valor y rehacer el cálculo previo con él.",
+      "recurso": null
+     },
+     {
+      "texto": "Calcular con los valores medidos la frecuencia de resonancia $f_r = 1/(2\\pi\\sqrt{LC})$, el factor de calidad $Q = X_L/(R + R_W)$ y la corriente y las tensiones esperadas a 3 kHz, en $f_r$ y a 8 kHz.",
+      "duracion_min": 15,
+      "seguridad": "",
+      "verificacion": "Debe obtenerse $f_r$ cerca de 4,99 kHz y una corriente en la resonancia cerca de 16 mA.",
+      "recurso": {
+       "tipo": "ecuacion",
+       "leyenda": "Frecuencia de resonancia y factor de calidad del RLC en serie:",
+       "circuito": "",
+       "ecuacion": "f_r = \\frac{1}{2\\pi\\sqrt{L C}}, \\qquad Q = \\frac{X_L}{R + R_W}",
+       "donde": "$f_r$ en Hz, $L$ en H, $C$ en F; $X_L$, $R$ y $R_W$ en Ω; $Q$ adimensional.",
+       "grafica": null
+      }
+     },
+     {
+      "texto": "Montar en serie el resistor, L3 y C2, con el condensador del lado de tierra.",
+      "duracion_min": 6,
+      "seguridad": "Montar con el generador apagado.",
+      "verificacion": "El docente revisa el montaje antes de energizar.",
+      "recurso": {
+       "tipo": "circuito",
+       "leyenda": "Circuito RLC en serie con el condensador del lado de tierra",
+       "circuito": "\\draw (0,0) to[sV, l=$v_s$] (0,3) to[R, l=$R$] (3,3) to[L, l=$L_3$] (6,3) to[C, l=$C_2$] (6,0) -- (0,0); \\draw (0,0) node[ground]{};",
+       "ecuacion": "",
+       "donde": "",
+       "grafica": null
+      }
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Descargar C2",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Verificar componentes",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Calcular fr, Q y tensiones",
+       "forma": "caja"
+      },
+      {
+       "id": "a3",
+       "texto": "Montar el circuito",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Montaje revisado?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "a3",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a3",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a3",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Medición a 3 kHz y 8 kHz",
+    "pasos": [
+     {
+      "texto": "Ajustar el generador a una onda sinusoidal de 3 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 2,00 V eficaces.",
+      "duracion_min": 6,
+      "seguridad": "",
+      "verificacion": "El multímetro debe indicar 2,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado.",
+      "recurso": null
+     },
+     {
+      "texto": "Medir con el multímetro de verdadero valor eficaz las tensiones en el resistor, en la bobina y en el condensador, y calcular la corriente como $V_R/R$.",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "A 3 kHz la tensión del condensador debe superar a la de la bobina (carácter capacitivo).",
+      "recurso": null
+     },
+     {
+      "texto": "Repetir a 8 kHz, reajustando la tensión de la fuente a 2,00 V eficaces.",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "A 8 kHz la tensión de la bobina debe superar a la del condensador (carácter inductivo).",
+      "recurso": null
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Ajustar 3 kHz y 2 V",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Medir VR, Vbob y VC",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Repetir a 8 kHz",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Carácter esperado?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a1",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Resonancia y ley de voltajes de Kirchhoff",
+    "pasos": [
+     {
+      "texto": "Barrer la frecuencia entre 3 kHz y 8 kHz buscando el máximo de la tensión en el resistor, reajustando la fuente a 2,00 V eficaces.",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "El máximo debe aparecer cerca de 5 kHz; si no se encuentra, revisar las conexiones de la serie.",
+      "recurso": null
+     },
+     {
+      "texto": "Afinar la resonancia con el osciloscopio, buscando que la tensión del resistor quede en fase con la de la fuente, y anotar la frecuencia.",
+      "duracion_min": 8,
+      "seguridad": "",
+      "verificacion": "La diferencia con $f_r$ calculada debe ser de pocos por ciento.",
+      "recurso": null
+     },
+     {
+      "texto": "Medir en la resonancia las tensiones en el resistor, la bobina y el condensador, y comprobar que $V_S \\approx V_R + I R_W$.",
+      "duracion_min": 10,
+      "seguridad": "",
+      "verificacion": "La tensión del resistor debe ser cercana a 1,60 V y la suma con la caída en la resistencia de devanado, cercana a 2,00 V.",
+      "recurso": null
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Barrer la frecuencia",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Afinar por fase",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Medir tensiones en fr",
+       "forma": "caja"
+      },
+      {
+       "id": "a3",
+       "texto": "Verificar LVK",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿LVK se cumple?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la etapa",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "a3",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a3",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a0",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   },
+   {
+    "titulo": "Desmontaje y cierre",
+    "pasos": [
+     {
+      "texto": "Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard.",
+      "duracion_min": 3,
+      "seguridad": "Desenergizar siempre antes de retirar componentes.",
+      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente.",
+      "recurso": null
+     },
+     {
+      "texto": "Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo.",
+      "duracion_min": 4,
+      "seguridad": "",
+      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado.",
+      "recurso": null
+     },
+     {
+      "texto": "Revisar con el docente las tablas de registro antes de abandonar el banco.",
+      "duracion_min": 3,
+      "seguridad": "",
+      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento.",
+      "recurso": null
+     }
+    ],
+    "diagrama": {
+     "nodos": [
+      {
+       "id": "ini",
+       "texto": "Inicio de la etapa",
+       "forma": "terminal"
+      },
+      {
+       "id": "a0",
+       "texto": "Desenergizar el montaje",
+       "forma": "caja"
+      },
+      {
+       "id": "a1",
+       "texto": "Descargar y retirar componentes",
+       "forma": "caja"
+      },
+      {
+       "id": "a2",
+       "texto": "Revisar tablas con el docente",
+       "forma": "caja"
+      },
+      {
+       "id": "dec",
+       "texto": "¿Tablas completas?",
+       "forma": "decision"
+      },
+      {
+       "id": "fin",
+       "texto": "Fin de la práctica",
+       "forma": "terminal"
+      }
+     ],
+     "aristas": [
+      {
+       "origen": "ini",
+       "destino": "a0",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a0",
+       "destino": "a1",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a1",
+       "destino": "a2",
+       "etiqueta": ""
+      },
+      {
+       "origen": "a2",
+       "destino": "dec",
+       "etiqueta": ""
+      },
+      {
+       "origen": "dec",
+       "destino": "fin",
+       "etiqueta": "sí"
+      },
+      {
+       "origen": "dec",
+       "destino": "a2",
+       "etiqueta": "no"
+      }
+     ]
+    }
+   }
+  ],
+  "cuestiones": [
+   "¿Por qué en la resonancia la tensión en el condensador puede ser mayor que la de la fuente?",
+   "¿Qué papel tiene la resistencia de devanado de la bobina en la ley de voltajes de Kirchhoff en la resonancia?",
+   "¿Cómo cambia el carácter del circuito (capacitivo, resistivo o inductivo) al pasar por la resonancia, y cómo se observó?",
+   "¿Qué diferencia hay entre la resonancia medida y la del circuito tanque de la semana 3 con los mismos componentes, y a qué se debe?"
+  ],
+  "analisis": [
+   "Presentar en la tabla de registro la corriente y las tensiones calculadas y medidas a las tres frecuencias, con su diferencia porcentual, y señalar el carácter del circuito en cada una.",
+   "Dibujar el diagrama fasorial de tensiones en la resonancia y a 3 kHz, con la tensión de la bobina real descompuesta en su caída resistiva y su caída reactiva, y comprobar que la suma fasorial reproduce la tensión de la fuente mientras la aritmética no lo hace."
+  ],
+  "tablas_registro": [
+   {
+    "leyenda": "RLC en serie con VS = 2,00 V eficaces",
+    "columnas": [
+     "Frecuencia (kHz)",
+     "I (mA)",
+     "VR (V)",
+     "Vbob (V)",
+     "VC (V)",
+     "Carácter"
+    ],
+    "filas": 4
+   }
+  ],
+  "conclusiones": "Concluir si las mediciones reproducen el comportamiento del circuito RLC en serie a ambos lados de la resonancia y en ella, explicando la influencia de la resistencia de devanado y de las capacitancias parásitas; relacionar la práctica con los criterios de medición en circuitos RLC del RA.",
+  "preguntas_conclusion": [
+   "¿Qué tan cerca estuvo la resonancia medida de la calculada?",
+   "¿Qué demostró la verificación de la ley de voltajes de Kirchhoff en la resonancia?",
+   "¿Qué resultado fue inesperado y cómo se explica?"
+  ],
+  "seguridad": [
+   "Trabajar con el circuito desenergizado mientras se conecta o modifica el montaje; energizar solo después de la revisión del docente.",
+   "Mantener la tensión de la fuente en 2,00 V eficaces: en la resonancia en serie la tensión en la bobina y en el condensador supera varias veces la de la fuente [1].",
+   "Conectar las tierras de las dos puntas del osciloscopio a un mismo nodo de referencia: unirlas a nodos distintos cortocircuita el elemento que queda entre ellas."
+  ],
+  "referencias_cargadas": [
+   {
+    "tipo": "book",
+    "autores": [
+     "Floyd, Thomas L."
+    ],
+    "titulo": "Principios de circuitos eléctricos",
+    "editorial": "Pearson Educación",
+    "anio": "2007",
+    "edicion": "8.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Boylestad, Robert L."
+    ],
+    "titulo": "Introducción al análisis de circuitos",
+    "editorial": "Pearson Educación",
+    "anio": "2004",
+    "edicion": "10.ª",
+    "url": ""
+   },
+   {
+    "tipo": "book",
+    "autores": [
+     "Deorsola, M. F. P.",
+     "Morcelle del Valle, P."
+    ],
+    "titulo": "Circuitos eléctricos. Parte 1",
+    "editorial": "Editorial de la Universidad de La Plata",
+    "anio": "2017",
+    "edicion": "1.ª",
+    "url": ""
+   }
+  ],
+  "referencias_externas": [],
+  "base_bibliografica": [
+   1,
+   2,
+   3
+  ]
+ }
+}

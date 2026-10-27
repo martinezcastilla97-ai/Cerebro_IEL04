@@ -1,0 +1,153 @@
+{
+ "formato": 2,
+ "temario_hash": "379688a119f6262f",
+ "modelo": "gpt-4o",
+ "fecha": "2026-10-27",
+ "partes": {
+  "apertura": {
+   "huella": "b445a11b18f7af01",
+   "diapositivas": [
+    {
+     "titulo": "Punto de partida de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 11: Circuito RLC en serie\n  \\item \\textbf{Semana 12: Circuito RLC en paralelo: análisis y Ley de Corrientes de Kirchhoff}\n  \\item Semana 13: Cálculo y medición de parámetros en circuitos RLC serie\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Calcular admitancias y aplicar la ley de corrientes de Kirchhoff\n  \\item Analizar un circuito RLC en serie y su resonancia (semana 11)\n  \\item Convertir una bobina real a su modelo en paralelo con R\\_p\n  \\item Calcular potencia activa, reactiva y aparente y factor de potencia\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Resultados de aprendizaje",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.45\\textwidth}\n\\begin{caja}{iubnavy}{IEL04-RA4}\n\\footnotesize Calcular un circuito resistivo, inductivo, capacitivo y RLC, sea en serie o paralelo.\n\\end{caja}\n\\vspace{1mm}\n\\begin{cajaplana}{iubblue}\n\\scriptsize \\textbf{CE1.} Identificar los tipos de resistores, inductores y capacitores.\\\\[2pt]\n\\textbf{CE2.} Realizar mediciones en un circuito resistivo, inductivo y capacitivo.\\\\[2pt]\n\\textbf{CE3.} Realizar mediciones en un circuito RLC.\n\\end{cajaplana}\n  \\column{0.52\\textwidth}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r0) at (1.25,0.00) {Identificar y verificar el resistor, la bobina y el condensador de un circuito RLC en paralelo antes del montaje.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Aplicar};\n  \\node[box, fill=iuborange, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular la admitancia, la impedancia y el carácter de un circuito RLC en paralelo a una frecuencia dada.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Aplicar};\n  \\node[box, fill=iubgreen, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r2) at (1.25,-2.90) {Analizar las corrientes de un circuito RLC en paralelo con la ley de corrientes de Kirchhoff y explicar la resonancia en paralelo y el circuito tanque real.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Analizar};\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r3) at (1.25,-4.35) {Medir las corrientes de rama y la corriente total de un RLC en paralelo a varias frecuencias y verificar la resonancia.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};\n  \\draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);\n  \\draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);\n  \\draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);\n\\end{tikzpicture}\n\\end{adjustbox}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-01": {
+   "huella": "57b58cf6f7b43908",
+   "diapositivas": [
+    {
+     "titulo": "Tres elementos en paralelo: cuando las corrientes se oponen",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item En la semana 11, el resistor, la bobina y el condensador compartían la corriente, y sus tensiones reactivas, opuestas, se restaban.\n  \\item El circuito RLC en paralelo aparece en tres contextos que el técnico en sistemas eléctricos encuentra a menudo.\n  \\item Cuando son iguales, en la resonancia, se cancelan y la fuente solo entrega la corriente del resistor: la corriente total es mínima y la impedancia máxima.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Conviene tener a la vista la tabla de la semana 11 al estudiar esta sesión: casi cada resultado del RLC en paralelo es el del RLC en serie con tensión y corriente, impedancia y admitancia, y mínimo y máximo intercambiados.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Relaciones de fase en el circuito RLC en paralelo",
+     "cuerpo": "\\elementoTemario{figura}{1}"
+    }
+   ]
+  },
+  "bloque-02": {
+   "huella": "e221fbae0c233aaa",
+   "diapositivas": [
+    {
+     "titulo": "Admitancia e impedancia del circuito RLC en paralelo",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item En paralelo, como se vio en las semanas 6 y 8, conviene trabajar con admitancias: se suman directamente, igual que las impedancias en serie.\n  \\item Lejos de la resonancia, una de las dos ramas reactivas deriva casi toda la corriente y la impedancia cae a unos cientos de ohmios.\n  \\item Si el circuito lleva una bobina real, su resistencia de devanado no está en paralelo sino en serie con la inductancia, dentro de la misma rama.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Aplicar al paralelo el criterio del serie y concluir que por debajo de la resonancia el circuito es capacitivo.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Admitancia e impedancia del circuito RLC",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.40\\linewidth}\n\\elementoTemario{ecuacion}{1}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Admitancia e impedancia de un RLC en paralelo ideal",
+     "cuerpo": "\\elementoTemario{tabla}{1}"
+    }
+   ]
+  },
+  "bloque-03": {
+   "huella": "6293b1e12b58403b",
+   "diapositivas": [
+    {
+     "titulo": "Ley de corrientes de Kirchhoff en el circuito RLC",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item La ley de corrientes de Kirchhoff se aplica en el nodo donde la corriente de la fuente se divide entre las tres ramas.\n  \\item Con $R = 1\\ \\text{k}\\Omega$, $L = 10\\ \\text{mH}$, $C = 0.1\\ \\mu\\text{F}$ y 2 V eficaces, a 4 kHz: $I_R = 2.00\\ \\text{mA}$, $I_C = 2 \\times 2.513 = 5.03\\ \\text{mA}$ e $I_L = 2 \\times 3.979 = 7.96\\ \\text{mA}$.\n  \\item Las columnas de la tabla también muestran por qué el carácter del circuito cambia con la frecuencia.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Advertencia de seguridad}\n\\footnotesize En un circuito tanque de potencia, la corriente que circula entre la bobina y el condensador en la resonancia puede ser muchas veces la de la línea.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Ley de corrientes de Kirchhoff en el circuito",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.50\\linewidth}\n\\elementoTemario{ecuacion}{2}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Corrientes de un RLC en paralelo ideal",
+     "cuerpo": "\\elementoTemario{tabla}{2}"
+    }
+   ]
+  },
+  "bloque-04": {
+   "huella": "c5dfb59b70a8f7aa",
+   "diapositivas": [
+    {
+     "titulo": "Resonancia en paralelo: impedancia máxima y corriente mínima",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item La resonancia en paralelo ocurre cuando las susceptancias capacitiva e inductiva son iguales, $B_C = B_L$, lo que equivale a $X_L = X_C$.\n  \\item Con $L = 10\\ \\text{mH}$ y $C = 0.1\\ \\mu\\text{F}$, $f_r = 5.03\\ \\text{kHz}$ y $X_L = 316\\ \\Omega$.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Usar para el paralelo el factor de calidad del serie, $Q = X_L/R$.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Resonancia en paralelo",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{3}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Impedancia de un RLC en paralelo (L = 10 mH, C = 0.1 µF)",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.62\\textwidth}\n\\elementoTemario{figura}{2}\n  \\column{0.35\\textwidth}\n\\begin{caja}{iubblue}{Lectura de la gráfica}\n\\footnotesize Y, a la inversa, un tanque en serie con una línea bloquea precisamente su frecuencia de resonancia, que es el principio de los filtros de rechazo de banda.\n\\end{caja}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-05": {
+   "huella": "4b8c19724389c4ca",
+   "diapositivas": [
+    {
+     "titulo": "El circuito tanque con bobina real",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item El circuito tanque ideal supone una bobina sin resistencia.\n  \\item La resistencia de devanado tiene además un efecto sobre la propia frecuencia de resonancia.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Suponer que la impedancia máxima de un tanque real es infinita, o igual a la resistencia del resistor externo.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: El circuito tanque con bobina real",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.27\\linewidth}\n\\elementoTemario{ecuacion}{4}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Efecto de la resistencia de devanado en un tanque con L",
+     "cuerpo": "\\elementoTemario{tabla}{3}"
+    }
+   ]
+  },
+  "bloque-06": {
+   "huella": "e8ddd3c09521cd0e",
+   "diapositivas": [
+    {
+     "titulo": "Corrección del factor de potencia con un condensador",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item La aplicación más importante del RLC en paralelo en los sistemas eléctricos es la \\textbf{corrección del factor de potencia}.\n  \\item El condensador no cambia la potencia real de la carga, porque no disipa energía; solo reduce la potencia reactiva que la red debe suministrar.\n  \\item El ángulo inicial es $\\cos^{-1}0.70 = 45.6^\\circ$, con $\\tan\\theta_1 = 1.020$; el final, $\\cos^{-1}0.95 = 18.2^\\circ$, con $\\tan\\theta_2 = 0.329$.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Advertencia de seguridad}\n\\footnotesize Los bancos de condensadores de corrección conservan su carga tras desconectarlos.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Corrección del factor de potencia",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{5}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Corrección del factor de potencia de una carga de 1.2 kW",
+     "cuerpo": "\\elementoTemario{tabla}{4}"
+    }
+   ]
+  },
+  "bloque-07": {
+   "huella": "3c4db8df32c7ed3c",
+   "diapositivas": [
+    {
+     "titulo": "Medición de un circuito RLC en paralelo antes, en y después",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Los tres se verifican antes del montaje con el ohmímetro y el medidor LCR, lo que cubre el criterio CE1.\n  \\item Con la bobina real, la corriente total se calcula sumando las admitancias de las tres ramas en forma rectangular.\n  \\item La comparación con el modelo ideal es instructiva.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Buscar que las corrientes de la bobina y del condensador sean iguales es menos preciso con una bobina real.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Medición de un circuito RLC en paralelo",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth}\n\\begin{minipage}{1.23\\linewidth}\n\\elementoTemario{ecuacion}{6}\n\\end{minipage}\n\\end{adjustbox}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Corriente total prevista del RLC en paralelo con la bobina",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.62\\textwidth}\n\\elementoTemario{figura}{3}\n  \\column{0.35\\textwidth}\n\\begin{caja}{iubblue}{Lectura de la gráfica}\n\\footnotesize Es la corriente de circulación del tanque, que no pasa por la fuente.\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "RLC en paralelo del kit con VS = 2.00 V eficaces",
+     "cuerpo": "\\elementoTemario{tabla}{5}"
+    }
+   ]
+  },
+  "bloque-08": {
+   "huella": "701a7df00b54ab5b",
+   "diapositivas": [
+    {
+     "titulo": "Síntesis de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Admitancia e impedancia del circuito RLC}\n\\scriptsize Y = G + j(BC \\ensuremath{-} BL), carácter inductivo o capacitivo según la frecuencia\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Ley de corrientes de Kirchhoff}\n\\scriptsize IT = IR + j(IC \\ensuremath{-} IL): corrientes reactivas en oposición y mayores que la total\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Resonancia en paralelo}\n\\scriptsize fr, Z = R, Q = R/XL, ancho de banda y curva de impedancia\n\\end{cardG}\n\\end{columns}\n\\vspace{2mm}\n\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{El circuito tanque con bobina real}\n\\scriptsize Equivalente RLC en paralelo, Rp(eq) = RW(Q² + 1) y desplazamiento de la resonancia\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Corrección del factor de potencia}\n\\scriptsize Compensar la corriente reactiva de una carga inductiva y dimensionar el condensador\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Medición de un circuito RLC en paralelo}\n\\scriptsize Con el kit: 4.7 k\\ensuremath{\\Omega}, bobina de 10.4 mH y condensador de 97.8 nF a 3 kHz, fr y 8 kHz\n\\end{cardG}\n\\end{columns}"
+    },
+    {
+     "titulo": "Reflexión para llevar",
+     "cuerpo": "\\centering\n\\begin{tikzpicture}\n  \\node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\\normalsize] (c) at (0,0) {\\itshape «Instalar un banco de condensadores sin calcular antes la corriente que circulará por él, o sin sus resistencias de descarga, pone en riesgo a quien lo intervenga después: el trabajo técnico responsable piensa también en el compañero del siguiente turno.»};\n  \\node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\\scriptsize\\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};\n\\end{tikzpicture}"
+    }
+   ]
+  }
+ }
+}

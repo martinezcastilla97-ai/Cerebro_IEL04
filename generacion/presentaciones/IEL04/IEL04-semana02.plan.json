@@ -1,0 +1,149 @@
+{
+ "formato": 2,
+ "temario_hash": "314cbaf8d2a883a0",
+ "modelo": "gpt-4o",
+ "fecha": "2026-10-27",
+ "partes": {
+  "apertura": {
+   "huella": "c3820ada0e26d787",
+   "diapositivas": [
+    {
+     "titulo": "Punto de partida de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iubblue}{Continuidad}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Semana 1: Condensadores\n  \\item \\textbf{Semana 2: Bobinas o inductores: estructura, comportamiento interno, identificación y tipos}\n  \\item Semana 3: Condensadores y bobinas en serie, en paralelo y mixto\n\\end{itemize}\n\\end{caja}\n  \\column{0.34\\textwidth}\n\\begin{caja}[height=5.9cm]{iuborange}{Prerrequisitos}\n\\scriptsize \\begin{itemize}\\setlength{\\itemsep}{2pt}\n  \\item Explicar qué es un campo magnético alrededor de un conductor\n  \\item Definir la capacitancia y calcular la energía almacenada\n  \\item Leer el código de colores de un resistor y el código de tres dígitos\n  \\item Convertir unidades con prefijos métricos (m, µ, n)\n\\end{itemize}\n\\end{caja}\n  \\column{0.29\\textwidth}\n\\begin{caja}[height=5.9cm]{iubgreen}{Competencia}\n\\scriptsize \\textbf{UC2.} Coordinar actividades asociadas a sistemas eléctricos utilizando fuentes convencionales y no convencionales de energía.\n\\end{caja}\n\\end{columns}"
+    },
+    {
+     "titulo": "Resultados de aprendizaje",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.45\\textwidth}\n\\begin{caja}{iubnavy}{IEL04-RA1}\n\\footnotesize Calcular un circuito capacitivo, inductivo y LC, sea en serie o paralelo.\n\\end{caja}\n\\vspace{1mm}\n\\begin{cajaplana}{iubblue}\n\\scriptsize \\textbf{CE1.} Identificar los tipos de capacitores e inductores.\\\\[2pt]\n\\textbf{CE2.} Realizar mediciones en un circuito capacitivo e inductivo.\\\\[2pt]\n\\textbf{CE3.} Realizar mediciones en un circuito LC.\n\\end{cajaplana}\n  \\column{0.52\\textwidth}\n\\centering\n\\begin{adjustbox}{max width=\\linewidth, max totalheight=6.1cm}\n\\begin{tikzpicture}\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r0) at (1.25,0.00) {Explicar cómo una bobina se opone a los cambios de corriente a partir de las leyes de Faraday y de Lenz.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,0.00) {Comprender};\n  \\node[box, fill=iuborange, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r1) at (1.25,-1.45) {Calcular la inductancia de una bobina a partir de sus parámetros físicos, y la tensión inducida y la energía almacenada a partir de su corriente.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-1.45) {Aplicar};\n  \\node[box, fill=iubgreen, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r2) at (1.25,-2.90) {Identificar el tipo de núcleo, el valor nominal y la tolerancia de inductores comerciales a partir de su construcción y su marcado.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-2.90) {Aplicar};\n  \\node[box, fill=iubblue, text width=4.9cm, align=left, font=\\tiny, anchor=west] (r3) at (1.25,-4.35) {Medir la inductancia y la resistencia de devanado de bobinas y decidir si son aptas para las mediciones en circuitos inductivos y LC.};\n  \\node[tag=iubnavy, font=\\tiny\\bfseries, minimum width=1.15cm, anchor=east] at (1.1,-4.35) {Evaluar};\n  \\draw[flecha, draw=iubnavy!40] (r0.south) -- (r1.north);\n  \\draw[flecha, draw=iubnavy!40] (r1.south) -- (r2.north);\n  \\draw[flecha, draw=iubnavy!40] (r2.south) -- (r3.north);\n\\end{tikzpicture}\n\\end{adjustbox}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-01": {
+   "huella": "da1a4a3fb438b0e5",
+   "diapositivas": [
+    {
+     "titulo": "Por qué estudiar la bobina",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item La semana anterior mostró que el condensador guarda energía en un campo eléctrico y se opone a los cambios bruscos de tensión.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Advertencia de seguridad}\n\\footnotesize Al trabajar con inductores pueden desarrollarse tensiones inducidas altas cuando el campo magnético cambia con rapidez, por ejemplo al abrir el circuito o al cambiar la corriente abruptamente $[1]$.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Cadena causal de la autoinducción",
+     "cuerpo": "\\elementoTemario{figura}{1}"
+    }
+   ]
+  },
+  "bloque-02": {
+   "huella": "f3cca04afb158929",
+   "diapositivas": [
+    {
+     "titulo": "Estructura de la bobina y definición de inductancia",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Un inductor es un componente pasivo formado por un alambre enrollado alrededor de un \\textbf{núcleo}, que exhibe la propiedad de inductancia $[1]$.\n  \\item Al igual que la capacitancia, la inductancia es una propiedad de la construcción, no de la corriente que circula.\n  \\item Una bobina de 350 vueltas sobre un núcleo de 1.5 cm de longitud y 0.5 cm de diámetro, con $\\mu = 0.25 \\times 10^{-3}\\ \\text{H/m}$, tiene $A = 1.96 \\times 10^{-5}\\ \\text{m}^2$ y $L = (350)^2 (0.25 \\times 10^{-3})(1.96 \\times 10^{-5}) / 0.015 \\approx 40\\ \\text{mH}$ $[1]$.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Calcular el área con el diámetro en lugar del radio, o dejar las dimensiones en centímetros.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Estructura de la bobina y definición",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{1}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Efecto del núcleo y del número de vueltas sobre",
+     "cuerpo": "\\elementoTemario{tabla}{1}"
+    }
+   ]
+  },
+  "bloque-03": {
+   "huella": "b948199ad888b5cd",
+   "diapositivas": [
+    {
+     "titulo": "Comportamiento interno",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item El comportamiento de la bobina se apoya en dos leyes del electromagnetismo.\n  \\item En un inductor no hace falta un imán externo: la propia corriente crea el flujo.\n  \\item Como en el condensador, la dependencia es cuadrática: duplicar la corriente cuadruplica la energía.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Hallazgo contraintuitivo}\n\\footnotesize A diferencia del condensador, que en la práctica puede tratarse como ideal, la bobina casi nunca es ideal: su resistencia de devanado se mide con un ohmímetro y debe incluirse en los cálculos cuando no es despreciable frente a las demás resistencias del circuito.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Comportamiento interno",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{2}\n\\end{cajaplana}\n\\vspace{1mm}\n\\begin{cajaplana}{iuborange}\n\\centering\n\\elementoTemario{ecuacion}{3}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Energía almacenada en función de la corriente para bobinas",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.62\\textwidth}\n\\elementoTemario{figura}{2}\n  \\column{0.35\\textwidth}\n\\begin{caja}{iubblue}{Lectura de la gráfica}\n\\footnotesize Como en el condensador, la dependencia es cuadrática: duplicar la corriente cuadruplica la energía.\n\\end{caja}\n\\end{columns}"
+    }
+   ]
+  },
+  "bloque-04": {
+   "huella": "b15d8735bc057f7e",
+   "diapositivas": [
+    {
+     "titulo": "Tipos de inductores según su núcleo y su construcción",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Los inductores se fabrican en una gran diversidad de formas y tamaños, pero caen en dos categorías generales: \\textbf{fijos} y \\textbf{variables} $[1]$.\n  \\item Los fabricantes las ofrecen con pocas espiras, de 1 a 32 vueltas, para aplicaciones de alta frecuencia $[2]$.\n  \\item Las de microhenrios, de aire, ferrita o montaje superficial, trabajan en circuitos de radiofrecuencia y en electrónica miniaturizada.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Tomar un inductor moldeado por un resistor.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Clasificación de los inductores según su ajuste",
+     "cuerpo": "\\elementoTemario{figura}{3}"
+    },
+    {
+     "titulo": "Tipos de inductores, valores típicos y aplicaciones",
+     "cuerpo": "\\elementoTemario{tabla}{2}"
+    }
+   ]
+  },
+  "bloque-05": {
+   "huella": "d70722671e2b59d2",
+   "diapositivas": [
+    {
+     "titulo": "Identificación",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item El punto de partida de la identificación son los \\textbf{valores estándar}.\n  \\item La diferencia es la unidad: el resultado de un inductor se expresa en microhenrios.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Un buen hábito es comprobar que el valor leído pertenece a la serie estándar.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Identificación",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{4}\n\\end{cajaplana}\n\\vspace{1mm}\n\\begin{cajaplana}{iuborange}\n\\centering\n\\elementoTemario{ecuacion}{5}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Lectura de marcados frecuentes de inductores",
+     "cuerpo": "\\elementoTemario{tabla}{3}"
+    }
+   ]
+  },
+  "bloque-06": {
+   "huella": "d2f6f7f2ccbc3794",
+   "diapositivas": [
+    {
+     "titulo": "Unidades, múltiplos, submúltiplos, simbología y nomenclatura",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item La \\textbf{simbología} del inductor representa las espiras del devanado: una línea ondulada o una sucesión de semicírculos entre dos terminales $[1]$.\n  \\item En los planos, cada bobina se identifica con la letra \\textbf{L} y un número correlativo, del mismo modo que los condensadores usan la C.\n  \\item La comparación con la semana anterior es directa.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Error frecuente}\n\\footnotesize Escribir «mH» cuando se quiere decir «µH», o al revés.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Unidades de inductancia y conversiones",
+     "cuerpo": "\\elementoTemario{tabla}{4}"
+    },
+    {
+     "titulo": "Símbolos y nomenclatura de los inductores",
+     "cuerpo": "\\elementoTemario{tabla}{5}"
+    }
+   ]
+  },
+  "bloque-07": {
+   "huella": "d777198905208e8a",
+   "diapositivas": [
+    {
+     "titulo": "Identificación y verificación de las bobinas de un kit",
+     "cuerpo": "\\begin{columns}[c,onlytextwidth]\n  \\column{0.57\\textwidth}\n\\small\n\\begin{itemize}\\setlength{\\itemsep}{4pt}\n  \\item Las lecturas que se usan más abajo son valores de ejemplo para ilustrar el procedimiento.\n  \\item El circuito abierto se detecta con facilidad con un ohmímetro, que indica una resistencia infinita $[2]$.\n  \\item L2: 472 son 4.7 mH, con K (±10 \\%); el intervalo va de 4.23 mH a 5.17 mH, y 4.62 mH da $e_{\\%} = -1.7\\ \\%$.\n\\end{itemize}\n  \\column{0.4\\textwidth}\n\\begin{cardO}{Nota pedagógica}\n\\footnotesize Conviene medir la resistencia de devanado de cada bobina nueva y anotarla en su bolsa o en el inventario: ese dato de referencia es el que permitirá detectar más adelante un corto entre espiras que el ohmímetro, por sí solo, no revela.\n\\end{cardO}\n\\end{columns}"
+    },
+    {
+     "titulo": "Ecuaciones: Identificación y verificación de las bobinas",
+     "cuerpo": "\\begin{cajaplana}{iubblue}\n\\centering\n\\elementoTemario{ecuacion}{6}\n\\end{cajaplana}"
+    },
+    {
+     "titulo": "Identificación y verificación de las bobinas del kit",
+     "cuerpo": "\\elementoTemario{tabla}{6}"
+    }
+   ]
+  },
+  "bloque-08": {
+   "huella": "effdcdc283040d3b",
+   "diapositivas": [
+    {
+     "titulo": "Síntesis de la sesión",
+     "cuerpo": "\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Estructura de la bobina y definición}\n\\scriptsize Espiras, núcleo, permeabilidad y L = N²µA/l\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Comportamiento interno}\n\\scriptsize Tensión inducida v = L di/dt, oposición al cambio, W = LI²/2 y modelo real con RW y CW\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Tipos de inductores según su núcleo}\n\\scriptsize Núcleo de aire, de hierro y de ferrita; toroidales, moldeados, de montaje superficial y variables\n\\end{cardG}\n\\end{columns}\n\\vspace{2mm}\n\\begin{columns}[T,onlytextwidth]\n  \\column{0.32\\textwidth}\n\\begin{cardB}{Identificación}\n\\scriptsize Lectura del valor, la tolerancia y la corriente nominal en el cuerpo del inductor\n\\end{cardB}\n  \\column{0.32\\textwidth}\n\\begin{cardO}{Unidades, múltiplos, submúltiplos}\n\\scriptsize Henrio, mH y µH, conversiones y símbolos de núcleo de aire, hierro, ferrita y variable\n\\end{cardO}\n  \\column{0.32\\textwidth}\n\\begin{cardG}{Identificación y verificación}\n\\scriptsize Decodificar el marcado, medir inductancia y resistencia de devanado, y detectar abiertos y cortos\n\\end{cardG}\n\\end{columns}"
+    },
+    {
+     "titulo": "Reflexión para llevar",
+     "cuerpo": "\\centering\n\\begin{tikzpicture}\n  \\node[fill=iubnavy, text=white, rounded corners=6pt, text width=11.5cm, inner sep=12pt, align=center, font=\\normalsize] (c) at (0,0) {\\itshape «Registrar con cuidado la inductancia y la resistencia de devanado de cada bobina, y no solo si funciona, es un trabajo que beneficia a todo el equipo: esos datos permitirán a los compañeros de los próximos semestres detectar a tiempo una bobina deteriorada.»};\n  \\node[fill=iubyellow, text=iubnavy, rounded corners=3pt, font=\\scriptsize\\bfseries, inner sep=4pt, anchor=south west] at ([yshift=-4pt]c.north west) {Componente actitudinal};\n\\end{tikzpicture}"
+    }
+   ]
+  }
+ }
+}
