@@ -1,8 +1,8 @@
 {
- "formato": 2,
+ "formato": 3,
  "huella": "b4493373c7e8f8f7",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "guia": {
   "titulo": "Circuito RC mixto: predicción con el método general y medición de corrientes, tensiones y ángulo",
   "introduccion": "La práctica cierra el RA IEL04-RA2 y corresponde a la sesión teórica de la semana 7, «Cálculo y medición de parámetros en circuitos RC en serie, en paralelo y mixtos». Reproduce su caso de estudio: un resistor $R_1$ en serie con el paralelo de $R_2$ y C2, alimentado con 5,00 V eficaces a 1 kHz; primero se predicen con el método general de impedancias y admitancias la corriente, las tensiones y el ángulo, y después se miden y se explica cada diferencia. Sin un manual de laboratorio asignado, la práctica se propone a partir de la bibliografía cargada: Floyd trata el análisis de circuitos RC en serie-paralelo y el uso de las puntas ×1 y ×10 del osciloscopio y su efecto de carga [1], Boylestad las redes de ca en serie-paralelo [2] y Deorsola los instrumentos y mediciones [3].",
@@ -93,25 +93,43 @@
       "texto": "Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 kΩ sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales.",
       "duracion_min": 3,
       "seguridad": "No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.",
-      "verificacion": "La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente."
+      "verificacion": "La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente.",
+      "recurso": null
      },
      {
       "texto": "Medir R1 y R2 con el ohmímetro y C2 con el medidor LCR, y anotar los valores.",
       "duracion_min": 6,
       "seguridad": "",
-      "verificacion": "R2 debe leer cerca de 1492 Ω y C2 cerca de 97,8 nF."
+      "verificacion": "R2 debe leer cerca de 1492 Ω y C2 cerca de 97,8 nF.",
+      "recurso": null
      },
      {
       "texto": "Calcular con los valores medidos la admitancia del paralelo, la impedancia total, la corriente, las tensiones $V_{R1}$ y $V_p$, las corrientes de rama y el ángulo.",
       "duracion_min": 15,
       "seguridad": "",
-      "verificacion": "La corriente total esperada es de unos 2,56 mA, adelantada unos 22° a la tensión; si el cálculo difiere mucho, revisar la conversión de admitancia a impedancia."
+      "verificacion": "La corriente total esperada es de unos 2,56 mA, adelantada unos 22° a la tensión; si el cálculo difiere mucho, revisar la conversión de admitancia a impedancia.",
+      "recurso": {
+       "tipo": "ecuacion",
+       "leyenda": "Impedancia total del circuito mixto:",
+       "circuito": "",
+       "ecuacion": "\\mathbf{Z}_T = R_1 + \\frac{1}{G_2 + j B_C}",
+       "donde": "$\\mathbf{Z}_T$ en ohmios (Ω), $G_2 = 1/R_2$ y $B_C = 2\\pi f C$ en siemens (S).",
+       "grafica": null
+      }
      },
      {
       "texto": "Montar R1 en serie con el paralelo de R2 y C2, con el resistor sensor en serie del lado de tierra.",
       "duracion_min": 7,
       "seguridad": "Montar con el generador apagado.",
-      "verificacion": "El docente revisa el montaje antes de energizar."
+      "verificacion": "El docente revisa el montaje antes de energizar.",
+      "recurso": {
+       "tipo": "circuito",
+       "leyenda": "Circuito RC mixto: R1 en serie con el paralelo de R2 y C2",
+       "circuito": "\\draw (0,0) to[sV, l=$v_s$] (0,3) to[R, l=$R_1$] (3,3) to[R, l=$R_2$] (3,0) -- (0,0); \\draw (3,3) -- (6,3) to[C, l=$C_2$] (6,0) -- (3,0); \\draw (0,0) node[ground]{};",
+       "ecuacion": "",
+       "donde": "",
+       "grafica": null
+      }
      }
     ],
     "diagrama": {
@@ -198,19 +216,22 @@
       "texto": "Ajustar el generador a una onda sinusoidal de 1 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 5,00 V eficaces.",
       "duracion_min": 6,
       "seguridad": "",
-      "verificacion": "El multímetro debe indicar 5,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado."
+      "verificacion": "El multímetro debe indicar 5,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado.",
+      "recurso": null
      },
      {
       "texto": "Medir $V_{R1}$ y la tensión del paralelo $V_p$ con el multímetro de verdadero valor eficaz.",
       "duracion_min": 6,
       "seguridad": "",
-      "verificacion": "La suma aritmética debe superar 5 V; las lecturas deben estar a menos del 2 % de la predicción."
+      "verificacion": "La suma aritmética debe superar 5 V; las lecturas deben estar a menos del 2 % de la predicción.",
+      "recurso": null
      },
      {
       "texto": "Con el circuito desenergizado, insertar el amperímetro en serie con la fuente, energizar y medir la corriente total; repetir en la rama de R2 y en la del condensador.",
       "duracion_min": 15,
       "seguridad": "Insertar el amperímetro solo con el circuito desenergizado.",
-      "verificacion": "Las tres lecturas deben estar a menos del 2 % de la predicción; si una se aparta más, revisar el contacto del amperímetro."
+      "verificacion": "Las tres lecturas deben estar a menos del 2 % de la predicción; si una se aparta más, revisar el contacto del amperímetro.",
+      "recurso": null
      }
     ],
     "diagrama": {
@@ -287,13 +308,15 @@
       "texto": "Medir con el osciloscopio el desfase entre la tensión de la fuente y la tensión en el resistor sensor, usando puntas ×10 [1].",
       "duracion_min": 8,
       "seguridad": "",
-      "verificacion": "La corriente debe adelantar a la tensión unos 22°; si se ve atrasada, revisar la polaridad de las puntas."
+      "verificacion": "La corriente debe adelantar a la tensión unos 22°; si se ve atrasada, revisar la polaridad de las puntas.",
+      "recurso": null
      },
      {
       "texto": "Completar la tabla comparativa y anotar para cada diferencia su causa probable: resistencia del amperímetro, resolución del multímetro o de los cursores, o resistencia interna del generador [FUENTE NO CARGADA EN raw/].",
       "duracion_min": 10,
       "seguridad": "",
-      "verificacion": "Cada diferencia mayor del 1 % debe tener una causa identificada; si no, repetir esa medición."
+      "verificacion": "Cada diferencia mayor del 1 % debe tener una causa identificada; si no, repetir esa medición.",
+      "recurso": null
      }
     ],
     "diagrama": {
@@ -370,19 +393,22 @@
       "texto": "Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard.",
       "duracion_min": 3,
       "seguridad": "Desenergizar siempre antes de retirar componentes.",
-      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente."
+      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente.",
+      "recurso": null
      },
      {
       "texto": "Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo.",
       "duracion_min": 4,
       "seguridad": "",
-      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado."
+      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado.",
+      "recurso": null
      },
      {
       "texto": "Revisar con el docente las tablas de registro antes de abandonar el banco.",
       "duracion_min": 3,
       "seguridad": "",
-      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento."
+      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento.",
+      "recurso": null
      }
     ],
     "diagrama": {

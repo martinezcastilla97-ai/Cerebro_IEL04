@@ -1,8 +1,8 @@
 {
- "formato": 2,
+ "formato": 3,
  "huella": "c924d604cf87cfb7",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "guia": {
   "titulo": "Caracterización de un filtro pasabanda RLC en serie: frecuencia de resonancia, frecuencias de corte, ancho de banda y factor de calidad",
   "introduccion": "La práctica cierra el RA IEL04-RA4 y corresponde a la sesión teórica de la semana 13, «Cálculo y medición de parámetros en circuitos RLC en serie, en paralelo y mixtos: filtros resonantes, frecuencia de resonancia, ancho de banda y nomenclatura». Reproduce su caso de estudio: un filtro pasabanda formado por el resistor de 100 Ω, la bobina L3 y el condensador C2 en serie, con la salida en el resistor, del que se miden la frecuencia de resonancia, las frecuencias de corte, el ancho de banda y el factor de calidad. No hay un manual de laboratorio asignado, por lo que la práctica se propone a partir de la bibliografía cargada: Floyd define el ancho de banda de los circuitos resonantes entre las frecuencias en que la respuesta cae al 70,7 % y trata los filtros pasabanda [1], Boylestad el factor de calidad y la selectividad [2] y Deorsola la nomenclatura y la simbología de los circuitos [3].",
@@ -88,25 +88,36 @@
       "texto": "Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 kΩ sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales.",
       "duracion_min": 3,
       "seguridad": "No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.",
-      "verificacion": "La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente."
+      "verificacion": "La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente.",
+      "recurso": null
      },
      {
       "texto": "Verificar el resistor con el ohmímetro, la bobina L3 con el medidor LCR y el ohmímetro (10,4 mH y 24,6 Ω esperados) y el condensador C2 con el medidor LCR (97,8 nF esperados).",
       "duracion_min": 8,
       "seguridad": "",
-      "verificacion": "Si algún valor difiere más que su tolerancia del registrado, anotar el nuevo valor y rehacer el cálculo previo con él."
+      "verificacion": "Si algún valor difiere más que su tolerancia del registrado, anotar el nuevo valor y rehacer el cálculo previo con él.",
+      "recurso": null
      },
      {
       "texto": "Calcular con los valores medidos la frecuencia de resonancia, el factor de calidad con la resistencia total del lazo $R + R_W$, las frecuencias de corte y el ancho de banda $AB = f_r/Q$.",
       "duracion_min": 12,
       "seguridad": "",
-      "verificacion": "Deben obtenerse $f_r$ cerca de 4990 Hz, Q cerca de 2,6 y un ancho de banda cercano a 1900 Hz."
+      "verificacion": "Deben obtenerse $f_r$ cerca de 4990 Hz, Q cerca de 2,6 y un ancho de banda cercano a 1900 Hz.",
+      "recurso": null
      },
      {
       "texto": "Montar en serie el resistor, L3 y C2, con el resistor del lado de tierra para medir en él la salida.",
       "duracion_min": 6,
       "seguridad": "Montar con el generador apagado.",
-      "verificacion": "El docente revisa el montaje antes de energizar."
+      "verificacion": "El docente revisa el montaje antes de energizar.",
+      "recurso": {
+       "tipo": "circuito",
+       "leyenda": "Filtro pasabanda RLC en serie con la salida en el resistor",
+       "circuito": "\\draw (0,0) to[sV, l=$v_{ent}$] (0,3) to[L, l=$L_3$] (3,3) to[C, l=$C_2$] (6,3) to[R, l_=$R$, v^=$v_{sal}$] (6,0) -- (0,0); \\draw (0,0) node[ground]{};",
+       "ecuacion": "",
+       "donde": "",
+       "grafica": null
+      }
      }
     ],
     "diagrama": {
@@ -193,19 +204,22 @@
       "texto": "Ajustar el generador a una onda sinusoidal de 5 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 2,00 V eficaces.",
       "duracion_min": 6,
       "seguridad": "",
-      "verificacion": "El multímetro debe indicar 2,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado."
+      "verificacion": "El multímetro debe indicar 2,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado.",
+      "recurso": null
      },
      {
       "texto": "Barrer la frecuencia buscando el máximo de la tensión en el resistor, reajustando la entrada a 2,00 V eficaces a cada frecuencia.",
       "duracion_min": 8,
       "seguridad": "",
-      "verificacion": "El máximo debe estar cerca de 5 kHz y por debajo de 2,00 V por la resistencia de devanado."
+      "verificacion": "El máximo debe estar cerca de 5 kHz y por debajo de 2,00 V por la resistencia de devanado.",
+      "recurso": null
      },
      {
       "texto": "Afinar la resonancia por fase con el osciloscopio (tensión del resistor en fase con la de la fuente) y anotar $f_r$ y la tensión de salida máxima.",
       "duracion_min": 8,
       "seguridad": "",
-      "verificacion": "La tensión de salida máxima esperada es cercana a 1,60 V."
+      "verificacion": "La tensión de salida máxima esperada es cercana a 1,60 V.",
+      "recurso": null
      }
     ],
     "diagrama": {
@@ -282,25 +296,87 @@
       "texto": "Calcular el 70,7 % de la tensión de salida máxima [1].",
       "duracion_min": 2,
       "seguridad": "",
-      "verificacion": "Con 1,60 V de máximo, el nivel de corte es de unos 1,13 V."
+      "verificacion": "Con 1,60 V de máximo, el nivel de corte es de unos 1,13 V.",
+      "recurso": {
+       "tipo": "grafica",
+       "leyenda": "Respuesta esperada del filtro con R = 99,5 Ω, RW = 24,6 Ω, L = 10,4 mH y C = 97,8 nF (2,00 V a la entrada)",
+       "circuito": "",
+       "ecuacion": "",
+       "donde": "",
+       "grafica": {
+        "tipo": "lineas",
+        "titulo": "Respuesta del filtro pasabanda",
+        "etiqueta_x": "Frecuencia f (Hz)",
+        "etiqueta_y": "Tensión de salida (V)",
+        "variable": "f",
+        "dominio_min": 2000.0,
+        "dominio_max": 10000.0,
+        "parametros": [
+         {
+          "nombre": "R",
+          "valor": 99.5
+         },
+         {
+          "nombre": "Rt",
+          "valor": 124.1
+         },
+         {
+          "nombre": "L",
+          "valor": 0.0104
+         },
+         {
+          "nombre": "C",
+          "valor": 9.78e-08
+         }
+        ],
+        "series": [
+         {
+          "nombre": "Vsal(f)",
+          "expresion": "2*R/sqrt(Rt**2+(2*pi*f*L-1/(2*pi*f*C))**2)",
+          "x": null,
+          "y": null
+         }
+        ],
+        "categorias": [],
+        "escala_log_x": false,
+        "escala_log_y": false,
+        "lineas_referencia": [
+         {
+          "eje": "y",
+          "valor": 1.13,
+          "etiqueta": "70,7 % del máximo"
+         }
+        ]
+       }
+      }
      },
      {
       "texto": "Bajar la frecuencia desde $f_r$ hasta que la salida caiga a ese nivel, reajustando la entrada, y anotar $f_1$.",
       "duracion_min": 10,
       "seguridad": "",
-      "verificacion": "$f_1$ debe estar cerca de 4,1 kHz."
+      "verificacion": "$f_1$ debe estar cerca de 4,1 kHz.",
+      "recurso": null
      },
      {
       "texto": "Subir la frecuencia desde $f_r$ hasta el mismo nivel y anotar $f_2$.",
       "duracion_min": 10,
       "seguridad": "",
-      "verificacion": "$f_2$ debe estar cerca de 6,0 kHz."
+      "verificacion": "$f_2$ debe estar cerca de 6,0 kHz.",
+      "recurso": null
      },
      {
       "texto": "Calcular $AB = f_2 - f_1$, $Q = f_r/AB$ y la comprobación $\\sqrt{f_1 f_2}$, que debe coincidir con $f_r$.",
       "duracion_min": 6,
       "seguridad": "",
-      "verificacion": "Si $\\sqrt{f_1 f_2}$ se aparta más del 2 % de $f_r$, repetir la medición de la frecuencia de corte más dudosa."
+      "verificacion": "Si $\\sqrt{f_1 f_2}$ se aparta más del 2 % de $f_r$, repetir la medición de la frecuencia de corte más dudosa.",
+      "recurso": {
+       "tipo": "ecuacion",
+       "leyenda": "Ancho de banda y factor de calidad del filtro:",
+       "circuito": "",
+       "ecuacion": "AB = f_2 - f_1, \\qquad Q = \\frac{f_r}{AB}",
+       "donde": "$AB$, $f_1$, $f_2$ y $f_r$ en hercios (Hz); $Q$ adimensional.",
+       "grafica": null
+      }
      }
     ],
     "diagrama": {
@@ -387,19 +463,22 @@
       "texto": "Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard.",
       "duracion_min": 3,
       "seguridad": "Desenergizar siempre antes de retirar componentes.",
-      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente."
+      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente.",
+      "recurso": null
      },
      {
       "texto": "Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo.",
       "duracion_min": 4,
       "seguridad": "",
-      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado."
+      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado.",
+      "recurso": null
      },
      {
       "texto": "Revisar con el docente las tablas de registro antes de abandonar el banco.",
       "duracion_min": 3,
       "seguridad": "",
-      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento."
+      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento.",
+      "recurso": null
      }
     ],
     "diagrama": {

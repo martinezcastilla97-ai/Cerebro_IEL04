@@ -1,8 +1,8 @@
 {
- "formato": 2,
+ "formato": 3,
  "huella": "4ec300fdabe61126",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "guia": {
   "titulo": "Circuitos RL en serie y en paralelo con la bobina real: tensiones, corrientes y ángulos a 10 kHz",
   "introduccion": "La práctica corresponde a la sesión teórica de la semana 8, «Circuitos RL en serie y en paralelo: reactancia inductiva, impedancia y leyes de Kirchhoff con la bobina real», y reproduce su caso de estudio: con la bobina L3 del kit y un resistor de 680 Ω se miden, a 10 kHz y 5,00 V eficaces, las tensiones y el ángulo del circuito en serie y las corrientes y el ángulo del circuito en paralelo, y se comparan con el cálculo que incluye la resistencia de devanado y con el cálculo ideal. No hay un manual de laboratorio asignado al RA IEL04-RA3, por lo que la práctica se propone a partir de la bibliografía cargada: Floyd trata la reactancia inductiva y el análisis de circuitos RL en serie y en paralelo [1], Boylestad los circuitos de ca R-L [2] y Deorsola el circuito RL y las leyes de Kirchhoff con fasores [3].",
@@ -83,13 +83,22 @@
       "texto": "Verificar la bobina L3 con el medidor LCR (inductancia) y el ohmímetro (resistencia de devanado), y el resistor de 680 Ω con el ohmímetro.",
       "duracion_min": 6,
       "seguridad": "",
-      "verificacion": "L3 debe leer cerca de 10,4 mH y 24,6 Ω, y el resistor cerca de 676 Ω; si no, anotar los valores nuevos para los cálculos."
+      "verificacion": "L3 debe leer cerca de 10,4 mH y 24,6 Ω, y el resistor cerca de 676 Ω; si no, anotar los valores nuevos para los cálculos.",
+      "recurso": null
      },
      {
       "texto": "Calcular a 10 kHz la reactancia $X_L = 2\\pi f L$, la impedancia del circuito en serie con y sin la resistencia de devanado, y las corrientes del circuito en paralelo.",
       "duracion_min": 12,
       "seguridad": "",
-      "verificacion": "Debe obtenerse $X_L$ cerca de 653 Ω y una corriente en serie cerca de 5,2 mA."
+      "verificacion": "Debe obtenerse $X_L$ cerca de 653 Ω y una corriente en serie cerca de 5,2 mA.",
+      "recurso": {
+       "tipo": "ecuacion",
+       "leyenda": "Reactancia inductiva e impedancia del RL en serie con la bobina real:",
+       "circuito": "",
+       "ecuacion": "X_L = 2\\pi f L, \\qquad Z = \\sqrt{(R + R_W)^2 + X_L^2}",
+       "donde": "$X_L$ y $Z$ en ohmios (Ω), $f$ en Hz, $L$ en H, $R$ y $R_W$ en Ω.",
+       "grafica": null
+      }
      }
     ],
     "diagrama": null
@@ -101,25 +110,36 @@
       "texto": "Montar el resistor en serie con L3, con la bobina del lado de tierra.",
       "duracion_min": 5,
       "seguridad": "Montar con el generador apagado.",
-      "verificacion": "El docente revisa el montaje antes de energizar."
+      "verificacion": "El docente revisa el montaje antes de energizar.",
+      "recurso": {
+       "tipo": "circuito",
+       "leyenda": "Circuito RL en serie con la bobina real (inductancia y resistencia de devanado)",
+       "circuito": "\\draw (0,0) to[sV, l=$v_s$] (0,3) to[R, l_=$R$, v^=$v_R$] (4,3) to[L, l=$L_3$] (4,1.5) to[R, l=$R_W$] (4,0) -- (0,0); \\draw (0,0) node[ground]{};",
+       "ecuacion": "",
+       "donde": "",
+       "grafica": null
+      }
      },
      {
       "texto": "Ajustar el generador a una onda sinusoidal de 10 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 5,00 V eficaces.",
       "duracion_min": 6,
       "seguridad": "",
-      "verificacion": "El multímetro debe indicar 5,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado."
+      "verificacion": "El multímetro debe indicar 5,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado.",
+      "recurso": null
      },
      {
       "texto": "Medir con el multímetro de verdadero valor eficaz la tensión en el resistor y la tensión entre los terminales de la bobina.",
       "duracion_min": 8,
       "seguridad": "",
-      "verificacion": "Las lecturas deben estar cerca de 3,53 V y 3,41 V; su suma aritmética supera 5 V."
+      "verificacion": "Las lecturas deben estar cerca de 3,53 V y 3,41 V; su suma aritmética supera 5 V.",
+      "recurso": null
      },
      {
       "texto": "Medir con el osciloscopio el desfase entre la tensión de la fuente y la del resistor y calcular el ángulo.",
       "duracion_min": 8,
       "seguridad": "",
-      "verificacion": "La corriente debe atrasar a la tensión unos 43°; si el ángulo se acerca a 44°, comprobar si se omitió la resistencia de devanado en el cálculo."
+      "verificacion": "La corriente debe atrasar a la tensión unos 43°; si el ángulo se acerca a 44°, comprobar si se omitió la resistencia de devanado en el cálculo.",
+      "recurso": null
      }
     ],
     "diagrama": {
@@ -206,19 +226,29 @@
       "texto": "Desenergizar y montar el resistor y L3 en paralelo, con el resistor sensor en serie con la fuente del lado de tierra.",
       "duracion_min": 6,
       "seguridad": "Desenergizar antes de modificar el montaje.",
-      "verificacion": "El docente revisa el montaje."
+      "verificacion": "El docente revisa el montaje.",
+      "recurso": {
+       "tipo": "circuito",
+       "leyenda": "Circuito RL en paralelo con el amperímetro en serie con la fuente",
+       "circuito": "\\draw (0,0) to[sV, l=$v_s$] (0,3) to[ammeter, l=$I_T$] (3,3) to[R, l=$R$] (3,0) -- (0,0); \\draw (3,3) -- (6,3) to[L, l=$L_3$] (6,0) -- (3,0); \\draw (0,0) node[ground]{};",
+       "ecuacion": "",
+       "donde": "",
+       "grafica": null
+      }
      },
      {
       "texto": "Con el circuito desenergizado, insertar el amperímetro en cada rama y en serie con la fuente, energizando para cada lectura, y anotar $I_R$, $I_{bob}$ e $I_T$.",
       "duracion_min": 15,
       "seguridad": "",
-      "verificacion": "Las lecturas deben estar cerca de 7,40 mA, 7,65 mA y 10,8 mA; $I_T$ debe ser menor que la suma aritmética."
+      "verificacion": "Las lecturas deben estar cerca de 7,40 mA, 7,65 mA y 10,8 mA; $I_T$ debe ser menor que la suma aritmética.",
+      "recurso": null
      },
      {
       "texto": "Medir con el osciloscopio el desfase entre la tensión de la fuente y la del resistor sensor.",
       "duracion_min": 7,
       "seguridad": "",
-      "verificacion": "La corriente total debe atrasar a la tensión unos 45°."
+      "verificacion": "La corriente total debe atrasar a la tensión unos 45°.",
+      "recurso": null
      }
     ],
     "diagrama": {
@@ -305,19 +335,22 @@
       "texto": "Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard.",
       "duracion_min": 3,
       "seguridad": "Desenergizar siempre antes de retirar componentes.",
-      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente."
+      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente.",
+      "recurso": null
      },
      {
       "texto": "Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo.",
       "duracion_min": 4,
       "seguridad": "",
-      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado."
+      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado.",
+      "recurso": null
      },
      {
       "texto": "Revisar con el docente las tablas de registro antes de abandonar el banco.",
       "duracion_min": 3,
       "seguridad": "",
-      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento."
+      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento.",
+      "recurso": null
      }
     ],
     "diagrama": {

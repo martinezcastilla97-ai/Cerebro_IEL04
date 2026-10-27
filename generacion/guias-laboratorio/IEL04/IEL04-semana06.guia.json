@@ -1,8 +1,8 @@
 {
- "formato": 2,
+ "formato": 3,
  "huella": "40f01f294d19e0a0",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "guia": {
   "titulo": "Circuito RC en paralelo: corrientes de rama, corriente total y ley de corrientes de Kirchhoff",
   "introduccion": "La práctica corresponde a la sesión teórica de la semana 6, «El circuito RC en paralelo: admitancia, reparto de corrientes y ley de corrientes de Kirchhoff», y reproduce su caso de estudio con los mismos componentes de la semana 4 conectados en paralelo: se miden a 1 kHz la corriente de cada rama y la corriente total, y se comprueba que la corriente total es la suma fasorial de las corrientes de rama. No hay un manual de laboratorio asignado al RA IEL04-RA2, por lo que la práctica se propone a partir de la bibliografía cargada: Floyd trata la admitancia y el análisis de circuitos RC en paralelo y la ley de corrientes de Kirchhoff [1], Boylestad las redes de ca en paralelo [2] y Deorsola las leyes de Kirchhoff con fasores [3].",
@@ -88,19 +88,29 @@
       "texto": "Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 kΩ sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales.",
       "duracion_min": 3,
       "seguridad": "No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.",
-      "verificacion": "La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente."
+      "verificacion": "La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente.",
+      "recurso": null
      },
      {
       "texto": "Verificar el resistor con el ohmímetro y el condensador C2 con el medidor LCR, y anotar sus valores medidos.",
       "duracion_min": 6,
       "seguridad": "",
-      "verificacion": "El resistor debe leer cerca de 1492 Ω y C2 cerca de 97,8 nF; si alguno sale de su tolerancia, reemplazarlo y anotar el nuevo valor."
+      "verificacion": "El resistor debe leer cerca de 1492 Ω y C2 cerca de 97,8 nF; si alguno sale de su tolerancia, reemplazarlo y anotar el nuevo valor.",
+      "recurso": null
      },
      {
       "texto": "Montar el resistor y C2 en paralelo y dejar en serie con la fuente el resistor sensor de 10 Ω, del lado de tierra, para observar la forma de onda de la corriente total.",
       "duracion_min": 7,
       "seguridad": "Montar con el generador apagado.",
-      "verificacion": "El docente revisa el montaje; el sensor debe quedar entre el paralelo y la tierra del generador."
+      "verificacion": "El docente revisa el montaje; el sensor debe quedar entre el paralelo y la tierra del generador.",
+      "recurso": {
+       "tipo": "circuito",
+       "leyenda": "Circuito RC en paralelo con el amperímetro en serie con la fuente",
+       "circuito": "\\draw (0,0) to[sV, l=$v_s$] (0,3) to[ammeter, l=$I_T$] (3,3) to[R, l=$R$] (3,0) -- (0,0); \\draw (3,3) -- (6,3) to[C, l=$C_2$] (6,0) -- (3,0); \\draw (0,0) node[ground]{};",
+       "ecuacion": "",
+       "donde": "",
+       "grafica": null
+      }
      }
     ],
     "diagrama": {
@@ -177,25 +187,29 @@
       "texto": "Ajustar el generador a una onda sinusoidal de 1 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 5,00 V eficaces.",
       "duracion_min": 6,
       "seguridad": "",
-      "verificacion": "El multímetro debe indicar 5,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado."
+      "verificacion": "El multímetro debe indicar 5,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado.",
+      "recurso": null
      },
      {
       "texto": "Con el circuito desenergizado, insertar el multímetro en serie con la rama del resistor, energizar y anotar la corriente $I_R$.",
       "duracion_min": 8,
       "seguridad": "Insertar el amperímetro solo con el circuito desenergizado.",
-      "verificacion": "Debe leerse cerca de 3,35 mA; si la lectura es nula, revisar que el multímetro esté en la función de corriente alterna."
+      "verificacion": "Debe leerse cerca de 3,35 mA; si la lectura es nula, revisar que el multímetro esté en la función de corriente alterna.",
+      "recurso": null
      },
      {
       "texto": "Repetir en la rama del condensador y anotar $I_C$.",
       "duracion_min": 8,
       "seguridad": "",
-      "verificacion": "Debe leerse cerca de 3,07 mA."
+      "verificacion": "Debe leerse cerca de 3,07 mA.",
+      "recurso": null
      },
      {
       "texto": "Repetir en serie con la fuente y anotar la corriente total $I_T$.",
       "duracion_min": 8,
       "seguridad": "",
-      "verificacion": "Debe leerse cerca de 4,55 mA, menor que la suma aritmética de las ramas; si coincide con la suma, revisar las conexiones."
+      "verificacion": "Debe leerse cerca de 4,55 mA, menor que la suma aritmética de las ramas; si coincide con la suma, revisar las conexiones.",
+      "recurso": null
      }
     ],
     "diagrama": {
@@ -282,19 +296,29 @@
       "texto": "Conectar el canal 1 a la tensión de la fuente y el canal 2 sobre el resistor sensor, con las tierras en el mismo nodo.",
       "duracion_min": 5,
       "seguridad": "",
-      "verificacion": "En el canal 2 debe verse una sinusoide pequeña (decenas de mV) en fase con la corriente total."
+      "verificacion": "En el canal 2 debe verse una sinusoide pequeña (decenas de mV) en fase con la corriente total.",
+      "recurso": null
      },
      {
       "texto": "Medir el desfase $\\Delta t$ entre los cruces por cero de las dos señales y calcular $\\theta = 360^\\circ \\times f \\times \\Delta t$.",
       "duracion_min": 8,
       "seguridad": "",
-      "verificacion": "La corriente total debe adelantar a la tensión unos 42°; si se ve atrasada, revisar la polaridad de las puntas."
+      "verificacion": "La corriente total debe adelantar a la tensión unos 42°; si se ve atrasada, revisar la polaridad de las puntas.",
+      "recurso": null
      },
      {
       "texto": "Calcular $\\sqrt{I_R^2 + I_C^2}$ y $\\arctan(I_C/I_R)$ con las lecturas y compararlos con $I_T$ y con el ángulo medido.",
       "duracion_min": 6,
       "seguridad": "",
-      "verificacion": "Los valores deben coincidir a menos del 2 % y de 1°; si no, repetir la medición de corriente correspondiente."
+      "verificacion": "Los valores deben coincidir a menos del 2 % y de 1°; si no, repetir la medición de corriente correspondiente.",
+      "recurso": {
+       "tipo": "ecuacion",
+       "leyenda": "Ley de corrientes de Kirchhoff en forma fasorial y ángulo de la corriente total:",
+       "circuito": "",
+       "ecuacion": "I_T = \\sqrt{I_R^2 + I_C^2}, \\qquad \\theta = \\arctan\\left(\\frac{I_C}{I_R}\\right)",
+       "donde": "$I_T$, $I_R$ e $I_C$ son corrientes eficaces en mA y $\\theta$ el ángulo de adelanto en grados (°).",
+       "grafica": null
+      }
      }
     ],
     "diagrama": {
@@ -371,19 +395,22 @@
       "texto": "Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard.",
       "duracion_min": 3,
       "seguridad": "Desenergizar siempre antes de retirar componentes.",
-      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente."
+      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente.",
+      "recurso": null
      },
      {
       "texto": "Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo.",
       "duracion_min": 4,
       "seguridad": "",
-      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado."
+      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado.",
+      "recurso": null
      },
      {
       "texto": "Revisar con el docente las tablas de registro antes de abandonar el banco.",
       "duracion_min": 3,
       "seguridad": "",
-      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento."
+      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento.",
+      "recurso": null
      }
     ],
     "diagrama": {

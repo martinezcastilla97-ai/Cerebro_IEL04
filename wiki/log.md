@@ -441,3 +441,9 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - IEL04-semana11: cubierta (juez)
 - IEL04-semana12: cubierta (juez)
 - IEL04-semana13: cubierta (juez)
+
+## [2026-10-27] puesta al día con la estructura 1.38 | IEL04
+- temarios: los 11 `.tex` se reescribieron desde las secciones ya redactadas (0 llamadas; el texto no cambia) para tomar la paleta IUB de `src/paleta_iub.py`; compilan sin errores (2 limpios, 9 con desbordes de margen en tablas anchas, como antes); auditoría bibliográfica repetida: 9 `cubierta`, 2 `vacio_detectado`
+- presentaciones: las 11 rehechas con el diseño 7 (solo colores del Manual de Identidad). No fue «sin LLM» como estimaba la prueba en seco: en la 1.38 cambió el texto que describe las figuras PNG, así que la huella de los bloques con figuras cambió y esas partes se volvieron a pedir (las escribió el asistente, sin proveedor `CEREBRO_*`). Compiladas sin errores; las ecuaciones largas se escalan según su largo; quedan los 5 desbordes pequeños de celdas de tabla de las semanas 2 y 11
+- guías de laboratorio: las 11 rehechas en el formato 3 (todo en LaTeX, tablas con la paleta) y con «recurso» en 2 o 3 pasos de cada una (29 en total): el circuito que se monta (circuitikz), la ecuación que se aplica y, en las semanas 4 y 13, la gráfica esperada (carga del condensador; respuesta del filtro); compiladas con pdflatex → biber las 11, sin errores; siguen en `revisar` (práctica propuesta a partir de la bibliografía)
+- observación para la plantilla: un rótulo de circuitikz con `{,}` (p. ej. `l=$1{,}5~\text{k}\Omega$`) pasa la validación de `circuito_tex` pero no compila («Extra }»); se evitó usando `l=$R$`

@@ -12,31 +12,43 @@
 %           [ieee] referencias IEEE (por defecto); [apa] referencias APA 7
 \usepackage{guialabiub}
 
-% --------------------- Diagramas de flujo del procedimiento ----------------
-% (TikZ, con los mismos estilos del .tex del temario; la plantilla no los trae)
+% ------- Tablas, diagramas de flujo, circuitos y gráficas (todo en LaTeX) -------
+% (la plantilla no los trae; los estilos y la paleta son los del .tex del temario)
+\usepackage{colortbl}                    % encabezado #121023 y filas alternas en las tablas
+\usepackage{xltabular}                   % la tabla de materiales se parte entre páginas
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\usepackage[siunitx,RPvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \usepackage{adjustbox}
+
+% Paleta del Manual de Identidad Visual IUB 2025 (los colores del manual y sus tintes)
 \definecolor{iubnavy}{HTML}{121023}
 \definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
 \definecolor{iubblue}{HTML}{00ADE7}
 \definecolor{iuborange}{HTML}{E39037}
 \definecolor{iubgreen}{HTML}{3B9C6D}
-\definecolor{iubpurple}{HTML}{8E6BBF}
-\definecolor{iubgris}{HTML}{D5DAE3}
-\definecolor{iubgrisoscuro}{HTML}{7C8598}
-\definecolor{iubfondoazul}{HTML}{EBF7FD}
-\definecolor{iubfondonaranja}{HTML}{FDF4EA}
-\definecolor{iubfondoverde}{HTML}{EDF8F2}
-\definecolor{iubfondogris}{HTML}{F4F6F9}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\pgfplotsset{cycle list={{iubblue, mark=*},{iuborange, mark=square*},{iubgreen, mark=triangle*},{iubnavy, mark=diamond*},{iubyellow, mark=pentagon*}}}
+
+% Estilos de los diagramas de flujo (TikZ) y de las gráficas (pgfplots)
 \tikzset{
-  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt},
-  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt},
-  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt},
-  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt},
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt, text=iubnavy},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt, text=iubnavy},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt, text=iubnavy},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt, text=iubnavy},
   dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
   drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
 }
+\pgfplotsset{iubejes/.style={width=0.9\linewidth, height=6.2cm, grid=major, grid style={iubgris}, axis lines*=left, axis line style={iubnavy}, tick label style={font=\small}, label style={font=\small}, title style={font=\bfseries\small}, legend cell align=left, legend style={draw=none, fill=none, font=\small, anchor=north, legend columns=-1, /tikz/every even column/.append style={column sep=8pt}}, unbounded coords=jump}}
 
 % --------------------------- Bibliografía ----------------------------
 \addbibresource{IEL04-semana01.bib}
@@ -74,15 +86,24 @@ Esta práctica lleva al banco el contenido de la sesión teórica de la semana 1
 
 % ---------------------------------------------------------------------
 \section{Materiales y Equipos}\label{sec:materiales}
-\begin{itemize}
-  \item \textbf{Kit de condensadores del grupo}: C1 223J, C2 104K 100V, C3 472K, C4 470 \textmu{}F 25 V, C5 100 \textmu{}F 16 V
-  \item \textbf{Medidor LCR}
-  \item \textbf{Multímetro digital con función de capacitancia}
-  \item \textbf{Resistencia de descarga}: 1 k\ensuremath{\Omega}
-  \item \textbf{Cables con pinzas de cocodrilo aisladas} (4)
-  \item \textbf{Lupa o lente de aumento para leer el marcado}
-  \item \textbf{Gafas de seguridad} (3)
-\end{itemize}
+% --- Tabla: materiales y equipos (7; xltabular repite el encabezado si se parte) ---
+\arrayrulecolor{iubnavy}
+\begin{xltabular}{\linewidth}{>{\raggedleft\arraybackslash}p{0.6cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedleft\arraybackslash}p{2.2cm}}
+\caption{Materiales y equipos de la práctica}\label{tab:materiales} \\
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Material o equipo}} & \textcolor{white}{\textbf{Especificación}} & \textcolor{white}{\textbf{Cantidad}} \\
+\endfirsthead
+\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Material o equipo}} & \textcolor{white}{\textbf{Especificación}} & \textcolor{white}{\textbf{Cantidad}} \\
+\endhead
+\bottomrule
+\endlastfoot
+  1 & Kit de condensadores del grupo & C1 223J, C2 104K 100V, C3 472K, C4 470 \textmu{}F 25 V, C5 100 \textmu{}F 16 V & 1 \\
+  \rowcolor{iubfondogris} 2 & Medidor LCR & --- & 1 \\
+  3 & Multímetro digital con función de capacitancia & --- & 1 \\
+  \rowcolor{iubfondogris} 4 & Resistencia de descarga & 1 k\ensuremath{\Omega} & 1 \\
+  5 & Cables con pinzas de cocodrilo aisladas & --- & 4 \\
+  \rowcolor{iubfondogris} 6 & Lupa o lente de aumento para leer el marcado & --- & 1 \\
+  7 & Gafas de seguridad & --- & 3 \\
+\end{xltabular}
 
 % ---------------------------------------------------------------------
 \section{Procedimiento}\label{sec:procedimiento}
@@ -90,7 +111,7 @@ La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en
 \lineablanco
 % --- Etapa 1: Preparación e identificación (4 pasos) ---
 \subsection{Preparación e identificación (\SI{33}{\minute})}\label{sec:etapa-1}
-% --- Figura 1: diagrama de flujo de la etapa 1 (TikZ; misma disposición que el PNG del .md) ---
+% --- Figura 1: diagrama de flujo de la etapa 1 (TikZ, con la paleta IUB) ---
 \begin{figure}[H]
   \centering
 \begin{adjustbox}{max width=\linewidth}
@@ -111,7 +132,7 @@ La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en
   \draw[dflecha] (n4) -- (n5);
   \draw[dflecha] (n5) -- (n6);
   \draw[dflecha] (n5) to[bend right=31] (n3);
-  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  % rotulos de las flechas (donde no caen sobre un nodo)
   \node[drotulo] at (3.673,-2.018) {sí};
   \node[drotulo] at (6.470,-1.573) {no};
 \end{tikzpicture}
@@ -122,12 +143,24 @@ La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en
 \begin{pasos}
   \item \textbf{Paso~1:} Revisar que el kit contenga los cinco condensadores y que el medidor LCR y el multímetro enciendan y tengan batería suficiente. \emph{(aprox.~\SI{5}{\minute})} \textbf{Comprobación:} Los dos instrumentos deben mostrar lectura estable con las puntas abiertas; si no, solicitar otro instrumento.
   \item \textbf{Paso~2:} Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 k\ensuremath{\Omega} sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales. \emph{(aprox.~\SI{3}{\minute})} \textbf{Comprobación:} La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente. \textbf{Seguridad:} No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.
+% figura del paso 2: Descarga del condensador a través de una resistencia, con el voltímetro en paralelo (circuito en circuitikz)
+\par\medskip\noindent
+\begin{minipage}{\linewidth}
+  \centering
+  \begin{adjustbox}{max width=\linewidth}
+    \begin{circuitikz}[color=iubnavy]
+    \draw (0,0) to[C, l=$C$] (0,3) -- (3,3) to[R, l=$1~\text{k}\Omega$] (3,0) -- (0,0); \draw (3,3) -- (5,3) to[voltmeter] (5,0) -- (3,0);
+    \end{circuitikz}
+  \end{adjustbox}
+  \captionof{figure}{Descarga del condensador a través de una resistencia, con el voltímetro en paralelo}\label{fig:paso-2}
+\end{minipage}
+\par\medskip
   \item \textbf{Paso~3:} Leer el marcado de cada condensador y anotar en la tabla de registro su tipo, su valor nominal (convertido a nF o \textmu{}F), su tolerancia y su tensión de trabajo, usando el código de tres dígitos y las letras J (\textpm{}5 \%) y K (\textpm{}10 \%) \cite{ref2}. \emph{(aprox.~\SI{15}{\minute})} \textbf{Comprobación:} Para C1 debe obtenerse 22 nF \textpm{}5 \%; si el valor no coincide, repasar la regla del tercer dígito como número de ceros en pF.
   \item \textbf{Paso~4:} Calcular para cada condensador el intervalo admisible $C_{\min} = C_n(1-t)$ a $C_{\max} = C_n(1+t)$. \emph{(aprox.~\SI{10}{\minute})} \textbf{Comprobación:} Para C1 el intervalo es de 20,9 nF a 23,1 nF; si el resultado difiere, revisar la conversión de unidades.
 \end{pasos}
 % --- Etapa 2: Medición de la capacitancia (4 pasos) ---
 \subsection{Medición de la capacitancia (\SI{40}{\minute})}\label{sec:etapa-2}
-% --- Figura 2: diagrama de flujo de la etapa 2 (TikZ; misma disposición que el PNG del .md) ---
+% --- Figura 3: diagrama de flujo de la etapa 2 (TikZ, con la paleta IUB) ---
 \begin{figure}[H]
   \centering
 \begin{adjustbox}{max width=\linewidth}
@@ -148,7 +181,7 @@ La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en
   \draw[dflecha] (n4) -- (n5);
   \draw[dflecha] (n5) -- (n6);
   \draw[dflecha] (n5) to[bend right=31] (n2);
-  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  % rotulos de las flechas (donde no caen sobre un nodo)
   \node[drotulo] at (3.840,-2.018) {sí};
   \node[drotulo] at (5.192,-1.232) {no};
 \end{tikzpicture}
@@ -164,7 +197,7 @@ La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en
 \end{pasos}
 % --- Etapa 3: Decisión y registro para el circuito LC (2 pasos) ---
 \subsection{Decisión y registro para el circuito LC (\SI{22}{\minute})}\label{sec:etapa-3}
-% --- Figura 3: diagrama de flujo de la etapa 3 (TikZ; misma disposición que el PNG del .md) ---
+% --- Figura 4: diagrama de flujo de la etapa 3 (TikZ, con la paleta IUB) ---
 \begin{figure}[H]
   \centering
 \begin{adjustbox}{max width=\linewidth}
@@ -183,7 +216,7 @@ La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en
   \draw[dflecha] (n3) -- (n4);
   \draw[dflecha] (n4) -- (n5);
   \draw[dflecha] (n4) to[bend right=31] (n1);
-  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  % rotulos de las flechas (donde no caen sobre un nodo)
   \node[drotulo] at (1.686,-2.018) {sí};
   \node[drotulo] at (3.348,-1.232) {no};
 \end{tikzpicture}
@@ -193,11 +226,25 @@ La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en
 \end{figure}
 \begin{pasos}
   \item \textbf{Paso~9:} Calcular la desviación $e_{\text{\%}} = (C_m - C_n)/C_n \times 100$ de cada condensador y decidir si se acepta (|e| no supera la tolerancia). \emph{(aprox.~\SI{12}{\minute})} \textbf{Comprobación:} Un condensador fuera de su intervalo se rechaza y se marca; se informa al docente para reponerlo.
+% ecuación del paso 9: Desviación relativa del valor medido respecto del nominal:
+\par Desviación relativa del valor medido respecto del nominal:
+\begin{equation}
+  e_{\text{\%}} = \frac{C_m - C_n}{C_n} \times 100
+  \label{eq:paso-9}
+\end{equation}
+donde $e_{\text{\%}}$ es la desviación en porcentaje, $C_m$ la capacitancia medida y $C_n$ la nominal, en la misma unidad (nF o \textmu{}F).
   \item \textbf{Paso~10:} Rotular C2 y C3 con su capacitancia medida y calcular con ella y con L = 10 mH la frecuencia de resonancia $f_r = 1/(2\pi\sqrt{LC})$ que se medirá en la semana 3. \emph{(aprox.~\SI{10}{\minute})} \textbf{Comprobación:} Con los valores nominales se obtiene unos 5,03 kHz para C2; un resultado muy distinto indica un error de unidades.
+% ecuación del paso 10: Frecuencia de resonancia del circuito LC:
+\par Frecuencia de resonancia del circuito LC:
+\begin{equation}
+  f_r = \frac{1}{2\pi\sqrt{L C}}
+  \label{eq:paso-10}
+\end{equation}
+donde $f_r$ en hercios (Hz), $L$ en henrios (H) y $C$ en faradios (F).
 \end{pasos}
 % --- Etapa 4: Desmontaje y cierre (3 pasos) ---
 \subsection{Desmontaje y cierre (\SI{10}{\minute})}\label{sec:etapa-4}
-% --- Figura 4: diagrama de flujo de la etapa 4 (TikZ; misma disposición que el PNG del .md) ---
+% --- Figura 5: diagrama de flujo de la etapa 4 (TikZ, con la paleta IUB) ---
 \begin{figure}[H]
   \centering
 \begin{adjustbox}{max width=\linewidth}
@@ -216,7 +263,7 @@ La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en
   \draw[dflecha] (n3) to[bend right=24] (n4);
   \draw[dflecha] (n4) -- (n5);
   \draw[dflecha] (n4) to[bend right=31] (n3);
-  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)
+  % rotulos de las flechas (donde no caen sobre un nodo)
   \node[drotulo] at (1.593,-2.018) {sí};
   \node[drotulo] at (4.302,-2.343) {no};
 \end{tikzpicture}
@@ -244,39 +291,32 @@ La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en
 Completar la tabla de identificación con el valor nominal, la tolerancia, el intervalo admisible, las dos lecturas y la desviación porcentual de cada condensador, usando la misma unidad del valor nominal en cada fila.
 \lineablanco
 Representar en un gráfico de barras la desviación porcentual de cada condensador junto con su tolerancia, de modo que se vea de un vistazo cuáles se aceptan; discutir si las desviaciones observadas son coherentes con el tipo de dieléctrico, como describe la sesión teórica.
-% --- Tabla 1: Identificación y medición de los condensadores del kit (5 filas vacías para registrar en el banco) ---
+% --- Tabla de registro 1: Identificación y medición de los condensadores del kit (5 filas vacías para registrar en el banco) ---
 \begin{table}[H]
   \centering
   \caption{Identificación y medición de los condensadores del kit}
   \label{tab:registro-1}
+  \arrayrulecolor{iubnavy}
   \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-    \toprule
-    \textbf{Ref.} & \textbf{Marcado} & \textbf{Cn (nF o \textmu{}F)} & \textbf{Tolerancia (\%)} & \textbf{Cm LCR (nF o \textmu{}F)} & \textbf{Cm multímetro (nF o \textmu{}F)} & \textbf{e (\%)} \\
-    \midrule
+    \rowcolor{iubnavy} \textcolor{white}{\textbf{Ref.}} & \textcolor{white}{\textbf{Marcado}} & \textcolor{white}{\textbf{Cn (nF o \textmu{}F)}} & \textcolor{white}{\textbf{Tolerancia (\%)}} & \textcolor{white}{\textbf{Cm LCR (nF o \textmu{}F)}} & \textcolor{white}{\textbf{Cm multímetro (nF o \textmu{}F)}} & \textcolor{white}{\textbf{e (\%)}} \\
     \rule{0pt}{0.8cm} & & & & & & \\
-    \cmidrule(lr){1-7}
+    \rowcolor{iubfondogris} \rule{0pt}{0.8cm} & & & & & & \\
     \rule{0pt}{0.8cm} & & & & & & \\
-    \cmidrule(lr){1-7}
-    \rule{0pt}{0.8cm} & & & & & & \\
-    \cmidrule(lr){1-7}
-    \rule{0pt}{0.8cm} & & & & & & \\
-    \cmidrule(lr){1-7}
+    \rowcolor{iubfondogris} \rule{0pt}{0.8cm} & & & & & & \\
     \rule{0pt}{0.8cm} & & & & & & \\
     \bottomrule
   \end{tabularx}
 \end{table}
-% --- Tabla 2: Frecuencia de resonancia prevista para la semana 3 (2 filas vacías para registrar en el banco) ---
+% --- Tabla de registro 2: Frecuencia de resonancia prevista para la semana 3 (2 filas vacías para registrar en el banco) ---
 \begin{table}[H]
   \centering
   \caption{Frecuencia de resonancia prevista para la semana 3}
   \label{tab:registro-2}
+  \arrayrulecolor{iubnavy}
   \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-    \toprule
-    \textbf{Condensador} & \textbf{C medida (nF)} & \textbf{L supuesta (mH)} & \textbf{fr con nominales (kHz)} & \textbf{fr con medida (kHz)} \\
-    \midrule
+    \rowcolor{iubnavy} \textcolor{white}{\textbf{Condensador}} & \textcolor{white}{\textbf{C medida (nF)}} & \textcolor{white}{\textbf{L supuesta (mH)}} & \textcolor{white}{\textbf{fr con nominales (kHz)}} & \textcolor{white}{\textbf{fr con medida (kHz)}} \\
     \rule{0pt}{0.8cm} & & & & \\
-    \cmidrule(lr){1-5}
-    \rule{0pt}{0.8cm} & & & & \\
+    \rowcolor{iubfondogris} \rule{0pt}{0.8cm} & & & & \\
     \bottomrule
   \end{tabularx}
 \end{table}

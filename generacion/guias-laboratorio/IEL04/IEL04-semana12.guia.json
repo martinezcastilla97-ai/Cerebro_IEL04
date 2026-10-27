@@ -1,8 +1,8 @@
 {
- "formato": 2,
+ "formato": 3,
  "huella": "9090718159c5591e",
  "modelo": "gpt-4o",
- "fecha": "2026-10-25",
+ "fecha": "2026-10-27",
  "guia": {
   "titulo": "Circuito RLC en paralelo: corrientes de rama, corriente mínima en la resonancia y circuito tanque con bobina real",
   "introduccion": "La práctica corresponde a la sesión teórica de la semana 12, «El circuito RLC en paralelo: susceptancias opuestas, ley de corrientes de Kirchhoff, circuito tanque y corrección del factor de potencia», y reproduce su caso de estudio: con un resistor de 4,7 kΩ, la bobina L3 y el condensador C2 en paralelo, alimentados con 2,00 V eficaces, se miden las corrientes de rama y la corriente total a 3 kHz, en la resonancia y a 8 kHz, y se observa que en la resonancia la fuente entrega una corriente mínima mientras por la bobina y el condensador circula una corriente mucho mayor. No hay un manual de laboratorio asignado al RA IEL04-RA4, por lo que la práctica se propone a partir de la bibliografía cargada: Floyd trata el análisis y la resonancia en paralelo, incluido el tanque con bobina no ideal [1], Boylestad el circuito resonante en paralelo con la resistencia de la bobina [2] y Deorsola la ley de corrientes de Kirchhoff con fasores [3].",
@@ -93,31 +93,50 @@
       "texto": "Identificar el resistor por su código de colores (amarillo-violeta-rojo-oro: 4,7 kΩ ±5 %) [1].",
       "duracion_min": 3,
       "seguridad": "",
-      "verificacion": "Si no da 4,7 kΩ, revisar el sentido de lectura."
+      "verificacion": "Si no da 4,7 kΩ, revisar el sentido de lectura.",
+      "recurso": null
      },
      {
       "texto": "Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 kΩ sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales.",
       "duracion_min": 3,
       "seguridad": "No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.",
-      "verificacion": "La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente."
+      "verificacion": "La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente.",
+      "recurso": null
      },
      {
       "texto": "Verificar el resistor con el ohmímetro, la bobina L3 con el medidor LCR y el ohmímetro (10,4 mH y 24,6 Ω esperados) y el condensador C2 con el medidor LCR (97,8 nF esperados).",
       "duracion_min": 8,
       "seguridad": "",
-      "verificacion": "Si algún valor difiere más que su tolerancia del registrado, anotar el nuevo valor y rehacer el cálculo previo con él."
+      "verificacion": "Si algún valor difiere más que su tolerancia del registrado, anotar el nuevo valor y rehacer el cálculo previo con él.",
+      "recurso": null
      },
      {
       "texto": "Calcular con los valores medidos la corriente de cada rama y la corriente total a 3 kHz, en la resonancia y a 8 kHz, sumando las admitancias en forma rectangular con la bobina real.",
       "duracion_min": 15,
       "seguridad": "",
-      "verificacion": "En la resonancia la corriente total esperada es cercana a 0,89 mA, muy inferior a la de la bobina o el condensador (unos 6,1 mA)."
+      "verificacion": "En la resonancia la corriente total esperada es cercana a 0,89 mA, muy inferior a la de la bobina o el condensador (unos 6,1 mA).",
+      "recurso": {
+       "tipo": "ecuacion",
+       "leyenda": "Resistencia equivalente en paralelo de la bobina real:",
+       "circuito": "",
+       "ecuacion": "R_{p(eq)} = R_W \\left(Q^2 + 1\\right)",
+       "donde": "$R_{p(eq)}$ y $R_W$ en ohmios (Ω); $Q = X_L / R_W$ adimensional.",
+       "grafica": null
+      }
      },
      {
       "texto": "Montar las tres ramas en paralelo y el resistor sensor en serie con la fuente del lado de tierra.",
       "duracion_min": 6,
       "seguridad": "Montar con el generador apagado.",
-      "verificacion": "El docente revisa el montaje antes de energizar."
+      "verificacion": "El docente revisa el montaje antes de energizar.",
+      "recurso": {
+       "tipo": "circuito",
+       "leyenda": "Circuito RLC en paralelo con el amperímetro en serie con la fuente",
+       "circuito": "\\draw (0,0) to[sV, l=$v_s$] (0,3) to[ammeter, l=$I_T$] (3,3) to[R, l=$R$] (3,0) -- (0,0); \\draw (3,3) -- (5.5,3) to[L, l=$L_3$] (5.5,0) -- (3,0); \\draw (5.5,3) -- (8,3) to[C, l=$C_2$] (8,0) -- (5.5,0); \\draw (0,0) node[ground]{};",
+       "ecuacion": "",
+       "donde": "",
+       "grafica": null
+      }
      }
     ],
     "diagrama": {
@@ -204,19 +223,22 @@
       "texto": "Ajustar el generador a una onda sinusoidal de 3 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 2,00 V eficaces.",
       "duracion_min": 6,
       "seguridad": "",
-      "verificacion": "El multímetro debe indicar 2,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado."
+      "verificacion": "El multímetro debe indicar 2,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado.",
+      "recurso": null
      },
      {
       "texto": "Con el circuito desenergizado, insertar el amperímetro en cada rama y en serie con la fuente, energizando para cada lectura, y anotar $I_R$, $I_{bob}$, $I_C$ e $I_T$.",
       "duracion_min": 15,
       "seguridad": "Insertar el amperímetro solo con el circuito desenergizado.",
-      "verificacion": "A 3 kHz la corriente de la bobina debe superar a la del condensador (carácter inductivo)."
+      "verificacion": "A 3 kHz la corriente de la bobina debe superar a la del condensador (carácter inductivo).",
+      "recurso": null
      },
      {
       "texto": "Repetir las cuatro lecturas a 8 kHz, reajustando la tensión de la fuente.",
       "duracion_min": 12,
       "seguridad": "",
-      "verificacion": "A 8 kHz la corriente del condensador debe superar a la de la bobina (carácter capacitivo)."
+      "verificacion": "A 8 kHz la corriente del condensador debe superar a la de la bobina (carácter capacitivo).",
+      "recurso": null
      }
     ],
     "diagrama": {
@@ -303,13 +325,15 @@
       "texto": "Con el amperímetro en serie con la fuente, barrer la frecuencia entre 3 kHz y 8 kHz y localizar el mínimo de la corriente total, reajustando la fuente a 2,00 V eficaces.",
       "duracion_min": 10,
       "seguridad": "",
-      "verificacion": "El mínimo debe aparecer cerca de 5 kHz [1]; si la corriente no baja, revisar la rama del condensador."
+      "verificacion": "El mínimo debe aparecer cerca de 5 kHz [1]; si la corriente no baja, revisar la rama del condensador.",
+      "recurso": null
      },
      {
       "texto": "Anotar la frecuencia del mínimo y medir en ella las corrientes de las tres ramas.",
       "duracion_min": 10,
       "seguridad": "",
-      "verificacion": "La corriente de la bobina y la del condensador deben ser varias veces la corriente total: es la corriente de circulación del tanque."
+      "verificacion": "La corriente de la bobina y la del condensador deben ser varias veces la corriente total: es la corriente de circulación del tanque.",
+      "recurso": null
      }
     ],
     "diagrama": {
@@ -386,19 +410,22 @@
       "texto": "Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard.",
       "duracion_min": 3,
       "seguridad": "Desenergizar siempre antes de retirar componentes.",
-      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente."
+      "verificacion": "Ningún indicador de salida debe quedar encendido en el generador ni en la fuente.",
+      "recurso": null
      },
      {
       "texto": "Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo.",
       "duracion_min": 4,
       "seguridad": "",
-      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado."
+      "verificacion": "El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado.",
+      "recurso": null
      },
      {
       "texto": "Revisar con el docente las tablas de registro antes de abandonar el banco.",
       "duracion_min": 3,
       "seguridad": "",
-      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento."
+      "verificacion": "Las tablas deben estar completas y con unidades; si falta un dato, repetir esa medición antes de desmontar el instrumento.",
+      "recurso": null
      }
     ],
     "diagrama": {

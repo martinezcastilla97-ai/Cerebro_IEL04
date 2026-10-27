@@ -21,12 +21,12 @@ avisos:
 archivo_tex: generacion/guias-laboratorio/IEL04/IEL04-semana07.tex
 temario_hash: d7d85eb67c0207df
 huella: b4493373c7e8f8f7
-formato: 2
+formato: 3
 docente: Ing. Sergio Martinez Castilla
 facultad: Facultad de Ingenierías
-compilada: '2026-10-25'
+compilada: '2026-10-27'
 fecha_creacion: '2026-10-25'
-fecha_actualizacion: '2026-10-25'
+fecha_actualizacion: '2026-10-27'
 ---
 # Guía de laboratorio: Circuito RC mixto: predicción con el método general y medición de corrientes, tensiones y ángulo
 
@@ -47,6 +47,8 @@ La práctica cierra el RA IEL04-RA2 y corresponde a la sesión teórica de la se
 
 ## 2. Materiales y Equipos
 
+**Tabla 1.** Materiales y equipos de la práctica
+
 | # | Material o equipo | Especificación | Cantidad |
 |---|---|---|---|
 | 1 | Resistor R1 | 1 kΩ (medido 996 Ω en la sesión) | 1 |
@@ -65,22 +67,157 @@ La práctica cierra el RA IEL04-RA2 y corresponde a la sesión teórica de la se
 
 La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en grupos de tres estudiantes, con tres roles que rotan entre etapas: quien monta y opera el circuito, quien mide y quien registra y verifica los cálculos. Antes de energizar cualquier montaje, el docente o el monitor revisa la conexión. Cada etapa abre con su diagrama de flujo, que muestra la secuencia y las comprobaciones de un vistazo, y sigue con sus pasos numerados; cada paso indica cuánto dura, qué debe observarse para saber que salió bien y qué hacer si no. Los valores numéricos de la sesión teórica sirven de referencia: las lecturas propias del grupo se registran en las tablas de la sección de análisis.
 
+> Los diagramas de flujo, los circuitos y las gráficas son código LaTeX (TikZ, circuitikz y pgfplots), como en el .tex: Obsidian los dibuja con el plugin TikZJax; sin él, se ve el código (el PDF de la guía los trae dibujados).
+
 ### 3.1 Preparación, predicción y montaje (31 min)
 
-![Figura 1. Diagrama de flujo de la etapa 1: Preparación, predicción y montaje](figuras/IEL04-semana07-flujo1.png)
+```tikz
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\begin{document}
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt, text=iubnavy},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt, text=iubnavy},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt, text=iubnavy},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt, text=iubnavy},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.445) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=1.177in, minimum height=0.680in] (n1) at (2.685,-0.445) {Descargar \\ C2};  % a0
+  \node[dcaja, minimum width=1.363in, minimum height=0.680in] (n2) at (4.877,-0.445) {Medir \\ componentes};  % a1
+  \node[dcaja, minimum width=1.270in, minimum height=0.890in] (n3) at (7.014,-0.445) {Predecir \\ con m\'{e}todo \\ general};  % a2
+  \node[dcaja, minimum width=1.177in, minimum height=0.890in] (n4) at (7.014,-2.018) {Montar el \\ circuito \\ mixto};  % a3
+  \node[ddecision, minimum width=1.766in, minimum height=1.156in] (n5) at (4.877,-2.018) {\textquestiondown{}Montaje \\ revisado?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n6) at (2.685,-2.018) {Fin de la \\ etapa};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) -- (n4);
+  \draw[dflecha] (n4) to[bend right=24] (n5);
+  \draw[dflecha] (n5) -- (n6);
+  \draw[dflecha] (n5) to[bend right=31] (n4);
+  % rotulos de las flechas (donde no caen sobre un nodo)
+  \node[drotulo] at (3.781,-2.018) {s\'{\i}};
+  \node[drotulo] at (6.159,-2.326) {no};
+\end{tikzpicture}
+\end{document}
+```
 
 *Figura 1. Diagrama de flujo de la etapa 1: Preparación, predicción y montaje*
 
 1. Descargar el condensador conectando entre sus terminales, durante unos segundos, una resistencia de 1 kΩ sujeta con pinzas aisladas, y medir con el voltímetro en cd la tensión entre terminales. *(≈ 3 min)* **Comprobación:** La tensión debe ser prácticamente nula (menos de 0,1 V); si no lo es, repetir la descarga antes de manipular el componente. **Seguridad:** No cortocircuitar los terminales con los dedos ni con una herramienta metálica: un condensador puede conservar carga después de desconectado.
 2. Medir R1 y R2 con el ohmímetro y C2 con el medidor LCR, y anotar los valores. *(≈ 6 min)* **Comprobación:** R2 debe leer cerca de 1492 Ω y C2 cerca de 97,8 nF.
 3. Calcular con los valores medidos la admitancia del paralelo, la impedancia total, la corriente, las tensiones $V_{R1}$ y $V_p$, las corrientes de rama y el ángulo. *(≈ 15 min)* **Comprobación:** La corriente total esperada es de unos 2,56 mA, adelantada unos 22° a la tensión; si el cálculo difiere mucho, revisar la conversión de admitancia a impedancia.
+
+**Ecuación (1).** Impedancia total del circuito mixto:
+
+$$
+\mathbf{Z}_T = R_1 + \frac{1}{G_2 + j B_C} \tag{1}
+$$
+
+donde $\mathbf{Z}_T$ en ohmios (Ω), $G_2 = 1/R_2$ y $B_C = 2\pi f C$ en siemens (S).
+
 4. Montar R1 en serie con el paralelo de R2 y C2, con el resistor sensor en serie del lado de tierra. *(≈ 7 min)* **Comprobación:** El docente revisa el montaje antes de energizar. **Seguridad:** Montar con el generador apagado.
+
+```tikz
+\usepackage{circuitikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\begin{document}
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt, text=iubnavy},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt, text=iubnavy},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt, text=iubnavy},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt, text=iubnavy},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+\begin{circuitikz}[color=iubnavy]
+\draw (0,0) to[sV, l=$v_s$] (0,3) to[R, l=$R_1$] (3,3) to[R, l=$R_2$] (3,0) -- (0,0); \draw (3,3) -- (6,3) to[C, l=$C_2$] (6,0) -- (3,0); \draw (0,0) node[ground]{};
+\end{circuitikz}
+\end{document}
+```
+
+*Figura 2. Circuito RC mixto: R1 en serie con el paralelo de R2 y C2*
+
 
 ### 3.2 Medición de tensiones y corrientes (27 min)
 
-![Figura 2. Diagrama de flujo de la etapa 2: Medición de tensiones y corrientes](figuras/IEL04-semana07-flujo2.png)
+```tikz
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\begin{document}
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt, text=iubnavy},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt, text=iubnavy},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt, text=iubnavy},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt, text=iubnavy},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.340) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=1.177in, minimum height=0.680in] (n1) at (3.089,-0.340) {Ajustar 1 \\ kHz y 5 V};  % a0
+  \node[dcaja, minimum width=1.363in, minimum height=0.680in] (n2) at (5.482,-0.340) {Medir VR1 y \\ Vp};  % a1
+  \node[dcaja, minimum width=1.270in, minimum height=0.680in] (n3) at (5.482,-1.986) {Medir \\ corrientes};  % a2
+  \node[ddecision, minimum width=2.184in, minimum height=1.513in] (n4) at (3.089,-1.986) {\textquestiondown{}Diferencias \\ menores al \\ 2 \%?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n5) at (0.689,-1.986) {Fin de la \\ etapa};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) -- (n4);
+  \draw[dflecha] (n4) -- (n5);
+  \draw[dflecha] (n4) to[bend right=31] (n2);
+  % rotulos de las flechas (donde no caen sobre un nodo)
+  \node[drotulo] at (1.649,-1.986) {s\'{\i}};
+  \node[drotulo] at (4.533,-1.522) {no};
+\end{tikzpicture}
+\end{document}
+```
 
-*Figura 2. Diagrama de flujo de la etapa 2: Medición de tensiones y corrientes*
+*Figura 3. Diagrama de flujo de la etapa 2: Medición de tensiones y corrientes*
 
 5. Ajustar el generador a una onda sinusoidal de 1 kHz y medir con el osciloscopio y con el multímetro de verdadero valor eficaz que la tensión en los bornes del circuito, con el circuito conectado, sea de 5,00 V eficaces. *(≈ 6 min)* **Comprobación:** El multímetro debe indicar 5,00 V y el osciloscopio una sinusoide sin distorsión; si la tensión baja al conectar el circuito, reajustar la amplitud con el circuito conectado.
 6. Medir $V_{R1}$ y la tensión del paralelo $V_p$ con el multímetro de verdadero valor eficaz. *(≈ 6 min)* **Comprobación:** La suma aritmética debe superar 5 V; las lecturas deben estar a menos del 2 % de la predicción.
@@ -88,18 +225,106 @@ La práctica ocupa el bloque de 2 h de laboratorio de la sesión y se realiza en
 
 ### 3.3 Ángulo y comparación (18 min)
 
-![Figura 3. Diagrama de flujo de la etapa 3: Ángulo y comparación](figuras/IEL04-semana07-flujo3.png)
+```tikz
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\begin{document}
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt, text=iubnavy},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt, text=iubnavy},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt, text=iubnavy},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt, text=iubnavy},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.445) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=0.991in, minimum height=0.680in] (n1) at (3.228,-0.445) {Medir \\ desfase};  % a0
+  \node[dcaja, minimum width=1.270in, minimum height=0.890in] (n2) at (5.715,-0.445) {Comparar \\ con la \\ predicci\'{o}n};  % a1
+  \node[dcaja, minimum width=0.991in, minimum height=0.680in] (n3) at (5.715,-2.018) {Asignar \\ causas};  % a2
+  \node[ddecision, minimum width=2.463in, minimum height=1.156in] (n4) at (3.228,-2.018) {\textquestiondown{}Causas \\ identificadas?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n5) at (0.689,-2.018) {Fin de la \\ etapa};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) -- (n4);
+  \draw[dflecha] (n4) -- (n5);
+  \draw[dflecha] (n4) to[bend right=31] (n1);
+  % rotulos de las flechas (donde no caen sobre un nodo)
+  \node[drotulo] at (1.705,-2.018) {s\'{\i}};
+  \node[drotulo] at (3.464,-1.232) {no};
+\end{tikzpicture}
+\end{document}
+```
 
-*Figura 3. Diagrama de flujo de la etapa 3: Ángulo y comparación*
+*Figura 4. Diagrama de flujo de la etapa 3: Ángulo y comparación*
 
 8. Medir con el osciloscopio el desfase entre la tensión de la fuente y la tensión en el resistor sensor, usando puntas ×10 [1]. *(≈ 8 min)* **Comprobación:** La corriente debe adelantar a la tensión unos 22°; si se ve atrasada, revisar la polaridad de las puntas.
 9. Completar la tabla comparativa y anotar para cada diferencia su causa probable: resistencia del amperímetro, resolución del multímetro o de los cursores, o resistencia interna del generador [FUENTE NO CARGADA EN raw/]. *(≈ 10 min)* **Comprobación:** Cada diferencia mayor del 1 % debe tener una causa identificada; si no, repetir esa medición.
 
 ### 3.4 Desmontaje y cierre (10 min)
 
-![Figura 4. Diagrama de flujo de la etapa 4: Desmontaje y cierre](figuras/IEL04-semana07-flujo4.png)
+```tikz
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}
+\begin{document}
+\definecolor{iubnavy}{HTML}{121023}
+\definecolor{iubyellow}{HTML}{FFDF2D}
+\definecolor{iubwhite}{HTML}{FFFFFF}
+\definecolor{iubblue}{HTML}{00ADE7}
+\definecolor{iuborange}{HTML}{E39037}
+\definecolor{iubgreen}{HTML}{3B9C6D}
+\colorlet{iubgris}{iubnavy!18}
+\colorlet{iubgrisoscuro}{iubnavy!60}
+\colorlet{iubfondoazul}{iubblue!8}
+\colorlet{iubfondonaranja}{iuborange!10}
+\colorlet{iubfondoverde}{iubgreen!9}
+\colorlet{iubfondogris}{iubnavy!5}
+\colorlet{iubpurple}{iubnavy!45}
+\tikzset{
+  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt, text=iubnavy},
+  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt, text=iubnavy},
+  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt, text=iubnavy},
+  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt, text=iubnavy},
+  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},
+  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},
+}
+\begin{tikzpicture}[x=1in, y=1in, font=\small]
+  % nodos (centro en pulgadas, con el tamano que calcula figuras.py)
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n0) at (0.689,-0.445) {Inicio de \\ la etapa};  % ini
+  \node[dcaja, minimum width=1.456in, minimum height=0.680in] (n1) at (2.950,-0.445) {Desenergizar \\ el montaje};  % a0
+  \node[dcaja, minimum width=1.363in, minimum height=0.890in] (n2) at (5.204,-0.445) {Descargar y \\ retirar \\ componentes};  % a1
+  \node[dcaja, minimum width=1.270in, minimum height=0.890in] (n3) at (5.204,-2.018) {Revisar \\ tablas con \\ el docente};  % a2
+  \node[ddecision, minimum width=1.905in, minimum height=1.156in] (n4) at (2.950,-2.018) {\textquestiondown{}Tablas \\ completas?};  % dec
+  \node[dterminal, minimum width=1.377in, minimum height=0.680in] (n5) at (0.689,-2.018) {Fin de la \\ pr\'{a}ctica};  % fin
+  % flechas (las de retorno, curvas)
+  \draw[dflecha] (n0) -- (n1);
+  \draw[dflecha] (n1) -- (n2);
+  \draw[dflecha] (n2) -- (n3);
+  \draw[dflecha] (n3) to[bend right=24] (n4);
+  \draw[dflecha] (n4) -- (n5);
+  \draw[dflecha] (n4) to[bend right=31] (n3);
+  % rotulos de las flechas (donde no caen sobre un nodo)
+  \node[drotulo] at (1.593,-2.018) {s\'{\i}};
+  \node[drotulo] at (4.302,-2.343) {no};
+\end{tikzpicture}
+\end{document}
+```
 
-*Figura 4. Diagrama de flujo de la etapa 4: Desmontaje y cierre*
+*Figura 5. Diagrama de flujo de la etapa 4: Desmontaje y cierre*
 
 10. Apagar el generador de funciones y la fuente, desconectar las puntas del osciloscopio y retirar la alimentación del protoboard. *(≈ 3 min)* **Comprobación:** Ningún indicador de salida debe quedar encendido en el generador ni en la fuente. **Seguridad:** Desenergizar siempre antes de retirar componentes.
 11. Descargar los condensadores del montaje con la resistencia de descarga, retirar los componentes y devolverlos al kit del grupo con su rótulo. *(≈ 4 min)* **Comprobación:** El kit debe quedar completo, con cada componente en su lugar y con su valor medido anotado.
@@ -118,7 +343,7 @@ Presentar en la tabla de registro la predicción con valores medidos, la medici�
 
 Dibujar el diagrama fasorial del circuito: las corrientes de rama sumadas en el paralelo y las tensiones $V_{R1}$ y $V_p$ sumadas en la parte serie, y verificar ambas sumas con las lecturas.
 
-**Tabla 1.** Circuito RC mixto a 1 kHz: predicción y medición
+**Tabla 2.** Circuito RC mixto a 1 kHz: predicción y medición
 
 | Magnitud | Predicción | Medido | Unidad | Diferencia (%) | Causa probable |
 |---|---|---|---|---|---|
