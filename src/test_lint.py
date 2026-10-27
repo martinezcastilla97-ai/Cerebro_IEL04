@@ -128,11 +128,12 @@ def probar_guias() -> None:
     contenido = guia_laboratorio.ruta_contenido(guia)
     contenido.write_text(json.dumps({"formato": 1, "huella": "x", "guia": {}}), encoding="utf-8")
     otro = [m for m in l17() if "guía de otro formato" in m]
-    assert len(otro) == 1 and "1 llamada al modelo" in otro[0] and "del 1 al 2: no tenía diagramas de flujo" in otro[0], otro
-    contenido.write_text(json.dumps({"formato": guia_laboratorio.FORMATO, "huella": "x", "guia": {}}), encoding="utf-8")
-    assert any("guía de otro formato" in m and "sin LLM" in m for m in l17()), l17()
+    assert len(otro) == 1 and "1 llamada al modelo" in otro[0] and "el formato 1 no tenía diagramas de flujo" in otro[0], otro
+    for formato in (2, guia_laboratorio.FORMATO):           # el .guia.json del formato 2 pasa la validación del 3: sin LLM
+        contenido.write_text(json.dumps({"formato": formato, "huella": "x", "guia": {}}), encoding="utf-8")
+        assert any("guía de otro formato" in m and "sin LLM" in m for m in l17()), (formato, l17())
     print("6. L17: una semana con criterios prácticos y bibliografía, sin práctica de un manual, se cuenta «sin guía» salvo que el docente haya "
-          "revisado la correlación sin asignar práctica; una guía de otro formato dice si rehacerla cuesta 1 llamada (del 1 al 2) o no -- OK")
+          "revisado la correlación sin asignar práctica; una guía de otro formato dice si rehacerla cuesta 1 llamada (la del formato 1) o no (la del 2 y el 3) -- OK")
 
 
 def main() -> None:

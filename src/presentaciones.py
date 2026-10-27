@@ -68,6 +68,8 @@ _ENCABEZADO_BLOQUE = re.compile(r"^(#{2,4})\s+(?:\d+(?:\.\d+)*\.?\s+)?(.*?)\s*\(
 _ENCABEZADO = re.compile(r"^(#{1,6})\s")
 _FILA_INDICE = re.compile(r"^\|\s*(\d+)\s*\|\s*(.+?)\s*\|\s*(\d+)\s*min\s*\|\s*$")
 _FIGURA_MD = re.compile(r"!\[([^\]]*)\]\((figuras/[^)\s]+)\)")
+# Como se le marca al modelo una figura PNG del .md del temario (sin el .tex): tiene que dibujarla en LaTeX
+MARCA_FIGURA_PNG = "[FIGURA DEL TEMARIO (imagen PNG: no va en la presentación)"
 
 
 def hash_cuerpo(cuerpo: str) -> str:
@@ -117,10 +119,11 @@ def indice_temporizado(cuerpo: str) -> dict[int, tuple[str, int]]:
 
 
 def _sin_imagenes(texto: str) -> str:
-    """Las figuras del temario son PNG: la presentacion no usa imagenes. Se le dice al modelo que la figura existe, de que es, y que
-    si le sirve la dibuje con TikZ o pgfplots a partir de los datos y las ecuaciones del texto."""
-    return _FIGURA_MD.sub(lambda m: f"[FIGURA DEL TEMARIO (imagen PNG, no disponible en la presentación): {m.group(1).strip()}. "
-                                    "Si ayuda, redibújala con TikZ o pgfplots con los datos y ecuaciones del texto, sin inventar valores]", texto)
+    """Las figuras PNG del .md del temario (las dibuja Python para Obsidian) nunca van a la presentacion: todo en ella es codigo LaTeX.
+    Sin el .tex del temario, se le dice al modelo que la figura existe y de que es, y que la dibuje con TikZ o pgfplots a partir de los
+    datos y las ecuaciones del texto (validar_parte lo exige mientras quedan reintentos)."""
+    return _FIGURA_MD.sub(lambda m: f"{MARCA_FIGURA_PNG}: {m.group(1).strip()}. Dibújala en LaTeX —TikZ para un diagrama, pgfplots para "
+                                    "una gráfica— con los datos y ecuaciones del texto, sin inventar valores]", texto)
 
 
 def partes_del_temario(cuerpo: str) -> list[Parte]:
@@ -364,6 +367,8 @@ def normalizar_parte(salida: DiapositivasParte) -> tuple[list[diseno_iub.Diaposi
     return diapositivas, problemas
 
 
+_TABLA = re.compile(r"\\begin\{(tabularx?|tabular\*?)\}.*?\\end\{\1\}", re.S)
+_DIBUJO = re.compile(r"\\begin\{(?:tikzpicture|circuitikz)\}")
 _VISUAL = re.compile(r"\\begin\{(?:tikzpicture|axis|semilogyaxis|semilogxaxis|loglogaxis|circuitikz|tabularx|tabular|caja|cajaplana|card[BOGN]|codebox)\}")
 
 
@@ -379,6 +384,18 @@ def validar_parte(salida: DiapositivasParte, parte: Parte, blando: bool = True) 
         problemas.append(f"\\elementoTemario a elementos que no son de esta parte: {', '.join(ajenos)} (los de esta parte: {lista})")
     if blando and len(salida.diapositivas) > 1 and not any(_VISUAL.search(d.cuerpo) or et.ORDEN.search(d.cuerpo) for d in salida.diapositivas):
         problemas.append("ninguna diapositiva usa un recurso visual: integra al menos un diagrama TikZ, una gráfica pgfplots, una tabla o tarjetas (caja/card)")
+    if blando:
+        # las tablas con la paleta del Manual de Identidad: el encabezado en \rowcolor{iubnavy} (con \hd{})
+        sin_color = [k for k, d in enumerate(salida.diapositivas, 1) for t in _TABLA.finditer(d.cuerpo) if "\\rowcolor{iubnavy}" not in t.group(0)]
+        if sin_color:
+            problemas.append(f"diapositiva(s) {', '.join(map(str, sorted(set(sin_color))))}: una tabla sin el encabezado institucional; ponle "
+                             "`\\rowcolor{iubnavy}` en la primera fila, con cada celda en `\\hd{...}`")
+        # sin el .tex del temario, sus figuras (PNG) se redibujan en LaTeX: ninguna imagen de Python va a la presentacion
+        png = (parte.texto_modelo or parte.texto).count(MARCA_FIGURA_PNG)       # lo que ve el modelo: con el .tex, las figuras van marcadas como elementos
+        dibujos = sum(len(_DIBUJO.findall(d.cuerpo)) for d in salida.diapositivas)
+        if png > dibujos:
+            problemas.append(f"el texto de la parte tiene {png} figura(s) del temario marcadas «FIGURA DEL TEMARIO (imagen PNG…)» y las "
+                             f"diapositivas solo dibujan {dibujos}: dibuja cada una en LaTeX (TikZ o pgfplots) con los datos del texto")
     return problemas
 
 

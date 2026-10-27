@@ -20,7 +20,7 @@ from pathlib import Path
 import vault
 from figuras import Arista, DiagramaSpec, GraficaSpec, Nodo, Parametro, Serie
 from schema_presentacion import DiapositivaLatex, DiapositivasParte
-from schema_guia_laboratorio import Etapa, GuiaLaboratorio, Material, Objetivo, Paso, Referencia, TablaRegistro
+from schema_guia_laboratorio import Etapa, GuiaLaboratorio, Material, Objetivo, Paso, Recurso, Referencia, TablaRegistro
 from schema_temario import Bloque, CierreSesion, PlanSesion, ResultadoSesion, SeccionRedactada, UnidadPlan
 
 PROGRAMA = "Programa de prueba"
@@ -366,6 +366,12 @@ def _flujo(accion: str) -> DiagramaSpec:
                                  Arista(origen="d", destino="a", etiqueta="no")])
 
 
+CIRCUITO_FALSO = r"""\draw (0,0) to[battery1, l=$V_s$] (0,3)
+      to[R, l=$R_1$] (3,3)
+      to[R, l_=$R_2$, v^=$V_{out}$] (3,0) -- (0,0);
+\draw (3,3) to[short, *-o] (4.5,3);"""
+
+
 def guia_falsa(usuario: str) -> GuiaLaboratorio:
     """La guia de laboratorio que devolveria un LLM para lo que pide el prompt: cubre los criterios de caracter practico, lista los
     equipos de la practica con su mismo nombre, cita la fuente [1] si hay alguna y da una referencia por fuente cargada."""
@@ -393,11 +399,21 @@ def guia_falsa(usuario: str) -> GuiaLaboratorio:
         procedimiento_introduccion=f"Organizar el trabajo en grupos de tres estudiantes y verificar el banco antes de energizarlo{cita}.",
         etapas=[Etapa(titulo="Preparación y montaje", pasos=[Paso(texto="Verificar que el banco esté desenergizado.", duracion_min=paso, seguridad="Desenergizar antes de conectar.",
                                                                  verificacion="El indicador de energía del banco está apagado."),
-                                                            Paso(texto="Conectar el circuito según el esquema de la práctica.", duracion_min=paso)],
+                                                            Paso(texto="Conectar el circuito según el esquema de la práctica.", duracion_min=paso,
+                                                                 recurso=Recurso(tipo="circuito", leyenda="Circuito de la práctica: divisor de tensión",
+                                                                                 circuito=CIRCUITO_FALSO))],
                       diagrama=_flujo("Montaje")),
                 Etapa(titulo="Medición", pasos=[Paso(texto="Energizar el banco y medir la tensión $V$ en la carga.", duracion_min=paso,
-                                                     verificacion="La lectura está entre 4,5 V y 5,5 V; si no, desenergizar y revisar la conexión del paso 2."),
-                                                Paso(texto="Registrar los valores en la Tabla 1 para cada punto de operación.", duracion_min=paso)],
+                                                     verificacion="La lectura está entre 4,5 V y 5,5 V; si no, desenergizar y revisar la conexión del paso 2.",
+                                                     recurso=Recurso(tipo="ecuacion", leyenda="Tensión esperada en la carga (divisor de tensión):",
+                                                                     ecuacion=r"V_{out} = V_s \frac{R_2}{R_1 + R_2}",
+                                                                     donde="$V_s$ es la tensión de la fuente (V) y $R_1$, $R_2$ las resistencias (Ω).")),
+                                                Paso(texto="Registrar los valores en la Tabla 2 para cada punto de operación.", duracion_min=paso,
+                                                     recurso=Recurso(tipo="grafica", leyenda="Tensión esperada en la carga según $R_2$",
+                                                                     grafica=GraficaSpec(tipo="lineas", titulo="", etiqueta_x="$R_2$ (kΩ)", etiqueta_y="$V$ (V)",
+                                                                                         variable="r", dominio_min=0.5, dominio_max=10,
+                                                                                         parametros=[Parametro(nombre="Vs", valor=10), Parametro(nombre="R1", valor=1)],
+                                                                                         series=[Serie(nombre="Esperada", expresion="Vs*r/(R1+r)")])))],
                       diagrama=_flujo("Medición"))],
         cuestiones=["¿Qué diferencia hay entre el valor medido y el calculado?", "¿Qué fuentes de error explican la desviación?",
                     "¿Cómo cambia la medición si se duplica la carga?"],

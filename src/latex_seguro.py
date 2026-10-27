@@ -27,6 +27,8 @@ import struct
 import unicodedata
 from pathlib import Path
 
+import paleta_iub
+
 # ---------------------------------------------------------------------------
 # Caracteres Unicode -> LaTeX
 # ---------------------------------------------------------------------------
@@ -966,11 +968,9 @@ _CLAVES_ANIDADAS = _lista_de_claves("""
 _CLAVES_DE_COLOR = _lista_de_claves("""
     color, draw, fill, text, bloque, nodo, term, cable, tag, colback, colframe, coltext, coltitle, colbacktitle
 """)
-_COLORES_BASE = frozenset("""
-    iubwhite iubnavy iubyellow iubblue iuborange iubgreen iubpurple iubgris iubgrisoscuro iubfondoazul iubfondonaranja iubfondoverde
-    iubfondogris white black red green blue cyan magenta yellow gray darkgray lightgray
-    brown lime olive orange pink purple teal violet none
-""".split())
+# Solo los colores del Manual de Identidad IUB y sus tintes (paleta_iub), `white` (el #FFFFFF del manual) y `none`: nada de `red`,
+# `black` ni `gray` (un color que no es de la institucion). Sus mezclas (`iubblue!40`, `iubnavy!6!white`) si se admiten.
+_COLORES_BASE = paleta_iub.NOMBRES | frozenset({"white", "none"})
 _PALABRAS_DE_FLECHA = frozenset("""
     Stealth Latex Triangle To Bar Bracket Circle Square Kite Straight Barb Rays Hooks Arc Tee Implies stealth latex to o d
     length width scale open round sep inset angle line reversed harpoon left right fill color bend pt cm mm em ex
@@ -1044,6 +1044,38 @@ def _es_color(valor: str, variables: dict[str, list[str]], profundidad: int = 0)
             and all(re.fullmatch(r"\s*\d{1,3}(?:\.\d+)?\s*", n) for n in numeros))
 
 
+# Los comandos que reciben un color como argumento (en el texto, fuera de las opciones de TikZ): cuantos argumentos son colores
+_COMANDOS_DE_COLOR = {"textcolor": (0,), "color": (0,), "colorbox": (0,), "fcolorbox": (0, 1), "rowcolor": (0,), "cellcolor": (0,),
+                      "columncolor": (0,), "arrayrulecolor": (0,), "rowcolors": (1, 2)}
+_COMANDO_COLOR = re.compile(r"\\(" + "|".join(sorted(_COMANDOS_DE_COLOR, key=len, reverse=True)) + r")(?![A-Za-z])\*?\s*")
+
+
+def colores_fuera_de_paleta(texto: str) -> list[str]:
+    """Los colores de \\textcolor, \\color, \\colorbox, \\fcolorbox, \\rowcolor, \\cellcolor, \\columncolor, \\arrayrulecolor y
+    \\rowcolors que no son del Manual de Identidad IUB (paleta_iub, `white` y sus mezclas), y todo color dado por su modelo
+    (`\\textcolor[HTML]{FF0000}`, `[rgb]`): las tablas, graficas, diagramas y textos van con la paleta de la institucion."""
+    malos: list[str] = []
+    variables = _variables_de_foreach(texto)
+    for m in _COMANDO_COLOR.finditer(texto):
+        nombre, i = m.group(1), m.end()
+        if i < len(texto) and texto[i] == "[":
+            malos.append(f"\\{nombre}[{texto[i + 1:_grupo(texto, i, '[', ']') - 1][:20]}]")
+            continue
+        argumentos = []
+        for _ in range(max(_COMANDOS_DE_COLOR[nombre]) + 1):
+            while i < len(texto) and texto[i] in " \t\n":
+                i += 1
+            if i >= len(texto) or texto[i] != "{":
+                break
+            fin = _grupo(texto, i, "{", "}")
+            argumentos.append(texto[i + 1:fin - 1])
+            i = fin
+        for k in _COMANDOS_DE_COLOR[nombre]:
+            if k < len(argumentos) and not _es_color(argumentos[k], variables):
+                malos.append(f"\\{nombre}{{{argumentos[k][:30]}}}")
+    return list(dict.fromkeys(malos))
+
+
 def _es_flecha(entrada: str) -> bool:
     return (bool(_ES_FLECHA.match(entrada)) and bool(re.search(r"[-<>]", entrada))
             and all(p in _PALABRAS_DE_FLECHA for p in re.findall(r"[A-Za-z]+", entrada)))
@@ -1073,7 +1105,7 @@ def _claves_malas(opciones: str, variables: dict[str, list[str]], profundidad: i
         if clave not in CLAVES_PERMITIDAS and not _ETIQUETA_CIRCUITO.match(clave):
             malas.append(clave[:40])
         elif clave in _CLAVES_DE_COLOR and not _es_color(valor, variables):
-            malas.append(f"{clave}={valor[:30]} (el valor tiene que ser un color)")
+            malas.append(f"{clave}={valor[:30]} (el valor tiene que ser un color de la paleta IUB)")
         elif clave in _CLAVES_ANIDADAS and profundidad < 3:
             malas += _claves_malas(_sin_llaves(valor), variables, profundidad + 1)
         elif clave in ("label", "pin") and _sin_llaves(valor).startswith("["):
@@ -1222,6 +1254,10 @@ def verificar_cuerpo(texto: str, titulo: bool = False) -> tuple[str, list[str]]:
                          "se admiten colores, grosores, los estilos del diseño, posiciones, anclas, tamaños, fuentes, formas, claves de ejes y "
                          "leyendas y componentes de circuitos; nada de /.style, /.code ni otros manejadores de claves)")
     problemas += _problemas_de_claves(revisable)
+    fuera = colores_fuera_de_paleta(revisable)
+    if fuera:
+        problemas.append("colores que no son del Manual de Identidad IUB: " + ", ".join(f"`{c}`" for c in fuera[:8]) + " (usa solo iubnavy, "
+                         "iubyellow, iubblue, iuborange, iubgreen, white y sus mezclas, como iubblue!15)")
     problemas += _balance(revisable)
     if _sin_escapar(revisable, "%"):
         problemas.append("un % sin escapar comenta el resto de la línea: el porcentaje se escribe \\% (y no escribas comentarios)")
@@ -1286,6 +1322,9 @@ def verificar_latex(tex: str) -> list[str]:
     if opciones:
         problemas.append("opciones no admitidas en el documento: " + ", ".join(f"`{o}`" for o in opciones[:12]))
     problemas += _problemas_de_claves(sin_codigo)
+    fuera = colores_fuera_de_paleta(sin_codigo)
+    if fuera:
+        problemas.append("colores que no son del Manual de Identidad IUB en el documento: " + ", ".join(f"`{c}`" for c in fuera[:8]))
     intrusos = sorted({c for c in documento if ord(c) > 127 and not soportado_por_inputenc(c)})
     if intrusos:
         problemas.append("caracteres que pdfLaTeX no soporta: " + ", ".join(f"U+{ord(c):04X}" for c in intrusos))

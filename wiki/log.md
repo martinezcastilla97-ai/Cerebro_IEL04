@@ -356,3 +356,9 @@ El docente confirmó que cada semana hay una sesión de 2 h de teoría y otra de
 - redactadas por el asistente de la sesión con `prompt-guia-laboratorio.md` (sin proveedor `CEREBRO_*`), validadas por `guia_laboratorio.validar_guia` y escritas por el script; tiempos ajustados al bloque de 2 h de práctica de la sesión (sesiones de 2 h de teoría y 2 h de práctica)
 - compiladas con pdflatex → biber → pdflatex → pdflatex (TeX Live, -no-shell-escape): las 11 sin errores (`compilada: 2026-10-25`); la plantilla institucional también compila aquí
 - semanas 1 y 2: el criterio CE3 (mediciones en un circuito LC) se trabaja dejando medidos C2, C3 y L3 para el circuito LC, que se mide completo en la semana 3; semanas 2 y 7 llevan el marcador de fuente no cargada (código de inductores; datos de los instrumentos), con su referencia externa
+
+## [2026-10-27] /actualizar-estructura 1.37 → 1.38
+- paquete: Cerebro_Docente; 1 archivos nuevos, 17 actualizados, 1 para revisar a mano, 0 páginas migradas
+- respaldo en /home/user/Cerebro_IEL04/memory_store/respaldos/estructura-20261027-014533
+- conflicto `src/diseno_iub.py`: se tomó el de la 1.38 (diseño 7) y se volvió a aplicar la corrección local del cierre (docente y contacto en dos líneas, para que el correo no quede bajo el logo); se conservan como edición local `src/correlate.py` y `src/test_correlate_fuentes.py`. El paquete se comprobó contra su propio manifiesto (68 archivos) y no trae rutas fuera de la plantilla
+- pruebas: todas pasan salvo las de plantilla limpia (`test_compatibilidad`, `test_replica`) y la del manifiesto (señala las 3 ediciones locales)

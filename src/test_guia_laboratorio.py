@@ -5,7 +5,7 @@ LLM se sustituye por una guia fija (_fixtures.guia_falsa) y pdflatex y biber por
   B. que semanas llevan guia: solo las de clase de una asignatura teorico-practica, con practica asignada al RA y temario;
   C. la guia: el .md y el .tex con la estructura de la plantilla institucional (tabla de datos, las 8 secciones en orden, pasos,
      tablas de registro, bibliografia con biblatex), el .bib, el estilo y las imagenes copiados, el frontmatter y el texto hostil
-     escapado;
+     escapado; todo en LaTeX (ninguna imagen: tablas, diagramas de flujo, circuitos, graficas y ecuaciones) y con la paleta IUB;
   D. el flujo: lo que no cumple vuelve al modelo con el motivo; una guia al dia se omite, otro docente o facultad la rehacen sin LLM,
      un temario que cambia la vuelve a pedir; --compilar (simulado) y un PDF de otra version; lint L17; el comando.
 
@@ -76,6 +76,12 @@ def probar_esquema() -> None:
         "paso": {**datos, "etapas": [{"titulo": "Etapa", "pasos": [{"texto": "corto"}]}] * 2},
         "duracion": {**datos, "etapas": [{"titulo": "Etapa", "pasos": [{"texto": "Un paso con su texto.", "duracion_min": 999}]}] * 2},
         "introduccion": {**datos, "introduccion": "breve"},
+        "circuito vacío": {**datos, "etapas": [{**datos["etapas"][0], "pasos": [{**datos["etapas"][0]["pasos"][0],
+                                                                                "recurso": {"tipo": "circuito", "leyenda": "Un circuito"}}]}] * 2},
+        "ecuación vacía": {**datos, "etapas": [{**datos["etapas"][0], "pasos": [{**datos["etapas"][0]["pasos"][0],
+                                                                                 "recurso": {"tipo": "ecuacion", "leyenda": "Una ecuación"}}]}] * 2},
+        "gráfica sin especificación": {**datos, "etapas": [{**datos["etapas"][0], "pasos": [{**datos["etapas"][0]["pasos"][0],
+                                                                                             "recurso": {"tipo": "grafica", "leyenda": "Una gráfica"}}]}] * 2},
     }
     for nombre, malo in malos.items():
         esperar(ValueError, GuiaLaboratorio.model_validate, malo)
@@ -83,7 +89,7 @@ def probar_esquema() -> None:
     assert gl.referencia_ieee(Referencia(tipo="book", autores=["Ogata, K."], titulo="Ingeniería de control", editorial="Pearson", anio="2010",
                                          edicion="5")) == "Ogata, K., *Ingeniería de control*, 5 ed., Pearson, 2010."
     print(f"A. el esquema acepta una guía válida y rechaza {len(malos)} defectos (secciones cortas, tablas sin columnas o filas, un tipo de "
-          "referencia desconocido, pasos y duraciones fuera de rango) -- OK")
+          "referencia desconocido, pasos y duraciones fuera de rango, un circuito, una ecuación o una gráfica sin su contenido) -- OK")
 
 
 def asignar_practica(ra: str, estado: str = "aceptado") -> None:
@@ -137,15 +143,16 @@ def probar_flujo(raiz: Path) -> None:
     carpeta = gl.GUIAS / "TPR01"
     md = carpeta / f"TPR01-semana{s1:02d}.md"
     archivos = {p.relative_to(carpeta).as_posix() for p in carpeta.rglob("*") if p.is_file()}
-    esperados = ({f"TPR01-semana{s:02d}{x}" for s in (s1, s2) for x in (".md", ".tex", ".bib", ".guia.json")}
-                 | {f"figuras/TPR01-semana{s:02d}-flujo{k}.png" for s in (s1, s2) for k in (1, 2)})      # un diagrama de flujo por etapa
+    # ninguna imagen dibujada con Python: los diagramas de flujo, el circuito y la grafica van en codigo LaTeX (el .tex y bloques ```tikz)
+    esperados = {f"TPR01-semana{s:02d}{x}" for s in (s1, s2) for x in (".md", ".tex", ".bib", ".guia.json")}
     assert archivos == esperados | set(gl.ARCHIVOS_ESTILO), archivos
     fm, cuerpo = vault.leer_pagina(md)
     assert fm["tipo"] == "guia_laboratorio" and fm["estado"] == "generada" and fm["avisos"] == [], fm["avisos"]
     assert fm["temario"] == f"[[TPR01-semana{s1:02d}]]" and fm["practica"] == "[[banco-uno]]" and fm["practica_experimento"] == "Exp1"
     assert fm["docente"] == "Docente Uno" and fm["facultad"] == "Facultad de Ingeniería" and fm["formato"] == gl.FORMATO
     assert [l[6:] for l in cuerpo.splitlines() if re.match(r"^## \d\. ", l)] == SECCIONES, cuerpo
-    assert "| 1 | Fuente de tensión DC | 0-30 V | 1 |" in cuerpo and "**Tabla 1.** Registro de las mediciones" in cuerpo
+    assert "| 1 | Fuente de tensión DC | 0-30 V | 1 |" in cuerpo and "**Tabla 1.** Materiales y equipos de la práctica" in cuerpo
+    assert "**Tabla 2.** Registro de las mediciones" in cuerpo                    # la Tabla 1 es la de materiales, como en el .tex
     tex = md.with_suffix(".tex").read_text(encoding="utf-8")
     plantilla = (gl.PLANTILLA / "guia-laboratorio.tex").read_text(encoding="utf-8")
     assert re.findall(r"\\section\{([^}]*)\}", tex) == re.findall(r"\\section\{([^}]*)\}", plantilla) == SECCIONES
@@ -154,8 +161,11 @@ def probar_flujo(raiz: Path) -> None:
                   r"\datosguia", r"\lineablanco", r"\begin{pasos}", r"\textbf{Paso~1:}", r"\textbf{Seguridad:}", r"\cite{ref1}",
                   r"\begin{tabularx}{\linewidth}", r"\caption{Registro de las mediciones}", r"\nocite{*}", r"\bibliografia",
                   # buenas practicas de la skill experto-en-latex: unidades con siunitx, booktabs, etiquetas, comentarios
-                  r"\SI{240}{\minute}", r"(aprox.~\SI{", r"\toprule", r"\midrule", r"\cmidrule(lr){1-3}", r"\bottomrule",
-                  r"\label{tab:registro-1}", r"\label{sec:objetivos}", r"\label{sec:etapa-1}", "% --- Etapa 1: ", "% --- Tabla 1: "):
+                  r"\SI{240}{\minute}", r"(aprox.~\SI{", r"\bottomrule", r"\label{tab:registro-1}", r"\label{tab:materiales}",
+                  r"\label{sec:objetivos}", r"\label{sec:etapa-1}", "% --- Etapa 1: ", "% --- Tabla de registro 1: ",
+                  # las tablas con la paleta del Manual de Identidad IUB: encabezado blanco sobre #121023 y filas alternas
+                  r"\begin{xltabular}{\linewidth}", r"\rowcolor{iubnavy} \textcolor{white}{\textbf{\#}} & \textcolor{white}{\textbf{Material o equipo}}",
+                  r"\rowcolor{iubnavy} \textcolor{white}{\textbf{Punto}}", r"\rowcolor{iubfondogris}", r"\arrayrulecolor{iubnavy}"):
         assert pieza in tex, pieza
     assert tex.count(r"\rule{0pt}{0.8cm}") == 5 and r"\subsection{Preparación y montaje" in tex
     assert not re.search(r"\\begin\{tabularx\}\{\\linewidth\}\{[^}]*\|", tex), "las tablas de la guía no llevan líneas verticales"
@@ -191,17 +201,38 @@ def probar_flujo(raiz: Path) -> None:
     assert "@book{ref1," in bib and "title        = {Título de la fuente 1}" in bib and bib.count("@book{") == 2      # libro-a y banco-uno
     assert (carpeta / "guialabiub.sty").read_bytes() == (gl.PLANTILLA / "guialabiub.sty").read_bytes()
     assert "/guia-laboratorio TPR01" in Path("wiki/log.md").read_text(encoding="utf-8")
-    # el procedimiento, lo mas intuitivo posible: cada etapa con su diagrama de flujo (PNG en el .md, TikZ en el .tex) y cada paso con lo
-    # que hay que comprobar
-    assert f"![Figura 1. Diagrama de flujo de la etapa 1: Preparación y montaje](figuras/TPR01-semana{s1:02d}-flujo1.png)" in cuerpo
-    assert "**Comprobación:** La lectura está entre 4,5 V y 5,5 V" in cuerpo
-    assert tex.count(r"\begin{tikzpicture}") == 2 and r"\label{fig:flujo-1}" in tex and r"\node[ddecision" in tex and r"\draw[dflecha]" in tex
+    # el procedimiento, lo mas intuitivo posible: cada etapa con su diagrama de flujo y cada paso con lo que hay que comprobar y, si
+    # ayuda, su recurso (el circuito, la ecuacion o la grafica). Todo en codigo LaTeX: en el .tex, TikZ, circuitikz, pgfplots y
+    # `equation`; en el .md, bloques ```tikz (TikZJax) y $$...$$; ninguna imagen dibujada con Python
+    assert "**Comprobación:** La lectura está entre 4,5 V y 5,5 V" in cuerpo and "![" not in cuerpo and ".png" not in cuerpo
+    bloques = re.findall(r"```tikz\n(.*?)\n```", cuerpo, flags=re.S)
+    assert len(bloques) == 4, len(bloques)                                         # 2 diagramas de flujo, el circuito y la gráfica
+    assert all(r"\begin{document}" in b and r"\definecolor{iubnavy}{HTML}{121023}" in b and all(ord(c) < 128 for c in b) for b in bloques)
+    assert r"\usepackage{circuitikz}" in bloques[1] and r"\begin{circuitikz}[color=iubnavy]" in bloques[1] and r"\usepackage{pgfplots}" in bloques[3]
+    assert r"{s\'{\i}}" in bloques[0], "TikZJax no lee UTF-8: las tildes van como comandos"
+    for pieza in ("*Figura 1. Diagrama de flujo de la etapa 1: Preparación y montaje*", "*Figura 2. Circuito de la práctica: divisor de tensión*",
+                  "*Figura 3. Diagrama de flujo de la etapa 2: Medición*", "*Figura 4. Tensión esperada en la carga según $R_2$*",
+                  "**Ecuación (1).** Tensión esperada en la carga", r"V_{\mathrm{out}} = V_s \frac{R_2}{R_1 + R_2} \tag{1}", "donde $V_s$ es la tensión"):
+        assert pieza in cuerpo, pieza
+    documento = tex.partition(r"\begin{document}")[2]
+    assert tex.count(r"\begin{tikzpicture}") == 3 and r"\label{fig:flujo-1}" in tex and r"\node[ddecision" in tex and r"\draw[dflecha]" in tex
     assert r"\caption{Diagrama de flujo de la etapa 1: Preparación y montaje}" in tex and r"\textbf{Comprobación:}" in tex
+    for pieza in (r"\begin{circuitikz}[color=iubnavy]", r"to[R, l_=$R_2$, v^=$V_{out}$]", r"\captionof{figure}{Circuito de la práctica: divisor de tensión}\label{fig:paso-2}",
+                  r"\begin{equation}", r"\label{eq:paso-3}", r"\begin{axis}", r"\captionof{figure}{Tensión esperada en la carga según $R_2$}\label{fig:paso-4}"):
+        assert pieza in documento, pieza
+    assert documento.index(r"\textbf{Paso~2:}") < documento.index(r"\begin{circuitikz}") < documento.index(r"\textbf{Paso~3:}"), "el recurso, debajo de su paso"
+    assert r"\includegraphics" not in documento and gl.ls.colores_fuera_de_paleta(documento) == []
     preambulo = tex.partition(r"\begin{document}")[0]
-    assert r"\usepackage{tikz}" in preambulo and "dcaja/.style" in preambulo and r"\definecolor{iubblue}{HTML}{00ADE7}" in preambulo
+    for paquete in ("tikz", "pgfplots", "colortbl", "xltabular", "adjustbox"):
+        assert f"\\usepackage{{{paquete}}}" in preambulo, paquete
+    assert r"circuitikz}" in preambulo and "dcaja/.style" in preambulo and "iubejes/.style" in preambulo and r"\definecolor{iubblue}{HTML}{00ADE7}" in preambulo
+    # solo los colores del manual (sus seis \definecolor) y tintes suyos (\colorlet), y el ciclo de pgfplots con la paleta
+    assert sorted(re.findall(r"\\definecolor\{(\w+)\}", preambulo)) == sorted(gl.paleta_iub.MANUAL), re.findall(r"\\definecolor\{(\w+)\}", preambulo)
+    assert r"\pgfplotsset{cycle list={{iubblue, mark=*}" in preambulo
     assert preambulo.index(r"\usepackage{guialabiub}") < preambulo.index(r"\usepackage{tikz}"), "los estilos de los diagramas, después de la plantilla"
     print("C. la guía sale en .md y en .tex con la estructura de la plantilla (tabla Facultad/Módulo/Docente, las 8 secciones en el mismo orden, "
-          "pasos con duración y seguridad, tablas de registro vacías, \\cite y biblatex), con su .bib, el estilo y las imágenes copiados -- OK")
+          "pasos con duración y seguridad, tablas de registro vacías, \\cite y biblatex), con su .bib, el estilo y las imágenes copiados; todo en "
+          "LaTeX (diagramas de flujo, circuito, gráfica, ecuación y tablas; en el .md, bloques ```tikz) y solo con la paleta IUB -- OK")
 
     # C2. texto hostil del modelo: se escapa (ningun comando suyo llega al .tex)
     hostil = _fixtures.guia_falsa(usuario)
@@ -237,6 +268,24 @@ def probar_flujo(raiz: Path) -> None:
     assert md.exists() and gl.ruta_contenido(md).exists(), "una guía que falla no borra la anterior"
     print("D1. lo que no cumple (equipos de la práctica que faltan, un criterio ajeno o uno práctico sin cubrir, una cita a una fuente que no "
           "existe, referencias que no cuadran) vuelve al modelo con el motivo; tras 3 intentos falla con un mensaje claro y deja la guía anterior -- OK")
+
+    # D1b. el recurso de un paso: un circuito con un comando que lee archivos, un color fuera de la paleta IUB u otro entorno, o una
+    # ecuacion con un comando que no es matematico, vuelve al modelo con el motivo
+    def recursos_malos(u):
+        g = _fixtures.guia_falsa(u)
+        pasos = g.pasos()
+        pasos[1].recurso.circuito = r"\draw[red] (0,0) to[R] (2,0); \input{secreto} \begin{tikzpicture}\end{tikzpicture}"
+        pasos[2].recurso.ecuacion = r"V = \write18{rm} I R"
+        return g
+    LLAMADAS.clear()
+    RESPUESTAS.append(recursos_malos)
+    gl.generar_guia("TPR01", s1, "Docente Uno", "Facultad de Ingeniería", replanificar=True)
+    assert len(LLAMADAS) == 2, len(LLAMADAS)
+    for motivo in ("el circuito del paso 2", "`red`", "\\input", "solo van trazos de circuitikz", "la ecuación del paso 3 usa comandos que no son matemáticos"):
+        assert motivo in LLAMADAS[1], motivo
+    assert r"\input" not in md.with_suffix(".tex").read_text(encoding="utf-8").partition(r"\begin{document}")[2]
+    print("D1b. el recurso de un paso (circuito o ecuación) con un comando que lee archivos, un color que no es del Manual de Identidad, otro "
+          "entorno o un comando no matemático vuelve al modelo con el motivo y nunca llega al .tex -- OK")
 
     # D2. al dia se omite; otro docente o facultad la rehacen sin LLM; un temario que cambia la vuelve a pedir
     gl.generar_guias("TPR01", "Docente Uno", "Facultad de Ingeniería")
@@ -321,15 +370,24 @@ def probar_flujo(raiz: Path) -> None:
     gl.generar_guias("TPR01", semanas=[s1])
     assert len(LLAMADAS) == 1 and vault.leer_pagina(md)[0]["origen_practica"] == "manual", "con la práctica asignada otra vez, vuelve al manual"
 
-    # un formato nuevo: lo guardado (.guia.json) se reutiliza sin LLM si pasa la validación actual; uno del formato 1 (sin diagramas) no
+    # un formato nuevo: lo guardado (.guia.json) se reutiliza sin LLM si pasa la validación actual; uno del formato 1 (sin diagramas) no.
+    # Una guia del formato 2 (sin recursos en los pasos y con los diagramas en PNG) pasa la del 3: se rehace sin LLM y sus PNG se borran
     contenido = gl.ruta_contenido(md)
     datos = json.loads(contenido.read_text(encoding="utf-8"))
+    for etapa in datos["guia"]["etapas"]:
+        for p in etapa["pasos"]:
+            p.pop("recurso", None)
     fm_md, cuerpo_md = vault.leer_pagina(md)
-    vault.escribir_pagina(md, {**fm_md, "formato": 1}, cuerpo_md)
-    contenido.write_text(json.dumps({**datos, "formato": 1}, ensure_ascii=False), encoding="utf-8")
+    vault.escribir_pagina(md, {**fm_md, "formato": 2}, cuerpo_md)
+    contenido.write_text(json.dumps({**datos, "formato": 2}, ensure_ascii=False), encoding="utf-8")
+    png_viejo = carpeta / "figuras" / f"{md.stem}-flujo1.png"
+    png_viejo.parent.mkdir(exist_ok=True)
+    _fixtures.png_falso(png_viejo)
+    assert any("guía de otro formato (2" in h.mensaje and "sin LLM" in h.mensaje for h in lint.revisar() if h.regla == "L17")
     LLAMADAS.clear()
     (_, _, llamadas), = gl.generar_guias("TPR01", semanas=[s1])[0]
     assert llamadas == 0 and not LLAMADAS and vault.leer_pagina(md)[0]["formato"] == gl.FORMATO, "válido con la validación actual: sin LLM"
+    assert not png_viejo.exists() and not png_viejo.parent.exists(), "los PNG del formato 2 se borran: la guía ya no usa imágenes"
     for etapa in datos["guia"]["etapas"]:
         etapa["diagrama"] = None
     vault.escribir_pagina(md, {**vault.leer_pagina(md)[0], "formato": 1}, cuerpo_md)
@@ -339,7 +397,8 @@ def probar_flujo(raiz: Path) -> None:
     assert json.loads(contenido.read_text(encoding="utf-8"))["formato"] == gl.FORMATO, "el .guia.json guarda su formato"
     print("D2c. sin práctica de un manual, la guía se propone a partir de la bibliografía ingerida (con las fuentes en que se basa, en `revisar` para "
           "que la valide el docente); sin manual ni bibliografía no hay guía; si el docente revisó la correlación sin asignar práctica, solo con "
-          "--desde-bibliografia; con la práctica asignada vuelve al manual; un formato nuevo se rehace sin LLM solo si lo guardado pasa la validación -- OK")
+          "--desde-bibliografia; con la práctica asignada vuelve al manual; un formato nuevo se rehace sin LLM solo si lo guardado pasa la validación "
+          "(del 2 al 3 sí, y se borran sus PNG; del 1, 1 llamada) -- OK")
 
     # D3. --compilar (simulado): pdflatex -> biber -> pdflatex -> pdflatex, sin shell-escape, con tiempo maximo y sin entrada
     ordenes: list[list[str]] = []

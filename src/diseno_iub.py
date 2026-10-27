@@ -26,6 +26,10 @@ Diseno 6 -- el Manual de Identidad Visual IUB 2025 (C:/.../Manual_Ident_IUB/manu
       simbolo de la franja (0,72 cm) es una marca de pantalla, por debajo del minimo de impresion (12 mm). Si falta un logo, el
       preambulo escribe «IUB» en su lugar (\IfFileExists), y la presentacion compila igual.
 
+Diseno 7 -- solo los colores del manual: la paleta vive en paleta_iub.py (los seis colores del manual y sus tintes, con \colorlet:
+ningun otro tono, ni el morado ni los grises de antes), el ciclo de pgfplots es el de la paleta (una serie sin color sale azul,
+naranja, verde...) y el LaTeX del modelo solo admite esos colores y `white` (latex_seguro: _COLORES_BASE y colores_fuera_de_paleta).
+
 Coordenadas en cm; la diapositiva mide 16 x 9 cm (aspectratio=169). La portada, los separadores y el cierre usan
 `remember picture, overlay`: hace falta compilar DOS veces. NO se ha compilado en el equipo donde se escribio (no hay LaTeX): la
 primera compilacion real (Overleaf o --compilar) es la que confirma que nada desborda.
@@ -37,15 +41,12 @@ import re
 from dataclasses import dataclass, field
 
 import latex_seguro as ls
+import paleta_iub
 from schema_presentacion import _largo
 
-VERSION = 6                 # version del diseno (campo `presentacion_diseno`): si cambia, las presentaciones se rehacen desde su plan
+VERSION = 7                 # version del diseno (campo `presentacion_diseno`): si cambia, las presentaciones se rehacen desde su plan
 
-COLORES = {"iubwhite": "FFFFFF", "iubnavy": "121023", "iubyellow": "FFDF2D",
-           "iubblue": "00ADE7", "iuborange": "E39037", "iubgreen": "3B9C6D",
-           # los que usan las figuras y tablas del temario (temario_latex.COLORES)
-           "iubpurple": "8E6BBF", "iubgris": "D5DAE3", "iubgrisoscuro": "7C8598", "iubfondoazul": "EBF7FD",
-           "iubfondonaranja": "FDF4EA", "iubfondoverde": "EDF8F2", "iubfondogris": "F4F6F9"}
+COLORES = paleta_iub.MANUAL     # los del Manual de Identidad; sus tintes (fondos y rejillas, paleta_iub.TINTES) van con \colorlet
 # Los logos que lleva cada presentacion (en logos/, junto al .tex): de config/framework_iub/logos/
 LOGOS = {"simbolo": "logo_iub_blanco.png", "horizontal": "logo_iub_horizontal.png", "amarillo": "logo_iub_horizontal_amarillo.png"}
 CICLO = ("iubblue", "iuborange", "iubgreen")            # se alternan para diferenciar bloques y conceptos
@@ -334,7 +335,7 @@ _PREAMBULO = r"""% =============================================================
 
 def preambulo(doc: Documento) -> str:
     c = doc.conv
-    colores = "\n".join(rf"\definecolor{{{n}}}{{HTML}}{{{h}}}" for n, h in COLORES.items())
+    colores = paleta_iub.definiciones() + "\n" + paleta_iub.ciclo_pgfplots()
     reemplazos = {
         "<<CABECERA_1>>": _comentario(f"{doc.codigo} - {doc.asignatura}"),
         "<<CABECERA_2>>": _comentario(f"Semana {doc.semana}: {doc.titulo}"),

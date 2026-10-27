@@ -358,10 +358,12 @@ def guias_hechas(destino: Path) -> int:
     return sum(1 for _ in carpeta.rglob("*.guia.json")) if carpeta.is_dir() else 0
 
 
-def guias_por_formato(destino: Path, formato: int) -> tuple[int, int]:
-    """(cuantos .guia.json de la copia se guardaron con `formato` —se rehacen desde lo guardado, sin LLM—, cuantos con otro o ilegibles
-    —no pasan la validacion de ese formato: 1 llamada cada uno—). Sin pydantic no se valida mas: se compara el campo `formato` que
-    guia_laboratorio guarda en cada .guia.json (del formato 1 al 2, uno del 1 nunca pasa: no tiene diagramas de flujo)."""
+def guias_por_formato(destino: Path, formato: int, reutilizables: tuple[int, ...] = ()) -> tuple[int, int]:
+    """(cuantos .guia.json de la copia se guardaron con `formato` o con uno de `reutilizables` (los que pasan la validacion de ese
+    formato: guia_laboratorio.FORMATOS_REUTILIZABLES) —se rehacen desde lo guardado, sin LLM—, cuantos con otro o ilegibles —no la
+    pasan: 1 llamada cada uno—). Sin pydantic no se valida mas: se compara el campo `formato` que guia_laboratorio guarda en cada
+    .guia.json (uno del 1 nunca pasa la del 2 ni la del 3: no tiene diagramas de flujo; uno del 2 si pasa la del 3)."""
+    validos = {formato, *reutilizables}
     carpeta = destino / "generacion" / "guias-laboratorio"
     mismo = otro = 0
     for ruta in sorted(carpeta.rglob("*.guia.json")) if carpeta.is_dir() else []:
@@ -369,7 +371,7 @@ def guias_por_formato(destino: Path, formato: int) -> tuple[int, int]:
             datos = json.loads(_leer(ruta))
         except ValueError:
             datos = None
-        if isinstance(datos, dict) and datos.get("formato") == formato:
+        if isinstance(datos, dict) and datos.get("formato") in validos:
             mismo += 1
         else:
             otro += 1
@@ -447,11 +449,14 @@ def efectos(entradas: list[Entrada], origen: Path, destino: Path, migradas: list
         nuevo = re.search(r"(?m)^FORMATO = (\d+)", _leer(origen / script_guia))
         viejo = re.search(r"(?m)^FORMATO = (\d+)", _leer(destino / script_guia)) if (destino / script_guia).is_file() else None
         if nuevo and (not viejo or viejo.group(1) != nuevo.group(1)):
-            mismo, otro = guias_por_formato(destino, int(nuevo.group(1)))
+            lista = re.search(r"(?m)^FORMATOS_REUTILIZABLES = \(([\d,\s]*)\)", _leer(origen / script_guia))
+            reutilizables = tuple(int(n) for n in re.findall(r"\d+", lista.group(1))) if lista else ()
+            validos = sorted({int(nuevo.group(1)), *reutilizables})
+            mismo, otro = guias_por_formato(destino, int(nuevo.group(1)), reutilizables)
             texto.append(f"el formato de las guías de laboratorio pasó a la versión {nuevo.group(1)}: las ya hechas se rehacen en la próxima corrida de "
-                         "`python src/guia_laboratorio.py CODIGO`; desde lo que guardó el modelo (.guia.json), sin LLM, solo las que lo guardaron en el "
-                         f"formato {nuevo.group(1)}; las de otro formato no pasan la validación nueva y se vuelven a pedir ({LLAMADAS_POR_GUIA} llamada "
-                         "por guía; del formato 1 al 2, todas: no tenían diagramas de flujo)"
+                         "`python src/guia_laboratorio.py CODIGO`; desde lo que guardó el modelo (.guia.json), sin LLM, las que lo guardaron en el "
+                         f"formato {' o '.join(map(str, validos))} (pasan la validación nueva); las de otro formato no la pasan y se vuelven a pedir "
+                         f"({LLAMADAS_POR_GUIA} llamada por guía; las del formato 1, siempre: no tenían diagramas de flujo)"
                          + (f" (en esta copia: {mismo} sin LLM; {otro} a pedir: ~{_llamadas(otro * LLAMADAS_POR_GUIA)})" if mismo or otro else ""))
     if cambia("src/temario.py", "src/schema_temario.py", "src/figuras.py", "src/pasajes.py", "src/prompts/prompt-temario"):
         texto.append("cambió la redacción de los temarios: los ya generados siguen vigentes y solo los nuevos usan el cambio; rehacerlos con `--forzar` cuesta "

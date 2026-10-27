@@ -325,9 +325,10 @@ def revisar() -> list[Hallazgo]:
                 guardado = json.loads(guia_laboratorio.ruta_contenido(p.ruta).read_text(encoding="utf-8")).get("formato")
             except (OSError, ValueError, AttributeError):
                 guardado = None
-            costo = ("sin LLM: lo guardado (.guia.json) es del formato actual" if guardado == guia_laboratorio.FORMATO else
+            costo = (f"sin LLM: lo guardado (.guia.json) es del formato {guardado}, que pasa la validación del actual"
+                     if guardado in (guia_laboratorio.FORMATO, *guia_laboratorio.FORMATOS_REUTILIZABLES) else
                      "1 llamada al modelo: lo guardado (.guia.json) es de otro formato y no pasa la validación del actual"
-                     + (" (del 1 al 2: no tenía diagramas de flujo)" if guardado in (1, None) and guia_laboratorio.FORMATO == 2 else ""))
+                     + (" (el formato 1 no tenía diagramas de flujo)" if guardado in (1, None) else ""))
             agregar(AVISO, p, "L17", f"guía de otro formato ({p.fm.get('formato')}; el actual es {guia_laboratorio.FORMATO}): {rehacer} la rehace — {costo}")
         if not archivo.is_file():
             agregar(AVISO, p, "L17", f"su .tex `{archivo.as_posix()}` no existe ({rehacer} --forzar lo vuelve a escribir, sin LLM si nada cambió)")

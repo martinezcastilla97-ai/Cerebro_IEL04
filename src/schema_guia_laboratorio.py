@@ -3,7 +3,8 @@ reintentos). Sigue las secciones de la plantilla institucional (config/framework
 
     1. Objetivos (general y especificos, cada uno con los Criterios de Evaluacion del RA que desarrolla)
     2. Materiales y Equipos          3. Procedimiento (etapas, cada una con su diagrama de flujo y sus pasos, con la duracion, la
-                                        comprobacion y la medida de seguridad de cada uno)
+                                        comprobacion y la medida de seguridad de cada uno y, si ayuda, un recurso: el circuito
+                                        que se monta, la ecuacion que se aplica o la grafica que se espera obtener)
     4. Cuestiones a Resolver         5. Analisis de Resultados (instrucciones y las tablas de registro de datos)
     6. Conclusiones                  7. Recomendaciones de Seguridad        8. Bibliografia (las referencias, como datos)
 
@@ -16,9 +17,11 @@ restricciones en el esquema). Lo que depende del RA, de la practica o de las fue
 
 from __future__ import annotations
 
+from enum import Enum
+
 from pydantic import BaseModel, model_validator
 
-from figuras import DiagramaSpec
+from figuras import DiagramaSpec, GraficaSpec
 
 TIPOS_REFERENCIA = ("book", "manual", "report", "online", "article", "misc")
 
@@ -59,11 +62,43 @@ class Material(BaseModel):
         return self
 
 
+class TipoRecurso(str, Enum):
+    circuito = "circuito"                # el esquema del circuito electrico o electronico que se monta (circuitikz)
+    ecuacion = "ecuacion"                # la ecuacion que se aplica en el paso, con lo que significa cada simbolo
+    grafica = "grafica"                  # la grafica que se espera obtener (los puntos los calcula el codigo, como en el temario)
+
+
+class Recurso(BaseModel):
+    """Lo que acompana a un paso para que el estudiante entienda como proceder: todo en LaTeX (circuitikz, amsmath, pgfplots), nunca
+    una imagen. El codigo lo valida (guia_laboratorio.validar_guia) y lo escribe; el modelo solo da el contenido."""
+    tipo: TipoRecurso
+    leyenda: str                         # la leyenda de la figura o la frase que presenta la ecuacion
+    circuito: str = ""                   # circuito: el cuerpo de un entorno circuitikz (\draw (0,0) to[R=$R_1$] (2,0) ...;)
+    ecuacion: str = ""                   # ecuacion: la formula LaTeX (amsmath), sin $ ni entorno
+    donde: str = ""                      # ecuacion: que es cada simbolo, con sus unidades
+    grafica: GraficaSpec | None = None   # grafica: la especificacion (funciones con sus parametros o datos de las fuentes)
+
+    @model_validator(mode="after")
+    def coherente(self):
+        self.leyenda = _texto("leyenda del recurso", self.leyenda, 5, 160)
+        self.circuito = self.circuito.strip()
+        self.ecuacion = self.ecuacion.strip().strip("$").strip()
+        self.donde = " ".join(self.donde.split())[:500]
+        if self.tipo == TipoRecurso.circuito and not 10 <= len(self.circuito) <= 2500:
+            raise ValueError(f"el circuito «{self.leyenda[:50]}» necesita `circuito`: el cuerpo de un entorno circuitikz (de 10 a 2500 caracteres)")
+        if self.tipo == TipoRecurso.ecuacion and not 1 <= len(self.ecuacion) <= 400:
+            raise ValueError(f"la ecuación «{self.leyenda[:50]}» necesita `ecuacion`: la fórmula LaTeX (hasta 400 caracteres)")
+        if self.tipo == TipoRecurso.grafica and self.grafica is None:
+            raise ValueError(f"la gráfica «{self.leyenda[:50]}» necesita `grafica`: su especificación")
+        return self
+
+
 class Paso(BaseModel):
     texto: str
     duracion_min: int | None = None      # tiempo aproximado del paso, en minutos
     seguridad: str = ""                  # la medida de seguridad de este paso, si la tiene
     verificacion: str = ""               # lo que el estudiante debe observar para saber que el paso salio bien (y que hacer si no)
+    recurso: Recurso | None = None       # si ayuda: el circuito que se monta, la ecuacion que se aplica o la grafica esperada
 
     @model_validator(mode="after")
     def coherente(self):

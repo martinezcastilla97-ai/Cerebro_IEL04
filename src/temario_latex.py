@@ -42,15 +42,13 @@ from pathlib import Path
 
 import figuras
 import latex_seguro as ls
+import paleta_iub
 from schema_temario import Bloque, TipoBloque, celdas_de_tabla
 
 VERSION = 2                 # version del formato del .tex (campo `latex_formato` del temario)
 INSTITUCION = "Institución Universitaria de Barranquilla"
 MARCA = "IUB"
-COLORES = {"iubnavy": "121023", "iubyellow": "FFDF2D", "iubblue": "00ADE7", "iuborange": "E39037", "iubgreen": "3B9C6D",
-           "iubpurple": "8E6BBF", "iubgris": "D5DAE3", "iubgrisoscuro": "7C8598", "iubfondoazul": "EBF7FD",
-           "iubfondonaranja": "FDF4EA", "iubfondoverde": "EDF8F2", "iubfondogris": "F4F6F9"}
-COLORES_SERIE = ["iubblue", "iuborange", "iubgreen", "iubnavy", "iubpurple"]
+COLORES_SERIE = paleta_iub.SERIES        # los colores (Manual de Identidad IUB y sus tintes) los define paleta_iub
 ALTO_GRAFICA = "6.2cm"
 CARACTERES_POR_RENGLON_CATEGORIA = 13      # cuantos caben en una linea de la etiqueta de una categoria (text width=2.4cm, \small)
 
@@ -602,7 +600,7 @@ class _Escritor:
                                                     (a.origen, a.destino))
                 rotulos.append(f"  \\node[drotulo] at ({mx:.3f},{my:.3f}) {{{etiqueta}}};")
         if rotulos:
-            lineas.append("  % rotulos de las flechas (donde los pone el PNG: sin caer sobre un nodo)")
+            lineas.append("  % rotulos de las flechas (donde no caen sobre un nodo)")
         lineas += rotulos
         lineas += [r"\end{tikzpicture}", r"\end{adjustbox}"]
         return "\n".join(lineas)
@@ -709,7 +707,7 @@ def documento(sesion: Sesion) -> tuple[str, list[str]]:
     peligrosas = ls.primitivas_peligrosas(_sin_codigo(texto_cuerpo))
     if peligrosas:
         raise ValueError("el LaTeX del temario trae primitivas que leen o escriben archivos: " + ", ".join("\\" + q for q in peligrosas))
-    colores = "\n".join(rf"\definecolor{{{n}}}{{HTML}}{{{h}}}" for n, h in COLORES.items())
+    colores = paleta_iub.definiciones() + "\n" + paleta_iub.ciclo_pgfplots()
     preambulo = (PREAMBULO.replace("<<COLORES>>", colores).replace("<<MARCA>>", MARCA).replace("<<INSTITUCION>>", INSTITUCION)
                  .replace("<<ENCABEZADO>>", e.titulo(f"{sesion.codigo} — {sesion.asignatura}"))
                  .replace("<<SEMANA>>", str(sesion.semana)).replace("<<TOTAL>>", str(sesion.total_semanas))

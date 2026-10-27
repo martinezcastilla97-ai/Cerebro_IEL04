@@ -303,12 +303,19 @@ def probar_clasificacion() -> None:
         escribir(v2, "src/guia_laboratorio.py", "FORMATO = 2\n")
         script = [ae.Entrada("src/guia_laboratorio.py", "plantilla", "actualizar")]
         texto = "\n".join(ae.efectos(script, v2, copia, []))
-        assert "formato de las guías de laboratorio pasó a la versión 2" in texto and "del formato 1 al 2, todas: no tenían diagramas" in texto, texto
+        assert "formato de las guías de laboratorio pasó a la versión 2" in texto and "las del formato 1, siempre: no tenían diagramas" in texto, texto
         assert "(en esta copia: 1 sin LLM; 3 a pedir: ~3 llamadas)" in texto, texto
-        escribir(v2, "src/guia_laboratorio.py", "FORMATO = 1\n# otro cambio\n")
+        # del 2 al 3: lo guardado en el formato 2 pasa la validacion del 3 (FORMATOS_REUTILIZABLES): sin LLM; el del 1 y el ilegible, 1 llamada
+        assert ae.guias_por_formato(copia, 3, (2, 3)) == (1, 3)
+        escribir(copia, "src/guia_laboratorio.py", "FORMATO = 2\n")
+        escribir(v2, "src/guia_laboratorio.py", "FORMATO = 3\nFORMATOS_REUTILIZABLES = (2, 3)\n")
+        texto = "\n".join(ae.efectos(script, v2, copia, []))
+        assert "pasó a la versión 3" in texto and "en el formato 2 o 3" in texto and "(en esta copia: 1 sin LLM; 3 a pedir: ~3 llamadas)" in texto, texto
+        escribir(v2, "src/guia_laboratorio.py", "FORMATO = 2\n# otro cambio\n")
         assert "formato de las guías" not in "\n".join(ae.efectos(script, v2, copia, [])), "sin cambio de FORMATO no hay aviso"
         print("C5. los efectos de las guías de laboratorio: un prompt nuevo no las invalida (`--replanificar`, 1 llamada por guía), un esquema nuevo las "
-              "revalida y un FORMATO nuevo las rehace sin LLM solo si lo guardado es de ese formato (del 1 al 2, 1 llamada por guía, contadas en la copia) -- OK")
+              "revalida y un FORMATO nuevo las rehace sin LLM solo si lo guardado pasa la validación nueva (del 1 al 2, 1 llamada por guía; del 2 al 3, "
+              "sin LLM; contadas en la copia) -- OK")
 
 
 # --- D. aplicar ------------------------------------------------------------------------------------------------------------

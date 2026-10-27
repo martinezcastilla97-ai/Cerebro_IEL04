@@ -29,6 +29,7 @@ import diseno_iub
 import elementos_tex
 import figuras
 import latex_seguro as ls
+import paleta_iub
 import lint
 import planeador
 import presentaciones
@@ -281,10 +282,13 @@ def probar_diseno() -> None:
     for requisito in (r"\usepackage[scaled=0.95]{helvet}", r"\fontfamily{pag}", r"\renewcommand{\familydefault}{\sfdefault}", r"\documentclass[aspectratio=169", r"\usepackage{tikz}",
                       r"\usepackage{pgfplots}", r"\usepackage[most]{tcolorbox}", r"circuitikz}", r"\newtcolorbox{caja}", r"\newtcolorbox{cardN}",
                       r"\newtcblisting{codebox}", r"\newcommand{\bloque}[4]", r"\setbeamertemplate{headline}", r"\logoIUBsimbolo{0.72cm}", r"flecha/.style",
-                      r"dcaja/.style", r"iubejes/.style", r"\definecolor{iubfondogris}", r"\newcommand{\elementoTemario}[2]",
-                      "Semana 3 \\quad \\insertframenumber", "Docente de prueba", "es-noshorthands"):
+                      r"dcaja/.style", r"iubejes/.style", r"\colorlet{iubfondogris}{iubnavy!5}", r"\pgfplotsset{cycle list={{iubblue, mark=*}",
+                      r"\newcommand{\elementoTemario}[2]", "Semana 3 \\quad \\insertframenumber", "Docente de prueba", "es-noshorthands"):
         assert requisito in tex, requisito
     preambulo, _, documento = tex.partition("\\begin{document}")
+    # solo los colores del manual: sus seis \definecolor y, lo demas, tintes suyos (\colorlet{..}{iubnavy!18}); ningun otro tono
+    assert sorted(re.findall(r"\\definecolor\{(\w+)\}", preambulo)) == sorted(paleta_iub.MANUAL)
+    assert all(re.fullmatch(r"iub(?:navy|blue|orange|green)!\d+", v) for v in re.findall(r"\\colorlet\{\w+\}\{([^}]*)\}", preambulo))
     # los logos del Manual de Identidad: solo los pone el preambulo (macros con \IfFileExists: sin el archivo, la marca en texto)
     assert "\\includegraphics" not in documento and preambulo.count("\\includegraphics") == 3 and preambulo.count("\\IfFileExists{logos/") == 3
     for nombre in diseno_iub.LOGOS.values():
@@ -604,6 +608,27 @@ def probar_flujo(raiz: Path) -> None:
     assert len(LLAMADAS) == n1 + 2
     assert "comandos o entornos no admitidos: \\input" in LLAMADAS[1] and "ninguna diapositiva usa un recurso visual" in LLAMADAS[2]
     print("D5. lo que no cumple (un comando fuera de la lista, un bloque sin ningún recurso visual) vuelve al modelo con el motivo -- OK")
+
+    # D5b. solo los colores del Manual de Identidad IUB (y `white` y sus mezclas): un color ajeno, en el texto o en una opcion, vuelve al
+    # modelo; una tabla sin el encabezado institucional y una figura PNG del temario sin redibujar en LaTeX, tambien (mientras hay reintentos)
+    for ajeno, motivo in ((r"\textcolor{red}{Alerta}", "`\\textcolor{red}`"), (r"\rowcolors{2}{gray}{white}", "`\\rowcolors{gray}`"),
+                          (r"\colorbox[HTML]{FF0000}{x}", "`\\colorbox[HTML]`"), (r"\fcolorbox{iubblue}{black}{x}", "`\\fcolorbox{black}`"),
+                          (r"\begin{tikzpicture}\node[fill=black] {a};\end{tikzpicture}", "fill=black"),
+                          (r"\begin{tikzpicture}\begin{axis}\addplot[color=blue] coordinates {(0,1) (1,2)};\end{axis}\end{tikzpicture}", "color=blue")):
+        _, problemas = ls.verificar_cuerpo(ajeno)
+        assert problemas and motivo in " ".join(problemas), (ajeno, problemas)
+    for propio in (r"\textcolor{iubblue!60!white}{x}", r"\rowcolors{2}{iubnavy!6}{white}", r"\begin{tikzpicture}\node[fill=iuborange!20, draw=iubnavy] {a};\end{tikzpicture}"):
+        assert ls.verificar_cuerpo(propio)[1] == [], propio
+    parte = presentaciones.Parte("bloque-01", "Bloque", "Texto con " + presentaciones.MARCA_FIGURA_PNG + ": Curva de carga. Dibújala]", None)
+    tabla_gris = r"\begin{tabularx}{\textwidth}{XX} a & b \\ c & d \\ \end{tabularx}"
+    sin_nada = DiapositivasParte(diapositivas=[DiapositivaLatex(titulo="Tabla", cuerpo=tabla_gris), DiapositivaLatex(titulo="Otra", cuerpo=cuerpo("cajas"))])
+    problemas = presentaciones.validar_parte(sin_nada, parte)
+    assert any("sin el encabezado institucional" in p for p in problemas) and any("solo dibujan 0" in p for p in problemas), problemas
+    assert presentaciones.validar_parte(sin_nada, parte, blando=False) == [], "en el último intento no detiene la parte"
+    con_todo = DiapositivasParte(diapositivas=[DiapositivaLatex(titulo="Tabla", cuerpo=cuerpo("tabla")), DiapositivaLatex(titulo="Curva", cuerpo=cuerpo("grafica"))])
+    assert presentaciones.validar_parte(con_todo, parte) == [], presentaciones.validar_parte(con_todo, parte)
+    print("D5b. solo los colores del Manual de Identidad IUB: un color ajeno (red, gray, black, blue, [HTML]) en el texto, en una tabla o en una opción "
+          "vuelve al modelo; una tabla sin el encabezado #121023 o una figura PNG del temario sin redibujar en LaTeX, también -- OK")
 
     LLAMADAS.clear()
     RESPUESTAS.extend([malo] * 3)

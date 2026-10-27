@@ -12,8 +12,14 @@ practica, de una de dos fuentes (origen_de_guia):
 Se redacta con el planeador (el tema de la semana), el temario (su titulo y su caso de estudio), el RA del curriculo (enunciado y
 criterios de evaluacion), la practica (si la hay) y los pasajes de las fuentes cargadas mas relevantes para ella (pasajes.py: BM25
 sobre el texto completo de raw/ y las paginas de wiki/fuentes/). El procedimiento esta pensado para que el estudiante trabaje sin el
-docente al lado: cada etapa lleva su diagrama de flujo (dibujado por el codigo: PNG para el .md, TikZ para el .tex, con
-figuras._mejor_disposicion) y cada paso, lo que debe comprobar para saber que salio bien.
+docente al lado: cada etapa lleva su diagrama de flujo (TikZ, con la disposicion de figuras._mejor_disposicion), cada paso lo que
+debe comprobar para saber que salio bien y, si ayuda, un recurso: el circuito que se monta (circuitikz), la ecuacion que se aplica
+(amsmath) o la grafica que se espera obtener (pgfplots, con los puntos calculados de su especificacion).
+
+Todo es CODIGO LaTeX, nunca una imagen dibujada con Python: las tablas (con el encabezado #121023 y filas alternas), los diagramas
+de flujo, los circuitos, las graficas y las ecuaciones, con los colores del Manual de Identidad IUB (paleta_iub). En el .md, las
+ecuaciones van en $$...$$ y los diagramas, circuitos y graficas en bloques ```tikz (el plugin TikZJax de Obsidian los dibuja; sin el,
+se ve el codigo).
 
 Escribe, en generacion/guias-laboratorio/{codigo}/:
 
@@ -24,7 +30,6 @@ Escribe, en generacion/guias-laboratorio/{codigo}/:
     {codigo}-semanaNN.guia.json  lo que escribio el modelo, con la huella de lo que se le dio: rehacer la guia con otro docente o
                                  facultad no vuelve a llamar al modelo
     guialabiub.sty, img/         el estilo y las imagenes de la plantilla (config/framework_iub/guia-laboratorio/), copiados
-    figuras/                     los diagramas de flujo de cada etapa del procedimiento (PNG, para el .md)
 
 La plantilla es la de la institucion (guia-laboratorio.tex y guialabiub.sty: carta, margenes de 3 cm, Carlito (el clon de Calibri), banner de
 encabezado y pie, marca de agua, tabla Facultad / Modulo / Docente, secciones numeradas y bibliografia IEEE con biblatex): se compila
@@ -53,27 +58,32 @@ import re
 import shutil
 import subprocess
 import sys
+import unicodedata
 from pathlib import Path
 from typing import Callable
 
 import correlate
-import figuras
 import latex_seguro as ls
+import paleta_iub
 import pasajes
 import presentaciones
 import temario
 import temario_latex
 import vault
 from schema_extraccion import CategoriaAccionCE, TipoAbordaje
-from schema_guia_laboratorio import GuiaLaboratorio, Referencia
+from schema_guia_laboratorio import GuiaLaboratorio, Recurso, Referencia, TipoRecurso
 
 GUIAS = Path("generacion") / "guias-laboratorio"
 PLANTILLA = Path("config") / "framework_iub" / "guia-laboratorio"
 ARCHIVOS_ESTILO = ("guialabiub.sty", "img/encabezado.png", "img/marca-agua.jpg", "img/pie-pagina.png")
-FORMATO = 2                     # version del formato de la guia (.md, .tex y .guia.json). Si cambia, la guia se rehace desde lo guardado
+FORMATO = 3                     # version del formato de la guia (.md, .tex y .guia.json). Si cambia, la guia se rehace desde lo guardado
                                 # (sin LLM) solo si lo guardado pasa la validacion del formato nuevo; si no, se vuelve a pedir (1 llamada).
                                 # 2: diagramas de flujo por etapa, comprobacion de cada paso y guias basadas en la bibliografia (las del
-                                # formato 1 no tienen diagramas: no pasan la validacion y cuestan 1 llamada cada una)
+                                # formato 1 no tienen diagramas: no pasan la validacion y cuestan 1 llamada cada una).
+                                # 3: todo en LaTeX (sin PNG: el .md lleva bloques ```tikz), tablas con la paleta IUB y el recurso de
+                                # cada paso (circuito, ecuacion o grafica, opcional: lo guardado del 2 lo pasa y se rehace sin LLM)
+FORMATOS_REUTILIZABLES = (2, 3)  # los formatos cuyo .guia.json pasa la validacion actual (LINT L17 y ACTUALIZAR-ESTRUCTURA cuentan con esto)
+MAX_RECURSOS = 12               # recursos (circuitos, ecuaciones y graficas) en toda la guia
 PASAJES_GUIA = 8
 CARACTERES_DE_PASAJES = 9000
 MAX_CASO = 3500                 # caracteres del caso de estudio del temario que se le dan al modelo
@@ -190,8 +200,52 @@ def caso_del_temario(cuerpo: str) -> str:
 def _textos(g: GuiaLaboratorio) -> list[str]:
     return [g.titulo, g.introduccion, g.objetivo_general, *(o.enunciado for o in g.objetivos_especificos),
             *(f"{m.nombre} {m.especificacion}" for m in g.materiales), g.procedimiento_introduccion,
-            *(e.titulo for e in g.etapas), *(f"{p.texto} {p.seguridad} {p.verificacion}" for p in g.pasos()), *g.cuestiones, *g.analisis,
+            *(e.titulo for e in g.etapas), *(f"{p.texto} {p.seguridad} {p.verificacion}" for p in g.pasos()),
+            *(f"{p.recurso.leyenda} {p.recurso.donde}" for p in g.pasos() if p.recurso), *g.cuestiones, *g.analisis,
             *(t.leyenda for t in g.tablas_registro), g.conclusiones, *g.preguntas_conclusion, *g.seguridad]
+
+
+# Lo unico que va en el cuerpo de un circuito (fuera de las formulas de sus etiquetas, que solo admiten comandos matematicos):
+# los trazos de circuitikz y TikZ, unidades y tamanos de letra
+_COMANDOS_CIRCUITO = frozenset("""draw node path coordinate fill filldraw foreach SI si qty unit num ang textbf textit textrm
+    tiny scriptsize footnotesize small normalsize""".split())
+
+
+def circuito_tex(r: Recurso) -> tuple[str, list[str]]:
+    """(el entorno circuitikz del recurso, normalizado, y lo que no cumple). El cuerpo que escribio el modelo pasa por la misma lista
+    de permitidos que las diapositivas (latex_seguro.verificar_cuerpo: comandos, opciones de circuitikz, colores de la paleta IUB,
+    llaves) y, ademas, solo puede llevar trazos (\\draw, \\node, \\path, \\coordinate...): ningun otro entorno ni las cajas de
+    las presentaciones, que la guia no define. El circuito va en el azul oscuro del manual (#121023)."""
+    cuerpo = re.sub(r"^\\begin\{circuitikz\}(\[[^\]]*\])?|\\end\{circuitikz\}$", "", r.circuito.strip()).strip()
+    texto, problemas = ls.verificar_cuerpo("\\begin{circuitikz}[color=iubnavy]\n" + cuerpo + "\n\\end{circuitikz}")
+    ajenos = sorted({c for c in re.findall(r"\\([A-Za-z]+)", ls._enmascarar_matematicas(cuerpo)) if c not in _COMANDOS_CIRCUITO})
+    if ajenos:
+        problemas.append("en un circuito solo van trazos de circuitikz (\\draw, \\node, \\path, \\coordinate), sin otros comandos ni entornos: "
+                         + ", ".join("\\" + c for c in ajenos[:8]))
+    if "\\draw" not in cuerpo:
+        problemas.append("el circuito no tiene ningún \\draw (p. ej. `\\draw (0,0) to[battery1, l=$V_s$] (0,2) to[R, l=$R_1$] (3,2);`)")
+    return texto, problemas
+
+
+def problemas_de_recursos(g: GuiaLaboratorio) -> list[str]:
+    """Los recursos de los pasos (circuitos, ecuaciones y graficas) que no se pueden escribir en LaTeX sin riesgo: un circuito fuera
+    de la lista de permitidos, una ecuacion con comandos que no son matematicos o sin balancear, o demasiados recursos. La grafica
+    ya la valida su esquema (figuras.GraficaSpec: los puntos se calculan, no se inventan)."""
+    problemas: list[str] = []
+    recursos = [(n, p.recurso) for n, p in enumerate(g.pasos(), 1) if p.recurso is not None]
+    if len(recursos) > MAX_RECURSOS:
+        problemas.append(f"{len(recursos)} pasos llevan recurso: el máximo es {MAX_RECURSOS} (deja solo los que de verdad ayudan a proceder)")
+    for n, r in recursos:
+        if r.tipo == TipoRecurso.circuito:
+            problemas += [f"el circuito del paso {n} («{r.leyenda[:40]}»): {p}" for p in circuito_tex(r)[1]]
+        elif r.tipo == TipoRecurso.ecuacion:
+            malos = ls.comandos_no_permitidos(r.ecuacion)
+            if malos:
+                problemas.append(f"la ecuación del paso {n} usa comandos que no son matemáticos: {', '.join(malos[:8])}")
+            problemas += [f"la ecuación del paso {n}: {p}" for p in ls._balance(r.ecuacion) if "signos $" not in p]
+            if "$" in r.ecuacion:
+                problemas.append(f"la ecuación del paso {n} va sin $ (es la fórmula sola)")
+    return problemas
 
 
 def _normal(texto: str) -> str:
@@ -230,6 +284,7 @@ def validar_guia(g: GuiaLaboratorio, criterios: list, codigo_practica: str | Non
     total = sum(p.duracion_min or 0 for p in pasos)
     if total > minutos:
         problemas.append(f"los pasos suman {total} minutos y la sesión dura {minutos}: ajusta las duraciones")
+    problemas += problemas_de_recursos(g)
     con_diagrama = sum(1 for e in g.etapas if e.diagrama is not None)
     if con_diagrama < min(2, len(g.etapas)):
         problemas.append(f"solo {con_diagrama} etapa(s) del procedimiento llevan `diagrama`: cada etapa lleva su diagrama de flujo (al menos dos), "
@@ -321,28 +376,33 @@ def renderizar_md(g: GuiaLaboratorio, datos: dict) -> str:
               f"**Duración:** {datos['minutos']} minutos", "", g.introduccion, "",
               "## 1. Objetivos", "", f"**Objetivo general:** {g.objetivo_general}", "", "**Objetivos específicos:**", ""]
     lineas += [f"- {o.enunciado}" + (f" *({', '.join(o.criterios)})*" if o.criterios else "") for o in g.objetivos_especificos]
-    lineas += ["", "## 2. Materiales y Equipos", "", "| # | Material o equipo | Especificación | Cantidad |", "|---|---|---|---|"]
+    lineas += ["", "## 2. Materiales y Equipos", "", "**Tabla 1.** Materiales y equipos de la práctica", "",
+               "| # | Material o equipo | Especificación | Cantidad |", "|---|---|---|---|"]
     lineas += [f"| {k} | {m.nombre} | {m.especificacion or '—'} | {m.cantidad} |" for k, m in enumerate(g.materiales, 1)]
     lineas += ["", "## 3. Procedimiento", "", g.procedimiento_introduccion]
+    if any(e.diagrama is not None for e in g.etapas) or any(p.recurso for p in g.pasos()):
+        lineas += ["", "> Los diagramas de flujo, los circuitos y las gráficas son código LaTeX (TikZ, circuitikz y pgfplots), como en el .tex: "
+                   "Obsidian los dibuja con el plugin TikZJax; sin él, se ve el código (el PDF de la guía los trae dibujados)."]
+    dibujo = _Dibujo()
     paso = 0
-    figura = 0
     for k, etapa in enumerate(g.etapas, 1):
         minutos = sum(p.duracion_min or 0 for p in etapa.pasos)
         lineas += ["", f"### 3.{k} {etapa.titulo}" + (f" ({minutos} min)" if minutos else ""), ""]
-        if k in datos.get("flujos", {}):
-            figura += 1
-            leyenda = f"Figura {figura}. Diagrama de flujo de la etapa {k}: {etapa.titulo}"
-            lineas += [f"![{leyenda}]({datos['flujos'][k]})", "", f"*{leyenda}*", ""]
+        if etapa.diagrama is not None:
+            figura = dibujo.figura()
+            lineas += [bloque_tikz(dibujo.diagrama(etapa.diagrama)), "", f"*Figura {figura}. Diagrama de flujo de la etapa {k}: {etapa.titulo}*", ""]
         for p in etapa.pasos:
             paso += 1
             extra = ((f" *(≈ {p.duracion_min} min)*" if p.duracion_min else "") + (f" **Comprobación:** {p.verificacion}" if p.verificacion else "")
                      + (f" **Seguridad:** {p.seguridad}" if p.seguridad else ""))
             lineas.append(f"{paso}. {p.texto}{extra}")
+            if p.recurso is not None:
+                lineas += ["", *_recurso_md(p.recurso, dibujo), ""]
     lineas += ["", "## 4. Cuestiones a Resolver", ""] + [f"{k}. {c}" for k, c in enumerate(g.cuestiones, 1)]
     lineas += ["", "## 5. Análisis de Resultados", ""]
     for parrafo in g.analisis:
         lineas += [parrafo, ""]
-    for k, t in enumerate(g.tablas_registro, 1):
+    for k, t in enumerate(g.tablas_registro, 2):              # la Tabla 1 es la de materiales
         lineas += [f"**Tabla {k}.** {t.leyenda}", "", "| " + " | ".join(t.columnas) + " |", "|" + "---|" * len(t.columnas)]
         lineas += ["|" + "   |" * len(t.columnas)] * t.filas + [""]
     lineas += ["## 6. Conclusiones", "", g.conclusiones, ""] + [f"- {p}" for p in g.preguntas_conclusion]
@@ -363,24 +423,117 @@ def _practica_md(g: GuiaLaboratorio, datos: dict) -> str:
     return f"[[{datos['fuente']}]] — {datos['experimento']}"
 
 
-# Lo que necesitan los diagramas de flujo del procedimiento (los mismos estilos y colores que el .tex del temario): va en el preambulo
-# del .tex de la guia, despues de la plantilla, que no los trae
-PREAMBULO_DIAGRAMAS = "\n".join([
-    "% --------------------- Diagramas de flujo del procedimiento ----------------",
-    "% (TikZ, con los mismos estilos del .tex del temario; la plantilla no los trae)",
-    r"\usepackage{tikz}",
-    r"\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}",
-    r"\usepackage{adjustbox}",
-    *(rf"\definecolor{{{n}}}{{HTML}}{{{h}}}" for n, h in temario_latex.COLORES.items()),
+# Los estilos de los diagramas de flujo (los mismos del .tex del temario) y de las graficas, con la paleta del Manual de Identidad IUB
+ESTILOS_TIKZ = "\n".join([
     r"\tikzset{",
-    r"  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt},",
-    r"  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt},",
-    r"  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt},",
-    r"  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt},",
+    r"  dcaja/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=1pt, align=center, inner sep=2pt, text=iubnavy},",
+    r"  destado/.style={draw=iubblue, fill=iubfondoazul, line width=1pt, rounded corners=6pt, align=center, inner sep=2pt, text=iubnavy},",
+    r"  ddecision/.style={draw=iuborange, fill=iubfondonaranja, line width=1pt, diamond, aspect=1.6, align=center, inner sep=1pt, text=iubnavy},",
+    r"  dterminal/.style={draw=iubgreen, fill=iubfondoverde, line width=1pt, rounded rectangle, align=center, inner sep=2pt, text=iubnavy},",
     r"  dflecha/.style={-{Stealth[length=2.4mm]}, line width=0.9pt, draw=iubnavy},",
     r"  drotulo/.style={font=\footnotesize, text=iubgrisoscuro, fill=white, fill opacity=0.92, text opacity=1, inner sep=1.5pt},",
     r"}",
 ])
+
+
+def estilo_ejes(ancho: str) -> str:
+    """El estilo `iubejes` de las graficas (pgfplots), el mismo del temario: rejilla y ejes en tintes de #121023."""
+    return (rf"\pgfplotsset{{iubejes/.style={{width={ancho}, height={temario_latex.ALTO_GRAFICA}, grid=major, grid style={{iubgris}}, "
+            r"axis lines*=left, axis line style={iubnavy}, tick label style={font=\small}, label style={font=\small}, "
+            r"title style={font=\bfseries\small}, legend cell align=left, legend style={draw=none, fill=none, font=\small, "
+            r"anchor=north, legend columns=-1, /tikz/every even column/.append style={column sep=8pt}}, unbounded coords=jump}}")
+
+
+# Lo que necesitan las tablas, los diagramas de flujo, los circuitos y las graficas del procedimiento: va en el preambulo del .tex de
+# la guia, despues de la plantilla, que no lo trae. Solo paquetes estandar de TeX Live, MiKTeX y Overleaf.
+PREAMBULO_DIAGRAMAS = "\n".join([
+    "% ------- Tablas, diagramas de flujo, circuitos y gráficas (todo en LaTeX) -------",
+    "% (la plantilla no los trae; los estilos y la paleta son los del .tex del temario)",
+    r"\usepackage{colortbl}                    % encabezado #121023 y filas alternas en las tablas",
+    r"\usepackage{xltabular}                   % la tabla de materiales se parte entre páginas",
+    r"\usepackage{tikz}",
+    r"\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}",
+    r"\usepackage[siunitx,RPvoltages]{circuitikz}",
+    r"\usepackage{pgfplots}",
+    r"\pgfplotsset{compat=1.18}",
+    r"\usepackage{adjustbox}",
+    "",
+    "% Paleta del Manual de Identidad Visual IUB 2025 (los colores del manual y sus tintes)",
+    paleta_iub.definiciones(),
+    paleta_iub.ciclo_pgfplots(),
+    "",
+    "% Estilos de los diagramas de flujo (TikZ) y de las gráficas (pgfplots)",
+    ESTILOS_TIKZ,
+    estilo_ejes(r"0.9\linewidth"),
+])
+# El encabezado de las tablas: texto blanco en negrita sobre el azul oscuro del manual (#121023)
+FONDO_ENCABEZADO, FONDO_ALTERNO = "iubnavy", "iubfondogris"
+
+
+def _ascii_tex(texto: str) -> str:
+    """El LaTeX con los caracteres no ASCII escritos como comandos (\\'a, \\~n, ?`): TikZJax (los bloques ```tikz del .md) no lee UTF-8."""
+    especiales = {"¿": "?`", "¡": "!`", "°": r"\ensuremath{^\circ}", "º": r"\ensuremath{^\circ}", "–": "--", "—": "---",
+                  "·": r"\ensuremath{\cdot}", "±": r"\ensuremath{\pm}", "µ": r"\ensuremath{\mu}", "μ": r"\ensuremath{\mu}",
+                  "Ω": r"\ensuremath{\Omega}", "×": r"\ensuremath{\times}", "«": "<<", "»": ">>", "“": "``", "”": "''", "’": "'"}
+    acentos = {"́": "'", "̀": "`", "̃": "~", "̈": '"', "̂": "^"}
+    salida = []
+    for ch in texto:
+        if ord(ch) < 128:
+            salida.append(ch)
+        elif ch in especiales:
+            salida.append(especiales[ch])
+        else:
+            base, *marcas = unicodedata.normalize("NFD", ch)
+            if ord(base) < 128 and len(marcas) == 1 and marcas[0] in acentos:
+                letra = r"\i" if base == "i" else base
+                salida.append("\\" + acentos[marcas[0]] + "{" + letra + "}")
+            else:
+                salida.append("?")
+    return "".join(salida)
+
+
+def bloque_tikz(dibujo: str) -> str:
+    """Un diagrama, un circuito o una grafica para el .md: un bloque ```tikz autocontenido (paquetes, paleta IUB y estilos) que el
+    plugin TikZJax de Obsidian dibuja. Es el mismo codigo del .tex, sin el `adjustbox` (TikZJax no lo trae)."""
+    dibujo = re.sub(r"(?m)^[ \t]*\\(?:begin|end)\{adjustbox\}.*\n?", "", dibujo).strip()
+    paquetes = ([r"\usepackage{pgfplots}"] if "\\begin{axis}" in dibujo else []) + ([r"\usepackage{circuitikz}"] if "circuitikz" in dibujo else [])
+    ejes = [r"\pgfplotsset{compat=1.16}", paleta_iub.ciclo_pgfplots(), estilo_ejes("12cm")] if "\\begin{axis}" in dibujo else []
+    return "\n".join(["```tikz", *paquetes, r"\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc}", r"\begin{document}",
+                      paleta_iub.definiciones(), ESTILOS_TIKZ, *ejes, _ascii_tex(dibujo), r"\end{document}", "```"])
+
+
+class _Dibujo:
+    """Los diagramas de flujo y las graficas en LaTeX (temario_latex._Escritor: la misma disposicion, los mismos puntos y la misma
+    paleta del temario) y la numeracion de figuras y ecuaciones, la misma en el .md y en el .tex."""
+
+    def __init__(self) -> None:
+        self.escritor = temario_latex._Escritor()
+        self.figuras = self.ecuaciones = 0
+
+    def figura(self) -> int:
+        self.figuras += 1
+        return self.figuras
+
+    def ecuacion(self) -> int:
+        self.ecuaciones += 1
+        return self.ecuaciones
+
+    def diagrama(self, spec) -> str:
+        return self.escritor.diagrama(spec)
+
+    def grafica(self, spec) -> str:
+        return self.escritor.grafica(spec)
+
+
+def _recurso_md(r: Recurso, dibujo: _Dibujo) -> list[str]:
+    """El recurso de un paso en el .md: el circuito y la grafica en un bloque ```tikz, la ecuacion en $$...$$ con su numero."""
+    if r.tipo == TipoRecurso.ecuacion:
+        n = dibujo.ecuacion()
+        return ([f"**Ecuación ({n}).** {r.leyenda}", "", "$$", temario_latex.pulir_formula(r.ecuacion) + f" \\tag{{{n}}}", "$$"]
+                + (["", f"donde {r.donde}"] if r.donde else []))
+    n = dibujo.figura()
+    codigo = circuito_tex(r)[0] if r.tipo == TipoRecurso.circuito else dibujo.grafica(r.grafica)
+    return [bloque_tikz(codigo), "", f"*Figura {n}. {r.leyenda}*"]
 
 
 class _Escritor:
@@ -398,22 +551,58 @@ class _Escritor:
     def lista(self, entorno: str, items: list[str]) -> str:
         return f"\\begin{{{entorno}}}\n" + "\n".join(f"  \\item {i}" for i in items) + f"\n\\end{{{entorno}}}"
 
+    def encabezado(self, columnas: list[str]) -> str:
+        """La fila de encabezado de una tabla con la paleta IUB: texto blanco en negrita sobre #121023."""
+        return (f"\\rowcolor{{{FONDO_ENCABEZADO}}} " + " & ".join(f"\\textcolor{{white}}{{\\textbf{{{self.texto(c)}}}}}" for c in columnas) + r" \\")
+
     def tabla(self, k: int, t) -> str:
-        r"""Una tabla de registro (skill experto-en-latex): booktabs, sin lineas verticales; cada fila vacia se separa con un
-        \cmidrule(lr), que marca las celdas para escribir a mano sin rejilla; la leyenda arriba y una etiqueta para citarla."""
+        r"""Una tabla de registro (skill experto-en-latex: sin lineas verticales), con la paleta del Manual de Identidad IUB, como las
+        del temario: el encabezado en blanco sobre #121023 (sin \toprule: la franja de color es el borde), las filas vacias alternando
+        blanco y un tinte de #121023, para escribir a mano sin rejilla, y el \bottomrule en #121023; la leyenda arriba y una etiqueta."""
         n = len(t.columnas)
         columnas = ">{\\raggedright\\arraybackslash}X" * n
-        encabezado = " & ".join(f"\\textbf{{{self.texto(c)}}}" for c in t.columnas) + r" \\"
         vacia = r"\rule{0pt}{0.8cm}" + " &" * (n - 1) + r" \\"
-        filas = []
-        for j in range(t.filas):
-            filas.append(f"    {vacia}")
-            filas.append(f"    \\cmidrule(lr){{1-{n}}}" if j < t.filas - 1 else r"    \bottomrule")
-        return "\n".join([f"% --- Tabla {k}: {temario_latex._comentario(t.leyenda)} ({t.filas} filas vacías para registrar en el banco) ---",
+        alterna = f"\\rowcolor{{{FONDO_ALTERNO}}} "
+        filas = [f"    {alterna if j % 2 else ''}{vacia}" for j in range(t.filas)]
+        return "\n".join([f"% --- Tabla de registro {k}: {temario_latex._comentario(t.leyenda)} ({t.filas} filas vacías para registrar en el banco) ---",
                           r"\begin{table}[H]", r"  \centering",
                           f"  \\caption{{{self.texto(t.leyenda)}}}", f"  \\label{{tab:registro-{k}}}",
-                          f"  \\begin{{tabularx}}{{\\linewidth}}{{{columnas}}}", r"    \toprule", f"    {encabezado}", r"    \midrule",
-                          *filas, r"  \end{tabularx}", r"\end{table}"])
+                          r"  \arrayrulecolor{iubnavy}",
+                          f"  \\begin{{tabularx}}{{\\linewidth}}{{{columnas}}}", f"    {self.encabezado(t.columnas)}",
+                          *filas, r"    \bottomrule", r"  \end{tabularx}", r"\end{table}"])
+
+    def materiales(self, g: GuiaLaboratorio) -> str:
+        r"""La tabla de materiales y equipos (xltabular: se parte entre paginas repitiendo el encabezado), con la misma paleta."""
+        encabezado = self.encabezado(["\\#", "Material o equipo", "Especificación", "Cantidad"])
+        alterna = f"\\rowcolor{{{FONDO_ALTERNO}}} "
+        filas = [f"  {alterna if k % 2 == 0 else ''}{k} & {self.texto(m.nombre)} & "
+                 f"{self.texto(m.especificacion) if m.especificacion else '---'} & {m.cantidad} \\\\" for k, m in enumerate(g.materiales, 1)]
+        return "\n".join([f"% --- Tabla: materiales y equipos ({len(g.materiales)}; xltabular repite el encabezado si se parte) ---",
+                          r"\arrayrulecolor{iubnavy}",
+                          r"\begin{xltabular}{\linewidth}{>{\raggedleft\arraybackslash}p{0.6cm} >{\raggedright\arraybackslash}X "
+                          r">{\raggedright\arraybackslash}X >{\raggedleft\arraybackslash}p{2.2cm}}",
+                          r"\caption{Materiales y equipos de la práctica}\label{tab:materiales} \\", encabezado,
+                          r"\endfirsthead", encabezado, r"\endhead", r"\bottomrule", r"\endlastfoot",
+                          *filas, r"\end{xltabular}"])
+
+    def recurso(self, r: Recurso, numero_paso: int, dibujo: _Dibujo) -> str:
+        r"""El recurso de un paso, en LaTeX y justo debajo del paso: el circuito (circuitikz) o la grafica (pgfplots) en un minipage
+        con \captionof (dentro de la lista de pasos no va un flotante), o la ecuacion numerada con lo que significa cada simbolo."""
+        if r.tipo == TipoRecurso.ecuacion:
+            dibujo.ecuacion()
+            ecuacion = dibujo.escritor.ecuacion(r.ecuacion).replace("\\end{equation}", f"  \\label{{eq:paso-{numero_paso}}}\n\\end{{equation}}")
+            self.conv.avisos.extend(a for a in dibujo.escritor.conv.avisos if a not in self.conv.avisos)
+            return "\n".join([f"% ecuación del paso {numero_paso}: {temario_latex._comentario(r.leyenda)}", f"\\par {self.texto(r.leyenda)}",
+                              ecuacion] + ([f"donde {self.texto(r.donde)}"] if r.donde else []))
+        dibujo.figura()
+        if r.tipo == TipoRecurso.circuito:
+            codigo, clase = circuito_tex(r)[0], "circuito en circuitikz"
+        else:
+            codigo, clase = dibujo.grafica(r.grafica), "gráfica en pgfplots con los puntos de su especificación"
+        return "\n".join([f"% figura del paso {numero_paso}: {temario_latex._comentario(r.leyenda)} ({clase})",
+                          r"\par\medskip\noindent", r"\begin{minipage}{\linewidth}", r"  \centering", r"  \begin{adjustbox}{max width=\linewidth}",
+                          *("    " + l for l in codigo.splitlines()), r"  \end{adjustbox}",
+                          f"  \\captionof{{figure}}{{{self.texto(r.leyenda)}}}\\label{{fig:paso-{numero_paso}}}", r"\end{minipage}", r"\par\medskip"])
 
 
 def _practica_tex(g: GuiaLaboratorio, datos: dict, e: _Escritor) -> str:
@@ -431,35 +620,35 @@ def renderizar_tex(g: GuiaLaboratorio, datos: dict) -> tuple[str, str, list[str]
     """(.tex, .bib, avisos del Conversor): la guia con la estructura de la plantilla institucional y las buenas practicas de la skill
     experto-en-latex del docente: codigo comentado e indentado, formulas pulidas (subindices descriptivos en redonda, funciones con su
     comando: temario_latex.pulir_formula), unidades con siunitx, tablas con booktabs sin lineas verticales, leyenda arriba y etiquetas
-    (\\label) en secciones, etapas y tablas, espacios irrompibles (Paso~N) y bibliografia con biblatex."""
+    (\\label) en secciones, etapas, tablas, figuras y ecuaciones, espacios irrompibles (Paso~N) y bibliografia con biblatex. Todo es
+    LaTeX (ninguna imagen): las tablas con la paleta IUB, los diagramas de flujo en TikZ, los circuitos en circuitikz, las graficas en
+    pgfplots y las ecuaciones en `equation`."""
     e = _Escritor(len(g.referencias_cargadas))
     t = e.texto
-    dibujo = temario_latex._Escritor()               # el TikZ de los diagramas, como en el .tex del temario
+    dibujo = _Dibujo()                               # el TikZ y el pgfplots, como en el .tex del temario, y la numeracion del .md
     numero = 0
-    figura = 0
     etapas = []
     for k, etapa in enumerate(g.etapas, 1):
+        flujo = ""
+        if etapa.diagrama is not None:
+            figura = dibujo.figura()
+            flujo = "\n".join([f"% --- Figura {figura}: diagrama de flujo de la etapa {k} (TikZ, con la paleta IUB) ---",
+                               r"\begin{figure}[H]", r"  \centering", dibujo.diagrama(etapa.diagrama),
+                               f"  \\caption{{Diagrama de flujo de la etapa {k}: {e.conv.titulo(etapa.titulo)}}}", f"  \\label{{fig:flujo-{k}}}",
+                               r"\end{figure}", ""])
         items = []
         for p in etapa.pasos:
             numero += 1
             extra = ((f" \\emph{{(aprox.~{minutos_si(p.duracion_min)})}}" if p.duracion_min else "")
                      + (f" \\textbf{{Comprobación:}} {t(p.verificacion)}" if p.verificacion else "")
                      + (f" \\textbf{{Seguridad:}} {t(p.seguridad)}" if p.seguridad else ""))
-            items.append(f"\\textbf{{Paso~{numero}:}} {t(p.texto)}{extra}")
+            recurso = ("\n" + e.recurso(p.recurso, numero, dibujo)) if p.recurso is not None else ""
+            items.append(f"\\textbf{{Paso~{numero}:}} {t(p.texto)}{extra}{recurso}")
         minutos = sum(p.duracion_min or 0 for p in etapa.pasos)
-        flujo = ""
-        if etapa.diagrama is not None:
-            figura += 1
-            flujo = "\n".join([f"% --- Figura {figura}: diagrama de flujo de la etapa {k} (TikZ; misma disposición que el PNG del .md) ---",
-                               r"\begin{figure}[H]", r"  \centering", dibujo.diagrama(etapa.diagrama),
-                               f"  \\caption{{Diagrama de flujo de la etapa {k}: {e.conv.titulo(etapa.titulo)}}}", f"  \\label{{fig:flujo-{k}}}",
-                               r"\end{figure}", ""])
         etapas.append(f"% --- Etapa {k}: {temario_latex._comentario(etapa.titulo)} ({len(etapa.pasos)} pasos) ---\n"
                       f"\\subsection{{{e.conv.titulo(etapa.titulo)}" + (f" ({minutos_si(minutos)})" if minutos else "") + f"}}\\label{{sec:etapa-{k}}}\n"
                       + flujo + e.lista("pasos", items))
-    e.conv.avisos.extend(a for a in dibujo.conv.avisos if a not in e.conv.avisos)
-    materiales = [f"\\textbf{{{t(m.nombre)}}}" + (f" ({m.cantidad})" if m.cantidad > 1 else "") + (f": {t(m.especificacion)}" if m.especificacion else "")
-                  for m in g.materiales]
+    e.conv.avisos.extend(a for a in dibujo.escritor.conv.avisos if a not in e.conv.avisos)
     objetivos = [t(o.enunciado) + (f" \\emph{{({', '.join(e.conv.escapar(c) for c in o.criterios)})}}" if o.criterios else "") for o in g.objetivos_especificos]
     # biblatex (style=ieee, sorting=none) numera por orden de primera cita: un \nocite con todas las claves, en el orden del .md
     # ([1], [2]… las cargadas y despues las externas), justo despues de \begin{document}, hace que el PDF numere igual que el .md
@@ -516,7 +705,7 @@ def renderizar_tex(g: GuiaLaboratorio, datos: dict) -> tuple[str, str, list[str]
         "",
         "% ---------------------------------------------------------------------",
         r"\section{Materiales y Equipos}\label{sec:materiales}",
-        e.lista("itemize", materiales),
+        e.materiales(g),
         "",
         "% ---------------------------------------------------------------------",
         r"\section{Procedimiento}\label{sec:procedimiento}",
@@ -572,12 +761,17 @@ def problemas_del_tex(tex: str, bib: str) -> list[str]:
     if "^^" in cuerpo or "^^" in bib:
         problemas.append("notación ^^ en el documento")
     problemas += temario_latex.revisar_balance("\\begin{document}" + cuerpo)
+    sin_comentarios = re.sub(r"(?<!\\)%.*", "", cuerpo)
+    fuera = ls.colores_fuera_de_paleta(sin_comentarios)
+    if fuera:
+        problemas.append("colores que no son del Manual de Identidad IUB: " + ", ".join(fuera[:8]))
+    if "\\includegraphics" in sin_comentarios:
+        problemas.append("una imagen (\\includegraphics) en el documento: las tablas, gráficas, diagramas y circuitos van en código LaTeX")
     for entrada in re.split(r"(?m)^(?=@)", bib):
         if entrada.startswith("@") and balance_bib(entrada) != 0:
             clave = re.match(r"@\w+\{([^,\s]*)", entrada)
             problemas.append(f"entrada del .bib con llaves desbalanceadas (biber cuenta todas las llaves): {clave.group(1) if clave else entrada[:40]}")
     claves = set(re.findall(r"^@\w+\{([^,\s]+),", bib, flags=re.M))
-    sin_comentarios = re.sub(r"(?<!\\)%.*", "", cuerpo)
     citadas = {c.strip() for grupo in re.findall(r"\\cite\{([^}]*)\}", sin_comentarios) for c in grupo.split(",")}
     if bib and citadas - claves:
         problemas.append(f"citas a claves que no están en el .bib: {', '.join(sorted(citadas - claves))}")
@@ -698,20 +892,14 @@ def _guardar_contenido(ruta: Path, huella: str, guia: GuiaLaboratorio) -> None:
     ruta.write_text(json.dumps(datos, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
 
 
-def dibujar_flujos(g: GuiaLaboratorio, destino: Path) -> dict[int, str]:
-    """Dibuja (PNG, para el .md) el diagrama de flujo de cada etapa que lo tiene, en figuras/ junto a la guia, y devuelve {etapa: ruta
-    relativa}. Antes borra los de una version anterior de esta guia (una etapa que ya no tiene diagrama no deja uno viejo)."""
+def borrar_figuras_png(destino: Path) -> None:
+    """Borra los PNG de los diagramas de flujo que escribia el formato 2 (figuras/{guia}-flujoK.png, dibujados con matplotlib): desde
+    el formato 3 todo va en codigo LaTeX y no queda al lado una imagen de otra version. La carpeta figuras/ se quita si queda vacia."""
     carpeta = destino.parent / "figuras"
     for viejo in carpeta.glob(f"{destino.stem}-flujo*.png"):
         viejo.unlink()
-    flujos = {}
-    for k, etapa in enumerate(g.etapas, 1):
-        if etapa.diagrama is not None:
-            ruta = carpeta / f"{destino.stem}-flujo{k}.png"
-            carpeta.mkdir(parents=True, exist_ok=True)
-            figuras.dibujar_diagrama(etapa.diagrama, ruta)
-            flujos[k] = f"figuras/{ruta.name}"
-    return flujos
+    if carpeta.is_dir() and not any(carpeta.iterdir()):
+        carpeta.rmdir()
 
 
 def huella_entradas(cuerpo_temario: str, ra, practica, fuentes: list[str], minutos: int, tema: str) -> str:
@@ -761,8 +949,6 @@ def generar_guia(codigo: str, semana: int, docente: str | None = None, facultad:
     docente y facultad y el formato actual) se omite; si solo cambio el docente, la facultad o el formato, se rehace desde lo guardado
     (sin LLM) si lo guardado pasa la validacion actual. `desde_bibliografia`: ver origen_de_guia."""
     avisar = progreso or avisar_nada
-    if not figuras.disponible():
-        raise RuntimeError("Falta matplotlib, que dibuja los diagramas de flujo del procedimiento: `pip install -r requirements.txt`")
     if compilar_pdf and not (shutil.which("pdflatex") and shutil.which("biber")):
         raise RuntimeError("--compilar necesita pdflatex y biber (MiKTeX o TeX Live): instálalos, o genera sin --compilar y sube la carpeta a Overleaf (pdfLaTeX)")
     nombre_pagina, asignatura, fm_asignatura = vault.localizar_asignatura(codigo)
@@ -850,8 +1036,8 @@ def generar_guia(codigo: str, semana: int, docente: str | None = None, facultad:
 
     datos = {"facultad": facultad, "modulo": f"{asignatura.codigo} — {asignatura.nombre}", "docente": docente, "semana": semana,
              "total": total, "ra": ra.codigo, "temario": ruta_temario.stem, "fuente": fuente_practica, "experimento": codigo_practica,
-             "minutos": minutos, "bib": destino_bib.name, "origen": origen,
-             "flujos": dibujar_flujos(guardada, destino)}
+             "minutos": minutos, "bib": destino_bib.name, "origen": origen}
+    borrar_figuras_png(destino)                       # los PNG del formato 2: la guia ya no usa imagenes
     cuerpo_md = renderizar_md(guardada, datos)
     tex, bib, avisos_tex = renderizar_tex(guardada, datos)
     avisos = list(avisos_tex)
